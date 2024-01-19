@@ -1,0 +1,6 @@
+#ifndef __M2F_MANAGEMENT_INTERFACE__H_
+#define __M2F_MANAGEMENT_INTERFACE__H_
+
+
+
+#endif

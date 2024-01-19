@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="api">
+      <UniqueIdentifier>{a2b5fff2-c309-41fe-a1f2-24e9dc90bb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{a473b12b-9557-4d27-a04d-67dd9e3051f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="management">
+      <UniqueIdentifier>{90a7dce0-3deb-48d7-b118-eee0266d1578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multimedia">
+      <UniqueIdentifier>{36765010-fc6e-469b-a11f-40d04a5caee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multimedia\audio">
+      <UniqueIdentifier>{a3429caa-0214-467d-9c81-3cba95e91f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multimedia\vedio">
+      <UniqueIdentifier>{9a3f561a-0e33-40af-af42-6e28f2c158c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{a6d9086a-08a0-43c5-86cc-18331d5f9b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multimedia\audio\codec">
+      <UniqueIdentifier>{3ca063c9-d0c2-44e2-8b9b-2ce3873358c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="multimedia\audio\codec\3thInterface">
+      <UniqueIdentifier>{e2285e7b-f475-4457-ad62-46e6d0615e85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="api\M2Fapi.cpp">
+      <Filter>api</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\codec\3thInterface\M2FAudioCodecTestInterface.cpp">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\codec\3thInterface\M2FOpusCodecInterface.cpp">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\codec\3thInterface\M2FSilkCodecInterface.cpp">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\codec\src\M2FAudioCodec.cpp">
+      <Filter>multimedia\audio\codec</Filter>
+    </ClCompile>
+    <ClCompile Include="management\src\M2FManagement.cpp">
+      <Filter>management</Filter>
+    </ClCompile>
+    <ClCompile Include="management\src\M2FMipsMonitor.cpp">
+      <Filter>management</Filter>
+    </ClCompile>
+    <ClCompile Include="common\src\M2FCommon.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\src\M2FObject.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\M2F.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\audio\src\M2FAudio.cpp">
+      <Filter>multimedia\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="multimedia\src\M2FMultimedia.cpp">
+      <Filter>multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="management\src\M2FMemoryManger.cpp">
+      <Filter>management</Filter>
+    </ClCompile>
+    <ClCompile Include="common\src\M2FMemory.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\src\M2FPrint.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="common\src\M2FList.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="api\M2Fapi.h">
+      <Filter>api</Filter>
+    </ClInclude>
+    <ClInclude Include="common\M2FCommonInterface.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\M2FMultimediaInterface.h">
+      <Filter>multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\M2FAudioInterface.h">
+      <Filter>multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\codec\3thInterface\M2FAudioCodecTestInterface.h">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\codec\3thInterface\M2FOpusCodecInterface.h">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\codec\3thInterface\M2FSilkCodecInterface.h">
+      <Filter>multimedia\audio\codec\3thInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\codec\src\M2FAudioCodec.h">
+      <Filter>multimedia\audio\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="management\M2FManagementInterface.h">
+      <Filter>management</Filter>
+    </ClInclude>
+    <ClInclude Include="src\M2FInterface.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\codec\M2FAudioCodecInterface.h">
+      <Filter>multimedia\audio\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="management\src\M2FManagement.h">
+      <Filter>management</Filter>
+    </ClInclude>
+    <ClInclude Include="management\src\M2FMipsMonitor.h">
+      <Filter>management</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FCommon.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FObject.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\M2F.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\audio\src\M2FAudio.h">
+      <Filter>multimedia\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="multimedia\src\M2FMultimedia.h">
+      <Filter>multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="management\src\M2FMemoryManger.h">
+      <Filter>management</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FMemory.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FPrint.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FTypes.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="common\src\M2FList.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

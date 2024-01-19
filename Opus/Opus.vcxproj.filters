@@ -1,0 +1,726 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="3th">
+      <UniqueIdentifier>{97a3591f-22bb-46b2-9c8a-1f16c53e46c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\celt">
+      <UniqueIdentifier>{8527f7ad-a8bb-4b2f-881c-31410d20efee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\include">
+      <UniqueIdentifier>{98e0772f-a9e9-468e-9126-174a101ca58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\silk">
+      <UniqueIdentifier>{cc0c67f4-9c7b-4f29-a0e8-6a3de9bd1e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\src">
+      <UniqueIdentifier>{b5198e52-0370-4873-ba75-82f637ad660a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\win32">
+      <UniqueIdentifier>{e14fc3c1-facd-4a23-a57c-ed194164d876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\celt\x86">
+      <UniqueIdentifier>{48da7f58-dcc9-41b9-a9cb-483b018e7633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\silk\fixed">
+      <UniqueIdentifier>{df33c069-0550-447d-af18-5de99cb2fa0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\silk\x86">
+      <UniqueIdentifier>{08fec35e-62cf-4f20-baf7-f88aa9f170f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\silk\fixed\x86">
+      <UniqueIdentifier>{a14971c2-1b1e-454e-a88b-262a43e20cfb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3th\celt\_kiss_fft_guts.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\arch.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\bands.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\celt.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\celt_lpc.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\cpu_support.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\cwrs.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\ecintrin.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\entcode.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\entdec.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\entenc.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\fixed_debug.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\fixed_generic.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\float_cast.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\kiss_fft.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\laplace.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\mathops.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\mdct.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\mfrngcod.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\modes.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\os_support.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\pitch.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\quant_bands.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\rate.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\stack_alloc.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\static_modes_fixed.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\static_modes_fixed_arm_ne10.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\static_modes_float.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\static_modes_float_arm_ne10.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\vq.h">
+      <Filter>3th\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\x86\celt_lpc_sse.h">
+      <Filter>3th\celt\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\x86\pitch_sse.h">
+      <Filter>3th\celt\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\x86\vq_sse.h">
+      <Filter>3th\celt\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\celt\x86\x86cpu.h">
+      <Filter>3th\celt\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus_custom.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus_defines.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus_multistream.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus_projection.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\include\opus_types.h">
+      <Filter>3th\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\win32\config.h">
+      <Filter>3th\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\win32\version.h">
+      <Filter>3th\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\src\analysis.h">
+      <Filter>3th\src</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\src\mapping_matrix.h">
+      <Filter>3th\src</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\src\mlp.h">
+      <Filter>3th\src</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\src\opus_private.h">
+      <Filter>3th\src</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\src\tansig_table.h">
+      <Filter>3th\src</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\OpusDec.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\OpusEnc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\x86\main_sse.h">
+      <Filter>3th\silk\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\x86\SigProc_FIX_sse.h">
+      <Filter>3th\silk\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\fixed\main_FIX.h">
+      <Filter>3th\silk\fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\fixed\structs_FIX.h">
+      <Filter>3th\silk\fixed</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\API.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\control.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\debug.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\define.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\errors.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\Inlines.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\MacroCount.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\MacroDebug.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\macros.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\main.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\NSQ.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\pitch_est_defines.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\PLC.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\resampler_private.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\resampler_rom.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\resampler_structs.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\SigProc_FIX.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\structs.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\tables.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\tuning_parameters.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="3th\silk\typedef.h">
+      <Filter>3th\silk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3th\celt\bands.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\celt.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\celt_decoder.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\celt_encoder.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\celt_lpc.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\cwrs.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\entcode.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\entdec.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\entenc.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\kiss_fft.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\laplace.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\mathops.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\mdct.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\modes.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\opus_custom_demo.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\pitch.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\quant_bands.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\rate.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\vq.c">
+      <Filter>3th\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\celt_lpc_sse4_1.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\pitch_sse.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\pitch_sse2.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\pitch_sse4_1.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\vq_sse2.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\x86_celt_map.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\celt\x86\x86cpu.c">
+      <Filter>3th\celt\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\analysis.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\mapping_matrix.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\mlp.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\mlp_data.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_compare.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_decoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_demo.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_encoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_multistream.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_multistream_decoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_multistream_encoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_projection_decoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\opus_projection_encoder.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\repacketizer.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\src\repacketizer_demo.c">
+      <Filter>3th\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\x86\burg_modified_FIX_sse4_1.c">
+      <Filter>3th\silk\fixed\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\x86\vector_ops_FIX_sse4_1.c">
+      <Filter>3th\silk\fixed\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpusDec.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpusEnc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\x86\NSQ_del_dec_sse4_1.c">
+      <Filter>3th\silk\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\x86\NSQ_sse4_1.c">
+      <Filter>3th\silk\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\x86\VAD_sse4_1.c">
+      <Filter>3th\silk\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\x86\VQ_WMat_EC_sse4_1.c">
+      <Filter>3th\silk\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\x86\x86_silk_map.c">
+      <Filter>3th\silk\x86</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\apply_sine_window_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\autocorr_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\burg_modified_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\corrMatrix_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\encode_frame_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\find_LPC_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\find_LTP_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\find_pitch_lags_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\find_pred_coefs_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\k2a_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\k2a_Q16_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\LTP_analysis_filter_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\LTP_scale_ctrl_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\noise_shape_analysis_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\pitch_analysis_core_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\process_gains_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\regularize_correlations_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\residual_energy_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\residual_energy16_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\schur_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\schur64_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\vector_ops_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\fixed\warped_autocorrelation_FIX.c">
+      <Filter>3th\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\A2NLSF.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\ana_filt_bank_1.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\biquad_alt.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\bwexpander.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\bwexpander_32.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\check_control_input.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\CNG.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\code_signs.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\control_audio_bandwidth.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\control_codec.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\control_SNR.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\debug.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\dec_API.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_core.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_frame.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_indices.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_parameters.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_pitch.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decode_pulses.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\decoder_set_fs.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\enc_API.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\encode_indices.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\encode_pulses.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\gain_quant.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\HP_variable_cutoff.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\init_decoder.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\init_encoder.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\inner_prod_aligned.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\interpolate.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\lin2log.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\log2lin.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\LP_variable_cutoff.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\LPC_analysis_filter.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\LPC_fit.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\LPC_inv_pred_gain.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_decode.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_del_dec_quant.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_encode.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_stabilize.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_unpack.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_VQ.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF_VQ_weights_laroia.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NLSF2A.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NSQ.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\NSQ_del_dec.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\pitch_est_tables.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\PLC.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\process_NLSFs.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\quant_LTP_gains.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_down2.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_down2_3.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_private_AR2.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_private_down_FIR.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_private_IIR_FIR.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_private_up2_HQ.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\resampler_rom.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\shell_coder.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\sigm_Q15.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\sort.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_decode_pred.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_encode_pred.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_find_predictor.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_LR_to_MS.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_MS_to_LR.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\stereo_quant_pred.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\sum_sqr_shift.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\table_LSF_cos.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_gain.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_LTP.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_NLSF_CB_NB_MB.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_NLSF_CB_WB.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_other.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_pitch_lag.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\tables_pulses_per_block.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\VAD.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="3th\silk\VQ_WMat_EC.c">
+      <Filter>3th\silk</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
