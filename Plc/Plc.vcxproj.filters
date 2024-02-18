@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{6c7ca3f6-49a7-40ac-bbdc-e830c45e4efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc">
+      <UniqueIdentifier>{3e77d239-e5e0-41d0-9ae7-8d2aec94f376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th">
+      <UniqueIdentifier>{2b2000c1-f245-4695-9f6b-187699711afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3th\musicplc">
+      <UniqueIdentifier>{d8903b46-2d68-4b89-84c7-76d912f1b7c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3th\audio\process\plc\plc.c">
+      <Filter>3th</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.c">
+      <Filter>3th\musicplc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3th\audio\process\plc\plc.h">
+      <Filter>3th</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3th\audio\process\plc\plcCommon.h">
+      <Filter>3th</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3th\audio\process\plc\3th\musicPlc.h">
+      <Filter>3th\musicplc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

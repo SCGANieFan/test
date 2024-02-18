@@ -1,6 +1,3 @@
 #pragma once
-bool CodecTest();
 
-bool test1();
-
-
+bool Test();

@@ -19,8 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BitPerSampleConvert.cpp" />
     <ClCompile Include="codec_test.cpp" />
-    <ClCompile Include="test1.cpp" />
+    <ClCompile Include="FrameTest.cpp" />
+    <ClCompile Include="StackTest.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="testDemo.cpp" />
+    <ClCompile Include="testInner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h" />

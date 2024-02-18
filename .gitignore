@@ -5,4 +5,7 @@ debug/
 x86/
 x64/
 
-
+*.o
+*.su
+*.lib
+*.pdb

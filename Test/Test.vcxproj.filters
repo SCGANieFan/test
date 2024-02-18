@@ -12,7 +12,22 @@
     <ClCompile Include="codec_test.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="test1.cpp">
+    <ClCompile Include="test.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="BitPerSampleConvert.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="testInner.h">
+      <Filter>inc</Filter>
+    </ClCompile>
+    <ClCompile Include="testDemo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="StackTest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameTest.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

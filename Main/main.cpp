@@ -1,9 +1,8 @@
 #include"test.h"
-
 int main()
 {
 	//CodecTest();
-	test1();
+	Test();
 	return 0;
 }
 

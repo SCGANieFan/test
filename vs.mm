@@ -1,0 +1,12 @@
+<map version="1.0.1">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node CREATED="1707378329085" ID="ID_299451438" MODIFIED="1707378366079" TEXT="ori">
+<node CREATED="1707378367474" ID="ID_1368395666" MODIFIED="1707378371376" POSITION="right" TEXT="main">
+<node CREATED="1707378376203" ID="ID_1284358976" MODIFIED="1707378377722" TEXT="test">
+<node CREATED="1707378378588" ID="ID_1613882145" MODIFIED="1707378383066" TEXT="opustest"/>
+<node CREATED="1707378383731" ID="ID_1522746069" MODIFIED="1707378387144" TEXT="plctest"/>
+</node>
+</node>
+<node CREATED="1707378630789" ID="ID_918124179" MODIFIED="1707378630969" POSITION="right" TEXT="plctest"/>
+</node>
+</map>
