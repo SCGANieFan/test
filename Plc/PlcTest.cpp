@@ -4,12 +4,11 @@
 #include<stdlib.h>
 #include<stdint.h>
 #include"plc.h"
-#include"testLib.h"
+#include"MMTest.h"
 
 
 void* cbHdInit(void *param0,bool *isSuccess)
 {
-
 	PlcParam* param = (PlcParam*)param0;
 
 	bool ret = true;
@@ -30,7 +29,7 @@ void* cbHdInit(void *param0,bool *isSuccess)
 
 #define NUM_LOST 1
 #define NUM_ALL 50
-int32_t cbRun(void* hd, Frame *ifrm, Frame* ofrm)
+MMTestRet cbRun(void* hd, Frame *ifrm, Frame* ofrm)
 {
 	bool isLost = false;
 	static uint32_t frames = 0;
@@ -52,15 +51,14 @@ int32_t cbRun(void* hd, Frame *ifrm, Frame* ofrm)
 	if (ret != PLC_RET_SUCCESS)
 	{
 		printf("plc error\n");
-		return -1;
+		return MMRet_FAIL;
 	}
 
 	ifrm->size = 0;
 	ifrm->offset = 0;
 	ofrm->size += outByte;
-	return 0;
+	return MMRet_SUCCESS;
 }
-
 
 
 #define SOURCE_PATH "../../source/audio/plc/"
@@ -72,35 +70,29 @@ int32_t cbRun(void* hd, Frame *ifrm, Frame* ofrm)
 #define OVERLAP_MS 2
 #define FRAME_LEN (FRAME_LEN_MS*SAMPLE_RATE/1000)
 
-int main()
+void PlcTest()
 {
+	MMTestParam testParam = { 0 };
+	testParam.mode = MMTestMode::TestModeAudio;
+	testParam.open.audio.channels = CHANNELS;
+	testParam.open.audio.frameSamples = FRAME_LEN;
+	testParam.open.audio.sampleWidth = sizeof(int16_t);
 
-	//prarame init
-	//void* param = NULL;
+	testParam.HdInit = cbHdInit;
+	testParam.Run = cbRun;
+
 	PlcParam param = { 0 };
-
-
 	param.fsHz = SAMPLE_RATE;
 	param.channels = CHANNELS;
 	param.targetChannels = param.channels;
 	param.targetChannel = param.channels;
 	param.sampleBits = sizeof(int16_t) << 3;
 	param.frameSamples = FRAME_LEN;
-
 	param.mode = PlcMode_e::PlcModeMusicPlc;
 	param.MusicPlcParam.overlapMs = OVERLAP_MS;
 	param.MusicPlcParam.decayTimeMs = DECAY_TIME_MS;
-
-	TestParam testParam = { 0 };
-	testParam.mode = TestMode::TestModeAudio;
 	testParam.param = (void*)(&param);
-	testParam.open.audio.channels = CHANNELS;
-	testParam.open.audio.frameSamples = FRAME_LEN;
-	testParam.open.audio.sampleWidth = sizeof(int16_t);
-
-	testParam.HdInit = cbHdInit;
-	testParam.Run= cbRun;
-	return MultiMediaTest(SOURCE_PATH FILE_NAME, &testParam);
+	MultiMediaTest(SOURCE_PATH FILE_NAME, &testParam);
 }
 
 

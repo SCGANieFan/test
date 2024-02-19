@@ -1,8 +1,16 @@
-#include"test.h"
-int main()
+#include"initAll.h"
+
+void test()
 {
-	//CodecTest();
-	Test();
+#if 1
+	PlcTest();
+#endif
+
+}
+
+int main()
+{	
+	test();
 	return 0;
 }
 

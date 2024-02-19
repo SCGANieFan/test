@@ -516,10 +516,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="testLib.cpp" />
+    <ClCompile Include="MMTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="testLib.h" />
+    <ClInclude Include="MMTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

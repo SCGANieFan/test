@@ -2,6 +2,12 @@
 
 #include<stdint.h>
 
+#define MMRet_SUCCESS 0
+#define MMRet_FAIL -1
+#define MMRet_INPUT_ERR -2
+#define MMRet_FILE_OPEN_ERR -3
+#define MMRet_MEMORY_ERR -4
+
 typedef struct
 {
 	void* buff;
@@ -10,7 +16,12 @@ typedef struct
 	int32_t max;
 }Frame;
 
-enum TestMode
+
+typedef int32_t MMTestRet;
+typedef void* CbHdInit(void* param, bool* isSuccess);
+typedef MMTestRet CbRun(void* hd, Frame* ifrm, Frame* ofrm);
+
+enum MMTestMode
 {
 	TestModeAudio = 0,
 	TestModeImage,
@@ -19,13 +30,10 @@ enum TestMode
 	TestModeMax,
 };
 
-typedef void* CbHdInit(void* param, bool* isSuccess);
-typedef int32_t CbRun(void* hd, Frame* ifrm, Frame* ofrm);
-
 typedef struct
 {
 	void* param;
-	TestMode mode;
+	MMTestMode mode;
 	union {
 		struct {
 			int32_t frameSamples;
@@ -45,13 +53,12 @@ typedef struct
 			uint8_t reserve[1024];
 		}multimedia;
 	}open;
-
 	CbHdInit* HdInit;
 	CbRun* Run;
+}MMTestParam;
 
-}TestParam;
+MMTestRet MultiMediaTest(const char* fileInName, MMTestParam* testParam);
 
-typedef int32_t MultiMediaTestRet;
-#define MMRet_SUCCESS 0
-#define MMRet_FAIL -1
-MultiMediaTestRet MultiMediaTest(const char* fileInName, TestParam* testParam);
+
+
+

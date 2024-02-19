@@ -6,6 +6,7 @@
 #define PLC_RET_INPUT_ERROR -1
 #define PLC_RET_FAIL -2
 
+typedef int32_t PlcRet;
 
 enum PlcMode_e {
 	PlcModeMusicPlc = 0,
@@ -57,7 +58,6 @@ typedef struct {
 	void* other;
 }PlcParam;
 
-typedef int32_t PlcRet;
 
 
 EXTERNC int32_t GetPlcStateSize(PlcParam* param);

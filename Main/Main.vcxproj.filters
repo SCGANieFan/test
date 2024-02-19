@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{70517a38-c85b-4be5-ba3c-7263a8b5ab79}</UniqueIdentifier>
+      <UniqueIdentifier>{5e3f1da7-e280-457a-b65e-8a02fe645154}</UniqueIdentifier>
     </Filter>
     <Filter Include="inc">
-      <UniqueIdentifier>{cae66157-0dc9-48ff-accb-1a3cd4e1c920}</UniqueIdentifier>
+      <UniqueIdentifier>{67f39159-9668-49c9-a01d-7492cfe0beeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MMTest.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MMTest.h">
+    <ClInclude Include="initAll.h">
       <Filter>inc</Filter>
     </ClInclude>
   </ItemGroup>

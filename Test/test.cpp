@@ -1,12 +1,13 @@
 #include"testInner.h"
 
+#include"PlcTest.h"
 
-
-bool Test()
+int main()
 {
 	//TestBitPerSampleConvet();
 	//StackTest();
-	testDemo();
+	//testDemo();
+	PlcTest();
 	return 1;
 }
 
