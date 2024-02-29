@@ -22,12 +22,22 @@
     <ClCompile Include="BitPerSampleConvert.cpp" />
     <ClCompile Include="codec_test.cpp" />
     <ClCompile Include="FrameTest.cpp" />
+    <ClCompile Include="OggTest.cpp" />
+    <ClCompile Include="ogg\OggBitstream.cpp" />
+    <ClCompile Include="ogg\OggDec.cpp" />
+    <ClCompile Include="ogg\OggDemux2Opus.cpp" />
+    <ClCompile Include="ogg\OggDemux2Opus2.cpp" />
+    <ClCompile Include="ogg\OggGeneral.cpp" />
     <ClCompile Include="StackTest.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="testDemo.cpp" />
     <ClCompile Include="testInner.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ogg\Ogg.h" />
+    <ClInclude Include="ogg\OggCrcTable.h" />
+    <ClInclude Include="ogg\OggDemux2Opus.h" />
+    <ClInclude Include="ogg\OggType.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -83,7 +93,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)_lib</OutDir>
+    <OutDir>$(SolutionDir)_lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,7 +101,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)M2F\api;../Plc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)M2F\api;./ogg;../Plc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <LanguageStandard>stdcpp17</LanguageStandard>

@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{2a1fe157-7b9c-46a9-95be-5b8b353ead39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ogg">
+      <UniqueIdentifier>{ec33c366-a634-4a40-a725-c746789ea16a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="codec_test.cpp">
@@ -30,10 +33,40 @@
     <ClCompile Include="FrameTest.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="ogg\OggDec.cpp">
+      <Filter>src\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="ogg\OggDemux2Opus.cpp">
+      <Filter>src\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="ogg\OggDemux2Opus2.cpp">
+      <Filter>src\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="ogg\OggGeneral.cpp">
+      <Filter>src\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="ogg\OggBitstream.cpp">
+      <Filter>src\ogg</Filter>
+    </ClCompile>
+    <ClCompile Include="OggTest.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h">
       <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ogg\OggDemux2Opus.h">
+      <Filter>src\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="ogg\OggType.h">
+      <Filter>src\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="ogg\Ogg.h">
+      <Filter>src\ogg</Filter>
+    </ClInclude>
+    <ClInclude Include="ogg\OggCrcTable.h">
+      <Filter>src\ogg</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

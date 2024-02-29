@@ -80,7 +80,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;DISABLE_FLOAT_API;FIXED_POINT;HAVE_CONFIG_H;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)inc;$(ProjectDir)3th;$(ProjectDir)3th/src;$(ProjectDir)3th/win32;$(ProjectDir)3th/silk/fixed;$(ProjectDir)3th/silk;$(ProjectDir)3th/include;$(ProjectDir)3th/celt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)inc;$(ProjectDir)3th;$(ProjectDir)3th/src;$(ProjectDir)3th/win32;$(ProjectDir)3th/silk/fixed;$(ProjectDir)3th/silk;$(ProjectDir)3th/include;$(ProjectDir)3th/celt;../TestLIb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
@@ -212,6 +212,7 @@
     <ClInclude Include="3th\win32\version.h" />
     <ClInclude Include="inc\OpusDec.h" />
     <ClInclude Include="inc\OpusEnc.h" />
+    <ClInclude Include="OpusTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3th\celt\bands.c" />
@@ -363,6 +364,7 @@
     <ClCompile Include="3th\src\opus_projection_encoder.c" />
     <ClCompile Include="3th\src\repacketizer.c" />
     <ClCompile Include="3th\src\repacketizer_demo.c" />
+    <ClCompile Include="OpusTest.cpp" />
     <ClCompile Include="src\OpusDec.cpp" />
     <ClCompile Include="src\OpusEnc.cpp" />
   </ItemGroup>

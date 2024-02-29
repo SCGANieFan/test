@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="3th">
       <UniqueIdentifier>{97a3591f-22bb-46b2-9c8a-1f16c53e46c4}</UniqueIdentifier>
     </Filter>
@@ -42,6 +30,12 @@
     </Filter>
     <Filter Include="3th\silk\fixed\x86">
       <UniqueIdentifier>{a14971c2-1b1e-454e-a88b-262a43e20cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{6dc4a457-8a80-48a3-a2b4-3ac1c65b94e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="inc">
+      <UniqueIdentifier>{e3dc2265-2606-4951-b243-e9fcf71d1e22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -186,12 +180,6 @@
     <ClInclude Include="3th\src\tansig_table.h">
       <Filter>3th\src</Filter>
     </ClInclude>
-    <ClInclude Include="inc\OpusDec.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\OpusEnc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="3th\silk\x86\main_sse.h">
       <Filter>3th\silk\x86</Filter>
     </ClInclude>
@@ -266,6 +254,15 @@
     </ClInclude>
     <ClInclude Include="3th\silk\typedef.h">
       <Filter>3th\silk</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\OpusDec.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\OpusEnc.h">
+      <Filter>inc</Filter>
+    </ClInclude>
+    <ClInclude Include="OpusTest.h">
+      <Filter>inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -400,12 +397,6 @@
     </ClCompile>
     <ClCompile Include="3th\silk\fixed\x86\vector_ops_FIX_sse4_1.c">
       <Filter>3th\silk\fixed\x86</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpusDec.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OpusEnc.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="3th\silk\x86\NSQ_del_dec_sse4_1.c">
       <Filter>3th\silk\x86</Filter>
@@ -721,6 +712,15 @@
     </ClCompile>
     <ClCompile Include="3th\silk\VQ_WMat_EC.c">
       <Filter>3th\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpusEnc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpusDec.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="OpusTest.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
