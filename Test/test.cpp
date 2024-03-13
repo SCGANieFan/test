@@ -1,11 +1,14 @@
 #include"testInner.h"
-//extern const int a[2] = { 1,2 };
-const int a[2] = { 1,2 };
+#include"PlcTest.h"
+#include"OggTest.h"
+
 int main()
 {
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//testDemo();
+	//OggTest();
+	//PlcTest();
 	OggTest();
 	return 1;
 }

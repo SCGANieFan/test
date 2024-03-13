@@ -1,3 +1,4 @@
+#if 0
 #include"testInner.h"
 
 int32_t pcm24to32(int8_t* in, int32_t inLen, int32_t* inUsed, int8_t* out, int32_t* outLen)
@@ -63,3 +64,4 @@ bool TestBitPerSampleConvet()
 	return 0;
 }
 
+#endif

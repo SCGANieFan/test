@@ -18,7 +18,7 @@ static const unsigned long mask[] =
 static const unsigned int mask8B[] =
 { 0x00,0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff };
 
-
+#if 0
 void oggpack_writeinit(oggpack_buffer* b) {
     memset(b, 0, sizeof(*b));
     b->ptr = b->buffer = (unsigned char*)_ogg_malloc(BUFFER_INCREMENT);
@@ -29,7 +29,7 @@ void oggpack_writeinit(oggpack_buffer* b) {
 void oggpackB_writeinit(oggpack_buffer* b) {
     oggpack_writeinit(b);
 }
-
+#endif
 int oggpack_writecheck(oggpack_buffer* b) {
     if (!b->ptr || !b->storage)return -1;
     return 0;
@@ -62,7 +62,7 @@ void oggpackB_writetrunc(oggpack_buffer* b, long bits) {
 }
 
 /* Takes only up to 32 bits. */
-#if 1
+#if 0
 void oggpack_write(oggpack_buffer* b, unsigned long value, int bits) {
     if (bits < 0 || bits>32) goto err;
     if (b->endbyte >= b->storage - 4) {
@@ -105,7 +105,7 @@ err:
     oggpack_writeclear(b);
 }
 #endif
-#if 1
+#if 0
 /* Takes only up to 32 bits. */
 void oggpackB_write(oggpack_buffer* b, unsigned long value, int bits) {
     if (bits < 0 || bits>32) goto err;
@@ -150,6 +150,7 @@ err:
 }
 #endif
 
+#if 0
 void oggpack_writealign(oggpack_buffer* b) {
     int bits = 8 - b->endbit;
     if (bits < 8)
@@ -219,6 +220,7 @@ void oggpack_writecopy(oggpack_buffer* b, void* source, long bits) {
 void oggpackB_writecopy(oggpack_buffer* b, void* source, long bits) {
     oggpack_writecopy_helper(b, source, bits, oggpackB_write, 1);
 }
+#endif
 
 void oggpack_reset(oggpack_buffer* b) {
     if (!b->ptr)return;
@@ -230,15 +232,15 @@ void oggpack_reset(oggpack_buffer* b) {
 void oggpackB_reset(oggpack_buffer* b) {
     oggpack_reset(b);
 }
-
+#if 0
 void oggpack_writeclear(oggpack_buffer* b) {
     if (b->buffer)_ogg_free(b->buffer);
     memset(b, 0, sizeof(*b));
 }
-
 void oggpackB_writeclear(oggpack_buffer* b) {
     oggpack_writeclear(b);
 }
+#endif
 
 void oggpack_readinit(oggpack_buffer* b, unsigned char* buf, int bytes) {
     memset(b, 0, sizeof(*b));

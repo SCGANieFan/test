@@ -7,29 +7,8 @@
 /* Helpers for ogg_stream_encode; this keeps the structure and
    what's happening fairly clear */
 
-static int _os_body_expand(ogg_stream_state* os, long needed) {
-    if (os->body_storage - needed <= os->body_fill) {
-        long body_storage;
-        void* ret;
-        if (os->body_storage > LONG_MAX - needed) {
-            ogg_stream_clear(os);
-            return -1;
-        }
-        body_storage = os->body_storage + needed;
-        if (body_storage < LONG_MAX - 1024)body_storage += 1024;
-        ret = _ogg_realloc(os->body_data, body_storage * sizeof(*os->body_data));
-        if (!ret) {
-            ogg_stream_clear(os);
-            return -1;
-        }
-        os->body_storage = body_storage;
-        os->body_data = (unsigned char*)ret;
-    }
-    return 0;
-}
-
-static int _os_lacing_expand(ogg_stream_state* os, long needed) {
 #if 0
+static int _os_lacing_expand(ogg_stream_state* os, long needed) {
     if (os->lacing_storage - needed <= os->lacing_fill) {
         long lacing_storage;
         void* ret;
@@ -39,13 +18,13 @@ static int _os_lacing_expand(ogg_stream_state* os, long needed) {
         }
         lacing_storage = os->lacing_storage + needed;
         if (lacing_storage < LONG_MAX - 32)lacing_storage += 32;
-        ret = _ogg_realloc(os->lacing_vals, lacing_storage * sizeof(*os->lacing_vals));
+        ret = os->realloc(os->lacing_vals, lacing_storage * sizeof(*os->lacing_vals));
         if (!ret) {
             ogg_stream_clear(os);
             return -1;
         }
         os->lacing_vals = (int*)ret;
-        ret = _ogg_realloc(os->granule_vals, lacing_storage *
+        ret = os->realloc(os->granule_vals, lacing_storage *
             sizeof(*os->granule_vals));
         if (!ret) {
             ogg_stream_clear(os);
@@ -55,10 +34,8 @@ static int _os_lacing_expand(ogg_stream_state* os, long needed) {
         os->lacing_storage = lacing_storage;
     }
     return 0;
-#else
-    return 0;
-#endif
 }
+#endif
 
 
 
@@ -88,22 +65,12 @@ int ogg_sync_init(ogg_sync_state* oy) {
 }
 
 /* clear non-flat storage within */
-#if 0
-int ogg_sync_clear(ogg_sync_state* oy) {
-    if (oy) {
-        if (oy->data)_ogg_free(oy->data);
-        memset(oy, 0, sizeof(*oy));
-    }
-    return(0);
-}
-#else
 int ogg_sync_clear(ogg_sync_state* oy) {
     if (oy) { 
         memset(oy, 0, sizeof(*oy));
     }
     return(0);
 }
-#endif
 
 /* clear things to an initial state.  Good to call, eg, before seeking */
 int ogg_sync_reset(ogg_sync_state* oy) {
@@ -118,61 +85,19 @@ int ogg_sync_reset(ogg_sync_state* oy) {
 }
 
 
-int ogg_sync_destroy(ogg_sync_state* oy) {
-    if (oy) {
-        ogg_sync_clear(oy);
-        _ogg_free(oy);
-    }
-    return(0);
-}
-
 int ogg_sync_check(ogg_sync_state* oy) {
     if (oy->storage < 0) return -1;
     return 0;
 }
-char* ogg_sync_buffer(ogg_sync_state* oy, long size) {
-    if (ogg_sync_check(oy)) return NULL;
 
-    /* first, clear out any space that has been previously returned */
-    if (oy->returned) {
-        oy->fill -= oy->returned;
-        if (oy->fill > 0)
-            memmove(oy->data, oy->data + oy->returned, oy->fill);
-        oy->returned = 0;
-    }
-
-    if (size > oy->storage - oy->fill) {
-        /* We need to extend the internal buffer */
-        long newsize;
-        void* ret;
-
-        if (size > INT_MAX - 4096 - oy->fill) {
-            ogg_sync_clear(oy);
-            return NULL;
-        }
-        newsize = size + oy->fill + 4096; /* an extra page to be nice */
-        if (oy->data)
-            ret = _ogg_realloc(oy->data, newsize);
-        else
-            ret = _ogg_malloc(newsize);
-        if (!ret) {
-            ogg_sync_clear(oy);
-            return NULL;
-        }
-        oy->data = (unsigned char*)ret;
-        oy->storage = newsize;
-    }
-
-    /* expose a segment at least as large as requested at the fill mark */
-    return((char*)oy->data + oy->fill);
-}
-int ogg_sync_wrote(ogg_sync_state* oy, long bytes) {
-    if (ogg_sync_check(oy))return -1;
-    if (oy->fill + bytes > oy->storage)return -1;
-    oy->fill += bytes;
+int ogg_sync_wrote(ogg_sync_state* oy, unsigned char *data,long bytes) {
+    oy->data = data;
+    oy->fill = bytes;
+    oy->storage = oy->fill;
+    oy->returned = 0;
+    
     return(0);
 }
-
 /* sync the stream.  This is meant to be useful for finding page
    boundaries.
 
@@ -284,7 +209,6 @@ sync_fail:
 int ogg_sync_pageout(ogg_sync_state* oy, ogg_page* og) {
 
     if (ogg_sync_check(oy))return 0;
-
     /* all we need to do is verify a page at the head of the stream
        buffer.  If it doesn't verify, we look for the next potential
        frame */
@@ -312,6 +236,10 @@ int ogg_sync_pageout(ogg_sync_state* oy, ogg_page* og) {
 }
 
 int ogg_stream_pagein(ogg_stream_state* os, ogg_page* og) {
+    if (!os
+        || !og)
+        return -1;
+
     unsigned char* header = og->header;
     unsigned char* body = og->body;
     long           bodysize = og->body_len;
@@ -325,26 +253,14 @@ int ogg_stream_pagein(ogg_stream_state* os, ogg_page* og) {
     int serialno = ogg_page_serialno(og);
     long pageno = ogg_page_pageno(og);
     int segments = header[26];
-#if 0
-    if (ogg_stream_check(os)) return -1;
-#endif
+    //if (ogg_stream_check(os)) return -1;
     /* clean up 'returned data' */
     {
         long lr = os->lacing_returned;
         long br = os->body_returned;
 
         /* body data */
-        if (br) {
-            os->body_fill -= br;
-#if 0
-            if (os->body_fill)
-                memmove(os->body_data, os->body_data + br, os->body_fill);
-#else
-
-#endif
-            os->body_returned = 0;
-        }
-
+        os->body_returned = 0;
         if (lr) {
             /* segment table */
             if (os->lacing_fill - lr) {
@@ -362,10 +278,13 @@ int ogg_stream_pagein(ogg_stream_state* os, ogg_page* og) {
     /* check the serial number */
     if (serialno != os->serialno)return(-1);
     if (version > 0)return(-1);
-#if 0
-    if (_os_lacing_expand(os, segments + 1)) return -1;
+#if 1
+    int needed = segments + 1;
+    if (os->lacing_storage <= (os->lacing_fill + needed)) {
+        return -1;
+    }
 #else
-
+    if (_os_lacing_expand(os, segments + 1)) return -1;
 #endif
     /* are we in sequence? */
     if (pageno != os->pageno) {
@@ -403,13 +322,8 @@ int ogg_stream_pagein(ogg_stream_state* os, ogg_page* og) {
     }
 
     if (bodysize) {
-#if 0
-        if (_os_body_expand(os, bodysize)) return -1;
-        memcpy(os->body_data + os->body_fill, body, bodysize);
-        os->body_fill += bodysize;
-#else
-        os->body_fill += bodysize;
-#endif
+        os->body_data = body;
+        os->body_fill = bodysize;
     }
 
     {
@@ -485,16 +399,10 @@ static int _packetout(ogg_stream_state* os, ogg_packet* op, int adv) {
             if (val & 0x200)eos = 0x200;
             bytes += size;
         }
-        if (os->body_data_valid_len < bytes)
-            return 2;
         if (op) {
             op->e_o_s = eos;
             op->b_o_s = bos;
-#if 0
             op->packet = os->body_data + os->body_returned;
-#else
-            op->packet = os->body_data;
-#endif
             op->packetno = os->packetno;
             op->granulepos = os->granule_vals[ptr];
             op->bytes = bytes;
@@ -518,7 +426,4 @@ int ogg_stream_packetpeek(ogg_stream_state* os, ogg_packet* op) {
     if (ogg_stream_check(os)) return 0;
     return _packetout(os, op, 0);
 }
-void ogg_packet_clear(ogg_packet* op) {
-    _ogg_free(op->packet);
-    memset(op, 0, sizeof(*op));
-}
+

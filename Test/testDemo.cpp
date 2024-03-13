@@ -1,33 +1,33 @@
 #include"testInner.h"
 
+class MyClass
+{
+public:
+	MyClass();
+	~MyClass();
+
+private:
+	int _a = 1;
+private:
+	int func();
+};
+MyClass::MyClass()
+{
+	_a = 2;
+}
+
+MyClass::~MyClass()
+{
+}
+int MyClass::func()
+{
+	return _a;
+}
 
 void func()
 {
-	int i=0;
-	int j = 1;
-	int k = 1;
-	int e = 1;
-	while (1)
-	{
-		switch (i)
-		{
-		case 0:
-			j = 1;
-			break;
-		case 1:
-			if(k == 1)
-				break;
-			break;
-		case 2:
-			e = 1;
-			break;
-		default:
-			break;
-		}
-		i++;
-	}
-
-	printf("i:%d\n", i);
+	
+	printf("size:%d\n", sizeof(MyClass));
 }
 
 

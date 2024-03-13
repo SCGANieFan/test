@@ -77,59 +77,82 @@ int ogg_page_packets(const ogg_page* og) {
 
 /* init the encode/decode logical stream state */
 
-int ogg_stream_init(ogg_stream_state* os, int serialno) {
+int ogg_stream_init(ogg_stream_state* os, int serialno)
+{
+#if 0
     if (os) {
         memset(os, 0, sizeof(*os));
-
-#if 0
-        os->body_storage = 16 * 1024;
-        os->lacing_storage = 1024;
-        os->body_data = (unsigned char*)_ogg_malloc(os->body_storage * sizeof(*os->body_data));
-        os->lacing_vals = (int*)_ogg_malloc(os->lacing_storage * sizeof(*os->lacing_vals));
-        os->granule_vals = (ogg_int64_t*)_ogg_malloc(os->lacing_storage * sizeof(*os->granule_vals));
-        if (!os->body_data || !os->lacing_vals || !os->granule_vals) {
+        os->lacing_storage = 512;
+        os->malloc = malloc;
+        os->realloc= realloc;
+        os->free = free;
+        os->lacing_vals = (int*)os->malloc(os->lacing_storage * sizeof(*os->lacing_vals));
+        os->granule_vals = (ogg_int64_t*)os->malloc(os->lacing_storage * sizeof(*os->granule_vals));
+        if (!os->lacing_vals || !os->granule_vals) {
             ogg_stream_clear(os);
             return -1;
         }
-#else
-        os->body_storage = 16 * 1024;
-        os->lacing_storage = LACING_STORAGE;
-#endif
-
-
         os->serialno = serialno;
 
         return(0);
     }
     return(-1);
+#else
+    if (os) {
+        //memset(os, 0, sizeof(*os));
+        //os->lacing_storage = 512;
+        //os->malloc = malloc;
+        //os->realloc = realloc;
+        //os->free = free;
+        //os->lacing_vals = (int*)os->malloc(os->lacing_storage * sizeof(*os->lacing_vals));
+        //os->granule_vals = (ogg_int64_t*)os->malloc(os->lacing_storage * sizeof(*os->granule_vals));
+        ogg_stream_clear(os);
+        if (!os->lacing_vals || !os->granule_vals) {
+            ogg_stream_clear(os);
+            return -1;
+        }
+        os->serialno = serialno;
+
+        return(0);
+    }
+    return(-1);
+#endif
 }
 
 /* async/delayed error detection for the ogg_stream_state */
 int ogg_stream_check(ogg_stream_state* os) {
-    if (!os || !os->body_data) return -1;
+    if (!os) return -1;
     return 0;
 }
 
 /* _clear does not free os, only the non-flat storage within */
-#if 0
 int ogg_stream_clear(ogg_stream_state* os) {
+#if 0
     if (os) {
-        if (os->body_data)_ogg_free(os->body_data);
-        if (os->lacing_vals)_ogg_free(os->lacing_vals);
-        if (os->granule_vals)_ogg_free(os->granule_vals);
+        if (os->lacing_vals)os->free(os->lacing_vals);
+        if (os->granule_vals)os->free(os->granule_vals);
 
         memset(os, 0, sizeof(*os));
     }
     return(0);
-}
 #else
-int ogg_stream_clear(ogg_stream_state* os) {
+
     if (os) {
+
+        int* lacing_vals = os->lacing_vals;
+        ogg_int64_t* granule_vals = os->granule_vals;
+        long lacing_storage = os->lacing_storage;
+
         memset(os, 0, sizeof(*os));
+
+        os->lacing_vals= lacing_vals;
+        os->granule_vals= granule_vals;
+        os->lacing_storage= lacing_storage;
     }
     return(0);
-}
+
 #endif
+}
 int ogg_stream_reset(ogg_stream_state* os) {
     if (ogg_stream_check(os)) return -1;
 
@@ -158,18 +181,19 @@ int ogg_stream_reset_serialno(ogg_stream_state* os, int serialno) {
     return(0);
 }
 
-
+#if 0
 int ogg_stream_destroy(ogg_stream_state* os) {
     if (os) {
         ogg_stream_clear(os);
-        _ogg_free(os);
+        os->free(os);
     }
     return(0);
 }
-
+#endif
 /* Helpers for ogg_stream_encode; this keeps the structure and
    what's happening fairly clear */
 
+#if 0
 static int _os_body_expand(ogg_stream_state* os, long needed) {
     if (os->body_storage - needed <= os->body_fill) {
         long body_storage;
@@ -180,7 +204,7 @@ static int _os_body_expand(ogg_stream_state* os, long needed) {
         }
         body_storage = os->body_storage + needed;
         if (body_storage < LONG_MAX - 1024)body_storage += 1024;
-        ret = _ogg_realloc(os->body_data, body_storage * sizeof(*os->body_data));
+        ret = os->realloc(os->body_data, body_storage * sizeof(*os->body_data));
         if (!ret) {
             ogg_stream_clear(os);
             return -1;
@@ -190,9 +214,7 @@ static int _os_body_expand(ogg_stream_state* os, long needed) {
     }
     return 0;
 }
-
 static int _os_lacing_expand(ogg_stream_state* os, long needed) {
-#if 0
     if (os->lacing_storage - needed <= os->lacing_fill) {
         long lacing_storage;
         void* ret;
@@ -202,13 +224,13 @@ static int _os_lacing_expand(ogg_stream_state* os, long needed) {
         }
         lacing_storage = os->lacing_storage + needed;
         if (lacing_storage < LONG_MAX - 32)lacing_storage += 32;
-        ret = _ogg_realloc(os->lacing_vals, lacing_storage * sizeof(*os->lacing_vals));
+        ret = os->realloc(os->lacing_vals, lacing_storage * sizeof(*os->lacing_vals));
         if (!ret) {
             ogg_stream_clear(os);
             return -1;
         }
         os->lacing_vals = (int*)ret;
-        ret = _ogg_realloc(os->granule_vals, lacing_storage *
+        ret = os->realloc(os->granule_vals, lacing_storage *
             sizeof(*os->granule_vals));
         if (!ret) {
             ogg_stream_clear(os);
@@ -218,11 +240,8 @@ static int _os_lacing_expand(ogg_stream_state* os, long needed) {
         os->lacing_storage = lacing_storage;
     }
     return 0;
-#else
-    return 0;
-#endif
 }
-
+#endif
 /* checksum the page */
 /* Direct table CRC; note that this will be faster in the future if we
    perform the checksum simultaneously with other copies */
@@ -266,6 +285,7 @@ void ogg_page_checksum_set(ogg_page* og) {
 }
 
 /* submit data to the internal buffer of the framing engine */
+#if 0
 int ogg_stream_iovecin(ogg_stream_state* os, ogg_iovec_t* iov, int count,
     long e_o_s, ogg_int64_t granulepos) {
 
@@ -328,13 +348,13 @@ int ogg_stream_iovecin(ogg_stream_state* os, ogg_iovec_t* iov, int count,
 
     return(0);
 }
-
 int ogg_stream_packetin(ogg_stream_state* os, ogg_packet* op) {
     ogg_iovec_t iov;
     iov.iov_base = op->packet;
     iov.iov_len = op->bytes;
     return ogg_stream_iovecin(os, &iov, 1, op->e_o_s, op->granulepos);
 }
+#endif
 
 /* Conditionally flush a page; force==0 will only flush nominal-size
    pages, force==1 forces us to flush a page regardless of page size

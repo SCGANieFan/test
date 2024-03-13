@@ -20,6 +20,7 @@ typedef struct
 typedef int32_t MMTestRet;
 typedef void* CbHdInit(void* param, bool* isSuccess);
 typedef MMTestRet CbRun(void* hd, Frame* ifrm, Frame* ofrm);
+typedef MMTestRet CbEnd(void* hd);
 
 enum MMTestMode
 {
@@ -27,6 +28,7 @@ enum MMTestMode
 	TestModeImage,
 	TestModeVedio,
 	TestModeMultimedia,
+	TestModeDemux,
 	TestModeMax,
 };
 
@@ -52,9 +54,14 @@ typedef struct
 		struct {
 			uint8_t reserve[1024];
 		}multimedia;
+
+		struct {
+			uint8_t reserve[1024];
+		}demux;
 	}open;
 	CbHdInit* HdInit;
 	CbRun* Run;
+	CbEnd* End;
 }MMTestParam;
 
 MMTestRet MultiMediaTest(const char* fileInName, MMTestParam* testParam);

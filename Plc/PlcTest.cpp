@@ -47,7 +47,7 @@ MMTestRet cbRun(void* hd, Frame *ifrm, Frame* ofrm)
 
 	PlcRet ret = PlcRun(hd, iBuff, inByte, &inUsed, oBuff, &outByte, isLost);
 
-	//printf("[%d] inLen:%d,outByte:%d\n", ii++, readNum,outByte);
+	printf("[%d] inLen:%d,outByte:%d\n", frames, inByte,outByte);
 	if (ret != PLC_RET_SUCCESS)
 	{
 		printf("plc error\n");

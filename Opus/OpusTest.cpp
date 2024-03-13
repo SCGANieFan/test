@@ -6,6 +6,7 @@
 #include"opus.h"
 #include"MMTest.h"
 
+#if 0
 
 void* cbHdInit(void* param0, bool* isSuccess)
 {
@@ -75,7 +76,6 @@ MMTestRet cbRun(void* hd, Frame* ifrm, Frame* ofrm)
 typedef struct {
 
 }OpusParam;
-
 void PlcTest()
 {
 	MMTestParam testParam = { 0 };
@@ -100,5 +100,5 @@ void PlcTest()
 	testParam.param = (void*)(&param);
 	MultiMediaTest(SOURCE_PATH FILE_NAME, &testParam);
 }
-
+#endif
 

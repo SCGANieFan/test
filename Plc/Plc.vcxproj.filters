@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{682eb4ac-2d6f-4548-8da9-dff5810dbbab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="inc">
-      <UniqueIdentifier>{7e1ae075-4785-4118-9035-0924c2d0c990}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3th">
       <UniqueIdentifier>{3d2a9f6c-910a-42ac-acf0-26c481093d7d}</UniqueIdentifier>
     </Filter>
@@ -15,20 +9,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlcTest.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\3th\audio\process\plc\plc.c">
       <Filter>3th</Filter>
     </ClCompile>
     <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.c">
       <Filter>3th\musicPlc</Filter>
     </ClCompile>
+    <ClCompile Include="PlcTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlcTest.h">
-      <Filter>inc</Filter>
-    </ClInclude>
     <ClInclude Include="..\3th\audio\process\plc\plc.h">
       <Filter>3th</Filter>
     </ClInclude>
@@ -38,5 +27,6 @@
     <ClInclude Include="..\3th\audio\process\plc\3th\musicPlc.h">
       <Filter>3th\musicPlc</Filter>
     </ClInclude>
+    <ClInclude Include="PlcTest.h" />
   </ItemGroup>
 </Project>

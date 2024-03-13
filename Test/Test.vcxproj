@@ -22,22 +22,12 @@
     <ClCompile Include="BitPerSampleConvert.cpp" />
     <ClCompile Include="codec_test.cpp" />
     <ClCompile Include="FrameTest.cpp" />
-    <ClCompile Include="OggTest.cpp" />
-    <ClCompile Include="ogg\OggBitstream.cpp" />
-    <ClCompile Include="ogg\OggDec.cpp" />
-    <ClCompile Include="ogg\OggDemux2Opus.cpp" />
-    <ClCompile Include="ogg\OggDemux2Opus2.cpp" />
-    <ClCompile Include="ogg\OggGeneral.cpp" />
     <ClCompile Include="StackTest.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="testDemo.cpp" />
     <ClCompile Include="testInner.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ogg\Ogg.h" />
-    <ClInclude Include="ogg\OggCrcTable.h" />
-    <ClInclude Include="ogg\OggDemux2Opus.h" />
-    <ClInclude Include="ogg\OggType.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -101,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)M2F\api;./ogg;../Plc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)M2F\api;./ogg;../Plc;../Ogg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -110,7 +100,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Plc.lib;TestLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ogg.lib;Plc.lib;TestLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

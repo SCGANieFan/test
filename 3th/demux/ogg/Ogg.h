@@ -51,8 +51,8 @@ extern int      ogg_sync_reset(ogg_sync_state* oy);
 extern int      ogg_sync_destroy(ogg_sync_state* oy);
 extern int      ogg_sync_check(ogg_sync_state* oy);
 
-extern char* ogg_sync_buffer(ogg_sync_state* oy, long size);
-extern int      ogg_sync_wrote(ogg_sync_state* oy, long bytes);
+extern char*	ogg_sync_buffer(ogg_sync_state* oy, long size);
+extern int      ogg_sync_wrote(ogg_sync_state* oy, unsigned char* data, long bytes);
 extern long     ogg_sync_pageseek(ogg_sync_state* oy, ogg_page* og);
 extern int      ogg_sync_pageout(ogg_sync_state* oy, ogg_page* og);
 extern int      ogg_stream_pagein(ogg_stream_state* os, ogg_page* og);
@@ -61,7 +61,7 @@ extern int      ogg_stream_packetpeek(ogg_stream_state* os, ogg_packet* op);
 
 /* Ogg BITSTREAM PRIMITIVES: general ***************************/
 
-extern int      ogg_stream_init(ogg_stream_state* os, int serialno);
+extern int		ogg_stream_init(ogg_stream_state* os, int serialno);
 extern int      ogg_stream_clear(ogg_stream_state* os);
 extern int      ogg_stream_reset(ogg_stream_state* os);
 extern int      ogg_stream_reset_serialno(ogg_stream_state* os, int serialno);
