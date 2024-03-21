@@ -8,8 +8,8 @@ int main()
 	//StackTest();
 	//testDemo();
 	//OggTest();
-	//PlcTest();
-	OggTest();
+	PlcTest();
+	//OggTest();
 	return 1;
 }
 

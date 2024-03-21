@@ -475,6 +475,7 @@
       <AdditionalIncludeDirectories>../3th/audio/process/plc;../3th/audio/process/plc/3th;../TestLIb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -519,14 +520,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.c" />
-    <ClCompile Include="..\3th\audio\process\plc\plc.c" />
+    <ClCompile Include="..\3th\audio\process\plc\3th\AudioSample.cpp" />
+    <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.cpp" />
+    <ClCompile Include="..\3th\audio\process\plc\plc.cpp" />
     <ClCompile Include="PlcTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3th\audio\process\plc\3th\AudioSample.h" />
     <ClInclude Include="..\3th\audio\process\plc\3th\musicPlc.h" />
     <ClInclude Include="..\3th\audio\process\plc\plc.h" />
-    <ClInclude Include="..\3th\audio\process\plc\plcCommon.h" />
     <ClInclude Include="PlcTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

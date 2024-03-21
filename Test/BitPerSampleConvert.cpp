@@ -1,4 +1,4 @@
-#if 0
+#if 1
 #include"testInner.h"
 
 int32_t pcm24to32(int8_t* in, int32_t inLen, int32_t* inUsed, int8_t* out, int32_t* outLen)
@@ -10,10 +10,17 @@ int32_t pcm24to32(int8_t* in, int32_t inLen, int32_t* inUsed, int8_t* out, int32
 	int32_t* pOut = (int32_t*)out;
 	while (inLen > 2)
 	{
+#if 0
 		int32_t outTemp = (((uint32_t)pIn[0]
 			+ (((uint32_t)pIn[1]) << 8)
 			+ (((uint32_t)pIn[2]) << 16)) << 8);
 		*pOut = outTemp >> 8;
+#else
+		int32_t outTemp = (((uint32_t)pIn[0]
+			+ (((uint32_t)pIn[1]) << 8)
+			+ (((uint32_t)pIn[2]) << 16)));
+		*pOut = outTemp;
+#endif
 		pIn += 3;
 		*inUsed += 3;
 		inLen -= 3;
@@ -32,9 +39,11 @@ int32_t pcm24to32(int8_t* in, int32_t inLen, int32_t* inUsed, int8_t* out, int32
 
 #define TEST_PATH "./"
 //#define TEST_FILE "mbz_48k2h24bit.pcm"
-#define TEST_FILE "stSection_16k1ch24bit.pcm"
+//#define TEST_FILE "stSection_16k1ch24bit.pcm"
+//#define TEST_FILE "1k_test.48k2ch24b.pcm"
+#define TEST_FILE "sin1k_48k1ch24bS32.pcm"
 #define TEST_FILE_SRC TEST_PATH TEST_FILE
-#define TEST_FILE_DST TEST_FILE_SRC ".32bit.pcm"
+#define TEST_FILE_DST TEST_FILE_SRC ".S32bitAlignHigh.pcm"
 
 bool TestBitPerSampleConvet()
 {

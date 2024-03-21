@@ -9,24 +9,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\3th\audio\process\plc\plc.c">
+    <ClCompile Include="..\3th\audio\process\plc\plc.cpp">
       <Filter>3th</Filter>
     </ClCompile>
-    <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.c">
+    <ClCompile Include="..\3th\audio\process\plc\3th\musicPlc.cpp">
       <Filter>3th\musicPlc</Filter>
     </ClCompile>
     <ClCompile Include="PlcTest.cpp" />
+    <ClCompile Include="..\3th\audio\process\plc\3th\AudioSample.cpp">
+      <Filter>3th\musicPlc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3th\audio\process\plc\plc.h">
-      <Filter>3th</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3th\audio\process\plc\plcCommon.h">
       <Filter>3th</Filter>
     </ClInclude>
     <ClInclude Include="..\3th\audio\process\plc\3th\musicPlc.h">
       <Filter>3th\musicPlc</Filter>
     </ClInclude>
     <ClInclude Include="PlcTest.h" />
+    <ClInclude Include="..\3th\audio\process\plc\3th\AudioSample.h">
+      <Filter>3th\musicPlc</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

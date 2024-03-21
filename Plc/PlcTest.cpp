@@ -60,9 +60,15 @@ MMTestRet cbRun(void* hd, Frame *ifrm, Frame* ofrm)
 	return MMRet_SUCCESS;
 }
 
+MMTestRet cbEnd(void* hd)
+{
+	free(hd);
+	return MMRet_SUCCESS;
+}
 
 #define SOURCE_PATH "../../source/audio/plc/"
-#define FILE_NAME "chirp_sin_16k1ch.wav"
+//#define FILE_NAME "chirp_sin_16k1ch.wav"
+#define FILE_NAME "sin4k_16k1ch.wav"
 #define FRAME_LEN_MS 20
 #define SAMPLE_RATE 16000
 #define CHANNELS 1
@@ -80,15 +86,17 @@ void PlcTest()
 
 	testParam.HdInit = cbHdInit;
 	testParam.Run = cbRun;
+	testParam.End = cbEnd;
 
 	PlcParam param = { 0 };
 	param.fsHz = SAMPLE_RATE;
 	param.channels = CHANNELS;
-	param.targetChannels = param.channels;
-	param.targetChannel = param.channels;
-	param.sampleBits = sizeof(int16_t) << 3;
 	param.frameSamples = FRAME_LEN;
+	param.sampleFormat.alignMode = PlcSampleAlignMode_e::PlcSampleHighByteAlign;
+	param.sampleFormat.storedBits= sizeof(int16_t) << 3;
+	param.sampleFormat.validBits= sizeof(int16_t) << 3;
 	param.mode = PlcMode_e::PlcModeMusicPlc;
+
 	param.MusicPlcParam.overlapMs = OVERLAP_MS;
 	param.MusicPlcParam.decayTimeMs = DECAY_TIME_MS;
 	testParam.param = (void*)(&param);

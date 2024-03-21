@@ -6,10 +6,10 @@
 #define MMTestPrint(fmt,...)		printf("%s [%d] " fmt "\n", __func__, __LINE__, ##__VA_ARGS__)
 void PrintErr(MMTestRet ret)
 {
+	if (ret == MMRet_SUCCESS)
+		return;
 	switch (ret)
 	{
-	case MMRet_SUCCESS:
-		break;
 	case MMRet_FAIL:
 		MMTestPrint("fail");
 		break;
@@ -25,6 +25,95 @@ void PrintErr(MMTestRet ret)
 	default:
 		break;
 	}
+}
+
+
+MMTestRet Running(MMTestParam* testParam, const char* fileInName, const char* fileOutName, int32_t readByteOnce, int32_t outByteOnce)
+{
+	MMTestRet ret = MMRet_SUCCESS;
+	FILE* fRead = NULL;
+	//char fileOutName[512];
+	FILE* fWrite = NULL;
+	int32_t frameByte = 0;
+	Frame ifrm = { 0 };
+	Frame ofrm = { 0 };
+	void* hd = NULL;
+
+	//check
+	if (!fileInName
+		||!fileOutName
+		|| !testParam) {
+		ret = MMRet_INPUT_ERR;
+		goto exitAudio;
+	}
+
+	//in file
+	fRead = fopen(fileInName, "rb+");
+	if (!fRead) {
+		ret = MMRet_FILE_OPEN_ERR;
+		goto exitAudio;
+	}
+
+	//out file	
+	//sprintf(fileOutName, "%s.pcm", fileInName);
+	fWrite = fopen(fileOutName, "wb+");
+	if (!fWrite) {
+		ret = MMRet_FILE_OPEN_ERR;
+		goto exitAudio;
+	}
+
+	frameByte = testParam->open.audio.channels * testParam->open.audio.frameSamples * testParam->open.audio.sampleWidth;
+
+
+	ifrm.max = frameByte;
+	ifrm.buff = malloc(ifrm.max);
+	if (!ifrm.buff) {
+		ret = MMRet_MEMORY_ERR;
+		goto exitAudio;
+	}
+
+
+	ofrm.max = frameByte;
+	ofrm.buff = malloc(ofrm.max);
+	if (!ofrm.buff) {
+		ret = MMRet_MEMORY_ERR;
+		goto exitAudio;
+	}
+	bool initRet;
+	hd = testParam->HdInit(testParam->param, &initRet);
+	if (!initRet)
+	{
+		ret = MMRet_FAIL;
+		goto exitAudio;
+	}
+	//int32_t outLen;
+	int32_t readByte;
+	while (1)
+	{
+		readByte = fread((uint8_t*)ifrm.buff + ifrm.offset, 1, frameByte, fRead);
+		if (readByte < frameByte)
+			break;
+		ifrm.size += readByte;
+
+		MMTestRet runRet = testParam->Run(hd, &ifrm, &ofrm);
+		if (runRet != MMRet_SUCCESS) {
+			ret = runRet;
+			goto exitAudio;
+		}
+		if (ifrm.offset) {
+			memmove(ifrm.buff, (uint8_t*)ifrm.buff + ifrm.offset, ifrm.size);
+			ifrm.offset = 0;
+		}
+		fwrite((uint8_t*)ofrm.buff + ofrm.offset, 1, ofrm.size, fWrite);
+		ofrm.size = 0;
+		ofrm.offset = 0;
+	}
+exitAudio:
+	if (ret != MMRet_INPUT_ERR)
+		testParam->End(hd);
+	PrintErr(ret);
+	return ret;
+
 }
 
 
@@ -108,6 +197,8 @@ MMTestRet AudioTest(const char* fileInName, MMTestParam* testParam)
 		ofrm.offset = 0;
 	}
 exitAudio:
+	if(ret!= MMRet_INPUT_ERR)
+		testParam->End(hd);
 	PrintErr(ret);
 	return ret;
 }
@@ -192,7 +283,8 @@ MMTestRet DemuxTest(const char* fileInName, MMTestParam* testParam)
 		ofrm.offset = 0;
 	}
 exitAudio:
-	testParam->End(hd);
+	if (ret != MMRet_INPUT_ERR)
+		testParam->End(hd);
 	PrintErr(ret);
 	return ret;
 }

@@ -76,7 +76,7 @@ MMTestRet cbRun(void* hd, Frame* ifrm, Frame* ofrm)
 typedef struct {
 
 }OpusParam;
-void PlcTest()
+void OpusTest()
 {
 	MMTestParam testParam = { 0 };
 	testParam.mode = MMTestMode::TestModeAudio;
