@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="OggTest.cpp" />
-    <ClCompile Include="..\3th\demux\ogg\OggBitstream.cpp">
+    <ClCompile Include="..\_third_part\algorithm\demux\ogg\OggDec.cpp">
       <Filter>3th</Filter>
     </ClCompile>
-    <ClCompile Include="..\3th\demux\ogg\OggDec.cpp">
+    <ClCompile Include="..\_third_part\algorithm\demux\ogg\OggDemux2Opus.cpp">
       <Filter>3th</Filter>
     </ClCompile>
-    <ClCompile Include="..\3th\demux\ogg\OggDemux2Opus.cpp">
+    <ClCompile Include="..\_third_part\algorithm\demux\ogg\OggGeneral.cpp">
       <Filter>3th</Filter>
     </ClCompile>
-    <ClCompile Include="..\3th\demux\ogg\OggGeneral.cpp">
+    <ClCompile Include="..\_third_part\algorithm\demux\ogg\Buffer.cpp">
       <Filter>3th</Filter>
     </ClCompile>
-    <ClCompile Include="..\3th\demux\ogg\Buffer.cpp">
+    <ClCompile Include="..\_third_part\algorithm\demux\ogg\OggBitstream.cpp">
       <Filter>3th</Filter>
     </ClCompile>
   </ItemGroup>
@@ -25,19 +25,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OggTest.h" />
-    <ClInclude Include="..\3th\demux\ogg\Ogg.h">
+    <ClInclude Include="..\_third_part\algorithm\demux\ogg\OggDemux2Opus.h">
       <Filter>3th</Filter>
     </ClInclude>
-    <ClInclude Include="..\3th\demux\ogg\OggCrcTable.h">
+    <ClInclude Include="..\_third_part\algorithm\demux\ogg\OggType.h">
       <Filter>3th</Filter>
     </ClInclude>
-    <ClInclude Include="..\3th\demux\ogg\OggDemux2Opus.h">
+    <ClInclude Include="..\_third_part\algorithm\demux\ogg\Buffer.h">
       <Filter>3th</Filter>
     </ClInclude>
-    <ClInclude Include="..\3th\demux\ogg\OggType.h">
+    <ClInclude Include="..\_third_part\algorithm\demux\ogg\Ogg.h">
       <Filter>3th</Filter>
     </ClInclude>
-    <ClInclude Include="..\3th\demux\ogg\Buffer.h">
+    <ClInclude Include="..\_third_part\algorithm\demux\ogg\OggCrcTable.h">
       <Filter>3th</Filter>
     </ClInclude>
   </ItemGroup>

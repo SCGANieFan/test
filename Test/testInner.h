@@ -23,3 +23,5 @@ bool FrameTest();
 
 
 //bool OggTest();
+
+void FuncRun();
