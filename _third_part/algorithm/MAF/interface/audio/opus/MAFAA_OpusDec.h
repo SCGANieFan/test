@@ -1,10 +1,18 @@
 #pragma once
 #include "MAFA_Audio.h"
-class MAFAA_MusicPlc24L:public MAFA_Audio
+class MAFAA_OpusDec:public MAFA_Audio
 {
+	typedef struct
+	{
+		int32_t fsHz;
+		int16_t channels;
+		int32_t width;
+		int32_t frameSamples;
+	}AudioInfo;
+
 public:
-	MAFAA_MusicPlc24L();
-	~MAFAA_MusicPlc24L();
+	MAFAA_OpusDec();
+	~MAFAA_OpusDec();
 public:
 	virtual int32_t Init(void* param) override;
 	virtual int32_t Deinit() override;
@@ -12,10 +20,5 @@ public:
 private:
 	void *_hd;
 	int32_t _hdSize;
-
-	int32_t _fsHz;
-	int16_t _channels;
-	int16_t _frameSamples;
-
-
+	AudioInfo _audioInfo;
 };

@@ -32,6 +32,11 @@ int32_t MAFAA_MusicPlc24L::Init(void* param)
 	sampleParam.channels = musicPlcParam->channels;
 	sampleParam.frameSamples = musicPlcParam->frameSamples;
 
+	_fsHz = musicPlcParam->fsHz;
+	_channels = musicPlcParam->channels;
+	_frameSamples = musicPlcParam->frameSamples;
+
+
 	_hdSize = MusicPlc24bLGetStateSize(
 		musicPlcParam->overlapMs,
 		&sampleParam);
@@ -97,6 +102,17 @@ int32_t MAFAA_MusicPlc24L::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
 	{
 		return -1;
 	}
+
+
+#if 1	
+	uint32_t* ptr = (uint32_t*)frameOut->buff + frameOut->off + frameOut->size;
+	for (int32_t i = 0; i < outByte/sizeof(uint32_t); i++)
+	{
+		ptr[i] = ptr[i] << 8;
+	}
+#endif
+
+
 	frameIn->size -= inUsed;
 	frameIn->off += inUsed;
 	frameOut->size += outByte;

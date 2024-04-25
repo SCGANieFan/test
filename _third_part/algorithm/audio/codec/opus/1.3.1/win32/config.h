@@ -35,12 +35,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #define OPUS_BUILD            1
 
+#if 0
 #if defined(_M_IX86) || defined(_M_X64)
 /* Can always compile SSE intrinsics (no special compiler flags necessary) */
 #define OPUS_X86_MAY_HAVE_SSE
 #define OPUS_X86_MAY_HAVE_SSE2
 #define OPUS_X86_MAY_HAVE_SSE4_1
-
 /* Presume SSE functions, if compiled to use SSE/SSE2/AVX (note that AMD64 implies SSE2, and AVX
    implies SSE4.1) */
 #if defined(_M_X64) || (defined(_M_IX86_FP) && (_M_IX86_FP >= 1)) || defined(__AVX__)
@@ -57,6 +57,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define OPUS_HAVE_RTCD 1
 #endif
 
+#endif
 #endif
 
 #include "version.h"
