@@ -3,14 +3,14 @@
 
 #include "MAFAA_MusicPlc32.h"
 #include "MAF.Objects.h"
-#include "AA_MusicPlc.h"
+#include "MAF.Interface.MusicPlc.h"
 
 
 #include"musicPlc32b.h"
 
 void maf_algorithm_audio_music_plc32_register()
 {
-	MAF_Object::Registe<MAFAA_MusicPlc32>("music_plc32");
+	MAF_Object::Registe<MAFAA_MusicPlc32>("proc-mplc32");
 }
 
 MAFAA_MusicPlc32::MAFAA_MusicPlc32()

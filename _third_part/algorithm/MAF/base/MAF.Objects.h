@@ -48,6 +48,5 @@ private:
 private:
 	static MAF_Object object;
 	Item _items[10];
-
 };
 

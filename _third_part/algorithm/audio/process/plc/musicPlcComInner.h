@@ -46,6 +46,8 @@ typedef struct
 	int32_t matchSamples;
 	int32_t seekSamples;
 	bool is24bL;
+	bool quickDeal;
+	uint8_t reserve[4];
 }MusicPlcState;
 
 

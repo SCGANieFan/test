@@ -1,6 +1,5 @@
 
-#include<string.h>
-
+#include"AudioSamplesCom.h"
 #include"AudioSamples.h"
 
 
@@ -91,7 +90,7 @@ bool AudioSamples::Move(int32_t moveSample)
 		uint8_t* src = _buff + moveSample * _width * _channels;
 
 		if (copyByte > 0) {
-			memmove(dst, src, copyByte);
+			AS_MCM_MOVE(dst, src, copyByte);
 		}
 
 		if (moveSample > _startSamples)
@@ -126,7 +125,7 @@ bool AudioSamples::Append(uint8_t* src, int32_t srcSample)
 	//check
 	uint8_t* pBuf = _buff + (_startSamples + _validSamples) * _width * _channels;
 	int32_t copySize = srcSample * _width * _channels;
-	memcpy(pBuf, src, copySize);
+	AS_MCM_CPY(pBuf, src, copySize);
 	_validSamples += srcSample;
 	return true;
 }

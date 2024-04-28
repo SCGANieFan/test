@@ -4,7 +4,7 @@
 #include<new>
 
 #include"AudioSamples32.h"
-#include"musicPlc16b.h"
+#include"musicPlc32b.h"
 #include"musicPlcComInner.h"
 
 EXTERNC int32_t MusicPlc32bGetStateSize(int32_t overlapMs, MusicPlcSampleParam* sampleParam)
@@ -44,7 +44,7 @@ EXTERNC int32_t MusicPlc32bStateInit(void* pMusicPlcStateIn, int32_t overlapMs, 
 	MusicPlcState* pPlc = (MusicPlcState*)pMusicPlcStateIn;
 	int32_t overlapInSamples = overlapMs * sampleParam->fsHz / 1000;
 
-	memset(pPlc, 0, MusicPlc16bGetStateSize(overlapMs, sampleParam));
+	memset(pPlc, 0, MusicPlc32bGetStateSize(overlapMs, sampleParam));
 
 	pPlc->inHistory = new((uint8_t*)pPlc + sizeof(MusicPlcState)) AudioSamples32();
 	pPlc->infuture = new((uint8_t*)pPlc->inHistory + sizeof(AudioSamples32)) AudioSamples32();

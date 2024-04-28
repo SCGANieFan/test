@@ -57,9 +57,12 @@ STATIC int32_t MusicPlcStateInitInner(void* pMusicPlcStateIn, int32_t overlapInS
 
 	pPlc->frameSamples = sampleParam->frameSamples;
 	pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->fsHz * MUSIC_PLC_MIN_FRAME_MS / 1000);
+	
+	uint8_t* ptr = (uint8_t*)(pPlc->muteFactor) + ((uint8_t*)pPlc->muteFactor - (uint8_t*)pPlc->fillSignal);
+	ptr = (uint8_t*)((((uint32_t)ptr + 4) >> 2) << 2);
 
 	pPlc->inHistory->Init(
-		(uint8_t*)(pPlc->muteFactor) + ((uint8_t*)pPlc->muteFactor - (uint8_t*)pPlc->fillSignal),
+		ptr,
 		pPlc->channels,
 		MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner));
 
@@ -100,7 +103,7 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, int32_t*
 		{
 			if(pMusicPlc->is24bL)
 				pMusicPlc->inHistory->LeftShift(8, false);
-#if 1
+#if 0
 			int32_t bestLag = pMusicPlc->inHistory->WaveFormMatch(
 				&(*pMusicPlc->inHistory)[pMusicPlc->inHistory->GetSamples() - pMusicPlc->overlapInSamples],
 				pMusicPlc->seekSamples,
@@ -165,7 +168,10 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, int32_t*
 		else
 		{
 			//infuture
-			pMusicPlc->infuture->Append(&(*pIn)[0], pMusicPlc->frameSamples);
+			if ((pMusicPlc->decaySamplesNow - 1) < 0)
+				pMusicPlc->quickDeal = true;
+			else
+				pMusicPlc->infuture->Append(&(*pIn)[0], pMusicPlc->frameSamples);
 		}
 		//muteFactor
 		if ((pMusicPlc->decaySamplesNow - 1) < 0)
@@ -199,17 +205,32 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, int32_t*
 	//out
 	if (outLen)
 		*outLen = pMusicPlc->frameSamples * pMusicPlc->channels * pMusicPlc->width;
-	pOut->Append(&(*pMusicPlc->inHistory)[pMusicPlc->inHistory->GetSamples() - pMusicPlc->overlapInSamples], pMusicPlc->overlapInSamples);
-	pOut->Append(&(*pMusicPlc->infuture)[0], pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
+	if (pMusicPlc->quickDeal)
+	{
+		pOut->Append(&(*pMusicPlc->inHistory)[pMusicPlc->inHistory->GetSamples() - pMusicPlc->overlapInSamples], pMusicPlc->overlapInSamples);
+		pOut->Append(&(*pIn)[0], pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 
-	//shift
-	pMusicPlc->inHistory->Move(-pMusicPlc->frameSamples);
-	pMusicPlc->inHistory->Append(&(*pMusicPlc->infuture)[0], pMusicPlc->frameSamples);
-	pMusicPlc->inHistory->used(pMusicPlc->frameSamples);
-	pMusicPlc->infuture->Clear();
+		//shift
+		pMusicPlc->inHistory->Move(-pMusicPlc->frameSamples);
+		pMusicPlc->inHistory->Append(&(*pIn)[0], pMusicPlc->frameSamples);
+		pMusicPlc->inHistory->used(pMusicPlc->frameSamples);
+		pMusicPlc->quickDeal = false;
+		pMusicPlc->muteFactor->Clear();
+	}
+	else
+	{
+		pOut->Append(&(*pMusicPlc->inHistory)[pMusicPlc->inHistory->GetSamples() - pMusicPlc->overlapInSamples], pMusicPlc->overlapInSamples);
+		pOut->Append(&(*pMusicPlc->infuture)[0], pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 
-	//
-	pMusicPlc->muteFactor->Clear();
+		//shift
+		pMusicPlc->inHistory->Move(-pMusicPlc->frameSamples);
+		pMusicPlc->inHistory->Append(&(*pMusicPlc->infuture)[0], pMusicPlc->frameSamples);
+		pMusicPlc->inHistory->used(pMusicPlc->frameSamples);
+		pMusicPlc->infuture->Clear();
+
+		//
+		pMusicPlc->muteFactor->Clear();
+	}
 	return MUSIC_PLC_RET_SUCCESS;
 }
 

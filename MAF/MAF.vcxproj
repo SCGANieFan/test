@@ -67,21 +67,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\audio\MAFA_Audio.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\AudioAlgorithm.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Memory.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Printf.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\audio\AudioAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\audio\MAFA_Audio.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\audio\MAFA_AudioFrame.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\AudioAlgorithm.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Objects.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Memory.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Printf.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\audio\AudioAlgorithm.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -421,9 +420,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../_third_part/algorithm/MAF/;../_third_part/algorithm//MAF/base/;../_third_part/algorithm/MAF/audio/;../_third_part/algorithm/MAF/interface/audio</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../_third_part/algorithm/MAF/;../_third_part/algorithm//MAF/base/</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>

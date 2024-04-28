@@ -4,7 +4,7 @@
 #include<new>
 
 #include"AudioSamples32.h"
-#include"musicPlc24bl.h"
+#include"musicPlc24bL.h"
 #include"musicPlcComInner.h"
 
 EXTERNC int32_t MusicPlc24bLGetStateSize(int32_t overlapMs, MusicPlcSampleParam* sampleParam)
@@ -83,13 +83,6 @@ EXTERNC int32_t MusicPlc24bL(void* pMusicPlcStateIn, uint8_t* in, int32_t inLen,
 
 	int32_t ret = MusicPlcRun((MusicPlcState*)pMusicPlcStateIn, &pIn, inUsed, &pOut, outLen, isLost);
 
-#if 1
-	uint32_t* ptr = (uint32_t*)out;
-	for (int i = 0; i < frameSamples*channels; i++)
-	{
-		ptr[i] = ptr[i] << 8;
-	}
-#endif
 
 	if (ret != MUSIC_PLC_RET_SUCCESS)
 		return MUSIC_PLC_RET_FAIL;

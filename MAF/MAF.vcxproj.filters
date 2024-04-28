@@ -4,19 +4,16 @@
     <Filter Include="base">
       <UniqueIdentifier>{bf219c2e-eaf2-4885-88d5-f5955c89d230}</UniqueIdentifier>
     </Filter>
-    <Filter Include="audio">
-      <UniqueIdentifier>{9b8c34ac-e0ef-48bf-8c13-882a66ec17cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="interface">
-      <UniqueIdentifier>{3e39b9f5-175d-4b00-8761-3c2a9c5eb5c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="interface\audio">
-      <UniqueIdentifier>{c6ecd179-2a16-4e6c-ad9b-d769848c03b5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\audio\MAFA_Audio.cpp">
-      <Filter>audio</Filter>
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Printf.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp">
+      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.cpp">
       <Filter>base</Filter>
@@ -24,37 +21,24 @@
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Memory.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\audio\AudioAlgorithm.cpp">
-      <Filter>interface\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Printf.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\AudioAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\audio\MAFA_Audio.h">
-      <Filter>audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Memory.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Memory.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Printf.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Objects.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\audio\MAFA_AudioFrame.h">
-      <Filter>audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\audio\AudioAlgorithm.h">
-      <Filter>interface\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Printf.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\AudioAlgorithm.h" />
   </ItemGroup>
 </Project>

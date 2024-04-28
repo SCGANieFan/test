@@ -1,4 +1,4 @@
-#include<string.h>
+#include"AudioSamplesCom.h"
 #include"AudioSamples32.h"
 
 AudioSamples32::AudioSamples32()
@@ -100,7 +100,7 @@ bool AudioSamples32::AppendInFixPoint(int32_t num, int32_t den)
 	_validSamples++;
 	if (den == 0)
 	{
-		memset(pBuff, 0, _width * _channels);
+		AS_MCM_SET(pBuff, 0, _width * _channels);
 		return true;
 	}
 	int32_t* psrc = (int32_t*)pBuff;

@@ -1,27 +1,27 @@
 #if 1
 #include<string.h>
 
-#include "MAFAA_MusicPlc16.h"
+#include "MAFAA_MusicPlc24L.h"
 #include "MAF.Objects.h"
-#include "AA_MusicPlc.h"
+#include "MAF.Interface.MusicPlc.h"
 
 
-#include"musicPlc16b.h"
+#include"musicPlc24bL.h"
 
-void maf_algorithm_audio_music_plc16_register()
+void maf_algorithm_audio_music_plc24L_register()
 {
-	MAF_Object::Registe<MAFAA_MusicPlc16>("music_plc16");
+	MAF_Object::Registe<MAFAA_MusicPlc24L>("proc-mplc24L");
 }
 
-MAFAA_MusicPlc16::MAFAA_MusicPlc16()
+MAFAA_MusicPlc24L::MAFAA_MusicPlc24L()
 {
 }
-MAFAA_MusicPlc16::~MAFAA_MusicPlc16()
+MAFAA_MusicPlc24L::~MAFAA_MusicPlc24L()
 {
 }
 
 
-int32_t MAFAA_MusicPlc16::Init(void* param)
+int32_t MAFAA_MusicPlc24L::Init(void* param)
 {
 	MAF_PRINT();
 	AA_MusicPlcParam* musicPlcParam = (AA_MusicPlcParam*)param;
@@ -31,9 +31,14 @@ int32_t MAFAA_MusicPlc16::Init(void* param)
 	sampleParam.fsHz = musicPlcParam->fsHz;
 	sampleParam.channels = musicPlcParam->channels;
 	sampleParam.frameSamples = musicPlcParam->frameSamples;
-	
-	_hdSize = MusicPlc16bGetStateSize(
-		musicPlcParam->overlapMs, 
+
+	_fsHz = musicPlcParam->fsHz;
+	_channels = musicPlcParam->channels;
+	_frameSamples = musicPlcParam->frameSamples;
+
+
+	_hdSize = MusicPlc24bLGetStateSize(
+		musicPlcParam->overlapMs,
 		&sampleParam);
 
 	_hd = _memory.Malloc(_hdSize);
@@ -43,8 +48,8 @@ int32_t MAFAA_MusicPlc16::Init(void* param)
 		return -1;
 	}
 
-	int32_t ret = MusicPlc16bStateInit(
-		_hd, 
+	int32_t ret = MusicPlc24bLStateInit(
+		_hd,
 		musicPlcParam->overlapMs,
 		musicPlcParam->decayTimeMs,
 		&sampleParam);
@@ -57,14 +62,14 @@ int32_t MAFAA_MusicPlc16::Init(void* param)
 	return 0;
 }
 
-int32_t MAFAA_MusicPlc16::Deinit()
+int32_t MAFAA_MusicPlc24L::Deinit()
 {
 	MAF_PRINT();
 	_memory.Free(_hd);
 	return 0;
 }
 
-int32_t MAFAA_MusicPlc16::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
+int32_t MAFAA_MusicPlc24L::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
 {
 	int32_t inUsed = 0;
 	int32_t ret;
@@ -73,18 +78,18 @@ int32_t MAFAA_MusicPlc16::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
 
 	if (frameIn->flags & MAFA_FRAME_IS_EMPTY)
 	{
-		ret = MusicPlc16b(
-			_hd, 
-			NULL, 
+		ret = MusicPlc24bL(
+			_hd,
+			NULL,
 			0,
 			NULL,
-			frameOut->buff + frameOut->off+ frameOut->size,
-			&outByte, 
+			frameOut->buff + frameOut->off + frameOut->size,
+			&outByte,
 			true);
 	}
 	else
 	{
-		ret = MusicPlc16b(
+		ret = MusicPlc24bL(
 			_hd,
 			frameIn->buff + frameIn->off,
 			frameIn->size,
@@ -97,6 +102,17 @@ int32_t MAFAA_MusicPlc16::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
 	{
 		return -1;
 	}
+
+
+#if 1	
+	uint32_t* ptr = (uint32_t*)frameOut->buff + frameOut->off + frameOut->size;
+	for (int32_t i = 0; i < outByte/sizeof(uint32_t); i++)
+	{
+		ptr[i] = ptr[i] << 8;
+	}
+#endif
+
+
 	frameIn->size -= inUsed;
 	frameIn->off += inUsed;
 	frameOut->size += outByte;

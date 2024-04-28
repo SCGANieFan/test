@@ -1,3 +1,4 @@
+#if 0
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
@@ -198,4 +199,11 @@ void OpusTest()
 
 	testParam.param = (void*)(&param);
 	MultiMediaTest(SOURCE_PATH FILE_NAME, &testParam);
+}
+#endif
+
+#include<stdio.h>
+void OpusTest()
+{
+	printf("PlcTest\n");
 }

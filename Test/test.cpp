@@ -1,6 +1,7 @@
 #include"testInner.h"
 #include"PlcTest.h"
 #include"OggTest.h"
+#include"OpusTest.h"
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
 	//OggTest();
 	PlcTest();
 	//OggTest();
+	//OpusTest();
 	return 1;
 }
 

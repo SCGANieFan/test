@@ -152,7 +152,7 @@ bool AudioSample::ProductWithEverySamlpe(AudioSample& src, int32_t productSample
 				int16_t* p = (int16_t*)(_buff + (_startSamples + s) * _width * _channels);
 				for (int16_t ch = 0; ch < _channels; ch++)
 				{
-					p[ch] = (((int64_t)p[ch]) * *((int32_t*)&src[s])) >> src.GetFixPointNum();
+					p[ch] = (int16_t)((((int64_t)p[ch]) * *((int32_t*)&src[s])) >> src.GetFixPointNum());
 				}
 			}
 		}
@@ -339,7 +339,7 @@ bool AudioSample::AppendInFixPoint(int32_t num, int32_t den)
 		int16_t* psrc = (int16_t*)pBuff;
 		int64_t fac = ((int64_t)num << _fixPointNum) / den;
 		for (int16_t ch = 0; ch < _channels; ch++) {
-			psrc[ch] = fac;
+			psrc[ch] = (int16_t)fac;
 		}
 		break;
 	}
@@ -348,7 +348,7 @@ bool AudioSample::AppendInFixPoint(int32_t num, int32_t den)
 		int32_t* psrc = (int32_t*)pBuff;
 		int64_t fac = ((int64_t)num << _fixPointNum) / den;
 		for (int16_t ch = 0; ch < _channels; ch++) {
-			psrc[ch] = fac;
+			psrc[ch] = (int32_t)fac;
 		}
 		break;
 	}
