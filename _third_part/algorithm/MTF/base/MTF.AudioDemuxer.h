@@ -1,6 +1,7 @@
 #pragma once
 #include"MTF.Source.h"
-class MTF_AudioDemuxer :public MTF_Source
+#include"MTF.AudioInfo.h"
+class MTF_AudioDemuxer :public MTF_Source, public MTF_AudioInfo
 {
 public:
 	MTF_AudioDemuxer();

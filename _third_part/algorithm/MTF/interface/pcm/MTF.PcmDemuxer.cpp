@@ -3,27 +3,43 @@
 #include "MTF.String.h"
 #include "MTF.Objects.h"
 
+void mtf_pcm_demuxer_register()
+{
+	MTF_Objects::Registe<MTF_PcmDemuxer>("pcm_demuxer");
+}
+
 MTF_PcmDemuxer ::MTF_PcmDemuxer ()
 {
-	_pFile = 0;
-	_url = 0;
 
-	mtf_int32 size = 1024;
-	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
 }
+
 MTF_PcmDemuxer ::~MTF_PcmDemuxer ()
 {
 	if (_pFile)
 		fclose((FILE*)_pFile);
 
-	_oData.Used(_oData._size);
-	MTF_FREE(_oData.Data());
+	if (_oData.Data())
+	{
+		_oData.Used(_oData._size);
+		MTF_FREE(_oData.Data());
+	}
+	
 }
 
-void mtf_pcm_demuxer_register()
+mtf_int32 MTF_PcmDemuxer::Init()
 {
-	MTF_Objects::Registe<MTF_PcmDemuxer>("pcm_demuxer");
+	MTF_PRINT();
+	if (!_url)
+		MTF_PRINT("_url:%d", _url);
+	_pFile = fopen(_url, "rb+");
+
+	mtf_int32 size = _frameBytes;
+	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
+	
+	
+	return 0;
 }
+
 
 mtf_int32 MTF_PcmDemuxer::generate(MTF_Data*& oData)
 {
@@ -42,13 +58,11 @@ mtf_int32 MTF_PcmDemuxer::generate(MTF_Data*& oData)
 
 mtf_int32 MTF_PcmDemuxer ::Set(const mtf_int8* key, mtf_void* val)
 {
-	if (MTF_Srting::StrCompare(key, "url"))
+	if (MTF_String::StrCompare(key, "url"))
 	{
 		MTF_PRINT("url,%s", (const mtf_int8*)val);
 		_url = (const mtf_int8*)val;
-		if (_pFile)
-			fclose((FILE*)_pFile);
-		_pFile = fopen(_url, "rb+");
+
 		return 0;
 	}
 	return MTF_AudioDemuxer::Set(key, val);

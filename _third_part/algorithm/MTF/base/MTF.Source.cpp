@@ -38,7 +38,7 @@ mtf_int32 MTF_Source::Generate(MTF_Data*& oData)
 
 mtf_int32 MTF_Source::Set(const mtf_int8* key, mtf_void* val)
 {
-	if (MTF_Srting::StrCompare(key, "to"))
+	if (MTF_String::StrCompare(key, "to"))
 	{
 		_to = (MTF_Element*)val; return 0;
 	}

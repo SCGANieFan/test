@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/NF/work/program/multimedia/vs/_third_part/algorithm/audio/process/plc",
-      "program": "d:/NF/work/program/multimedia/vs/_third_part/algorithm/audio/process/plc/build/Debug/outDebug",
+      "cwd": "d:/NF/work/program/multimedia/vs/_third_part/algorithm/MTF/base",
+      "program": "d:/NF/work/program/multimedia/vs/_third_part/algorithm/MTF/base/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

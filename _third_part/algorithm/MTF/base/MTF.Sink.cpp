@@ -38,7 +38,7 @@ mtf_int32 MTF_Sink::Run()
 
 mtf_int32 MTF_Sink::Set(const mtf_int8* key, mtf_void* val)
 {
-	if (MTF_Srting::StrCompare(key, "from"))
+	if (MTF_String::StrCompare(key, "from"))
 	{
 		_from = (MTF_Element*)val; return 0;
 	}

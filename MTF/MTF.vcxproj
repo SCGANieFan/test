@@ -20,7 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Data.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Element.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Interface.cpp" />
@@ -37,7 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Data.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Element.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Interface.h" />

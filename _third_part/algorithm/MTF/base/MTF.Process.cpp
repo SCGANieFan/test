@@ -73,12 +73,10 @@ mtf_int32 MTF_Process::Run()
 
 mtf_int32 MTF_Process::Set(const mtf_int8* key, mtf_void* val)
 {
-	if (MTF_Srting::StrCompare(key, "from"))
-	{
+	if (MTF_String::StrCompare(key, "from")) {
 		_from = (MTF_Element*)val; return 0;
 	}
-	else if(MTF_Srting::StrCompare(key, "to"))
-	{
+	else if (MTF_String::StrCompare(key, "to")) {
 		_to = (MTF_Element*)val; return 0;
 	}
 	return MTF_Element::Set(key, val);

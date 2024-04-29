@@ -49,6 +49,12 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MTF\MultimeidaTest.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Memory.h">
@@ -97,5 +103,11 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MTF\MultimeidaTest.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -67,14 +67,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFAA_PcmDemux.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFAA_PcmMux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmDemux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmMux.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFAA_PcmDemux.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFAA_PcmMux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmDemux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmMux.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.h" />
   </ItemGroup>

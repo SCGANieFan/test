@@ -1,32 +1,32 @@
 #pragma once
-#include "MAFA_Audio.h"
-class MAFAA_OpusEnc:public MAFA_Audio
+#include "MAF.Audio.h"
+class MAFAA_OpusEnc:public MAF_Audio
 {
 	typedef struct
 	{
-		int32_t fsHz;
-		int16_t channels;
-		int32_t width;
-		int32_t frameSamples;
+		maf_int32 fsHz;
+		maf_int16 channels;
+		maf_int32 width;
+		maf_int32 frameSamples;
 	}AudioInfo;
 
 	typedef struct
 	{
-		int32_t sampling_rate_hz;
-		uint8_t channels;
-		uint32_t application;
-		uint32_t bitrate_bps;
-		int32_t bandwidth;
-		uint8_t use_vbr;
-		uint8_t cvbr;
-		uint8_t complexity;
-		uint8_t use_inbandfec;
-		int32_t forcechannels;
-		uint8_t use_dtx;
-		//uint8_t packet_loss_perc;
-		uint8_t lsb_depth;
-		uint32_t variable_duration;
-		uint32_t frame_duration_0p1ms;
+		maf_int32 sampling_rate_hz;
+		maf_uint8 channels;
+		maf_uint32 application;
+		maf_uint32 bitrate_bps;
+		maf_int32 bandwidth;
+		maf_uint8 use_vbr;
+		maf_uint8 cvbr;
+		maf_uint8 complexity;
+		maf_uint8 use_inbandfec;
+		maf_int32 forcechannels;
+		maf_uint8 use_dtx;
+		//maf_uint8 packet_loss_perc;
+		maf_uint8 lsb_depth;
+		maf_uint32 variable_duration;
+		maf_uint32 frame_duration_0p1ms;
 	}EncInfo;
 
 
@@ -35,12 +35,12 @@ public:
 	MAFAA_OpusEnc();
 	~MAFAA_OpusEnc();
 public:
-	virtual int32_t Init(void* param) override;
-	virtual int32_t Deinit() override;
-	virtual int32_t Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut) override;
+	virtual maf_int32 Init() override;
+	virtual maf_int32 Deinit() override;
+	virtual maf_int32 Process(MAF_Data* dataIn, MAF_Data* dataOut) override;
 private:
-	void *_hd;
-	int32_t _hdSize;
+	maf_void *_hd;
+	maf_int32 _hdSize;
 	AudioInfo _audioInfo;
 	EncInfo _encInfo;
 };

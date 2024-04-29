@@ -5,15 +5,15 @@
 
 typedef struct
 {
-	int32_t fsHz;
-	int16_t channels;
-	int16_t frameSamples;
+	maf_int32 fsHz;
+	maf_int16 channels;
+	maf_int16 frameSamples;
 }MAF_Interface_PcmDemux;
 
 typedef struct
 {
-	int32_t fsHz;
-	int16_t channels;
-	int16_t frameSamples;
+	maf_int32 fsHz;
+	maf_int16 channels;
+	maf_int16 frameSamples;
 }MAF_Interface_PcmMux;
 

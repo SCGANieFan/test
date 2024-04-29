@@ -52,13 +52,13 @@
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc32.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc16.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc24L.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc24L.cpp">
       <Filter>maf</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,13 +100,13 @@
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc24L.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc24L.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc32.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFAA_MusicPlc16.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.h">
       <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>

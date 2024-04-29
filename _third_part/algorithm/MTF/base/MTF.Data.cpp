@@ -28,7 +28,7 @@ mtf_int32 MTF_Data::DeInit()
 }
 mtf_int32 MTF_Data::Append(mtf_uint8* buff, mtf_int32 len)
 {
-	MTF_MCM_CPY((mtf_int8*)Data(), (mtf_int8*)buff, len);
+	MTF_MEM_CPY((mtf_int8*)Data(), (mtf_int8*)buff, len);
 	_size += len;
 	return 0;
 }
@@ -55,7 +55,7 @@ mtf_int32 MTF_Data::Used(mtf_int32 size)
 	_size -= size;
 	if (_size > 0)
 	{
-		MTF_MCM_MOVE((mtf_int8*)_buff, (mtf_int8*)_buff + _off, _size);
+		MTF_MEM_MOVE((mtf_int8*)_buff, (mtf_int8*)_buff + _off, _size);
 		_size = 0;
 	}
 	_off = 0;

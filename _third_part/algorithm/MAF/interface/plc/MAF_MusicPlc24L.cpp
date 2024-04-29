@@ -1,27 +1,27 @@
-#if 1
+#if 0
 #include<string.h>
 
-#include "MAFAA_MusicPlc24L.h"
+#include "MAF_MusicPlc24L.h"
 #include "MAF.Objects.h"
 #include "MAF.Interface.MusicPlc.h"
 
 
 #include"musicPlc24bL.h"
 
-void maf_algorithm_audio_music_plc24L_register()
+maf_void maf_algorithm_audio_music_plc24L_register()
 {
-	MAF_Object::Registe<MAFAA_MusicPlc24L>("proc-mplc24L");
+	MAF_Object::Registe<MAF_MusicPlc24L>("proc-mplc24L");
 }
 
-MAFAA_MusicPlc24L::MAFAA_MusicPlc24L()
+MAF_MusicPlc24L::MAF_MusicPlc24L()
 {
 }
-MAFAA_MusicPlc24L::~MAFAA_MusicPlc24L()
+MAF_MusicPlc24L::~MAF_MusicPlc24L()
 {
 }
 
 
-int32_t MAFAA_MusicPlc24L::Init(void* param)
+maf_int32 MAF_MusicPlc24L::Init()
 {
 	MAF_PRINT();
 	AA_MusicPlcParam* musicPlcParam = (AA_MusicPlcParam*)param;
@@ -48,7 +48,7 @@ int32_t MAFAA_MusicPlc24L::Init(void* param)
 		return -1;
 	}
 
-	int32_t ret = MusicPlc24bLStateInit(
+	maf_int32 ret = MusicPlc24bLStateInit(
 		_hd,
 		musicPlcParam->overlapMs,
 		musicPlcParam->decayTimeMs,
@@ -62,19 +62,19 @@ int32_t MAFAA_MusicPlc24L::Init(void* param)
 	return 0;
 }
 
-int32_t MAFAA_MusicPlc24L::Deinit()
+maf_int32 MAF_MusicPlc24L::Deinit()
 {
 	MAF_PRINT();
 	_memory.Free(_hd);
 	return 0;
 }
 
-int32_t MAFAA_MusicPlc24L::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
+maf_int32 MAF_MusicPlc24L::Process(MAF_AudioFrame* frameIn, MAF_AudioFrame* frameOut)
 {
-	int32_t inUsed = 0;
-	int32_t ret;
+	maf_int32 inUsed = 0;
+	maf_int32 ret;
 
-	int32_t outByte = frameOut->max - frameOut->off - frameOut->size;
+	maf_int32 outByte = frameOut->max - frameOut->off - frameOut->size;
 
 	if (frameIn->flags & MAFA_FRAME_IS_EMPTY)
 	{
@@ -105,8 +105,8 @@ int32_t MAFAA_MusicPlc24L::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
 
 
 #if 1	
-	uint32_t* ptr = (uint32_t*)frameOut->buff + frameOut->off + frameOut->size;
-	for (int32_t i = 0; i < outByte/sizeof(uint32_t); i++)
+	maf_uint32* ptr = (maf_uint32*)frameOut->buff + frameOut->off + frameOut->size;
+	for (maf_int32 i = 0; i < outByte/sizeof(maf_uint32); i++)
 	{
 		ptr[i] = ptr[i] << 8;
 	}

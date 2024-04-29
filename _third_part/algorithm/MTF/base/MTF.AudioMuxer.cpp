@@ -17,11 +17,11 @@ mtf_int32 MTF_AudioMuxer::receive(MTF_Data& iData)
 
 mtf_int32 MTF_AudioMuxer::Set(const mtf_int8* key, mtf_void* val)
 {
-	return MTF_Sink::Set(key,val);
+	return MTF_Sink::Set(key, val) & MTF_AudioInfo::Set(key, val);
 }
 mtf_int32 MTF_AudioMuxer::Get(const mtf_int8* key, mtf_void* val)
 {
-	return MTF_Sink::Get(key, val);
+	return MTF_Sink::Get(key, val) & MTF_AudioInfo::Get(key, val);
 }
 
 

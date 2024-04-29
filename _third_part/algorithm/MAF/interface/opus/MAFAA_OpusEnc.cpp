@@ -11,7 +11,7 @@
 #include "opus_private.h"
 
 
-void maf_algorithm_audio_opus_enc_register()
+maf_void maf_algorithm_audio_opus_enc_register()
 {
 	MAF_Object::Registe<MAFAA_OpusEnc>("opus_enc");
 }
@@ -24,16 +24,16 @@ MAFAA_OpusEnc::~MAFAA_OpusEnc()
 }
 
 
-int32_t MAFAA_OpusEnc::Init(void* param)
+maf_int32 MAFAA_OpusEnc::Init()
 {
 	MAF_PRINT("");
+#if 0
 	if(!param)
 		return -1;
 	MAF_InterfaceOpusEnc* encParam = (MAF_InterfaceOpusEnc*)param;
 	MAF_PRINT("channels:%d",encParam->channels);
 	MAF_PRINT("frameSamples:%d",encParam->frameSamples);
 	MAF_PRINT("fsHz:%d",encParam->fsHz);
-#if 1
 	_audioInfo.channels = encParam->channels;
 	_audioInfo.fsHz = encParam->fsHz;
 	_audioInfo.width = 2;
@@ -50,7 +50,7 @@ int32_t MAFAA_OpusEnc::Init(void* param)
         return -1;
 	}
 
-    int32_t err;
+    maf_int32 err;
     err = opus_encoder_init((OpusEncoder*)_hd, encParam->fsHz, encParam->channels,OPUS_APPLICATION_VOIP);
 
     if (err != OPUS_OK)
@@ -85,33 +85,34 @@ int32_t MAFAA_OpusEnc::Init(void* param)
     }
 	MAF_PRINT("create encoder success\n");
     return 0;
+#else
+    return 0;
 #endif
 }
 
-int32_t MAFAA_OpusEnc::Deinit()
+maf_int32 MAFAA_OpusEnc::Deinit()
 {
 	MAF_PRINT("");
 	_memory.Free(_hd);
 	return 0;
 }
 
-int32_t MAFAA_OpusEnc::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
+maf_int32 MAFAA_OpusEnc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
-
-	if(!frameIn
-	||!frameOut)
+#if 0
+	if(!dataIn
+	||!dataOut)
 	{
 		return -1;	
 	}
 
-#if 1
-	int32_t outLen;
+	maf_int32 outLen;
     outLen = opus_encode(
 		(OpusEncoder*)_hd, 
-		(const opus_int16*)(frameIn->buff+frameIn->off),
-		frameIn->size,
-		frameOut->buff+frameOut->off+frameOut->size,
-		frameOut->max-frameOut->off-frameOut->size);
+		(const opus_int16*)(dataIn->buff+dataIn->off),
+		dataIn->size,
+		dataOut->buff+dataOut->off+dataOut->size,
+		dataOut->max-dataOut->off-dataOut->size);
 
     if (outLen < 0)
     {        
@@ -119,10 +120,10 @@ int32_t MAFAA_OpusEnc::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
         return -1;
     }
 	
-	int32_t inUsed=_audioInfo.frameSamples*_audioInfo.channels*_audioInfo.width;
-	frameIn->off += inUsed;
-	frameIn->size -= inUsed;
-	frameOut->size += outLen;	
+	maf_int32 inUsed=_audioInfo.frameSamples*_audioInfo.channels*_audioInfo.width;
+	dataIn->off += inUsed;
+	dataIn->size -= inUsed;
+	dataOut->size += outLen;	
 #endif
 	return 0;
 }

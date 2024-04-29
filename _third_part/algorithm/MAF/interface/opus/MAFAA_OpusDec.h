@@ -1,24 +1,24 @@
 #pragma once
-#include "MAFA_Audio.h"
-class MAFAA_OpusDec:public MAFA_Audio
+#include "MAF.Audio.h"
+class MAFAA_OpusDec:public MAF_Audio
 {
 	typedef struct
 	{
-		int32_t fsHz;
-		int16_t channels;
-		int32_t width;
-		int32_t frameSamples;
+		maf_int32 fsHz;
+		maf_int16 channels;
+		maf_int32 width;
+		maf_int32 frameSamples;
 	}AudioInfo;
 
 public:
 	MAFAA_OpusDec();
 	~MAFAA_OpusDec();
 public:
-	virtual int32_t Init(void* param) override;
-	virtual int32_t Deinit() override;
-	virtual int32_t Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut) override;
+	virtual maf_int32 Init() override;
+	virtual maf_int32 Deinit() override;
+	virtual maf_int32 Process(MAF_Data* dataIn, MAF_Data* dataOut) override;
 private:
-	void *_hd;
-	int32_t _hdSize;
+	maf_void *_hd;
+	maf_int32 _hdSize;
 	AudioInfo _audioInfo;
 };

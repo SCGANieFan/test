@@ -1,27 +1,27 @@
 #include "MTF.String.h"
 #include<string.h>
-MTF_Srting::MTF_Srting()
+MTF_String::MTF_String()
 {
 }
-MTF_Srting::~MTF_Srting()
+MTF_String::~MTF_String()
 {
 }
 
-void* MTF_Srting::MemCpy(mtf_int8* dst, mtf_int8* src, mtf_int32 size)
+void* MTF_String::MemCpy(mtf_int8* dst, mtf_int8* src, mtf_int32 size)
 {
 	return memcpy(dst, src, size);
 }
-void* MTF_Srting::MemSet(mtf_int8* dst, mtf_int32 val, mtf_int32 size)
+void* MTF_String::MemSet(mtf_int8* dst, mtf_int32 val, mtf_int32 size)
 {
 	return memset(dst, val, size);
 }
-void* MTF_Srting::MemMove(mtf_int8* dst, mtf_int8* src, mtf_int32 size)
+void* MTF_String::MemMove(mtf_int8* dst, mtf_int8* src, mtf_int32 size)
 {
 	return memmove(dst, src, size);
 }
 
 
-mtf_int32 MTF_Srting::StrLen(const mtf_int8* str)
+mtf_int32 MTF_String::StrLen(const mtf_int8* str)
 {
 	mtf_int32 strLen = 0;
 	while (*str++ != '\0')
@@ -29,7 +29,7 @@ mtf_int32 MTF_Srting::StrLen(const mtf_int8* str)
 	return strLen;
 }
 
-mtf_int32 MTF_Srting::Search(const mtf_int8* str, const mtf_int8* temp, mtf_int32 posStart, mtf_int32 posEnd, mtf_bool dir)
+mtf_int32 MTF_String::Search(const mtf_int8* str, const mtf_int8* temp, mtf_int32 posStart, mtf_int32 posEnd, mtf_bool dir)
 {
 	str += posStart;
 	mtf_int32 strLen = posEnd - posStart + 1;
@@ -92,7 +92,7 @@ mtf_int32 MTF_Srting::Search(const mtf_int8* str, const mtf_int8* temp, mtf_int3
 	return pos + posStart;
 }
 
-mtf_int32 MTF_Srting::Search(const mtf_int8* str, const mtf_int8* temp, mtf_bool dir)
+mtf_int32 MTF_String::Search(const mtf_int8* str, const mtf_int8* temp, mtf_bool dir)
 {
 
 	mtf_int32 strLen = StrLen(str);
@@ -100,28 +100,28 @@ mtf_int32 MTF_Srting::Search(const mtf_int8* str, const mtf_int8* temp, mtf_bool
 }
 
 
-mtf_int32 MTF_Srting::Cut(const mtf_int8* str, const mtf_int8* characteristic, mtf_int8* out, mtf_int32 outByteMax)
+mtf_int32 MTF_String::Cut(const mtf_int8* str, const mtf_int8* characteristic, mtf_int8* out, mtf_int32 outByteMax)
 {
 	mtf_int32	pos = Search(str, characteristic);
 	if (pos < 0)
 		return -1;
 	mtf_int32 outByte = pos;
 	outByte = outByte > outByteMax ? outByteMax : outByte;
-	MTF_MCM_CPY(out, (mtf_int8*)str, outByte);
+	MTF_MEM_CPY(out, (mtf_int8*)str, outByte);
 	return pos;
 }
-mtf_int32 MTF_Srting::Cut(const mtf_int8* str, const mtf_int8* characteristic, mtf_int8* out)
+mtf_int32 MTF_String::Cut(const mtf_int8* str, const mtf_int8* characteristic, mtf_int8* out)
 {
 	return Cut(str, characteristic, out, 1024);
 }
 
-mtf_int32 MTF_Srting::StrAppend(mtf_int8* src, mtf_int8* dst)
+mtf_int32 MTF_String::StrAppend(mtf_int8* src, mtf_int8* dst)
 {
 	//for
 	return 0;
 }
 
-bool MTF_Srting::StrCompare(const mtf_int8* cmp0, const mtf_int8* cmp1)
+bool MTF_String::StrCompare(const mtf_int8* cmp0, const mtf_int8* cmp1)
 {
 	
 	mtf_int32 len0 = StrLen(cmp0);
@@ -135,5 +135,10 @@ bool MTF_Srting::StrCompare(const mtf_int8* cmp0, const mtf_int8* cmp1)
 	return true;
 }
 
+const mtf_int8* MTF_String::BaseName(const mtf_int8* str)
+{
+	mtf_int32  pos = Search(str, "\\", false);
+	return str + pos + 1;
+}
 
 

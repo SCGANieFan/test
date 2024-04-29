@@ -67,20 +67,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\AudioAlgorithm.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Data.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA.Info.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.String.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Audio.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\MAF.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Memory.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF_Printf.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Algorithm.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Memory.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\AudioAlgorithm.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Data.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA.Info.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.String.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Type.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Audio.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\MAF.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Objects.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA_Audio.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Algorithm.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Memory.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF_Printf.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Algorithm.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Memory.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Printf.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -418,7 +425,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../_third_part/algorithm/MAF/;../_third_part/algorithm//MAF/base/</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>

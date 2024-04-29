@@ -103,7 +103,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Plc.lib;TestLib.lib;MAF.lib;MTF.lib;Opus.lib;Pcm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Plc.lib;MAF.lib;MTF.lib;Opus.lib;Pcm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OptimizeReferences>false</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
     </Link>

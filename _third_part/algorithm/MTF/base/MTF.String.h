@@ -1,10 +1,10 @@
 #pragma once
 #include"MTF.Type.h"
-class MTF_Srting
+class MTF_String
 {
 public:
-	MTF_Srting();
-	~MTF_Srting();
+	MTF_String();
+	~MTF_String();
 
 public:
 	static void* MemCpy(mtf_int8* dst, mtf_int8* src, mtf_int32 size);
@@ -19,15 +19,16 @@ public:
 	static mtf_int32 StrAppend(mtf_int8* src, mtf_int8* dst);
 
 	static bool StrCompare(const mtf_int8* cmp0, const mtf_int8* cmp1);
+	static const mtf_int8* BaseName(const mtf_int8* str);
 private:
 
 };
 
 
 #if 1
-#define MTF_MCM_CPY(dst,src,size) MTF_Srting::MemCpy(dst,src,size)
-#define MTF_MCM_SET(dst,val,size) MTF_Srting::MemSet(dst,val,size)
-#define MTF_MCM_MOVE(dst,src,size) MTF_Srting::MemMove(dst,src,size)
+#define MTF_MEM_CPY(dst,src,size) MTF_String::MemCpy((mtf_int8*)dst,(mtf_int8*)src,(mtf_int32)size)
+#define MTF_MEM_SET(dst,val,size) MTF_String::MemSet((mtf_int8*)dst,(mtf_int32)val,(mtf_int32)size)
+#define MTF_MEM_MOVE(dst,src,size) MTF_String::MemMove((mtf_int8*)dst,(mtf_int8*)src,(mtf_int32)size)
 #else
 #include<string.h>
 #define MTF_MCM_CPY(dst,src,size) memcpy(dst,src,size)

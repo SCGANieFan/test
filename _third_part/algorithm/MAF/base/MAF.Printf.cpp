@@ -1,5 +1,5 @@
 #include<stdarg.h>
-#include "MAF_Printf.h"
+#include "MAF.Printf.h"
 
 #ifdef _WIN32
 #include<stdio.h>
@@ -16,12 +16,12 @@ MAF_Printf::~MAF_Printf()
 {
 }
 
-void MAF_Printf::Printf(const char* _Format, ...)
+maf_void MAF_Printf::Printf(const maf_int8* _Format, ...)
 {
-    char buf[256];
+    maf_int8 buf[256];
     va_list args;
     va_start(args, _Format);
-    vsprintf_s(buf, 256, _Format, args);
+    vsprintf(buf, _Format, args);
     va_end(args);
     printf_inner(buf);
 }

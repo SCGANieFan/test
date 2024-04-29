@@ -1,5 +1,5 @@
 #include "MTF.Element.h"
-
+#include "MTF.String.h"
 
 MTF_Element::MTF_Element()
 {

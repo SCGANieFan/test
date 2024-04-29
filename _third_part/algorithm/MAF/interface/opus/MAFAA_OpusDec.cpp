@@ -12,7 +12,7 @@
 #include "opus_types.h"
 
 
-void maf_algorithm_audio_opus_dec_register()
+maf_void maf_algorithm_audio_opus_dec_register()
 {
 	MAF_Object::Registe<MAFAA_OpusDec>("opus_dec");
 }
@@ -25,16 +25,16 @@ MAFAA_OpusDec::~MAFAA_OpusDec()
 }
 
 
-int32_t MAFAA_OpusDec::Init(void* param)
+maf_int32 MAFAA_OpusDec::Init()
 {
 	MAF_PRINT("");
+#if 0
 	if(!param)
 		return -1;
 	MAF_InterfaceOpusDec* decParam = (MAF_InterfaceOpusDec*)param;
 	MAF_PRINT("channels:%d",decParam->channels);
 	MAF_PRINT("frameSamples:%d",decParam->frameSamples);
 	MAF_PRINT("fsHz:%d",decParam->fsHz);
-#if 1
 	_audioInfo.channels = decParam->channels;
 	_audioInfo.fsHz = decParam->fsHz;
 	_audioInfo.width = 2;
@@ -49,7 +49,7 @@ int32_t MAFAA_OpusDec::Init(void* param)
         return -1;
 	}
 
-    int32_t err;
+    maf_int32 err;
     err = opus_decoder_init((OpusDecoder*)_hd, decParam->fsHz, decParam->channels);
     if (err != OPUS_OK)
     {
@@ -57,34 +57,34 @@ int32_t MAFAA_OpusDec::Init(void* param)
         return -1;
     }
 	MAF_PRINT("create decoder success\n");
-    return 0;
 #endif
+	return 0;
 }
 
-int32_t MAFAA_OpusDec::Deinit()
+maf_int32 MAFAA_OpusDec::Deinit()
 {
 	MAF_PRINT("");
 	_memory.Free(_hd);
 	return 0;
 }
 
-int32_t MAFAA_OpusDec::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
+maf_int32 MAFAA_OpusDec::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
+#if 0
 
-	if(!frameIn
-	||!frameOut)
+	if(!dataIn
+	||!dataOut)
 	{
 		return -1;	
 	}
 
-#if 1
-	int32_t outLen;
+	maf_int32 outLen;
 	
     outLen = opus_decode(
 		(OpusDecoder*)_hd,
-		frameIn->buff+frameIn->off,
-        frameIn->size,
-		(opus_int16*)(frameOut->buff+frameOut->off+frameOut->size),
+		dataIn->buff+dataIn->off,
+        dataIn->size,
+		(opus_int16*)(dataOut->buff+dataOut->off+dataOut->size),
 		_audioInfo.frameSamples,
 		0);
 
@@ -94,10 +94,10 @@ int32_t MAFAA_OpusDec::Process(MAFA_Frame* frameIn, MAFA_Frame* frameOut)
         MAF_PRINT("error decoding frame");
         return -1;
     }
-	int32_t inUsed=frameIn->size;
-	frameIn->off += inUsed;
-	frameIn->size -= inUsed;
-	frameOut->size += outLen*_audioInfo.channels* _audioInfo.width;
+	maf_int32 inUsed=dataIn->size;
+	dataIn->off += inUsed;
+	dataIn->size -= inUsed;
+	dataOut->size += outLen*_audioInfo.channels* _audioInfo.width;
 #endif
 	return 0;
 }

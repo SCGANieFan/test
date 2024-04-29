@@ -5,11 +5,11 @@
 
 typedef struct
 {
-	int32_t fsHz;
-	int16_t channels;
-	int16_t frameSamples;
-	int16_t decayTimeMs;
-	int16_t overlapMs;
+	maf_int32 fsHz;
+	maf_int16 channels;
+	maf_int16 frameSamples;
+	maf_int16 decayTimeMs;
+	maf_int16 overlapMs;
 }AA_MusicPlcParam;
 
 #define DECAY_TIME_MS 50
