@@ -1,9 +1,6 @@
-#include<stdio.h>
-#include<stdint.h>
-#include<string.h>
+#if 1
 #include<new>
-
-#include"AudioSamples16.h"
+#include"Algo.AS_Calculator16.h"
 #include"musicPlc16b.h"
 #include"musicPlcComInner.h"
 
@@ -25,9 +22,8 @@ EXTERNC int32_t MusicPlc16bGetStateSize(int32_t overlapMs, MusicPlcSampleParam* 
 	int16_t width = sizeof(int16_t);
 	
 	return sizeof(MusicPlcState)
-		+ sizeof(AudioSamples16) * 4
+		+ sizeof(AS_Calculator16)
 		+ (buffSamples * sampleParam->channels + muteFactorSamples) * width;
-		
 }
 
 EXTERNC int32_t MusicPlc16bStateInit(void* pMusicPlcStateIn, int32_t overlapMs, int32_t decayTimeMs, MusicPlcSampleParam* sampleParam)
@@ -45,12 +41,12 @@ EXTERNC int32_t MusicPlc16bStateInit(void* pMusicPlcStateIn, int32_t overlapMs, 
 	int32_t overlapInSamples = overlapMs * sampleParam->fsHz / 1000;
 
 	memset(pPlc, 0, MusicPlc16bGetStateSize(overlapMs, sampleParam));
+	
+	pPlc->info.Init(sampleParam->fsHz, sizeof(i16), sampleParam->channels, (i32)((u64)sampleParam->frameSamples * 1000 * 1000 / sampleParam->fsHz));
+	pPlc->frameSamples = sampleParam->frameSamples;
 
-	pPlc->inHistory = new((uint8_t*)pPlc + sizeof(MusicPlcState)) AudioSamples16();
-	pPlc->infuture = new((uint8_t*)pPlc->inHistory + sizeof(AudioSamples16)) AudioSamples16();
-	pPlc->fillSignal = new((uint8_t*)pPlc->infuture + sizeof(AudioSamples16)) AudioSamples16();
-	pPlc->muteFactor = new((uint8_t*)pPlc->fillSignal + sizeof(AudioSamples16)) AudioSamples16();
-	return MusicPlcStateInitInner(pMusicPlcStateIn, overlapInSamples, decayTimeMs, sampleParam, sizeof(int16_t));
+	pPlc->asCalculator = new((uint8_t*)pPlc + sizeof(MusicPlcState)) AS_Calculator16();
+	return MusicPlcStateInitInner(pMusicPlcStateIn, overlapInSamples, decayTimeMs);
 }
 
 EXTERNC int32_t MusicPlc16b(void* pMusicPlcStateIn, uint8_t* in, int32_t inLen, int32_t* inUsed, uint8_t* out, int32_t* outLen, bool isLost)
@@ -62,29 +58,22 @@ EXTERNC int32_t MusicPlc16b(void* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 		*outLen = 0;
 	if (!pMusicPlcStateIn)
 		return MUSIC_PLC_RET_FAIL;
+
+	MusicPlcState* plcState = (MusicPlcState*)pMusicPlcStateIn;
 	if (isLost == false) {
 		if (!in
-			|| inLen < ((int32_t)((MusicPlcState*)pMusicPlcStateIn)->frameSamples * ((MusicPlcState*)pMusicPlcStateIn)->channels))
+			|| inLen < (plcState->frameSamples * plcState->info._bytesPerSample))
 			return MUSIC_PLC_RET_FAIL;
 	}
 	if (!out)
 		return MUSIC_PLC_RET_FAIL;
 
-	int16_t channels = ((MusicPlcState*)pMusicPlcStateIn)->channels;
-	int16_t width = ((MusicPlcState*)pMusicPlcStateIn)->width;
-	int32_t frameSamples = ((MusicPlcState*)pMusicPlcStateIn)->frameSamples;
+	AudioSamples pIn;
+	pIn.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, (u8*)in, inLen / plcState->info._bytesPerSample);
+	
+	AudioSamples pOut;
+	pOut.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, (u8*)out, plcState->frameSamples);
 
-	AudioSamples16 pIn;
-	pIn.Init((uint8_t*)in, channels, inLen / channels / width);
-
-	AudioSamples16 pOut;
-	pOut.Init((uint8_t*)out, channels, frameSamples);
-
-	int32_t ret = MusicPlcRun((MusicPlcState*)pMusicPlcStateIn, &pIn, inUsed, &pOut, outLen, isLost);
-
-	if (ret != MUSIC_PLC_RET_SUCCESS)
-		return MUSIC_PLC_RET_FAIL;
-
-	return MUSIC_PLC_RET_SUCCESS;
+	return MusicPlcRun((MusicPlcState*)pMusicPlcStateIn, &pIn, inUsed, &pOut, outLen, isLost);
 }
-
+#endif

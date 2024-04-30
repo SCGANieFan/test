@@ -1,4 +1,4 @@
-
+#if 0
 #include"AudioSamplesCom.h"
 #include"AudioSamples.h"
 
@@ -137,3 +137,4 @@ void AudioSamples::used(int32_t usedSample)
 	_startSamples += usedSample;
 	_startSamples = _startSamples < _samples ? _startSamples : _samples;
 }
+#endif

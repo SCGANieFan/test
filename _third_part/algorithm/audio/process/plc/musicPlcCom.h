@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include<stdint.h>
 
 #ifdef __cplusplus
@@ -11,7 +9,6 @@
 
 #define MUSIC_PLC_RET_SUCCESS 0
 #define MUSIC_PLC_RET_FAIL -1
-
 
 typedef struct
 {

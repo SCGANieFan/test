@@ -1,16 +1,13 @@
-#if 0
-#include<string.h>
-
+#if 1
 #include "MAF_MusicPlc32.h"
 #include "MAF.Objects.h"
+#include "MAF.String.h"
 #include "MAF.Interface.MusicPlc.h"
+#include "musicPlc32b.h"
 
-
-#include"musicPlc32b.h"
-
-maf_void maf_algorithm_audio_music_plc32_register()
+maf_void maf_music_plc32_register()
 {
-	MAF_Object::Registe<MAF_MusicPlc32>("proc-mplc32");
+	MAF_Object::Registe<MAF_MusicPlc32>("music_plc32");
 }
 
 MAF_MusicPlc32::MAF_MusicPlc32()
@@ -20,22 +17,19 @@ MAF_MusicPlc32::~MAF_MusicPlc32()
 {
 }
 
-
 maf_int32 MAF_MusicPlc32::Init()
 {
 	MAF_PRINT();
-	AA_MusicPlcParam* musicPlcParam = (AA_MusicPlcParam*)param;
 
 	MusicPlcSampleParam sampleParam;
-	memset(&sampleParam, 0, sizeof(MusicPlcSampleParam));
-	sampleParam.fsHz = musicPlcParam->fsHz;
-	sampleParam.channels = musicPlcParam->channels;
-	sampleParam.frameSamples = musicPlcParam->frameSamples;
+	MAF_MEM_SET(&sampleParam, 0, sizeof(MusicPlcSampleParam));
+	sampleParam.fsHz = _rate;
+	sampleParam.channels = _ch;
+	sampleParam.frameSamples = _frameSamples;
 
 	_hdSize = MusicPlc32bGetStateSize(
-		musicPlcParam->overlapMs,
+		_overlapMs,
 		&sampleParam);
-
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (unsigned)_hd, _hdSize);
 	if (!_hd)
@@ -45,15 +39,14 @@ maf_int32 MAF_MusicPlc32::Init()
 
 	maf_int32 ret = MusicPlc32bStateInit(
 		_hd,
-		musicPlcParam->overlapMs,
-		musicPlcParam->decayTimeMs,
+		_overlapMs,
+		_decayMs,
 		&sampleParam);
 
 	if (ret < 0)
 	{
 		return -1;
 	}
-
 	return 0;
 }
 
@@ -64,21 +57,22 @@ maf_int32 MAF_MusicPlc32::Deinit()
 	return 0;
 }
 
-maf_int32 MAF_MusicPlc32::Process(MAF_AudioFrame* frameIn, MAF_AudioFrame* frameOut)
+maf_int32 MAF_MusicPlc32::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
 	maf_int32 inUsed = 0;
 	maf_int32 ret;
 
-	maf_int32 outByte = frameOut->max - frameOut->off - frameOut->size;
+	maf_int32 outByte = dataOut->GetLeftSize();
 
-	if (frameIn->flags & MAFA_FRAME_IS_EMPTY)
+	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
 	{
+		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
 		ret = MusicPlc32b(
 			_hd,
 			NULL,
 			0,
 			NULL,
-			frameOut->buff + frameOut->off + frameOut->size,
+			dataOut->GetLeftData(),
 			&outByte,
 			true);
 	}
@@ -86,10 +80,10 @@ maf_int32 MAF_MusicPlc32::Process(MAF_AudioFrame* frameIn, MAF_AudioFrame* frame
 	{
 		ret = MusicPlc32b(
 			_hd,
-			frameIn->buff + frameIn->off,
-			frameIn->size,
+			dataIn->GetData(),
+			dataIn->GetSize(),
 			&inUsed,
-			frameOut->buff + frameOut->off + frameOut->size,
+			dataOut->GetLeftData(),
 			&outByte,
 			false);
 	}
@@ -97,10 +91,26 @@ maf_int32 MAF_MusicPlc32::Process(MAF_AudioFrame* frameIn, MAF_AudioFrame* frame
 	{
 		return -1;
 	}
-	frameIn->size -= inUsed;
-	frameIn->off += inUsed;
-	frameOut->size += outByte;
+	dataIn->Used(inUsed);
+	dataIn->ClearUsed();
+	dataOut->Append(outByte);
 	return 0;
+}
+
+maf_int32 MAF_MusicPlc32::Set(const maf_int8* key, maf_void* val)
+{
+	if (MAF_String::StrCompare(key, "decayMs")) {
+		_decayMs = (maf_int16)val; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "overlapMs")) {
+		_overlapMs = (maf_int16)val; return 0;
+	}
+	return MAF_Audio::Set(key, val);
+}
+
+maf_int32 MAF_MusicPlc32::Get(const maf_int8* key, maf_void* val)
+{
+	return MAF_Audio::Get(key, val);
 }
 
 

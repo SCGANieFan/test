@@ -2,6 +2,7 @@
 #include"PlcTest.h"
 #include"OggTest.h"
 #include"OpusTest.h"
+#include"MTF_demoTest.h"
 
 int main()
 {
@@ -12,6 +13,7 @@ int main()
 	PlcTest();
 	//OggTest();
 	//OpusTest();
+	//MTF_demo_Test();
 	return 1;
 }
 

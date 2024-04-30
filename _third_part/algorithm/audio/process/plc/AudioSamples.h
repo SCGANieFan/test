@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 
 #include<stdint.h>
@@ -55,3 +56,4 @@ protected:
 
 
 
+#endif

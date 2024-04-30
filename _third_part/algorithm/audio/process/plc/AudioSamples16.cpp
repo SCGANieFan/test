@@ -1,3 +1,4 @@
+#if 0
 #include"AudioSamplesCom.h"
 #include"AudioSamples16.h"
 
@@ -156,3 +157,4 @@ int16_t AudioSamples16::WaveFormMatch(uint8_t* comp, int32_t seekSample, int32_t
 
 	return lagOpt;
 }
+#endif

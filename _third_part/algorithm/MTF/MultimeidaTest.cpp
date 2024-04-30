@@ -10,9 +10,7 @@
 
 
 
-#define MTF_REGISTER(name) \
-extern void mtf_##name##_register();\
-			mtf_##name##_register();
+
 
 bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** param)
 {
@@ -59,11 +57,11 @@ bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** para
 int32_t MultiemdiaTestInit()
 {
 	MTF_Memory::Init(malloc, realloc, calloc, free);
-
+#if 0
 	MTF_REGISTER(pcm_demuxer);
 	MTF_REGISTER(music_plc);
 	MTF_REGISTER(pcm_muxer);
-
+#endif
 	return 0;
 }
 

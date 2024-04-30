@@ -1,23 +1,20 @@
-#include "MTF.MusicPlc.h"
+#include "MTF.demo.h"
 #include "MTF.String.h"
 #include "MTF.Objects.h"
 #include "MAF.h"
 
-void mtf_music_plc_register()
+void mtf_audio_demo_register()
 {
-	MTF_Objects::Registe<MTF_MusicPlc>("music_plc");
-#if 1
-	MAF_REGISTER(music_plc16);
-#else
-	MAF_REGISTER(music_plc32);
-#endif
+	MTF_Objects::Registe<MTF_AudioDemo>("audio_demo");
+
+	MAF_REGISTER(audio_demo);
 }
-MTF_MusicPlc::MTF_MusicPlc()
+MTF_AudioDemo::MTF_AudioDemo()
 {
 
 }
 
-MTF_MusicPlc::~MTF_MusicPlc()
+MTF_AudioDemo::~MTF_AudioDemo()
 {
 	if (_iData.Data())
 	{
@@ -36,14 +33,10 @@ MTF_MusicPlc::~MTF_MusicPlc()
 	}
 }
 
-mtf_int32 MTF_MusicPlc::Init()
+mtf_int32 MTF_AudioDemo::Init()
 {	
 	//lib init
-#if 1
-	const mtf_int8* type = "music_plc16";
-#else
-	const mtf_int8* type = "music_plc32";
-#endif
+	const mtf_int8* type = "audio_demo";
 	MA_Ret ret;
 	ret = MAF_GetHandleSize(type, &_hdSize);
 	if (ret != MA_RET_SUCCESS)
@@ -53,7 +46,7 @@ mtf_int32 MTF_MusicPlc::Init()
 	_hd = MTF_MALLOC(_hdSize);
 	if (!_hd)
 		MTF_PRINT("err");
-
+#if 0
 	mtf_void* param[] = {
 	(mtf_void*)type,
 	(mtf_void*)MTF_Memory::Malloc,
@@ -69,6 +62,10 @@ mtf_int32 MTF_MusicPlc::Init()
 
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
 							 ",rate=$5,ch=$6,fSamples=$7,decayMs=$8,overlapMs=$9";
+#else
+	mtf_void* param[] = { (mtf_void*)type };
+	const mtf_int8* script = "type=$0";
+#endif
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");
@@ -81,16 +78,15 @@ mtf_int32 MTF_MusicPlc::Init()
 	return 0;
 }
 
-mtf_int32 MTF_MusicPlc::receive(MTF_Data& iData)
+mtf_int32 MTF_AudioDemo::receive(MTF_Data& iData)
 {
 	_iData.Append(iData.Data(), iData._size);
 	iData.Used(iData._size);
 	return 0;
 }
 
-#define FRAMES_LOST 5
-#define FRAMES_TOTAL 50
-mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
+
+mtf_int32 MTF_AudioDemo::generate(MTF_Data*& oData)
 {
 	AA_Data AA_iData;
 	MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
@@ -98,10 +94,7 @@ mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 	AA_iData.max = AA_iData.size = _iData._size;
 
 	_frames++;
-	if (_frames % FRAMES_TOTAL > (FRAMES_TOTAL - FRAMES_LOST))
-		AA_iData.flags |= AA_DataFlag_FRAME_IS_EMPTY;
-	else
-		AA_iData.flags &= ~AA_DataFlag_FRAME_IS_EMPTY;
+
 
 	AA_Data AA_oData;
 	MTF_MEM_SET(&AA_oData, 0, sizeof(AA_Data));
@@ -115,9 +108,9 @@ mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 	return 0;
 }
 
-mtf_int32 MTF_MusicPlc::Set(const mtf_int8* key, mtf_void* val)
+mtf_int32 MTF_AudioDemo::Set(const mtf_int8* key, mtf_void* val)
 {
-#if 1
+#if 0
 	if (MTF_String::StrCompare(key, "decayMs")) {
 		_decayMs = (mtf_int16)val; return 0;
 	}
@@ -127,7 +120,7 @@ mtf_int32 MTF_MusicPlc::Set(const mtf_int8* key, mtf_void* val)
 #endif
 	return MTF_AudioProcess::Set(key, val);
 }
-mtf_int32 MTF_MusicPlc::Get(const mtf_int8* key, mtf_void* val)
+mtf_int32 MTF_AudioDemo::Get(const mtf_int8* key, mtf_void* val)
 {
 	return MTF_AudioProcess::Get(key, val);
 }

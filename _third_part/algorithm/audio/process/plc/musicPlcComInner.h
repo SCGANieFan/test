@@ -1,15 +1,9 @@
 #pragma once
 
-#include<stdint.h>
-#include"AudioSamples.h"
+#include"Algo.Type.h"
+#include"Algo.AudioSamlpes.h"
+#include"Algo.AS_Calculator.h"
 
-#if 0
-#define STATIC static
-#define INLINE inline
-#else
-#define STATIC 
-#define INLINE
-#endif
 
 #define MUSIC_PLC_MIN_FRAME_MS 10
 #define MUSIC_PLC_SEEK_MS_DEFAULT 2
@@ -26,46 +20,44 @@ typedef enum {
 
 typedef struct
 {
-	int32_t fsHz;
-	int16_t channels;
-	int16_t width;
+	AudioInfo info;
+	i32 frameSamples;
+	
+	i32 lostCount;
+	i32 overlapInSamples;	
+	i32 frameSamplesInner;
+	i32 decaySamples;
 
-	int32_t lostCount;
-	int32_t overlapInSamples;
-	int32_t frameSamples;
-	int32_t frameSamplesInner;
-	int32_t decaySamples;
+	AS_Calculator *asCalculator;
+	AudioSamples inHistory;
+	AudioSamples infuture;
+	AudioSamples fillSignal;
+	AudioSamples muteFactor;
 
-	AudioSamples* inHistory;
-	AudioSamples* infuture;
-	AudioSamples* fillSignal;
-	AudioSamples* muteFactor;
-
-	int32_t decaySamplesNow;
-	int32_t fillSignalSampleIndex;
-	int32_t matchSamples;
-	int32_t seekSamples;
-	bool is24bL;
-	bool quickDeal;
-	uint8_t reserve[4];
+	i32 decaySamplesNow;
+	i32 fillSignalSampleIndex;
+	i32 matchSamples;
+	i32 seekSamples;
+	b1 quickDeal;
+	u8 reserve[4];
 }MusicPlcState;
 
 
 
-STATIC INLINE int32_t MusicPlcGetMuteFactorSamples(int32_t frameSamples);
 
-STATIC INLINE int32_t MusicPlcGetFillSignalSamples(int32_t frameSamples);
+i32 MusicPlcGetMuteFactorSamples(i32 frameSamples);
 
-STATIC INLINE int32_t MusicPlcGetHistorySamples(int32_t overlapInSamples, int32_t frameSamples);
+i32 MusicPlcGetFillSignalSamples(i32 frameSamples);
 
-STATIC INLINE int32_t MusicPlcGetFutureSamples(int32_t frameSamples);
+i32 MusicPlcGetHistorySamples(i32 overlapInSamples, i32 frameSamples);
 
-STATIC INLINE int32_t MusicPlcGetBufSamples(int32_t overlapInSamples, int32_t frameSamplesInner, int32_t frameSamples);
+i32 MusicPlcGetFutureSamples(i32 frameSamples);
 
-STATIC INLINE bool MusicPlcCheckParam(int32_t overlapMs, int32_t frameSamples, int32_t fsHz, int16_t channels);
+i32 MusicPlcGetBufSamples(i32 overlapInSamples, i32 frameSamplesInner, i32 frameSamples);
 
+b1 MusicPlcCheckParam(i32 overlapMs, i32 frameSamples, i32 fsHz, i16 channels);
 
-STATIC int32_t MusicPlcStateInitInner(void* pMusicPlcStateIn, int32_t overlapInSamples,
-	int32_t decayTimeMs, MusicPlcSampleParam* sampleParam, int16_t width);
+i32 MusicPlcStateInitInner(void* pMusicPlcStateIn, i32 overlapInSamples, i32 decayTimeMs);
+	
 
-STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, int32_t* inUsed, AudioSamples* pOut, int32_t* outLen, bool isLost);
+i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioSamples* pOut, i32* outLen, b1 isLost);

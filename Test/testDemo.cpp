@@ -1,33 +1,47 @@
 #if 1
 #include<string.h>
-#include"MultimeidaTest.h"
-//#include"MTF.Object.h"
+#include<stdio.h>
 
 
-#define PATH "../../source/audio/plc/"
-#define FILE_NAME "chirp_sin_16k1ch.wav"
+class P0
+{
+public:
+	P0() {};
+	~P0() {};
+public:
+	static void Print() { printf("p0\n"); };
+	int a = 1;
+};
 
+class P1
+{
+public:
+	P1() {};
+	~P1() {};
+public:
+	void Print() { printf("p1\n"); };
+	int b = 2;
+};
+
+class Child: public P0,  public P1
+{
+public:
+	Child() {};
+	~Child() {};
+public:
+};
 
 
 bool testDemo()
 {
+	Child c;
+	P0* p0 = (P0*)&c;
+	//P1* p1 = (P1*)&c;
 
-#if 1
-	MultiemdiaTestInit();
-	void* param[] = {
-		(void*)(PATH FILE_NAME),
-		(void*)(PATH FILE_NAME ".plc.pcm"),
-	};
-	const char* str = {
-	"|pcm_demuxer,url=$0|-->"
-	"|music_plc|-->"
-	"|pcm_muxer,url=$1|"
-	};
-	MultiemdiaApi(str, param);
-	return 1;
-#else
 
-#endif
+	p0->Print();
+	((P1*)p0)->Print();
+	return 0;
 }
 
 #endif
