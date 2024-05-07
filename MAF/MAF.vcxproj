@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Data.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA.Info.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.String.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Audio.cpp" />
@@ -75,7 +76,6 @@
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Algorithm.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Memory.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Data.h" />

@@ -12,15 +12,31 @@ i32 AudioSamples::GetValidSamples()
 	return _validSamples;
 }
 
+i32 AudioSamples::GetUsedSamples()
+{
+	return _usedSamples;
+}
+
 i32 AudioSamples::GetSamplesMax()
 {
 	return _samples;
+}
+
+i32 AudioSamples::GetLeftSamples()
+{
+	return _samples - _usedSamples - _validSamples;
 }
 
 i32 AudioSamples::GetSizeMax()
 {
 	return _samplesTotal * _info->_width;
 }
+
+b1 AudioSamples::IsFull()
+{
+	return GetValidSamples() == GetSamplesMax();
+}
+
 
 b1 AudioSamples::Init(const AudioInfo* pInfo, u8* buf, i32 samples, i16 fpNum)
 {
@@ -39,17 +55,25 @@ b1 AudioSamples::Append(AudioSamples& src, i32 srcSample, i32 appendSample)
 	_size += copyByte;
 	return true;
 }
+b1 AudioSamples::Append(i32 appendSample)
+{
+	_validSamples += appendSample;
+	_size += appendSample * _info->_bytesPerSample;
+	return true;
+}
 
 b1 AudioSamples::Used(i32 usedSample)
 {
 	_off += usedSample * _info->_bytesPerSample;
 	_size -= usedSample * _info->_bytesPerSample;
 	_validSamples -= usedSample;
+	_usedSamples += usedSample;
 	return true;
 }
 
 b1 AudioSamples::ClearUsed()
 {
+	_usedSamples = 0;
 	Data::ClearUsed();
 	return true;
 }

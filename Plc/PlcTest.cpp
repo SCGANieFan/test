@@ -1,8 +1,8 @@
-#include"MultimeidaTest.h"
+#include"MTF.h"
 #define PATH "../../source/audio/plc/"
 
 #if 1
-#if 1
+#if 0
 #define FILE_NAME "chirp_sin_16k1ch.wav"
 #define RATE 16000
 #define CHANNEL 1
@@ -25,8 +25,8 @@
 #define RATE 48000
 #define CHANNEL 4
 #define WIDTH 4
-#define FRAME_MS 20
-#define DECAY_MS 50
+#define FRAME_MS 2
+#define DECAY_MS 40
 #define OVERLAP_MS 2
 
 #endif

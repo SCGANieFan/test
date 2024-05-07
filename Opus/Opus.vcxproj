@@ -207,8 +207,8 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\tansig_table.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\win32\config.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\win32\version.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusDec.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusEnc.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusDec.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusEnc.h" />
     <ClInclude Include="OpusTest.h" />
   </ItemGroup>
   <ItemGroup>
@@ -343,8 +343,8 @@
     <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_decoder.c" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_encoder.c" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\repacketizer.c" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusDec.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusEnc.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusDec.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusEnc.cpp" />
     <ClCompile Include="OpusTest.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 #include"PlcTest.h"
 #include"OggTest.h"
 #include"OpusTest.h"
+#include"AudioSpeedCtrTest.h"
 #include"MTF_demoTest.h"
 
 int main()
@@ -10,7 +11,8 @@ int main()
 	//StackTest();
 	//testDemo();
 	//OggTest();
-	PlcTest();
+	//PlcTest();
+	AudioSpeedCtrTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();

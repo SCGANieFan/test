@@ -21,6 +21,7 @@ typedef enum {
 typedef struct
 {
 	AudioInfo info;
+	AudioInfo muteInfo;
 	i32 frameSamples;
 	
 	i32 lostCount;
@@ -39,25 +40,17 @@ typedef struct
 	i32 matchSamples;
 	i32 seekSamples;
 	b1 quickDeal;
-	u8 reserve[4];
 }MusicPlcState;
 
 
+void* MusicplcMalloc(i32 size);
 
-
-i32 MusicPlcGetMuteFactorSamples(i32 frameSamples);
-
-i32 MusicPlcGetFillSignalSamples(i32 frameSamples);
-
-i32 MusicPlcGetHistorySamples(i32 overlapInSamples, i32 frameSamples);
-
-i32 MusicPlcGetFutureSamples(i32 frameSamples);
-
-i32 MusicPlcGetBufSamples(i32 overlapInSamples, i32 frameSamplesInner, i32 frameSamples);
+void MusicplcFree(void* ptr);
 
 b1 MusicPlcCheckParam(i32 overlapMs, i32 frameSamples, i32 fsHz, i16 channels);
 
-i32 MusicPlcStateInitInner(void* pMusicPlcStateIn, i32 overlapInSamples, i32 decayTimeMs);
+i32 MusicPlcStateInitInner(MusicPlcState* pMusicPlcStateIn, i32 overlapInSamples, i32 decayTimeMs);
 	
-
 i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioSamples* pOut, i32* outLen, b1 isLost);
+
+i32 MusicPlcStateDeInitInner(MusicPlcState* pMusicPlc);

@@ -48,13 +48,13 @@
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Interface.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\MultimeidaTest.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MTF\MTF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Memory.h">
@@ -102,12 +102,12 @@
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Interface.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\MultimeidaTest.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MTF\MTF.h" />
   </ItemGroup>
 </Project>

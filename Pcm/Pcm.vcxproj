@@ -67,14 +67,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmDemux.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmMux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmDemux.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA_PcmMux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.h" />
   </ItemGroup>
@@ -232,24 +232,28 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -416,7 +420,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../_third_part/algorithm/MAF;../_third_part/algorithm/MAF/base;../_third_part/algorithm/MAF/inc;../_third_part/algorithm/MAF/interface/pcm;../_third_part/algorithm/MTF;../_third_part/algorithm/MTF/base;../_third_part/algorithm/MTF/interface/pcm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MTF_PATH)/interface/pcm;$(MAF_PATH)/interface/pcm;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WholeProgramOptimization>false</WholeProgramOptimization>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <ALGO_PATH>../_third_part/algorithm</ALGO_PATH>
+    <ALGO_AUDIO_PATH>../_third_part/algorithm/audio</ALGO_AUDIO_PATH>
+    <MAF_PATH>../_third_part/algorithm/MAF</MAF_PATH>
+    <MTF_PATH>../_third_part/algorithm/MTF</MTF_PATH>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="ALGO_PATH">
+      <Value>$(ALGO_PATH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="ALGO_AUDIO_PATH">
+      <Value>$(ALGO_AUDIO_PATH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MAF_PATH">
+      <Value>$(MAF_PATH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MTF_PATH">
+      <Value>$(MTF_PATH)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

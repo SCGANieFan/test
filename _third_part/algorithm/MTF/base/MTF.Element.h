@@ -11,7 +11,7 @@ class MTF_Element :public MTF_Object
 {
 public:
 	MTF_Element();
-	~MTF_Element();
+	virtual ~MTF_Element();
 public:
 	virtual mtf_int32 Init() = 0;
 	virtual mtf_int32 Run() = 0;

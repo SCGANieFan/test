@@ -6,9 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -29,6 +26,9 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Data.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp">
       <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>

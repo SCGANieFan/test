@@ -13,12 +13,18 @@ public:
 	virtual b1 RightShift(AudioSamples& as, i32 startSample, i32 samples, i16 bits) = 0;
 	virtual b1 RightShiftSigned(AudioSamples& as, i32 startSample, i32 samples, i16 bits) = 0;
 public:
-	//add
-	//reduce
-	//product
 	virtual b1 Product(AudioSamples& dst, i32 dstSample, AudioSamples& src, i32 srcSample, i32 productSample) = 0;
 	virtual b1 OverlapAdd(AudioSamples& dst, i32 dstSample, AudioSamples& src, i32 srcSample, i32 overlapSample) = 0;
-	virtual i16 WaveFormMatch(AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample) = 0;
+
+	//mode choose
+	//sum
+	//accorelation
+	enum class WaveformMatchChoose_e {
+		WAVEFORM_MATCH_SUM=0,
+		WAVEFORM_MATCH_ACCORELATION,
+		WAVEFORM_MATCH_MAX,
+	};
+	virtual i16 WaveFormMatch(WaveformMatchChoose_e mode, AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample) = 0;
 };
 
 #endif

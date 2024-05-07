@@ -16,11 +16,11 @@
     <Filter Include="lib\audiosample">
       <UniqueIdentifier>{9a300a1b-4737-4b2d-84f6-386ebbf5f6bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\base">
+      <UniqueIdentifier>{2f11cfcc-daa8-4a86-94bc-c0e09dc9e04d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF_demo.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
@@ -28,9 +28,6 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="MTF_demoTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.WaveFormMatch.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
@@ -58,11 +55,14 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
+      <Filter>lib\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF_demo.h">
-      <Filter>maf</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
       <Filter>mtf</Filter>
     </ClInclude>
@@ -70,18 +70,6 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="MTF_demoTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.h">
       <Filter>lib\audiosample</Filter>
     </ClInclude>
@@ -93,6 +81,24 @@
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.h">
       <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.h">
+      <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

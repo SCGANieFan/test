@@ -4,7 +4,7 @@ class MTF_Process :public MTF_Element
 {
 public:
 	MTF_Process();
-	~MTF_Process();
+	virtual ~MTF_Process();
 
 private:
 	virtual mtf_int32 Pull(MTF_Data*& iData) final;

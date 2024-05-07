@@ -220,24 +220,28 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -470,9 +474,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../_third_part/algorithm/audio/process/plc;../_third_part/algorithm/audio/com;../_third_part/algorithm/MAF;../_third_part/algorithm/MAF/base;../_third_part/algorithm/MAF/inc;../_third_part/algorithm/MAF/interface/plc;../_third_part/algorithm/MTF;../_third_part/algorithm/MTF/base;../_third_part/algorithm/MTF/interface/plc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/plc;$(MTF_PATH)/interface/plc;$(MAF_PATH)/interface/plc;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <CompileAs>CompileAsCpp</CompileAs>
       <Optimization>Disabled</Optimization>
@@ -521,28 +525,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples16.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples32.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp" />
     <ClCompile Include="PlcTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples16.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples32.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamplesCom.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcCom.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h" />
     <ClInclude Include="PlcTest.h" />
   </ItemGroup>

@@ -6,7 +6,7 @@ class MTF_AudioProcess :public MTF_Process, public MTF_AudioInfo
 {
 public:
 	MTF_AudioProcess();
-	~MTF_AudioProcess();
+	virtual ~MTF_AudioProcess();
 protected:
 	virtual mtf_int32 Init() = 0;
 	virtual mtf_int32 receive(MTF_Data& iData) = 0;

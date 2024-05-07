@@ -14,12 +14,16 @@ public:
 	
 	//get
 	i32 GetValidSamples();
+	i32 GetUsedSamples();
 	i32 GetSamplesMax();
+	i32 GetLeftSamples();
 	i32 GetSizeMax();
+	b1 IsFull();
 
 	//
 	b1 Init(const AudioInfo* pInfo, u8* buf, i32 samples, i16 fpNum = 0);
 	b1 Append(AudioSamples& src, i32 srcSample, i32 appendSample);
+	b1 Append(i32 appendSample);
 	b1 Used(i32 usedSample);
 	b1 ClearUsed();
 	b1 Clear(i32 usedSample);
@@ -27,6 +31,7 @@ protected:
 	i16 _fpNum = 0;	
 	i32 _samples = 0;
 	i32 _validSamples = 0;
+	i32 _usedSamples = 0;
 	i32 _samplesTotal = 0;//_samples * channel
 };
 

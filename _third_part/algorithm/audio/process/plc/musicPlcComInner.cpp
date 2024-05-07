@@ -2,31 +2,50 @@
 #include"musicPlcCom.h"
 #include"musicPlcComInner.h"
 
-i32 MusicPlcGetMuteFactorSamples(i32 frameSamples)
+#if 1
+#include"Algo.Printer.h"
+#include"Algo.Memory.h"
+
+void* MusicplcMalloc(i32 size) {
+#if 1
+	static i32 sizeTotal = 0;
+	sizeTotal += size;
+	void *ptr= ALGO_MALLOC(size);
+	ALGO_PRINT("malloc, ptr:%x, size:%d, sizeTotal:%d,", (u32)ptr, size, sizeTotal);
+	return ptr;
+#else
+	return ALGO_MALLOC(size);
+#endif
+}
+
+void MusicplcFree(void* ptr) {
+#if 1
+	ALGO_PRINT("free, ptr:%x", (u32)ptr);
+	return ALGO_FREE(ptr);
+#else
+	return ALGO_FREE(ptr);
+#endif
+}
+#endif
+
+STATIC INLINE i32 MusicPlcGetMuteFactorSamples(i32 frameSamples)
 {
 	return frameSamples;
 }
 
-i32 MusicPlcGetFillSignalSamples(i32 frameSamples)
+STATIC INLINE i32 MusicPlcGetFillSignalSamples(i32 frameSamples)
 {
 	return frameSamples;
 }
 
-i32 MusicPlcGetHistorySamples(i32 overlapInSamples, i32 frameSamples)
+STATIC INLINE i32 MusicPlcGetHistorySamples(i32 overlapInSamples, i32 frameSamples)
 {
 	return frameSamples + overlapInSamples;
 }
 
-i32 MusicPlcGetFutureSamples(i32 frameSamples)
+STATIC INLINE i32 MusicPlcGetFutureSamples(i32 frameSamples)
 {
 	return frameSamples;
-}
-
-i32 MusicPlcGetBufSamples(i32 overlapInSamples, i32 frameSamplesInner, i32 frameSamples)
-{
-	return MusicPlcGetHistorySamples(overlapInSamples, frameSamplesInner)
-		+ MusicPlcGetFutureSamples(frameSamples)
-		+ MusicPlcGetFillSignalSamples(frameSamplesInner);
 }
 
 b1 MusicPlcCheckParam(i32 overlapMs, i32 frameSamples, i32 fsHz, i16 channels)
@@ -43,34 +62,37 @@ b1 MusicPlcCheckParam(i32 overlapMs, i32 frameSamples, i32 fsHz, i16 channels)
 }
 
 
-i32 MusicPlcStateInitInner(void* pMusicPlcStateIn, i32 overlapInSamples, i32 decayTimeMs)
+i32 MusicPlcStateInitInner(MusicPlcState* pMusicPlc, i32 overlapInSamples, i32 decayTimeMs)
 {
-	MusicPlcState* pPlc = (MusicPlcState*)pMusicPlcStateIn;
+	MusicPlcState* pPlc = (MusicPlcState*)pMusicPlc;
 	pPlc->overlapInSamples = overlapInSamples;
 	pPlc->decaySamples = decayTimeMs * pPlc->info._rate / 1000;
 	
 	pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->info._rate * MUSIC_PLC_MIN_FRAME_MS / 1000);
+
+	u8* ptr;
+	i32 samples;
+	samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
+	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
+	pPlc->inHistory.Init(&pPlc->info, ptr, samples);
+	pPlc->inHistory.Append(pPlc->inHistory, 0, pPlc->inHistory.GetSamplesMax());
+
+	samples = MusicPlcGetFutureSamples(pPlc->frameSamples);
+	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
+	pPlc->infuture.Init(&pPlc->info, ptr, samples);
+
+	samples = MusicPlcGetFillSignalSamples(pPlc->frameSamplesInner);
+	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
+	pPlc->fillSignal.Init(&pPlc->info, ptr, samples);
 	
-	u8* ptr = (u8*)pPlc->asCalculator + sizeof(AS_Calculator);
-	ptr = (u8*)((((u32)ptr + 4) >> 2) << 2);
+	pPlc->muteInfo.Init(pPlc->info._rate, pPlc->info._width, 1);
+	samples = MusicPlcGetMuteFactorSamples(pPlc->frameSamples);
+	ptr = (u8*)MusicplcMalloc(samples * pPlc->muteInfo._bytesPerSample);
+	pPlc->muteFactor.Init(&pPlc->muteInfo, ptr, samples, 14);
 
-	pPlc->inHistory.Init(&pPlc->info, ptr, MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner));
-	pPlc->inHistory.Append(pPlc->inHistory,0, pPlc->inHistory.GetSamplesMax());
-
-	pPlc->infuture.Init(&pPlc->info, &(pPlc->inHistory)[pPlc->inHistory.GetSamplesMax()], MusicPlcGetFutureSamples(pPlc->frameSamples));
-		
-	pPlc->fillSignal.Init(&pPlc->info, &(pPlc->infuture)[pPlc->infuture.GetSamplesMax()], MusicPlcGetFillSignalSamples(pPlc->frameSamplesInner));
-		
 	pPlc->fillSignalSampleIndex = 0;
-	pPlc->muteFactor.Init(
-		&pPlc->info,
-		&(pPlc->fillSignal)[pPlc->fillSignal.GetSamplesMax()],
-		MusicPlcGetMuteFactorSamples(pPlc->frameSamples),
-		14);
-
 	pPlc->matchSamples = MUSIC_PLC_MATCH_MS_DEFAULT * pPlc->info._rate / 1000;
 	pPlc->matchSamples = pPlc->matchSamples < pPlc->overlapInSamples ? pPlc->matchSamples : pPlc->overlapInSamples;
-
 	pPlc->seekSamples = MUSIC_PLC_SEEK_MS_DEFAULT * pPlc->info._rate / 1000;
 
 	return MUSIC_PLC_RET_SUCCESS;
@@ -78,7 +100,7 @@ i32 MusicPlcStateInitInner(void* pMusicPlcStateIn, i32 overlapInSamples, i32 dec
 
 i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioSamples* pOut, i32* outLen, b1 isLost)
 {
-	MUTE_MODE muteMode = MUTE_MODE_DOMUTE;
+	MUTE_MODE muteMode = MUTE_MODE_NOMUTE;
 	if (isLost == true)
 	{
 		pMusicPlc->lostCount += 1;
@@ -86,6 +108,7 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		{
 #if 1
 			i32 bestLag = pMusicPlc->asCalculator->WaveFormMatch(
+				AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
 				pMusicPlc->inHistory,
 				0,
 				pMusicPlc->inHistory,
@@ -117,6 +140,7 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		}
 		else
 		{
+			muteMode = MUTE_MODE_DOMUTE;
 			for (i32 i = 0; i < pMusicPlc->frameSamples; i++) {
 				pMusicPlc->decaySamplesNow++;
 				pMusicPlc->decaySamplesNow = MIN(pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
@@ -144,8 +168,7 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 				pMusicPlc->fillSignalSampleIndex = (pMusicPlc->fillSignalSampleIndex + 1) % pMusicPlc->fillSignal.GetValidSamples();
 			}
 			pMusicPlc->asCalculator->OverlapAdd(pMusicPlc->infuture, 0, *pIn, 0, pMusicPlc->overlapInSamples);
-			pMusicPlc->infuture.Append(*pIn, pMusicPlc->overlapInSamples, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
-			pMusicPlc->infuture.Append(*pIn, 0, pMusicPlc->frameSamples);
+			pMusicPlc->infuture.Append(*pIn, pMusicPlc->overlapInSamples, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);			
 		}
 		else
 		{
@@ -157,12 +180,9 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		}
 
 		//muteFactor
-		if ((pMusicPlc->decaySamplesNow - 1) < 0)
+		if ((pMusicPlc->decaySamplesNow - 1) >= 0)
 		{
-			muteMode = MUTE_MODE_NOMUTE;
-		}
-		else
-		{
+			muteMode = MUTE_MODE_DOMUTE;
 			for (i32 i = 0; i < pMusicPlc->frameSamples; i++)
 			{
 				pMusicPlc->decaySamplesNow--;
@@ -173,15 +193,14 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		}
 	}
 	//muting
-	if (muteMode == MUTE_MODE_DOMUTE)
-	{
-		pMusicPlc->asCalculator->Product(pMusicPlc->infuture, 0, pMusicPlc->muteFactor, 0, pMusicPlc->frameSamples);
+	if (muteMode != MUTE_MODE_NOMUTE) {
+		if (muteMode == MUTE_MODE_DOMUTE) {
+			pMusicPlc->asCalculator->Product(pMusicPlc->infuture, 0, pMusicPlc->muteFactor, 0, pMusicPlc->frameSamples);
+		}
+		else {
+			memset(&(pMusicPlc->infuture)[0], 0, pMusicPlc->infuture.GetSizeMax());
+		}
 	}
-	else if (muteMode == MUTE_MODE_DOMUTE_ZERO)
-	{
-		memset(&(pMusicPlc->infuture)[0], 0, pMusicPlc->infuture.GetSizeMax());
-	}
-
 	//out
 	if (outLen)
 		*outLen = pMusicPlc->frameSamples * pMusicPlc->info._bytesPerSample;
@@ -194,7 +213,6 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		pMusicPlc->inHistory.Clear(pMusicPlc->frameSamples);
 		pMusicPlc->inHistory.Append(*pIn, 0, pMusicPlc->frameSamples);
 		pMusicPlc->quickDeal = false;
-		pMusicPlc->muteFactor.Clear(pMusicPlc->muteFactor.GetValidSamples());
 	}
 	else
 	{
@@ -205,9 +223,30 @@ i32 MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, i32* inUsed, AudioS
 		pMusicPlc->inHistory.Clear(pMusicPlc->frameSamples);
 		pMusicPlc->inHistory.Append(pMusicPlc->infuture, 0, pMusicPlc->frameSamples);
 		pMusicPlc->infuture.Clear(pMusicPlc->infuture.GetValidSamples());
-		pMusicPlc->muteFactor.Clear(pMusicPlc->muteFactor.GetValidSamples());
 	}
+	pMusicPlc->muteFactor.Clear(pMusicPlc->muteFactor.GetValidSamples());
 	return MUSIC_PLC_RET_SUCCESS;
 }
+
+
+i32 MusicPlcStateDeInitInner(MusicPlcState* pMusicPlc)
+{
+	pMusicPlc->asCalculator->~AS_Calculator();
+	MusicplcFree(pMusicPlc->asCalculator);
+
+	MusicplcFree(&pMusicPlc->inHistory[0]);
+	pMusicPlc->inHistory.~AudioSamples();
+
+	MusicplcFree(&pMusicPlc->infuture[0]);
+	pMusicPlc->infuture.~AudioSamples();
+
+	MusicplcFree(&pMusicPlc->fillSignal[0]);
+	pMusicPlc->fillSignal.~AudioSamples();
+
+	MusicplcFree(&pMusicPlc->muteFactor[0]);
+	pMusicPlc->muteFactor.~AudioSamples();
+	return MUSIC_PLC_RET_SUCCESS;
+}
+
 
 #endif

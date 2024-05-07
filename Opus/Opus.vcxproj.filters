@@ -229,10 +229,10 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\rate.h">
       <Filter>lib\celt</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusEnc.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusEnc.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusDec.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusDec.h">
       <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>
@@ -631,10 +631,10 @@
     <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\rate.c">
       <Filter>lib\celt</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusEnc.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusDec.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFAA_OpusDec.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\opus\MAFA.OpusEnc.cpp">
       <Filter>maf</Filter>
     </ClCompile>
   </ItemGroup>

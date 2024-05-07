@@ -10,7 +10,7 @@ public:
 	AudioInfo() {};
 	~AudioInfo() {};
 public:
-	b1 Init(i32 rate, i16 width, i16 channels, i32 fUs) {
+	b1 Init(i32 rate, i16 width, i16 channels) {
 		_rate = rate;
 		_width = width;
 		_channels = channels;

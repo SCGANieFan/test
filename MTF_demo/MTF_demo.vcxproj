@@ -402,7 +402,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../_third_part/algorithm/audio/com;../_third_part/algorithm/audio/demo;../_third_part/algorithm/MAF;../_third_part/algorithm/MAF/base;../_third_part/algorithm/MAF/inc;../_third_part/algorithm/MAF/interface/demo;../_third_part/algorithm/MTF;../_third_part/algorithm/MTF/base;../_third_part/algorithm/MTF/interface/demo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -531,7 +531,7 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\demo\audiodemo.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF_demo.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.cpp" />
     <ClCompile Include="MTF_demoTest.cpp" />
   </ItemGroup>
@@ -543,9 +543,10 @@
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\demo\audiodemo.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF_demo.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h" />
     <ClInclude Include="MTF_demoTest.h" />
   </ItemGroup>

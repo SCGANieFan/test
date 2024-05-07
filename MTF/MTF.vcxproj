@@ -35,7 +35,7 @@
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Sink.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Source.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.String.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\MultimeidaTest.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\MTF.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.h" />
@@ -55,7 +55,7 @@
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Source.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.String.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Type.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\MultimeidaTest.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\MTF.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

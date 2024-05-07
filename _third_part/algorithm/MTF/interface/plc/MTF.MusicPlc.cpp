@@ -3,12 +3,18 @@
 #include "MTF.Objects.h"
 #include "MAF.h"
 
+#define MUSIC16 1
+//#define MUSIC24 1
+//#define MUSIC32 1
+
 void mtf_music_plc_register()
 {
 	MTF_Objects::Registe<MTF_MusicPlc>("music_plc");
-#if 1
+#if MUSIC16
 	MAF_REGISTER(music_plc16);
-#else
+#elif MUSIC24
+	MAF_REGISTER(music_plc24);
+#elif MUSIC32
 	MAF_REGISTER(music_plc32);
 #endif
 }
@@ -39,9 +45,11 @@ MTF_MusicPlc::~MTF_MusicPlc()
 mtf_int32 MTF_MusicPlc::Init()
 {	
 	//lib init
-#if 1
+#if MUSIC16
 	const mtf_int8* type = "music_plc16";
-#else
+#elif MUSIC24
+	const mtf_int8* type = "music_plc24";
+#elif MUSIC32
 	const mtf_int8* type = "music_plc32";
 #endif
 	MA_Ret ret;
@@ -99,7 +107,9 @@ mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 
 	_frames++;
 	if (_frames % FRAMES_TOTAL > (FRAMES_TOTAL - FRAMES_LOST))
+	{
 		AA_iData.flags |= AA_DataFlag_FRAME_IS_EMPTY;
+	}
 	else
 		AA_iData.flags &= ~AA_DataFlag_FRAME_IS_EMPTY;
 
@@ -107,6 +117,7 @@ mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 	MTF_MEM_SET(&AA_oData, 0, sizeof(AA_Data));
 	AA_oData.buff = _oData.LeftData();
 	AA_oData.max = _oData.LeftSize();
+
 	MAF_Run(_hd, &AA_iData, &AA_oData);
 	_iData.Used(_iData._size);
 	_oData._size += AA_oData.size;

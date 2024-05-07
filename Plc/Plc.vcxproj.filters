@@ -4,12 +4,6 @@
     <Filter Include="lib">
       <UniqueIdentifier>{e3790de4-cc13-4b33-adce-e8a2e6bde521}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\audio_samples">
-      <UniqueIdentifier>{3c6b764d-efd0-442b-a47c-038ce43c619d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lib\musicplc">
-      <UniqueIdentifier>{42227895-a890-4ca5-afdc-6fe4e9d8c333}</UniqueIdentifier>
-    </Filter>
     <Filter Include="maf">
       <UniqueIdentifier>{989ba753-302b-4c8c-8853-25833e6f50a7}</UniqueIdentifier>
     </Filter>
@@ -19,67 +13,46 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlcTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples.cpp">
-      <Filter>lib\audio_samples</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples16.cpp">
-      <Filter>lib\audio_samples</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\AudioSamples32.cpp">
-      <Filter>lib\audio_samples</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.cpp">
-      <Filter>lib\musicplc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.cpp">
-      <Filter>lib\musicplc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.cpp">
-      <Filter>lib\musicplc</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.cpp">
       <Filter>maf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlcTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples.h">
-      <Filter>lib\audio_samples</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples16.h">
-      <Filter>lib\audio_samples</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamples32.h">
-      <Filter>lib\audio_samples</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.h">
-      <Filter>lib\musicplc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.h">
-      <Filter>lib\musicplc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.h">
-      <Filter>lib\musicplc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcCom.h">
-      <Filter>lib\musicplc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\AudioSamplesCom.h">
-      <Filter>lib\audio_samples</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc32.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcCom.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAF_MusicPlc16.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.h">
       <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>

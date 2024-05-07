@@ -1,5 +1,5 @@
 #include"Algo.AS_Calculator32.h"
-i16 AS_Calculator32::WaveFormMatch(AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample)
+i16 AS_Calculator32::WaveFormMatch(WaveformMatchChoose_e mode, AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample)
 {
 	i64 matchFactor = 0;
 	i32 matchFactorOpt = 0;

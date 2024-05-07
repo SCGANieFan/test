@@ -4,7 +4,11 @@
     "algo.audiodata.h": "c",
     "algo.type.h": "c",
     "algo.data.h": "c",
-    "algo.memory.h": "c"
+    "algo.memory.h": "c",
+    "random": "cpp",
+    "array": "cpp",
+    "initializer_list": "cpp",
+    "utility": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

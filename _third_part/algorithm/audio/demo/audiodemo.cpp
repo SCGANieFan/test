@@ -7,7 +7,7 @@ AudioInfo info;
 void AudioDemoInit()
 {
 	printf("comInit\n");
-	info.Init(48000, 2, 1, 20 * 1000);
+	//info.Init(48000, 2, 1, 20 * 1000);
 }
 
 
