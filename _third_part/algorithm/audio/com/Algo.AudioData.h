@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Algo.Type.h"
+#include"Algo.Macro.h"
 #include"Algo.Data.h"
 
 
@@ -32,7 +33,7 @@ public:
 	AudioData() {};
 	~AudioData() {};
 public:
-	virtual b1 Init(const AudioInfo* pInfo,u8* buf,i32 max);
+	virtual b1 Init(const AudioInfo* pInfo, Buffer *buffer);
 protected:
 	const AudioInfo *_info = 0;
 };

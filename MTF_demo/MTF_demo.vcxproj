@@ -541,7 +541,9 @@
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buff.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h" />

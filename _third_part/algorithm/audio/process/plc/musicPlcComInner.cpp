@@ -70,25 +70,25 @@ i32 MusicPlcStateInitInner(MusicPlcState* pMusicPlc, i32 overlapInSamples, i32 d
 	
 	pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->info._rate * MUSIC_PLC_MIN_FRAME_MS / 1000);
 
-	u8* ptr;
-	i32 samples;
-	samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
-	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
-	pPlc->inHistory.Init(&pPlc->info, ptr, samples);
+	BufferSamples bufferSamples;
+
+	bufferSamples._samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
+	bufferSamples._buf= (u8*)MusicplcMalloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+	pPlc->inHistory.Init(&pPlc->info, &bufferSamples);
 	pPlc->inHistory.Append(pPlc->inHistory, 0, pPlc->inHistory.GetSamplesMax());
 
-	samples = MusicPlcGetFutureSamples(pPlc->frameSamples);
-	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
-	pPlc->infuture.Init(&pPlc->info, ptr, samples);
+	bufferSamples._samples = MusicPlcGetFutureSamples(pPlc->frameSamples);
+	bufferSamples._buf = (u8*)MusicplcMalloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+	pPlc->infuture.Init(&pPlc->info, &bufferSamples);
 
-	samples = MusicPlcGetFillSignalSamples(pPlc->frameSamplesInner);
-	ptr = (u8*)MusicplcMalloc(samples * pPlc->info._bytesPerSample);
-	pPlc->fillSignal.Init(&pPlc->info, ptr, samples);
-	
+	bufferSamples._samples = MusicPlcGetFillSignalSamples(pPlc->frameSamplesInner);
+	bufferSamples._buf = (u8*)MusicplcMalloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+	pPlc->fillSignal.Init(&pPlc->info, &bufferSamples);
+
 	pPlc->muteInfo.Init(pPlc->info._rate, pPlc->info._width, 1);
-	samples = MusicPlcGetMuteFactorSamples(pPlc->frameSamples);
-	ptr = (u8*)MusicplcMalloc(samples * pPlc->muteInfo._bytesPerSample);
-	pPlc->muteFactor.Init(&pPlc->muteInfo, ptr, samples, 14);
+	bufferSamples._samples = MusicPlcGetMuteFactorSamples(pPlc->frameSamples);
+	bufferSamples._buf = (u8*)MusicplcMalloc(bufferSamples._samples * pPlc->muteInfo._bytesPerSample);
+	pPlc->muteFactor.Init(&pPlc->muteInfo, &bufferSamples, 14);
 
 	pPlc->fillSignalSampleIndex = 0;
 	pPlc->matchSamples = MUSIC_PLC_MATCH_MS_DEFAULT * pPlc->info._rate / 1000;

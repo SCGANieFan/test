@@ -19,7 +19,7 @@ void AudioDemoRun()
 	i32 bufSize = 1024;
 	u8* buf = (u8*)ALGO_MALLOC(bufSize);
 	AudioData data;
-	data.Init(&info, buf, bufSize);
+	//data.Init(&info, buf, bufSize);
 	ALGO_FREE(buf);
 }
 

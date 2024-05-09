@@ -100,5 +100,11 @@
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.h">
       <Filter>maf</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buff.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

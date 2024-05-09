@@ -32,10 +32,10 @@ EXTERNC int32_t MusicPlc32bStateInit(void* pMusicPlcStateIn, int32_t overlapMs, 
 EXTERNC int32_t MusicPlc32b(void* pMusicPlcStateIn, uint8_t* in, int32_t inLen, int32_t* inUsed, uint8_t* out, int32_t* outLen, bool isLost)
 {
 	//check
+	if (!outLen)
+		return MUSIC_PLC_RET_FAIL;
 	if (inUsed)
 		*inUsed = 0;
-	if (outLen)
-		*outLen = 0;
 	if (!pMusicPlcStateIn)
 		return MUSIC_PLC_RET_FAIL;
 
@@ -48,10 +48,18 @@ EXTERNC int32_t MusicPlc32b(void* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 	if (!out)
 		return MUSIC_PLC_RET_FAIL;
 
+	Buffer buffer;
+
 	AudioSamples pIn;
-	pIn.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, (u8*)in, plcState->frameSamples);
+	buffer._buf = in;
+	buffer._max = inLen;
+	pIn.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, &buffer);
+
 	AudioSamples pOut;
-	pOut.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, (u8*)out, plcState->frameSamples);
+	buffer._buf = out;
+	buffer._max = *outLen;
+	pOut.Init(&((MusicPlcState*)pMusicPlcStateIn)->info, &buffer);
+
 	return MusicPlcRun((MusicPlcState*)pMusicPlcStateIn, &pIn, inUsed, &pOut, outLen, isLost);
 }
 

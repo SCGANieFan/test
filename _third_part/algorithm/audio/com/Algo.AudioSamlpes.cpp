@@ -38,13 +38,26 @@ b1 AudioSamples::IsFull()
 }
 
 
-b1 AudioSamples::Init(const AudioInfo* pInfo, u8* buf, i32 samples, i16 fpNum)
+b1 AudioSamples::Init(const AudioInfo* pInfo, Buffer* buffer, i16 fpNum)
 {
-	_samples = samples;
+	_samples = buffer->_max / pInfo->_bytesPerSample;
 	_validSamples = 0;
 	_samplesTotal = _samples * pInfo->_channels;
 	_fpNum = fpNum;
-	return AudioData::Init(pInfo, buf, _samplesTotal * pInfo->_width);
+	return AudioData::Init(pInfo, buffer);
+}
+
+b1 AudioSamples::Init(const AudioInfo* pInfo, BufferSamples* bufferSamples, i16 fpNum)
+{
+	_samples = bufferSamples->_samples;
+	_validSamples = 0;
+	_samplesTotal = _samples * pInfo->_channels;
+	_fpNum = fpNum;
+
+	Buffer buffer;
+	buffer._buf = bufferSamples->_buf;
+	buffer._max = _samples * pInfo->_bytesPerSample;
+	return AudioData::Init(pInfo, &buffer);
 }
 
 b1 AudioSamples::Append(AudioSamples& src, i32 srcSample, i32 appendSample)
@@ -59,6 +72,16 @@ b1 AudioSamples::Append(i32 appendSample)
 {
 	_validSamples += appendSample;
 	_size += appendSample * _info->_bytesPerSample;
+	return true;
+}
+
+b1 AudioSamples::AppendFully(AudioSamples& src, i32* usedSamples)
+{
+	i32 AppendSamples;
+	AppendSamples = GetSamplesMax() - GetValidSamples();
+	AppendSamples = AppendSamples < src.GetValidSamples() ? AppendSamples : src.GetValidSamples();
+	Append(src, src.GetUsedSamples(), AppendSamples);
+	*usedSamples = AppendSamples;
 	return true;
 }
 

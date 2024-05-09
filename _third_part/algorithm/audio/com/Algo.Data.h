@@ -2,6 +2,7 @@
 
 #include"Algo.Type.h"
 #include"Algo.Memory.h"
+#include"Algo.Buff.h"
 class Data
 {
 public:
@@ -37,12 +38,12 @@ public:
 		return _buff;
 	};
 
-	//
-	b1 Init(u8* buf, i32 max) {
-		_buff = buf;
+	
+	b1 Init(Buffer *buffer) {
+		_buff = buffer->_buf;
 		_off = 0;
 		_size = 0;
-		_max = max;
+		_max = buffer->_max;
 		_flags = 0;
 		return true;
 	};
@@ -71,6 +72,7 @@ public:
 	{
 		return (b1)(_flags & flag);
 	}
+
 protected:
 	u8* _buff = 0;
 	i32 _off = 0;

@@ -533,8 +533,6 @@
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControl16.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControlInner16.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\Overlap16.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\SeekBestLag16.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioSpeedCtr\MAFA.SpeedCtr.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioSpeedCtr\MTF.AudioSpeedCtr.cpp" />
     <ClCompile Include="AudioSpeedCtrTest.cpp" />

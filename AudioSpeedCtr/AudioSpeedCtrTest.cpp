@@ -1,11 +1,35 @@
 #include"MTF.h"
 #define PATH "../../source/audio/speedCtr/"
 
-#define FILE_NAME "stSection_16k1ch.wav"
+#if 1
+//16k1ch
 //#define FILE_NAME "chirp_sin_16k1ch.wav"
+#define FILE_NAME "Female1_1st_16k1ch.wav"
+//#define FILE_NAME "Female1_1st_16k1ch.wav"
+//#define FILE_NAME "stSection_16k1ch.wav"
 #define RATE 16000
 #define CHANNEL 1
 #define WIDTH 2
+#endif
+
+#if 0
+//16k2ch
+#define FILE_NAME "man_track_16k_2ch.wav"
+#define RATE 16000
+#define CHANNEL 2
+#define WIDTH 2
+#endif
+
+
+#if 0
+//48k2ch
+#define FILE_NAME "mbz_48k2h.wav"
+#define RATE 48000
+#define CHANNEL 2
+#define WIDTH 2
+#endif
+
+
 #define FRAME_MS 20
 #define SPEED (1.5f)
 
@@ -17,7 +41,7 @@ void AudioSpeedCtrTest()
 	MTF_REGISTER(auio_speedCtr);
 	MTF_REGISTER(pcm_muxer);
 
-	float speedQ8 = SPEED * (1 << 8);
+	uint32_t speedQ8 = (uint32_t)(SPEED * (1 << 8));
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
 		(void*)(PATH FILE_NAME ".speed.pcm"),
@@ -25,7 +49,7 @@ void AudioSpeedCtrTest()
 		(void*)CHANNEL,
 		(void*)WIDTH,
 		(void*)FRAME_MS,
-		(void*)(uint32_t)speedQ8,
+		(void*)speedQ8,
 	};
 
 	const char* str = {

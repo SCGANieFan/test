@@ -37,12 +37,6 @@
     <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControl16.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\Overlap16.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\SeekBestLag16.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControlInner16.cpp">
       <Filter>lib</Filter>
     </ClCompile>

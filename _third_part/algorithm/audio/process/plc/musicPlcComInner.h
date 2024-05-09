@@ -1,6 +1,4 @@
 #pragma once
-
-#include"Algo.Type.h"
 #include"Algo.AudioSamlpes.h"
 #include"Algo.AS_Calculator.h"
 

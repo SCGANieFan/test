@@ -29,7 +29,3 @@ typedef long long i64;
 typedef float f32;
 typedef double f64;
 typedef bool b1;
-
-#define STATIC static
-#define INLINE inline
-

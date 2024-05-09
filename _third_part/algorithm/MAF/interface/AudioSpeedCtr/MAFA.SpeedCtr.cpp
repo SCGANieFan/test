@@ -54,7 +54,7 @@ maf_int32 MAFA_SpeedCtr::Init()
 
 	int32_t size;
 	maf_void* buf;
-	size = 2 * 1024;
+	size = 10 * 1024;
 	buf = _memory.Malloc(size);
 	_oDataCache.Init((maf_uint8*)buf, 0, size);
 	
@@ -83,9 +83,9 @@ maf_int32 MAFA_SpeedCtr::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	outLen = _oDataCache.GetLeftSize();
 	AudioSpeedControl_Run16b(
 		_hd,
-		(int8_t*)dataIn->GetData(),
+		dataIn->GetData(),
 		dataIn->GetSize(),
-		(int8_t*)_oDataCache.GetLeftData(),
+		_oDataCache.GetLeftData(),
 		&outLen);
 	_oDataCache.Append(outLen);
 	if (_oDataCache.GetSize() > 0)
@@ -97,7 +97,7 @@ maf_int32 MAFA_SpeedCtr::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 		_oDataCache.ClearUsed();
 	}
 
-	MAF_PRINT("[%d],isize:%d,osize:%d", num++, dataIn->GetSize(), dataOut->GetSize());
+	//MAF_PRINT("[%d],isize:%d,osize:%d", num++, dataIn->GetSize(), dataOut->GetSize());
 	dataIn->Used(dataIn->GetSize());
 #endif
 	return 0;
