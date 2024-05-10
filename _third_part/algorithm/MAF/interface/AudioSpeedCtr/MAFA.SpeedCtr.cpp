@@ -2,12 +2,15 @@
 #include "MAFA.SpeedCtr.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-#include "AudioSpeedControl16.h"
+#include "AudioSpeedControl.h"
 
 maf_void maf_auio_speedCtr_register()
 {
 	MAF_Object::Registe<MAFA_SpeedCtr>("auio_speedCtr");
 }
+
+maf_void* MAFA_SpeedCtr::_malloc = 0;
+maf_void* MAFA_SpeedCtr::_free = 0;
 
 MAFA_SpeedCtr::MAFA_SpeedCtr()
 {
@@ -19,38 +22,56 @@ MAFA_SpeedCtr::~MAFA_SpeedCtr()
 maf_int32 MAFA_SpeedCtr::Init()
 {
 	MAF_PRINT();
-	
 #if 1
-	_hdSize = AudioSpeedControl_GetStateSize16b();
+	_malloc = _memory.GetMalloc();
+	_free= _memory.GetFree();
+#endif
+
+#if 1
+	_hdSize = AudioSpeedControl_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);
 	if (!_hd) {
 		return -1;
 	}
 	MAF_PRINT("_hd=%x,size:%d", (unsigned)_hd, _hdSize);
-	AudioSpeedInitParam param;
-
 #if 1
+	AudioSpeedInitParam param;
+	MAF_MEM_SET(&param, 0, sizeof(AudioSpeedInitParam));
+	_basePorting = _memory.Malloc(sizeof(BasePorting));
+	BasePorting* basePorting = (BasePorting*)_basePorting;
+
+	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
+	basePorting->Free = (ALGO_Free_t)FreeLocal;
+	basePorting->MemCpy = (ALGO_MemCpy_t)MAF_String::MemCpy;
+	basePorting->MemSet = (ALGO_MemSet_t)MAF_String::MemSet;
+	basePorting->MemMove = (ALGO_MemMove_t)MAF_String::MemMove;
+	basePorting->Printf = (ALGO_Printf_t)MAF_Printf::Printf;
+
+	param.basePorting = basePorting;
 	param.fsHz = _rate;
 	param.width = _width;
 	param.channels = _ch;
-	if (_isSpeech)
-	{
-		// use settings for speech processing
-		param.seekMs = 15;
-		param.overlapMs = 8;
-		param.constMs = 24;
-	}
-	else
-	{
-		// use settings for speech processing
-		param.seekMs = 15;
-		param.overlapMs = 8;
-		param.constMs = 24;
-	}
-
+	param.seekMs = AUDIO_SPEED_REF_VAL_SEEK_MS;
+	param.overlapMs = AUDIO_SPEED_REF_VAL_OVERLAP_MS;
+	param.constMs = AUDIO_SPEED_REF_VAL_CONST_MS;
 	param.speed = _speed;
 #endif
-	AudioSpeedControl_Init16b(_hd, &param);
+	AudioSpeedControl_Init(_hd, &param);
+
+#if 1
+	//set
+	maf_void* ascSetParam[] = {
+		(maf_void*)(maf_uint32)((1.5f) * (1 << 8)),
+	};
+	AudioSpeedControl_Set(_hd, AudioSpeedControl_SetChhoose_e::AUDIO_SPEED_CONTROL_SET_CHOOSE_SPEEDQ8, ascSetParam);
+
+	//get
+	maf_int32 speedQ8;
+	maf_void* ascGetParam[] = {
+		(maf_void*)(maf_uint32)(&speedQ8),
+	};
+	AudioSpeedControl_Get(_hd, AudioSpeedControl_GetChhoose_e::AUDIO_SPEED_CONTROL_GET_CHOOSE_SPEEDQ8, ascGetParam);
+#endif
 
 	int32_t size;
 	maf_void* buf;
@@ -66,9 +87,12 @@ maf_int32 MAFA_SpeedCtr::Deinit()
 {
 	MAF_PRINT();
 #if 1
-	MAF_PRINT("_hd=%x", (unsigned)_hd);
-	AudioSpeedControl_DeInit16b(_hd);
+	MAF_PRINT("_hd=%x", (maf_uint32)_hd);
+	AudioSpeedControl_DeInit(_hd);
 	_memory.Free(_hd);
+	if(_basePorting)
+		_memory.Free(_basePorting);
+
 #endif
 	return 0;
 }
@@ -81,7 +105,7 @@ maf_int32 MAFA_SpeedCtr::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	int32_t outLen;
 	
 	outLen = _oDataCache.GetLeftSize();
-	AudioSpeedControl_Run16b(
+	AudioSpeedControl_Run(
 		_hd,
 		dataIn->GetData(),
 		dataIn->GetSize(),
@@ -116,5 +140,26 @@ maf_int32 MAFA_SpeedCtr::Get(const maf_int8* key, maf_void* val)
 	return MAF_Audio::Get(key, val);
 }
 
+#if 1
+maf_void* MAFA_SpeedCtr::MallocLocal(int32_t size)
+{
+#if 1
+	static maf_int32 sizeTotal = 0;
+	sizeTotal += size;
+	maf_void* ptr = ((ALGO_Malloc_t)_malloc)(size);
+	MAF_PRINT("malloc, ptr:%x, size:%d, sizeTotal:%d,", (maf_uint32)ptr, size, sizeTotal);
+	return ptr;
+#else
+	return ((ALGO_Malloc_t)_malloc)(size);
+#endif	
+}
 
+maf_void MAFA_SpeedCtr::FreeLocal(maf_void* block)
+{
+#if 1
+	MAF_PRINT("free, ptr:%x", (maf_uint32)block);
+#endif
+	return ((ALGO_Free_t)_free)(block);
+}
+#endif
 #endif

@@ -26,7 +26,7 @@
 #define CHANNEL 4
 #define WIDTH 4
 #define FRAME_MS 2
-#define DECAY_MS 40
+#define DECAY_MS 50
 #define OVERLAP_MS 2
 
 #endif

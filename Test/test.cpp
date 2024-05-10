@@ -11,8 +11,8 @@ int main()
 	//StackTest();
 	//testDemo();
 	//OggTest();
-	//PlcTest();
-	AudioSpeedCtrTest();
+	PlcTest();
+	//AudioSpeedCtrTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();

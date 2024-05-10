@@ -1,5 +1,6 @@
 #include"Algo.Memory.h"
 #include"Algo.AS_Calculator32.h"
+extern AS_Calculator* asCalculator32 = new(ALGO_MALLOC(sizeof(AS_Calculator32))) AS_Calculator32();
 
 b1 AS_Calculator32::AppendInFixPoint(AudioSamples& as, i32 num, i32 den)
 {

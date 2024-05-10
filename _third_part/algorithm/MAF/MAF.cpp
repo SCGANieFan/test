@@ -39,13 +39,27 @@ static maf_bool prase(maf_void* hd, const maf_int8* script, maf_void** param)
 		strLen0 -= posStart + 1;
 		posStart = MAF_String::Search(pStr, "=", 0, strLen0 - 1);
 
+		uint8_t shift = 1;
 		if (*(pStr + posStart + 1) == '$')
 		{
-			((MAF_Algorithm*)hd)->Set(pStr, param[*(pStr + posStart + 2) - 48]);
+			uint8_t index;
+			index = *(pStr + posStart + 2) - 48;
+			shift = 3;
+			if (*(pStr + posStart + 3) != ','
+				&& *(pStr + posStart + 3) != ';')
+			{
+				index = 10* index +*(pStr + posStart + 3) - 48;
+				shift = 4;
+			}
+			((MAF_Algorithm*)hd)->Set(pStr, param[index]);
 		}
-		pStr += posStart + 3;
-		strLen0 -= posStart + 3;
+		pStr += posStart + shift;
+		strLen0 -= posStart + shift;
 	}
+#if 0
+	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
+		",rate=$5,ch=$6,width=$7,fSamples=$8,decayMs=$9,overlapMs=$10";
+#endif
 }
 
 EXTERNC

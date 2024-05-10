@@ -64,7 +64,7 @@ mtf_int32 MTF_AudioSpeedCtr::Init()
 	};
 
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
-							 ",rate=$5,ch=$6,width=$7,fSamples=$8,speedQ8=$9";
+							 ",rate=$5,ch=$6,width=$7,fSamples=$8,speedQ8=$9;";
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");

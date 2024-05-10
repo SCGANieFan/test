@@ -13,6 +13,13 @@ public:
 	~MAF_Memory();
 
 public:
+    //get
+    maf_void* GetMalloc();
+    maf_void* GetRealloc();
+    maf_void* GetCalloc();
+    maf_void* GetFree();
+
+    //
     maf_void Init(maf_void* malloc, maf_void* realloc, maf_void* calloc, maf_void* free);
 
     maf_void* Malloc(maf_int32 size);

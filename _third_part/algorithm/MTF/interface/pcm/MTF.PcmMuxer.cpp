@@ -29,9 +29,15 @@ MTF_PcmMuxer::~MTF_PcmMuxer()
 mtf_int32 MTF_PcmMuxer::Init()
 {
 	MTF_PRINT();
-	if (!_url)
-		MTF_PRINT("_url:%d", _url);
+	if (!_url) {
+		MTF_PRINT("error, _url = 0");
+		return -1;
+	}
 	_pFile = fopen(_url, "wb+");
+	if (!_pFile) {
+		MTF_PRINT("error, no such file:%s", _url);
+		return -1;
+	}
 
 	mtf_int32 size = _frameBytes;
 	_iData.Init((mtf_uint8*)MTF_MALLOC(size), size);

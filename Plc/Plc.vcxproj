@@ -525,21 +525,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp" />
     <ClCompile Include="PlcTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcCom.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h" />
     <ClInclude Include="PlcTest.h" />
   </ItemGroup>

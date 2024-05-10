@@ -1,6 +1,8 @@
 #include"Algo.Memory.h"
 #include"Algo.AS_Calculator16.h"
 
+AS_Calculator* asCalculator16 = new(ALGO_MALLOC(sizeof(AS_Calculator16))) AS_Calculator16();
+
 b1 AS_Calculator16::AppendInFixPoint(AudioSamples& as, i32 num, i32 den)
 {
 	i16* pBuff = (i16*)as.GetLeftData();

@@ -1,7 +1,7 @@
 #include"MTF.h"
 #define PATH "../../source/audio/speedCtr/"
 
-#if 1
+#if 0
 //16k1ch
 //#define FILE_NAME "chirp_sin_16k1ch.wav"
 #define FILE_NAME "Female1_1st_16k1ch.wav"
@@ -21,7 +21,7 @@
 #endif
 
 
-#if 0
+#if 1
 //48k2ch
 #define FILE_NAME "mbz_48k2h.wav"
 #define RATE 48000

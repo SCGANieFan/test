@@ -61,6 +61,12 @@
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp">
       <Filter>maf</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.cpp">
+      <Filter>lib\audiosample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.Porting.cpp">
+      <Filter>lib\base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
@@ -104,6 +110,12 @@
       <Filter>lib\base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buff.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.PortingInner.h">
       <Filter>lib\base</Filter>
     </ClInclude>
   </ItemGroup>

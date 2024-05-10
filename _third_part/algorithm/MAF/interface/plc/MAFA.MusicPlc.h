@@ -1,11 +1,11 @@
 #pragma once
 #include"MAF.Audio.h"
 
-class MAFA_MusicPlc16:public MAF_Audio
+class MAFA_MusicPlc :public MAF_Audio
 {
 public:
-	MAFA_MusicPlc16();
-	~MAFA_MusicPlc16();
+	MAFA_MusicPlc();
+	~MAFA_MusicPlc();
 public:
 	virtual maf_int32 Init() final;
 	virtual maf_int32 Deinit() final;
@@ -14,9 +14,17 @@ public:
 	virtual maf_int32 Set(const maf_int8* key, maf_void* val) final;
 	virtual maf_int32 Get(const maf_int8* key, maf_void* val) final;
 private:
+	static maf_void* MallocLocal(int32_t size);
+	static maf_void FreeLocal(maf_void* block);
+private:
 	maf_void* _hd = 0;
 	maf_int32 _hdSize = 0;
 
 	maf_int16 _decayMs = 0;
 	maf_int16 _overlapMs = 0;
+	maf_void* _basePorting;
+
+private:
+	static maf_void* _malloc;
+	static maf_void* _free;
 };

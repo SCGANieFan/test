@@ -1,46 +1,24 @@
 #if 1
 #include<string.h>
 #include<stdio.h>
+#include<stdarg.h>
 
-
-class P0
+#if 0
+class P
 {
 public:
-	P0() {};
-	~P0() {};
+	P() {};
+	~P() {};
 public:
-	static void Print() { printf("p0\n"); };
-	int a = 1;
-};
+	static 
+private:
 
-class P1
-{
-public:
-	P1() {};
-	~P1() {};
-public:
-	void Print() { printf("p1\n"); };
-	int b = 2;
-};
-
-class Child: public P0,  public P1
-{
-public:
-	Child() {};
-	~Child() {};
-public:
 };
 
 
+#endif
 bool testDemo()
 {
-	Child c;
-	P0* p0 = (P0*)&c;
-	//P1* p1 = (P1*)&c;
-
-
-	p0->Print();
-	((P1*)p0)->Print();
 	return 0;
 }
 

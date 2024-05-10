@@ -16,19 +16,10 @@
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.cpp">
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.cpp">
       <Filter>maf</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,22 +28,10 @@
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcComInner.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc16b.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlc32b.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\musicPlcCom.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc32.h">
-      <Filter>maf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc16.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.h">
       <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>

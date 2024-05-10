@@ -3,20 +3,10 @@
 #include "MTF.Objects.h"
 #include "MAF.h"
 
-#define MUSIC16 1
-//#define MUSIC24 1
-//#define MUSIC32 1
-
 void mtf_music_plc_register()
 {
 	MTF_Objects::Registe<MTF_MusicPlc>("music_plc");
-#if MUSIC16
-	MAF_REGISTER(music_plc16);
-#elif MUSIC24
-	MAF_REGISTER(music_plc24);
-#elif MUSIC32
-	MAF_REGISTER(music_plc32);
-#endif
+	MAF_REGISTER(music_plc);
 }
 MTF_MusicPlc::MTF_MusicPlc()
 {
@@ -45,13 +35,7 @@ MTF_MusicPlc::~MTF_MusicPlc()
 mtf_int32 MTF_MusicPlc::Init()
 {	
 	//lib init
-#if MUSIC16
-	const mtf_int8* type = "music_plc16";
-#elif MUSIC24
-	const mtf_int8* type = "music_plc24";
-#elif MUSIC32
-	const mtf_int8* type = "music_plc32";
-#endif
+	const mtf_int8* type = "music_plc";
 	MA_Ret ret;
 	ret = MAF_GetHandleSize(type, &_hdSize);
 	if (ret != MA_RET_SUCCESS)
@@ -70,13 +54,14 @@ mtf_int32 MTF_MusicPlc::Init()
 	(mtf_void*)MTF_Memory::Free,
 	(mtf_void*)_rate,
 	(mtf_void*)_ch,
+	(mtf_void*)_width,
 	(mtf_void*)_frameSamples,
 	(mtf_void*)_decayMs,
 	(mtf_void*)_overlapMs,
 	};
 
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
-							 ",rate=$5,ch=$6,fSamples=$7,decayMs=$8,overlapMs=$9";
+							 ",rate=$5,ch=$6,width=$7,fSamples=$8,decayMs=$9,overlapMs=$10;";
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");
