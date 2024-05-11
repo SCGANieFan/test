@@ -27,14 +27,16 @@ public:
 
 
 
-class AudioData :public Data
+//class AudioData :public Data
+class AudioData :protected Data
 {
 public:
 	AudioData() {};
 	~AudioData() {};
 public:
 	virtual b1 Init(const AudioInfo* pInfo, Buffer *buffer);
-protected:
+//protected:
+public:
 	const AudioInfo *_info = 0;
 };
 

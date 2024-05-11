@@ -32,6 +32,11 @@ i32 AudioSamples::GetSizeMax()
 	return _samplesTotal * _info->_width;
 }
 
+i16 AudioSamples::GetFPNum()
+{
+	return _fpNum;
+}
+
 b1 AudioSamples::IsFull()
 {
 	return GetValidSamples() == GetSamplesMax();

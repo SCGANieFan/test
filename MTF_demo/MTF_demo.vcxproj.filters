@@ -28,30 +28,6 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="MTF_demoTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.WaveFormMatch.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.Basic.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.Overlapadd.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.Product.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.WaveFormMatch.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.Basic.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.Overlapadd.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.Product.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
@@ -67,6 +43,18 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.Porting.cpp">
       <Filter>lib\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Product.cpp">
+      <Filter>lib\audiosample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.WaveFormMatch.cpp">
+      <Filter>lib\audiosample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.basic.cpp">
+      <Filter>lib\audiosample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.OverlapAdd.cpp">
+      <Filter>lib\audiosample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
@@ -76,16 +64,10 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="MTF_demoTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator32.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h">
       <Filter>lib\audiosample</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator16.h">
       <Filter>lib\audiosample</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h">
@@ -117,6 +99,18 @@
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.PortingInner.h">
       <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.OverlapAdd.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Product.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.WaveFormMatch.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.basic.h">
+      <Filter>lib\audiosample</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

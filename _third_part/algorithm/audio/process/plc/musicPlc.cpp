@@ -24,7 +24,7 @@ typedef struct
 	i32 frameSamplesInner;
 	i32 decaySamples;
 
-	AS_Calculator* asCalculator;
+	AS_Calculator asCalculator;
 	AudioSamples inHistory;
 	AudioSamples infuture;
 	AudioSamples fillSignal;
@@ -110,7 +110,7 @@ EXTERNC {
 		pPlc->overlapInSamples = sampleParam->overlapMs * pPlc->info._rate / 1000;
 		pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->info._rate * MUSIC_PLC_MIN_FRAME_MS / 1000);
 		pPlc->decaySamples = sampleParam->decayTimeMs * pPlc->info._rate / 1000;
-		pPlc->asCalculator = AS_Calculator::GetCaculator(pPlc->info._width);
+		pPlc->asCalculator.Init(pPlc->info._width);
 		BufferSamples bufferSamples;
 		
 		bufferSamples._samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
@@ -244,7 +244,7 @@ EXTERNC {
 					pMusicPlc->infuture.Append(pMusicPlc->fillSignal, pMusicPlc->fillSignalSampleIndex, 1);
 					pMusicPlc->fillSignalSampleIndex = (pMusicPlc->fillSignalSampleIndex + 1) % pMusicPlc->fillSignal.GetValidSamples();
 				}
-				pMusicPlc->asCalculator->OverlapAdd(pMusicPlc->infuture, 0, pIn, 0, pMusicPlc->overlapInSamples);
+				pMusicPlc->asCalculator.OverlapAdd(pMusicPlc->infuture, 0, pIn, 0, pMusicPlc->overlapInSamples);
 				pMusicPlc->infuture.Append(pIn, pMusicPlc->overlapInSamples, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 			}
 
@@ -254,7 +254,7 @@ EXTERNC {
 			{
 				pMusicPlc->decaySamplesNow--;
 				pMusicPlc->decaySamplesNow = MAX(pMusicPlc->decaySamplesNow, 0);
-				pMusicPlc->asCalculator->AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
+				pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 
 			}
 		}
@@ -264,7 +264,7 @@ EXTERNC {
 			if (pMusicPlc->lostCount == 1)
 			{
 #if 1
-				i32 bestLag = pMusicPlc->asCalculator->WaveFormMatch(
+				i32 bestLag = pMusicPlc->asCalculator.WaveFormMatch(
 					AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
 					pMusicPlc->inHistory,
 					0,
@@ -276,7 +276,7 @@ EXTERNC {
 				i32 bestLag = 0;
 #endif
 				//overlap add
-				pMusicPlc->asCalculator->OverlapAdd(
+				pMusicPlc->asCalculator.OverlapAdd(
 					pMusicPlc->inHistory,
 					pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples,
 					pMusicPlc->inHistory,
@@ -296,7 +296,7 @@ EXTERNC {
 				for (i32 i = 0; i < pMusicPlc->frameSamples; i++) {
 					pMusicPlc->decaySamplesNow++;
 					pMusicPlc->decaySamplesNow = MIN(pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
-					pMusicPlc->asCalculator->AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
+					pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 				}
 			}
 			else {
@@ -311,7 +311,7 @@ EXTERNC {
 		//muting
 		if (muteMode != MUTE_MODE_NOMUTE) {
 			if (muteMode == MUTE_MODE_DOMUTE) {
-				pMusicPlc->asCalculator->Product(pMusicPlc->infuture, 0, pMusicPlc->muteFactor, 0, pMusicPlc->frameSamples);
+				pMusicPlc->asCalculator.Product(pMusicPlc->infuture, 0, pMusicPlc->muteFactor, 0, pMusicPlc->frameSamples);
 			}
 			else {
 				pMusicPlc->basePorting->MemSet(&(pMusicPlc->infuture)[0], 0, pMusicPlc->infuture.GetSizeMax());

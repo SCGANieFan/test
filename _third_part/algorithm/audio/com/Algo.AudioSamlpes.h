@@ -11,7 +11,8 @@ public:
 	i32 _samples = 0;
 };
 
-class AudioSamples:protected AudioData
+//class AudioSamples:protected AudioData
+class AudioSamples:public AudioData
 {
 	friend class AS_Calculator16;
 	friend class AS_Calculator32;
@@ -29,6 +30,7 @@ public:
 	i32 GetSamplesMax();
 	i32 GetLeftSamples();
 	i32 GetSizeMax();
+	i16 GetFPNum();
 	b1 IsFull();
 
 	//

@@ -8,7 +8,7 @@ typedef struct {
     i32 seekSamples;
     i32 overlapSamples;
     i32 constSamples;
-    AS_Calculator* asCalculator;
+    AS_Calculator asCalculator;
     AudioSamples tmpBuf;
     AudioSamples iCache;
     f32 speed;
@@ -34,7 +34,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->tmpBuf.Append(*pIn, pIn->GetUsedSamples(), pState->overlapSamples);
     }
     int32_t bestLag;
-    bestLag = pState->asCalculator->WaveFormMatch(
+    bestLag = pState->asCalculator.WaveFormMatch(
         AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
         *pIn,
         pIn->GetUsedSamples(),
@@ -43,7 +43,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->seekSamples,
         pState->overlapSamples);
 
-    pState->asCalculator->OverlapAdd(
+    pState->asCalculator.OverlapAdd(
         pState->tmpBuf,
         0,
         *pIn,
@@ -104,7 +104,7 @@ EXTERNC{
         pState->overlapSamples = param->overlapMs * pState->info._rate / 1000;
         pState->constSamples = param->constMs * pState->info._rate / 1000;
 
-        pState->asCalculator = AS_Calculator::GetCaculator(param->width);
+        pState->asCalculator.Init(param->width);
 
         BufferSamples bufferSamples;
         bufferSamples._samples = pState->overlapSamples;
