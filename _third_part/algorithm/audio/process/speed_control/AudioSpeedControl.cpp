@@ -1,6 +1,13 @@
 #if 1
-#include"Algo.AS_Calculator.h"
+#include"Algo.AudioSamlpes.h"
+#include"Algo.AS.OverlapAdd.h"
+#include"Algo.AS.WaveFormMatch.h"
 #include"AudioSpeedControl.h"
+
+typedef struct {
+    ALGO_OVERLAP_ADD_CB OverlapAdd;
+    ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
+}FuncList;
 
 typedef struct {
     BasePorting* basePorting;
@@ -8,7 +15,7 @@ typedef struct {
     i32 seekSamples;
     i32 overlapSamples;
     i32 constSamples;
-    AS_Calculator asCalculator;
+    FuncList *funcList;
     AudioSamples tmpBuf;
     AudioSamples iCache;
     f32 speed;
@@ -16,6 +23,20 @@ typedef struct {
     b1 isInited;
 }ASC_State;
 
+static FuncList funcList16_g = {
+    Algo_OverlapAdd<i16>,
+    Get_Algo_WaveFormMatch(sizeof(i16)),
+};
+
+static FuncList funcList24_g = {
+    Algo_OverlapAdd<i24>,
+    Get_Algo_WaveFormMatch(sizeof(i24)),
+};
+
+static FuncList funcList32_g = {
+    Algo_OverlapAdd<i32>,
+    Get_Algo_WaveFormMatch(sizeof(i32)),
+};
 
 STATIC INLINE int32_t AudioSpeedControl_InMinSamlpes(ASC_State* pState)
 {
@@ -34,6 +55,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->tmpBuf.Append(*pIn, pIn->GetUsedSamples(), pState->overlapSamples);
     }
     int32_t bestLag;
+#if 0
     bestLag = pState->asCalculator.WaveFormMatch(
         AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
         *pIn,
@@ -42,14 +64,30 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         0,
         pState->seekSamples,
         pState->overlapSamples);
-
+#else
+    bestLag = pState->funcList->WaveFormMatch(
+        Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,
+        pIn->_info,
+        pIn->GetBufInSample(pIn->GetUsedSamples()),
+        pState->tmpBuf.GetBufInSample(0),
+        pState->seekSamples,
+        pState->overlapSamples);
+#endif
+#if 0
     pState->asCalculator.OverlapAdd(
         pState->tmpBuf,
         0,
         *pIn,
         pIn->GetUsedSamples() + bestLag,
         pState->overlapSamples);
-
+#else
+    pState->funcList->OverlapAdd(
+        pState->tmpBuf._info,
+        pState->tmpBuf.GetBufInSample(0),
+        pState->tmpBuf.GetBufInSample(0),
+        pIn->GetBufInSample(pIn->GetUsedSamples() + bestLag),
+        pState->overlapSamples);
+#endif
     pOut->Append(
         pState->tmpBuf,
         0,
@@ -104,7 +142,16 @@ EXTERNC{
         pState->overlapSamples = param->overlapMs * pState->info._rate / 1000;
         pState->constSamples = param->constMs * pState->info._rate / 1000;
 
-        pState->asCalculator.Init(param->width);
+
+        if (pState->info._width == 2) {
+            pState->funcList = &funcList16_g;
+        }
+        else if (pState->info._width == 3) {
+            pState->funcList = &funcList24_g;
+        }
+        else {
+            pState->funcList = &funcList32_g;
+        }
 
         BufferSamples bufferSamples;
         bufferSamples._samples = pState->overlapSamples;
@@ -207,8 +254,8 @@ EXTERNC{
     AudioSpeedControlRet AudioSpeedControl_DeInit(void* pStateIn)
     {
         ASC_State* pState = (ASC_State*)pStateIn;
-        pState->basePorting->Free(&pState->tmpBuf[0]);
-        pState->basePorting->Free(&pState->iCache[0]);
+        pState->basePorting->Free(pState->tmpBuf.GetBufInSample(0));
+        pState->basePorting->Free(pState->iCache.GetBufInSample(0));
         return AUDIO_SPEED_CONTROL_RET_SUCCESS;
     }
 }

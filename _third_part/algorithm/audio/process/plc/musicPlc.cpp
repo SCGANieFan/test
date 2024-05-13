@@ -1,5 +1,9 @@
 #if 1
-#include"Algo.AS_Calculator.h"
+#include"Algo.AudioSamlpes.h"
+#include"Algo.AS.Basic.h"
+#include"Algo.AS.Product.h"
+#include"Algo.AS.OverlapAdd.h"
+#include"Algo.AS.WaveFormMatch.h"
 #include"MusicPlc.h"
 
 #define MUSIC_PLC_MIN_FRAME_MS 10
@@ -11,6 +15,13 @@ typedef enum {
 	MUTE_MODE_DOMUTE,
 	MUTE_MODE_DOMUTE_ZERO,
 }MUTE_MODE;
+
+typedef struct {
+	ALGO_PRODUCT_CB product;
+	ALGO_OVERLAP_ADD_CB Overlapadd;
+	ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
+	ALGO_APPEND_IN_FIXPOINT AppendInFixpoint;
+}FuncList;
 
 typedef struct
 {
@@ -24,7 +35,7 @@ typedef struct
 	i32 frameSamplesInner;
 	i32 decaySamples;
 
-	AS_Calculator asCalculator;
+	FuncList* funcList;
 	AudioSamples inHistory;
 	AudioSamples infuture;
 	AudioSamples fillSignal;
@@ -39,6 +50,26 @@ typedef struct
 }MusicPlcState;
 
 
+static FuncList funcList16_g = {
+	Algo_Product<i16>,
+	Algo_OverlapAdd<i16>,
+	Get_Algo_WaveFormMatch(sizeof(i16)),
+	Algo_AppendInFixPoint<i16>,
+};
+
+static FuncList funcList24_g = {
+	Algo_Product<i24>,
+	Algo_OverlapAdd<i24>,
+	Get_Algo_WaveFormMatch(sizeof(i24)),
+	Algo_AppendInFixPoint<i24>,
+};
+
+static FuncList funcList32_g = {
+	Algo_Product<i32>,
+	Algo_OverlapAdd<i32>,
+	Get_Algo_WaveFormMatch(sizeof(i32)),
+	Algo_AppendInFixPoint<i32>,
+};
 
 STATIC INLINE i32 MusicPlcGetMuteFactorSamples(i32 frameSamples)
 {
@@ -110,7 +141,16 @@ EXTERNC {
 		pPlc->overlapInSamples = sampleParam->overlapMs * pPlc->info._rate / 1000;
 		pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->info._rate * MUSIC_PLC_MIN_FRAME_MS / 1000);
 		pPlc->decaySamples = sampleParam->decayTimeMs * pPlc->info._rate / 1000;
-		pPlc->asCalculator.Init(pPlc->info._width);
+
+		if (pPlc->info._width == 2){
+			pPlc->funcList = &funcList16_g;
+		}
+		else if (pPlc->info._width == 3) {
+			pPlc->funcList = &funcList24_g;
+		}
+		else{
+			pPlc->funcList = &funcList32_g;
+		}
 		BufferSamples bufferSamples;
 		
 		bufferSamples._samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
@@ -244,7 +284,14 @@ EXTERNC {
 					pMusicPlc->infuture.Append(pMusicPlc->fillSignal, pMusicPlc->fillSignalSampleIndex, 1);
 					pMusicPlc->fillSignalSampleIndex = (pMusicPlc->fillSignalSampleIndex + 1) % pMusicPlc->fillSignal.GetValidSamples();
 				}
-				pMusicPlc->asCalculator.OverlapAdd(pMusicPlc->infuture, 0, pIn, 0, pMusicPlc->overlapInSamples);
+#if 1
+				pMusicPlc->funcList->Overlapadd(
+					pMusicPlc->infuture._info,
+					pMusicPlc->infuture.GetBufInSample(0),
+					pMusicPlc->infuture.GetBufInSample(0),
+					pIn.GetBufInSample(0),
+					pMusicPlc->overlapInSamples);
+#endif
 				pMusicPlc->infuture.Append(pIn, pMusicPlc->overlapInSamples, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 			}
 
@@ -254,8 +301,17 @@ EXTERNC {
 			{
 				pMusicPlc->decaySamplesNow--;
 				pMusicPlc->decaySamplesNow = MAX(pMusicPlc->decaySamplesNow, 0);
+#if 0
 				pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
-
+#else
+				pMusicPlc->funcList->AppendInFixpoint(
+					pMusicPlc->muteFactor._info,
+					pMusicPlc->muteFactor.GetBufInSample(i),
+					pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow,
+					pMusicPlc->decaySamples,
+					pMusicPlc->muteFactor.GetFPNum());
+				pMusicPlc->muteFactor.Append(1);
+#endif
 			}
 		}
 		else
@@ -264,24 +320,26 @@ EXTERNC {
 			if (pMusicPlc->lostCount == 1)
 			{
 #if 1
-				i32 bestLag = pMusicPlc->asCalculator.WaveFormMatch(
-					AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
-					pMusicPlc->inHistory,
-					0,
-					pMusicPlc->inHistory,
-					pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples,
+
+				i32 bestLag = pMusicPlc->funcList->WaveFormMatch(
+					Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,
+					pMusicPlc->inHistory._info,
+					pMusicPlc->inHistory.GetBufInSample(0),
+					pMusicPlc->inHistory.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
 					pMusicPlc->seekSamples,
 					pMusicPlc->matchSamples);
 #else		
 				i32 bestLag = 0;
 #endif
 				//overlap add
-				pMusicPlc->asCalculator.OverlapAdd(
-					pMusicPlc->inHistory,
-					pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples,
-					pMusicPlc->inHistory,
-					bestLag,
+#if 1
+				pMusicPlc->funcList->Overlapadd(
+					pMusicPlc->inHistory._info,
+					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
+					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
+					pMusicPlc->inHistory.GetBufInSample(bestLag),
 					pMusicPlc->overlapInSamples);
+#endif
 				//fill signal
 				pMusicPlc->fillSignal.Clear(pMusicPlc->fillSignal.GetValidSamples());
 				pMusicPlc->fillSignal.Append(
@@ -296,7 +354,17 @@ EXTERNC {
 				for (i32 i = 0; i < pMusicPlc->frameSamples; i++) {
 					pMusicPlc->decaySamplesNow++;
 					pMusicPlc->decaySamplesNow = MIN(pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
+#if 0
 					pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
+#else
+					pMusicPlc->funcList->AppendInFixpoint(
+						pMusicPlc->muteFactor._info,
+						pMusicPlc->muteFactor.GetBufInSample(i),
+						pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow,
+						pMusicPlc->decaySamples,
+						pMusicPlc->muteFactor.GetFPNum());
+					pMusicPlc->muteFactor.Append(1);
+#endif
 				}
 			}
 			else {
@@ -309,14 +377,21 @@ EXTERNC {
 			}
 		}
 		//muting
+#if 1
 		if (muteMode != MUTE_MODE_NOMUTE) {
 			if (muteMode == MUTE_MODE_DOMUTE) {
-				pMusicPlc->asCalculator.Product(pMusicPlc->infuture, 0, pMusicPlc->muteFactor, 0, pMusicPlc->frameSamples);
+				pMusicPlc->funcList->product(
+					pMusicPlc->infuture._info,
+					pMusicPlc->infuture.GetBufInSample(0),
+					pMusicPlc->muteFactor.GetBufInSample(0),
+					pMusicPlc->muteFactor.GetFPNum(),
+					pMusicPlc->frameSamples);
 			}
 			else {
-				pMusicPlc->basePorting->MemSet(&(pMusicPlc->infuture)[0], 0, pMusicPlc->infuture.GetSizeMax());
+				pMusicPlc->basePorting->MemSet(pMusicPlc->infuture.GetBufInSample(0), 0, pMusicPlc->infuture.GetSizeMax());
 			}
 		}
+#endif
 		//out
 		pOut.Append(pMusicPlc->inHistory, pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples, pMusicPlc->overlapInSamples);
 		pOut.Append(pMusicPlc->infuture, 0, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
@@ -336,10 +411,10 @@ EXTERNC {
 		if (!pMusicPlcStateIn)
 			return MUSIC_PLC_RET_FAIL;
 		MusicPlcState* pMusicPlc = (MusicPlcState*)pMusicPlcStateIn;
-		pMusicPlc->basePorting->Free(&pMusicPlc->inHistory[0]);
-		pMusicPlc->basePorting->Free(&pMusicPlc->infuture[0]);
-		pMusicPlc->basePorting->Free(&pMusicPlc->fillSignal[0]);
-		pMusicPlc->basePorting->Free(&pMusicPlc->muteFactor[0]);
+		pMusicPlc->basePorting->Free(pMusicPlc->inHistory.GetBufInSample(0));
+		pMusicPlc->basePorting->Free(pMusicPlc->infuture.GetBufInSample(0));
+		pMusicPlc->basePorting->Free(pMusicPlc->fillSignal.GetBufInSample(0));
+		pMusicPlc->basePorting->Free(pMusicPlc->muteFactor.GetBufInSample(0));
 		return MUSIC_PLC_RET_SUCCESS;
 	}
 }

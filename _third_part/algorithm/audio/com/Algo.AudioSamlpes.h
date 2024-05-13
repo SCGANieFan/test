@@ -17,11 +17,14 @@ public:
 	AudioSamples() {};
 	~AudioSamples() {};
 public:
-	INLINE u8& operator[](i32 sample) { return _buff[sample * _info->_bytesPerSample]; };
+#if 0
+	INLINE AudioSamples& operator[](i32 sample) { return _buff[sample * _info->_bytesPerSample]; };
+#endif
 public:
 	//set
 	
 	//get
+	INLINE u8* GetBufInSample(i32 sample) { return &_buff[sample * _info->_bytesPerSample]; };
 	INLINE i32 GetValidSamples() { return _validSamples; };
 	INLINE i32 GetUsedSamples() { return _usedSamples; };
 	INLINE i32 GetSamplesMax() { return _samples; };
@@ -35,7 +38,7 @@ public:
 	b1 Init(const AudioInfo* pInfo, BufferSamples *buffer, i16 fpNum = 0);
 	INLINE b1 Append(AudioSamples& src, i32 srcSample, i32 appendSample) {
 		i32 copyByte = appendSample * _info->_bytesPerSample;
-		ALGO_MEM_CPY(GetLeftData(), &src[srcSample], copyByte);
+		ALGO_MEM_CPY(GetLeftData(), src.GetBufInSample(srcSample), copyByte);
 		_validSamples += appendSample;
 		_size += copyByte;
 		return true;

@@ -66,11 +66,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.h" />
+    <ClInclude Include="AudioResample.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.cpp" />
+    <ClCompile Include="AudioResample.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{12838396-4f93-40a8-9600-6763e14e6451}</ProjectGuid>
-    <RootNamespace>MTFdemo</RootNamespace>
+    <ProjectGuid>{d2df5885-67b5-4de0-bb8c-76ba89394566}</ProjectGuid>
+    <RootNamespace>Resample</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -220,24 +232,28 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -402,12 +418,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../_third_part/algorithm/audio/com;../_third_part/algorithm/audio/demo;../_third_part/algorithm/MAF;../_third_part/algorithm/MAF/base;../_third_part/algorithm/MAF/inc;../_third_part/algorithm/MAF/interface/demo;../_third_part/algorithm/MTF;../_third_part/algorithm/MTF/base;../_third_part/algorithm/MTF/interface/demo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <Optimization>Disabled</Optimization>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/AudioResample;$(MTF_PATH)/interface/AudioResample;$(MAF_PATH)/interface/AudioResample;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -519,39 +532,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\demo\audiodemo.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.cpp" />
-    <ClCompile Include="MTF_demoTest.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Basic.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.OverlapAdd.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Product.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_CalculatorInner.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buffer.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\demo\audiodemo.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h" />
-    <ClInclude Include="MTF_demoTest.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

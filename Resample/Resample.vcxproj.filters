@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{1b84adfa-66e8-4b40-9aab-5e533243f586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maf">
+      <UniqueIdentifier>{d43f2ea3-1441-43e3-9fdb-4543b7295c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mtf">
+      <UniqueIdentifier>{a4502e1e-7e67-4727-8563-2e8c15f16a29}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioResample.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioResample.cpp" />
+  </ItemGroup>
+</Project>

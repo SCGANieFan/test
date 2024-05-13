@@ -1,7 +1,6 @@
-#pragma once
-#include"Algo.Type.h"
-#include"Algo.Macro.h"
+#include"Algo.AS.WaveFormMatch.h"
 
+#if 1
 template<class T>
 STATIC INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
 {
@@ -84,7 +83,7 @@ STATIC INLINE i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelati
 			tempQ15++;
 		}
 	}
-	* normQ30 = lnormQ30;
+	*normQ30 = lnormQ30;
 	//out Q10
 	return (i32)((corrQ30 / ((u64)sqrt((*normQ30 < 1) ? 1 : *normQ30))) >> 5);
 }
@@ -115,21 +114,44 @@ STATIC INLINE i16 AccorelationMatch_Local(T* ref, T* temp, i16 channels, i32 see
 }
 
 template<class T>
-i16 WaveFormMatch_Local(AS_Calculator::WaveformMatchChoose_e mode, AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample)
+i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, const AudioInfo* info, u8* ref, u8* cmp, i32 seekSample, i32 matchSample)
 {
-	auto pRef = (T*)&dst[dstSample];
-	auto pTemp = (T*)&cmp[cmpSample];
+	T* pRef = (T*)ref;
+	T* pCmp = (T*)cmp;
 	switch (mode)
 	{
-	case AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM:
-		return SumMatch_Local<T>(pRef, pTemp, dst._info->_channels, seekSample, matchSample);
+	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM:
+		return SumMatch_Local<T>(pRef, pCmp, info->_channels, seekSample, matchSample);
 		break;
-	case AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_ACCORELATION:
-		return AccorelationMatch_Local<T>(pRef, pTemp, dst._info->_channels, seekSample, matchSample);
+	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_ACCORELATION:
+		return AccorelationMatch_Local<T>(pRef, pCmp, info->_channels, seekSample, matchSample);
 		break;
-	case AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_MAX:
+	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_MAX:
 		break;
 	default:
 		break;
 	}
 }
+
+#endif
+
+
+
+ALGO_WAVE_FORM_MATCH_CB Get_Algo_WaveFormMatch(i16 width)
+{
+	if (width == 2)
+	{
+		return Algo_WaveFormMatch<i16>;
+	}
+	else if (width == 3)
+	{
+		return Algo_WaveFormMatch<i24>;
+	}
+	else if (width == 4)
+	{
+		return Algo_WaveFormMatch<i32>;
+	}
+	return 0;
+}
+
+

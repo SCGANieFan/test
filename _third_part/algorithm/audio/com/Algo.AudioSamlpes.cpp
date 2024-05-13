@@ -1,4 +1,4 @@
-#include"Algo.AS_CalculatorInner.h"
+#include"Algo.AudioSamlpes.h"
 
 b1 AudioSamples::Init(const AudioInfo* pInfo, Buffer* buffer, i16 fpNum)
 {

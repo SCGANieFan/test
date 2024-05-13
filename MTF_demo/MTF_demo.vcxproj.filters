@@ -40,16 +40,10 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Product.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.WaveFormMatch.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.basic.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.OverlapAdd.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.cpp">
       <Filter>lib\audiosample</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,19 +88,22 @@
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h">
       <Filter>lib\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.OverlapAdd.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Product.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.WaveFormMatch.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.basic.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_CalculatorInner.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Product.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.OverlapAdd.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.h">
+      <Filter>lib\audiosample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Basic.h">
       <Filter>lib\audiosample</Filter>
     </ClInclude>
   </ItemGroup>

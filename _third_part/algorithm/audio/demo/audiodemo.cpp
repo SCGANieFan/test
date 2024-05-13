@@ -16,12 +16,18 @@ void AudioDemoRun()
 {
 	printf("comRun\n");
 	AudioSamples samples;
+	//samples[0]
+	//samples()
+	//samples.GetBufInSample(sample)
+	//samples.Sample(sample)
 
+
+#if 0
 	//samples.Init(0, 0);
 	AudioInfo info;
 	Buffer buf;
 	samples.Init(&info, &buf);
-
+#endif
 
 }
 
