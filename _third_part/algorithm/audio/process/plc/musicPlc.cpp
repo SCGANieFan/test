@@ -70,7 +70,7 @@ STATIC b1 MusicPlcCheckParam(i32 overlapMs, i32 frameSamples, i32 fsHz, i16 chan
 		return false;
 	if (channels != 1 && channels != 2 && channels != 4)
 		return false;
-	if (width != 2 && channels != 4)
+	if (width != 2 && width != 3 && width != 4)
 		return false;
 
 	return true;

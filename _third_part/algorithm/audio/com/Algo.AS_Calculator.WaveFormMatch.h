@@ -3,7 +3,7 @@
 #include"Algo.Macro.h"
 
 template<class T>
-STATIC INLINE i32 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
+STATIC INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
 {
 	i64 matchFactor = 0;
 	for (i16 m = 0; m < matchSample; m++) {
@@ -20,8 +20,8 @@ STATIC INLINE i32 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSa
 template<class T>
 STATIC INLINE i16 SumMatch_Local(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
 {
-	i32 matchFactor = 0;
-	i32 matchFactorOpt = 0;
+	i64 matchFactor = 0;
+	i64 matchFactorOpt = 0;
 	i16 lagOpt = 0;
 	auto pRef = ref;
 	auto pTemp = temp;

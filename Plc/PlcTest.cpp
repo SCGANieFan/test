@@ -21,6 +21,15 @@
 #endif
 #else
 
+#if 1
+#define FILE_NAME "sin1k_48k1ch24b.pcm"
+#define RATE 48000
+#define CHANNEL 1
+#define WIDTH 3
+#define FRAME_MS 2
+#define DECAY_MS 50
+#define OVERLAP_MS 2
+#else
 #define FILE_NAME "sin4ch48k32b.wav"
 #define RATE 48000
 #define CHANNEL 4
@@ -28,7 +37,7 @@
 #define FRAME_MS 2
 #define DECAY_MS 50
 #define OVERLAP_MS 2
-
+#endif
 #endif
 void PlcTest()
 {

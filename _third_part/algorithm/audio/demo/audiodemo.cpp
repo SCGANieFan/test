@@ -1,5 +1,6 @@
 #include"Algo.Memory.h"
 #include"Algo.AudioData.h"
+#include"Algo.AudioSamlpes.h"
 #include"audiodemo.h"
 
 AudioInfo info;
@@ -7,7 +8,6 @@ AudioInfo info;
 void AudioDemoInit()
 {
 	printf("comInit\n");
-	//info.Init(48000, 2, 1, 20 * 1000);
 }
 
 
@@ -15,12 +15,14 @@ void AudioDemoInit()
 void AudioDemoRun()
 {
 	printf("comRun\n");
+	AudioSamples samples;
 
-	i32 bufSize = 1024;
-	u8* buf = (u8*)ALGO_MALLOC(bufSize);
-	AudioData data;
-	//data.Init(&info, buf, bufSize);
-	ALGO_FREE(buf);
+	//samples.Init(0, 0);
+	AudioInfo info;
+	Buffer buf;
+	samples.Init(&info, &buf);
+
+
 }
 
 

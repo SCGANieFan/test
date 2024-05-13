@@ -4,16 +4,7 @@
 class AS_Calculator
 {
 public:
-	typedef struct {
-		void* appendInFixPoint_cb;
-		void* leftShift_cb;
-		void* leftShiftSigned_cb;
-		void* RightShift_cb;
-		void* RightShiftSigned_cb;
-		void* product_cb;
-		void* overlapAdd_cb;
-		void* waveFormMatch_cb;
-	}FuncList;
+
 public:
 	AS_Calculator() {};
 	~AS_Calculator() {};
@@ -35,7 +26,7 @@ public:
 	};
 	i16 WaveFormMatch(WaveformMatchChoose_e mode, AudioSamples& dst, i32 dstSample, AudioSamples& cmp, i32 cmpSample, i32 seekSample, i32 matchSample);
 private:
-	FuncList*_funcList;
+	void*_funcList;
 };
 
 #endif

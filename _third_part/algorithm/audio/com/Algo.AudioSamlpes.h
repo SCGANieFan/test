@@ -11,37 +11,58 @@ public:
 	i32 _samples = 0;
 };
 
-//class AudioSamples:protected AudioData
 class AudioSamples:public AudioData
 {
-	friend class AS_Calculator16;
-	friend class AS_Calculator32;
 public:
 	AudioSamples() {};
 	~AudioSamples() {};
 public:
-	u8& operator[](i32 sample);
+	INLINE u8& operator[](i32 sample) { return _buff[sample * _info->_bytesPerSample]; };
 public:
 	//set
 	
 	//get
-	i32 GetValidSamples();
-	i32 GetUsedSamples();
-	i32 GetSamplesMax();
-	i32 GetLeftSamples();
-	i32 GetSizeMax();
-	i16 GetFPNum();
-	b1 IsFull();
+	INLINE i32 GetValidSamples() { return _validSamples; };
+	INLINE i32 GetUsedSamples() { return _usedSamples; };
+	INLINE i32 GetSamplesMax() { return _samples; };
+	INLINE i32 GetLeftSamples() { return _samples - _usedSamples - _validSamples; };
+	INLINE i32 GetSizeMax() { return _samplesTotal * _info->_width; };
+	INLINE i16 GetFPNum() { return _fpNum; };
+	INLINE b1 IsFull() { return GetValidSamples() == GetSamplesMax(); };
 
 	//
-	virtual b1 Init(const AudioInfo* pInfo, Buffer *buffer, i16 fpNum = 0) final;
+	b1 Init(const AudioInfo* pInfo, Buffer *buffer, i16 fpNum = 0);
 	b1 Init(const AudioInfo* pInfo, BufferSamples *buffer, i16 fpNum = 0);
-	b1 Append(AudioSamples& src, i32 srcSample, i32 appendSample);
-	b1 Append(i32 appendSample);
-	b1 AppendFully(AudioSamples& src, i32 *usedSamples);
-	b1 Used(i32 usedSample);
-	b1 ClearUsed();
-	b1 Clear(i32 usedSample);
+	INLINE b1 Append(AudioSamples& src, i32 srcSample, i32 appendSample) {
+		i32 copyByte = appendSample * _info->_bytesPerSample;
+		ALGO_MEM_CPY(GetLeftData(), &src[srcSample], copyByte);
+		_validSamples += appendSample;
+		_size += copyByte;
+		return true;
+	};
+	INLINE b1 Append(i32 appendSample) {
+		_validSamples += appendSample;
+		_size += appendSample * _info->_bytesPerSample;
+		return true;
+	};
+	INLINE b1 AppendFully(AudioSamples& src, i32 *usedSamples) {
+		i32 AppendSamples;
+		AppendSamples = GetSamplesMax() - GetValidSamples();
+		AppendSamples = AppendSamples < src.GetValidSamples() ? AppendSamples : src.GetValidSamples();
+		Append(src, src.GetUsedSamples(), AppendSamples);
+		*usedSamples = AppendSamples;
+		return true;
+	};
+	INLINE b1 Used(i32 usedSample) {
+		_off += usedSample * _info->_bytesPerSample;
+		_size -= usedSample * _info->_bytesPerSample;
+		_validSamples -= usedSample;
+		_usedSamples += usedSample;
+		return true;
+	};
+	
+	INLINE b1 ClearUsed() { _usedSamples = 0; Data::ClearUsed(); return true; };
+	INLINE b1 Clear(i32 usedSample) { Used(usedSample); ClearUsed(); return true; };
 protected:
 	i16 _fpNum = 0;	
 	i32 _samples = 0;
