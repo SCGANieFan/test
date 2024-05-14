@@ -3,6 +3,8 @@
 #include"Algo.AudioSamlpes.h"
 #include"audiodemo.h"
 
+using namespace Algo;
+using namespace Audio;
 AudioInfo info;
 
 void AudioDemoInit()

@@ -1,5 +1,7 @@
 #include"Algo.AudioSamlpes.h"
 
+using namespace Algo;
+using namespace Audio;
 b1 AudioSamples::Init(const AudioInfo* pInfo, Buffer* buffer, i16 fpNum)
 {
 	_samples = buffer->_max / pInfo->_bytesPerSample;

@@ -1,10 +1,13 @@
 #if 1
 #include"Algo.AudioSamlpes.h"
-#include"Algo.AS.Basic.h"
-#include"Algo.AS.Product.h"
-#include"Algo.AS.OverlapAdd.h"
-#include"Algo.AS.WaveFormMatch.h"
+#include"Algo.AudioCal.Basic.h"
+#include"Algo.AudioCal.Product.h"
+#include"Algo.AudioCal.OverlapAdd.h"
+#include"Algo.AudioCal.WaveFormMatch.h"
 #include"MusicPlc.h"
+
+using namespace Algo;
+using namespace Audio;
 
 #define MUSIC_PLC_MIN_FRAME_MS 10
 #define MUSIC_PLC_SEEK_MS_DEFAULT 2
@@ -51,21 +54,21 @@ typedef struct
 
 
 static FuncList funcList16_g = {
-	Algo_Product<i16>,
+	Algo_Product<i16,i16>,
 	Algo_OverlapAdd<i16>,
 	Get_Algo_WaveFormMatch(sizeof(i16)),
 	Algo_AppendInFixPoint<i16>,
 };
 
 static FuncList funcList24_g = {
-	Algo_Product<i24>,
+	Algo_Product<i24,i24>,
 	Algo_OverlapAdd<i24>,
 	Get_Algo_WaveFormMatch(sizeof(i24)),
 	Algo_AppendInFixPoint<i24>,
 };
 
 static FuncList funcList32_g = {
-	Algo_Product<i32>,
+	Algo_Product<i32,i32>,
 	Algo_OverlapAdd<i32>,
 	Get_Algo_WaveFormMatch(sizeof(i32)),
 	Algo_AppendInFixPoint<i32>,
@@ -285,12 +288,12 @@ EXTERNC {
 					pMusicPlc->fillSignalSampleIndex = (pMusicPlc->fillSignalSampleIndex + 1) % pMusicPlc->fillSignal.GetValidSamples();
 				}
 #if 1
-				pMusicPlc->funcList->Overlapadd(
-					pMusicPlc->infuture._info,
+				pMusicPlc->funcList->Overlapadd(					
 					pMusicPlc->infuture.GetBufInSample(0),
 					pMusicPlc->infuture.GetBufInSample(0),
 					pIn.GetBufInSample(0),
-					pMusicPlc->overlapInSamples);
+					pMusicPlc->overlapInSamples,
+					pMusicPlc->infuture._info->_channels);
 #endif
 				pMusicPlc->infuture.Append(pIn, pMusicPlc->overlapInSamples, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 			}
@@ -305,10 +308,10 @@ EXTERNC {
 				pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 #else
 				pMusicPlc->funcList->AppendInFixpoint(
-					pMusicPlc->muteFactor._info,
 					pMusicPlc->muteFactor.GetBufInSample(i),
 					pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow,
 					pMusicPlc->decaySamples,
+					pMusicPlc->muteFactor._info->_channels,
 					pMusicPlc->muteFactor.GetFPNum());
 				pMusicPlc->muteFactor.Append(1);
 #endif
@@ -322,10 +325,10 @@ EXTERNC {
 #if 1
 
 				i32 bestLag = pMusicPlc->funcList->WaveFormMatch(
-					Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,
-					pMusicPlc->inHistory._info,
+					Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,					
 					pMusicPlc->inHistory.GetBufInSample(0),
 					pMusicPlc->inHistory.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
+					pMusicPlc->inHistory._info->_channels,
 					pMusicPlc->seekSamples,
 					pMusicPlc->matchSamples);
 #else		
@@ -333,12 +336,12 @@ EXTERNC {
 #endif
 				//overlap add
 #if 1
-				pMusicPlc->funcList->Overlapadd(
-					pMusicPlc->inHistory._info,
+				pMusicPlc->funcList->Overlapadd(					
 					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
 					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
 					pMusicPlc->inHistory.GetBufInSample(bestLag),
-					pMusicPlc->overlapInSamples);
+					pMusicPlc->overlapInSamples,
+					pMusicPlc->inHistory._info->_channels);
 #endif
 				//fill signal
 				pMusicPlc->fillSignal.Clear(pMusicPlc->fillSignal.GetValidSamples());
@@ -358,10 +361,10 @@ EXTERNC {
 					pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 #else
 					pMusicPlc->funcList->AppendInFixpoint(
-						pMusicPlc->muteFactor._info,
 						pMusicPlc->muteFactor.GetBufInSample(i),
-						pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow,
+						pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, 
 						pMusicPlc->decaySamples,
+						pMusicPlc->muteFactor._info->_channels,
 						pMusicPlc->muteFactor.GetFPNum());
 					pMusicPlc->muteFactor.Append(1);
 #endif
@@ -381,11 +384,11 @@ EXTERNC {
 		if (muteMode != MUTE_MODE_NOMUTE) {
 			if (muteMode == MUTE_MODE_DOMUTE) {
 				pMusicPlc->funcList->product(
-					pMusicPlc->infuture._info,
 					pMusicPlc->infuture.GetBufInSample(0),
 					pMusicPlc->muteFactor.GetBufInSample(0),
-					pMusicPlc->muteFactor.GetFPNum(),
-					pMusicPlc->frameSamples);
+					pMusicPlc->frameSamples,
+					pMusicPlc->infuture._info->_channels,
+					pMusicPlc->muteFactor.GetFPNum());
 			}
 			else {
 				pMusicPlc->basePorting->MemSet(pMusicPlc->infuture.GetBufInSample(0), 0, pMusicPlc->infuture.GetSizeMax());

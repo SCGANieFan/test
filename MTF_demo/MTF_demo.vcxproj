@@ -520,9 +520,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\demo\audiodemo.cpp" />
@@ -531,15 +530,13 @@
     <ClCompile Include="MTF_demoTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Basic.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.OverlapAdd.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Product.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_CalculatorInner.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buffer.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h" />

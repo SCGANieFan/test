@@ -1,9 +1,11 @@
 #if 1
 #include"Algo.AudioSamlpes.h"
-#include"Algo.AS.OverlapAdd.h"
-#include"Algo.AS.WaveFormMatch.h"
+#include"Algo.AudioCal.OverlapAdd.h"
+#include"Algo.AudioCal.WaveFormMatch.h"
 #include"AudioSpeedControl.h"
 
+using namespace Algo;
+using namespace Audio;
 typedef struct {
     ALGO_OVERLAP_ADD_CB OverlapAdd;
     ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
@@ -67,9 +69,9 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
 #else
     bestLag = pState->funcList->WaveFormMatch(
         Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,
-        pIn->_info,
         pIn->GetBufInSample(pIn->GetUsedSamples()),
         pState->tmpBuf.GetBufInSample(0),
+        pIn->_info->_channels,
         pState->seekSamples,
         pState->overlapSamples);
 #endif
@@ -82,11 +84,12 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->overlapSamples);
 #else
     pState->funcList->OverlapAdd(
-        pState->tmpBuf._info,
         pState->tmpBuf.GetBufInSample(0),
         pState->tmpBuf.GetBufInSample(0),
         pIn->GetBufInSample(pIn->GetUsedSamples() + bestLag),
-        pState->overlapSamples);
+        pState->overlapSamples,
+        pState->tmpBuf._info->_channels);
+        
 #endif
     pOut->Append(
         pState->tmpBuf,

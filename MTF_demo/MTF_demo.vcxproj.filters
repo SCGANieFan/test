@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="lib\audiosample">
-      <UniqueIdentifier>{9a300a1b-4737-4b2d-84f6-386ebbf5f6bd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lib\base">
       <UniqueIdentifier>{2f11cfcc-daa8-4a86-94bc-c0e09dc9e04d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\audio">
+      <UniqueIdentifier>{9a300a1b-4737-4b2d-84f6-386ebbf5f6bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,22 +29,19 @@
     </ClCompile>
     <ClCompile Include="MTF_demoTest.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp">
-      <Filter>lib\audiosample</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
-      <Filter>lib\base</Filter>
+      <Filter>lib\audio</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.cpp">
-      <Filter>lib\audiosample</Filter>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp">
+      <Filter>lib\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.cpp">
-      <Filter>lib\audiosample</Filter>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
+      <Filter>lib\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.cpp">
-      <Filter>lib\audiosample</Filter>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
+      <Filter>lib\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,10 +53,7 @@
     </ClInclude>
     <ClInclude Include="MTF_demoTest.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h">
-      <Filter>lib\audiosample</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.h">
-      <Filter>lib\audiosample</Filter>
+      <Filter>lib\audio</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h">
       <Filter>lib\base</Filter>
@@ -68,9 +62,6 @@
       <Filter>lib\base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
       <Filter>lib\base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h">
@@ -88,23 +79,23 @@
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h">
       <Filter>lib\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_CalculatorInner.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS_Calculator.Resample.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Product.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.OverlapAdd.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.WaveFormMatch.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AS.Basic.h">
-      <Filter>lib\audiosample</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
+      <Filter>lib\audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

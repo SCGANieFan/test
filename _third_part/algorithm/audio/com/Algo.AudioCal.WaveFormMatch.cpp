@@ -1,5 +1,8 @@
-#include"Algo.AS.WaveFormMatch.h"
+#include<math.h>
+#include"Algo.AudioCal.WaveFormMatch.h"
 
+using namespace Algo;
+using namespace Audio;
 #if 1
 template<class T>
 STATIC INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
@@ -40,9 +43,9 @@ STATIC INLINE i16 SumMatch_Local(T* ref, T* temp, i16 channels, i32 seekSample, 
 }
 
 template<class T>
-STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, int32_t accorelationSamples, u64* normQ30)
+STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 accorelationSamples, u64* normQ30)
 {
-	int64_t corrQ30;
+	i64 corrQ30;
 	i16 i;
 
 	//last sample
@@ -59,7 +62,7 @@ STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, int32
 	corrQ30 = 0;
 	for (; i < accorelationSamples * channels; i++)
 	{
-		corrQ30 += (int64_t)refQ15[i] * tempQ15[i];
+		corrQ30 += (i64)refQ15[i] * tempQ15[i];
 	}
 
 	//outQ10
@@ -69,16 +72,16 @@ STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, int32
 template<class T>
 STATIC INLINE i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelationSample, u64* normQ30)
 {
-	int64_t corrQ30;
-	uint64_t lnormQ30;
-	int32_t i;
+	i64 corrQ30;
+	u64 lnormQ30;
+	i32 i;
 	corrQ30 = lnormQ30 = 0;
 	for (i32 as = 0; as < accorrelationSample; as++)
 	{
 		for (i16 ch = 0; ch < channels; ch++)
 		{
-			corrQ30 += (int64_t)*refQ15 * *tempQ15;
-			lnormQ30 += (int64_t)*refQ15 * *refQ15;
+			corrQ30 += (i64)*refQ15 * *tempQ15;
+			lnormQ30 += (i64)*refQ15 * *refQ15;
 			refQ15++;
 			tempQ15++;
 		}
@@ -114,17 +117,17 @@ STATIC INLINE i16 AccorelationMatch_Local(T* ref, T* temp, i16 channels, i32 see
 }
 
 template<class T>
-i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, const AudioInfo* info, u8* ref, u8* cmp, i32 seekSample, i32 matchSample)
+i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, u8* ref, u8* cmp, i16 channels, i32 seekSample, i32 matchSample)
 {
 	T* pRef = (T*)ref;
 	T* pCmp = (T*)cmp;
 	switch (mode)
 	{
 	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM:
-		return SumMatch_Local<T>(pRef, pCmp, info->_channels, seekSample, matchSample);
+		return SumMatch_Local<T>(pRef, pCmp, channels, seekSample, matchSample);
 		break;
 	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_ACCORELATION:
-		return AccorelationMatch_Local<T>(pRef, pCmp, info->_channels, seekSample, matchSample);
+		return AccorelationMatch_Local<T>(pRef, pCmp, channels, seekSample, matchSample);
 		break;
 	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_MAX:
 		break;
@@ -137,7 +140,7 @@ i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, const AudioInfo* info, u
 
 
 
-ALGO_WAVE_FORM_MATCH_CB Get_Algo_WaveFormMatch(i16 width)
+ALGO_WAVE_FORM_MATCH_CB Algo::Audio::Get_Algo_WaveFormMatch(i16 width)
 {
 	if (width == 2)
 	{
