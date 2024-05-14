@@ -1,80 +1,50 @@
-#if 0
-#include"Algo.AS_Calculator.h"
+#if 1
+//#include"Algo.AS_Calculator.h"
+#include"Algo.AudioCal.Product.h"
+#include"Algo.AudioData.h"
 #include"AudioResample.h"
+
+using namespace Algo;
+using namespace Audio;
+
+#define ONE_Q20	((i64)1 << 20)
+#define MASK_Q20 (ONE_Q20 - 1)
+
+typedef struct {
+    ALGO_DOT_PRODUCT_ADD_CB ProductAdd;
+    ALGO_DOT_PRODUCT_ADD_ACC_CB ProductAddAcc;
+}FuncList;
+
 
 typedef struct {
     BasePorting* basePorting;
-#if 0
-    AudioInfo info;
+    FuncList* funcList;
+    int16_t channels;
+    int16_t width;
+    int16_t bytePerSample;
     int32_t iFs;
     int32_t oFs;
-#else
-    AudioInfo iInfo;
-    AudioInfo oInfo;
-#endif
-#if 0
-    int32_t iSampleIndex;
-    int32_t oSampleIndex;
-#endif
-    AS_Calculator asCalculator;
+    int32_t KQ20;
+    i32 iSamplesAcc;
+    i32 oSamplesAcc;
+    u8 lastSample[4*8];
     b1 isInited;
 }AudioResampleState;
 
-#if 0
-STATIC INLINE int32_t AudioResample_InMinSamlpes(AudioResampleState* pState)
-{
-    int32_t samples1 = (pState->seekSamples + pState->overlapSamples + pState->constSamples + pState->overlapSamples);
-    int32_t samples2 = (int32_t)(pState->speed * (pState->overlapSamples + pState->constSamples));
-    return MAX(samples1, samples2);
-}
-AudioResampleRet AudioResample_RunInner(AudioResampleState* pState, AudioSamples* pIn, AudioSamples* pOut)
-{
-    int32_t offset = 0;
-    if (pOut->GetLeftSamples() < (pState->overlapSamples + pState->constSamples))
-        return AUDIO_RESAMPLE_RET_OUT_BUFF_NOT_ENOUGH;
-    if (pState->isBeginning == true) {
-        pState->isBeginning = false;
-        pState->tmpBuf.Append(*pIn, pIn->GetUsedSamples(), pState->overlapSamples);
-    }
-    int32_t bestLag;
-    bestLag = pState->asCalculator.WaveFormMatch(
-        AS_Calculator::WaveformMatchChoose_e::WAVEFORM_MATCH_SUM,
-        *pIn,
-        pIn->GetUsedSamples(),
-        pState->tmpBuf,
-        0,
-        pState->seekSamples,
-        pState->overlapSamples);
+static FuncList funcList16_g = {
+    Algo_ProductAdd<i16,i32>,
+    Algo_ProductAddAcc<i16,i64>,
+};
 
-    pState->asCalculator.OverlapAdd(
-        pState->tmpBuf,
-        0,
-        *pIn,
-        pIn->GetUsedSamples() + bestLag,
-        pState->overlapSamples);
+static FuncList funcList24_g = {
+    Algo_ProductAdd<i24,i32>,
+    Algo_ProductAddAcc<i24,i64>,
+};
 
-    pOut->Append(
-        pState->tmpBuf,
-        0,
-        pState->overlapSamples);
-
-    offset += bestLag + pState->overlapSamples;
-
-    //copy constSamples from in to out
-    pOut->Append(
-        *pIn,
-        pIn->GetUsedSamples() + offset,
-        pState->constSamples);
-    offset += pState->constSamples;
-
-    //updata tmpBuf
-    pState->tmpBuf.Clear(pState->tmpBuf.GetValidSamples());
-    pState->tmpBuf.Append(*pIn, pIn->GetUsedSamples() + offset, pState->overlapSamples);
-
-    pIn->Clear(pState->speed * (pState->overlapSamples + pState->constSamples));
-    return AUDIO_RESAMPLE_RET_SUCCESS;
-}
-#endif
+static FuncList funcList32_g = {
+    Algo_ProductAdd<i32,i32>,
+    Algo_ProductAddAcc<i32,i64>,
+};
 
 EXTERNC{
 
@@ -97,11 +67,26 @@ EXTERNC{
         param->basePorting->MemSet((u8*)pState, 0, sizeof(AudioResampleState));
         
         pState->basePorting = param->basePorting;
+        
+        if (param->width == 2) {
+            pState->funcList = &funcList16_g;
+        }
+        else if (param->width == 3) {
+            pState->funcList = &funcList24_g;
+        }
+        else {
+            pState->funcList = &funcList32_g;
+        }
 
-        pState->iInfo.Init(param->iFs, param->width, param->channels);
-        pState->oInfo.Init(param->oFs, param->width, param->channels);
 
-        pState->asCalculator.Init(param->width);
+        pState->channels= param->channels;
+        pState->width= param->width;
+        pState->bytePerSample = pState->channels * pState->width;
+
+        //pState->info.Init(param->iFs, param->width, param->channels);
+        pState->iFs = param->iFs;
+        pState->oFs = param->oFs;
+        pState->KQ20 = (i32)(((i64)pState->iFs << 20) / pState->oFs);
 
         pState->isInited = true;
         return AUDIO_RESAMPLE_RET_SUCCESS;
@@ -153,9 +138,8 @@ EXTERNC{
         return AUDIO_RESAMPLE_RET_SUCCESS;
     }
 
-#define ONE_Q15	((i32)1 << 15)
-#define MASK_Q15 (ONE_Q15 - 1)
-    AudioResampleRet AudioResample_Run(void* hd, uint8_t * in, int32_t *inSize, uint8_t * out, int32_t * outSize)
+
+    AudioResampleRet AudioResample_Run(void* hd, uint8_t* in, int32_t* inSize, uint8_t* out, int32_t* outSize)
     {
         //check
         if (!hd
@@ -169,52 +153,49 @@ EXTERNC{
             return AUDIO_RESAMPLE_RET_INPUT_ERROR;
 
         AudioResampleState* pState = (AudioResampleState*)hd;
-        Buffer buffer;
-        AudioSamples pIn;
-        buffer._buf = in;
-        buffer._max = *inSize;
-        pIn.Init(&pState->iInfo, &buffer);
-        pIn.Append(pIn.GetSamplesMax());
-
-        AudioSamples pOut;
-        buffer._buf = out;
-        buffer._max = *outSize;
-        pOut.Init(&pState->oInfo, &buffer);
-
-        //pState->asCalculator.
-
-        i32 KQ15 = (i32)(((i64)pIn._info->_rate << 15) / pOut._info->_rate);
-        i32 oSamplesMax = pOut.GetLeftSamples();
+        i32 oSamplesMax = *outSize / (pState->bytePerSample);
+        i32 iSamplesMax = *inSize / (pState->bytePerSample);
         i32 oSamples;
+        i32 iSamplesAccBases = pState->iSamplesAcc;
+        i32 iSamplesFloor;
+        i32 iSamplesCeil;
+        i64 iSamplesQ20 = (i64)(pState->oSamplesAcc) * pState->KQ20;
         for (oSamples = 0; oSamples < oSamplesMax; oSamples++)
         {
-            i32 iSamplesQ15 = oSamples * KQ15;
-            i32 iSamplesFloor = iSamplesQ15 >> 15;
-            i32 iSamplesCeil = (iSamplesQ15 + MASK_Q15) >> 15;
-            if (iSamplesCeil >= pIn.GetValidSamples())
+            iSamplesQ20 += pState->KQ20;
+            iSamplesFloor = (i32)(iSamplesQ20 >> 20) - iSamplesAccBases - 1;
+            iSamplesCeil = (i32)((iSamplesQ20 + MASK_Q20) >> 20) - iSamplesAccBases - 1;
+            if (iSamplesCeil >= iSamplesMax)
                 break;
-
-            i32 iSamplesFracFloorQ15 = iSamplesQ15 & MASK_Q15;
-            i32 iSamplesFracCeilQ15 = ONE_Q15 - iSamplesQ15 & MASK_Q15;
-
-
+            i64 iSamplesFracFloorQ20 = iSamplesQ20 & MASK_Q20;
+            i64 iSamplesFracCeilQ20 = ONE_Q20 - (iSamplesQ20 & MASK_Q20);
+        
             //produce add
-            auto pIn0 = (T*)&pIn[iSamplesFloor];
-            auto pIn1 = (T*)&pIn[iSamplesCeil];
-            auto pOut = (T*)&pOut[pOut.GetUsedSamples() + pOut._validSamples()];
+            u8* pInLast;
+            if (iSamplesFloor >= 0)
+                pInLast = &in[iSamplesFloor * pState->bytePerSample];
+            else
+                pInLast = pState->lastSample;
 
-            for (i16 ch = 0; ch < in._info->_channels; ch++)
-            {
-                *pOut = (T)(((i64)(*pIn0) * iSamplesFracCeilQ15 + (i64)(*pIn1) * iSamplesFracFloorQ15) >> 15);
-            }
+            u8* pInNow;
+            pInNow = &in[iSamplesCeil * pState->bytePerSample];
 
-            out.Used(1);
+            pState->funcList->ProductAdd(&out[oSamples * pState->bytePerSample], pInLast, (u8*)&iSamplesFracCeilQ20, 1, pState->channels, 20);
+            pState->funcList->ProductAddAcc(&out[oSamples * pState->bytePerSample], pInNow, (u8*)&iSamplesFracFloorQ20, 1, pState->channels, 20);
+            pState->oSamplesAcc++;
+
         }
-        oSamples + 1
-            in.Used()
+        pState->iSamplesAcc += iSamplesCeil;
 
-
-
+#if 1
+        while (pState->iSamplesAcc >= pState->iFs) {
+            pState->iSamplesAcc -= pState->iFs;
+            pState->oSamplesAcc -= pState->oFs;
+        }
+#endif
+        * inSize = iSamplesCeil * pState->bytePerSample;
+        *outSize = oSamples * pState->bytePerSample;
+        pState->basePorting->MemCpy(pState->lastSample, &in[iSamplesFloor * pState->bytePerSample], pState->bytePerSample);
         return AUDIO_RESAMPLE_RET_SUCCESS;
     }
 

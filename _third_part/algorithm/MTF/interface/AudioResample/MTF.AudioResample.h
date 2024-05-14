@@ -20,7 +20,7 @@ private:
 	mtf_void* _hd = 0;
 	mtf_int32 _hdSize = 0;
 
-	mtf_int32 _speedQ8 = 0;
+	mtf_int32 _oFs = 0;
 
 	mtf_int32 _frames = 0;
 

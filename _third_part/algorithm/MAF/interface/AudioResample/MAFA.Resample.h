@@ -1,11 +1,11 @@
 #pragma once
 #include"MAF.Audio.h"
 
-class MAFA_SpeedCtr:public MAF_Audio
+class MAFA_Resample:public MAF_Audio
 {
 public:
-	MAFA_SpeedCtr();
-	~MAFA_SpeedCtr();
+	MAFA_Resample();
+	~MAFA_Resample();
 public:
 	virtual maf_int32 Init() final;
 	virtual maf_int32 Deinit() final;
@@ -22,7 +22,7 @@ private:
 	maf_void* _hd = 0;
 	maf_int32 _hdSize = 0;
 
-	maf_float _speed = 0;
+	maf_int32 _oFs = 0;
 	maf_bool _isSpeech = true;
 
 	//MAF_Data _iDataCache;

@@ -1,25 +1,25 @@
-#if 0
-#include "MAFA.SpeedCtr.h"
+#if 1
+#include "MAFA.Resample.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-#include "AudioSpeedControl.h"
+#include "AudioResample.h"
 
-maf_void maf_auio_speedCtr_register()
+maf_void maf_auio_resample_register()
 {
-	MAF_Object::Registe<MAFA_SpeedCtr>("auio_speedCtr");
+	MAF_Object::Registe<MAFA_Resample>("auio_resample");
 }
 
-maf_void* MAFA_SpeedCtr::_malloc = 0;
-maf_void* MAFA_SpeedCtr::_free = 0;
+maf_void* MAFA_Resample::_malloc = 0;
+maf_void* MAFA_Resample::_free = 0;
 
-MAFA_SpeedCtr::MAFA_SpeedCtr()
+MAFA_Resample::MAFA_Resample()
 {
 }
-MAFA_SpeedCtr::~MAFA_SpeedCtr()
+MAFA_Resample::~MAFA_Resample()
 {
 }
 
-maf_int32 MAFA_SpeedCtr::Init()
+maf_int32 MAFA_Resample::Init()
 {
 	MAF_PRINT();
 #if 1
@@ -28,15 +28,15 @@ maf_int32 MAFA_SpeedCtr::Init()
 #endif
 
 #if 1
-	_hdSize = AudioSpeedControl_GetStateSize();
+	_hdSize = AudioResample_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);
 	if (!_hd) {
 		return -1;
 	}
 	MAF_PRINT("_hd=%x,size:%d", (unsigned)_hd, _hdSize);
 #if 1
-	AudioSpeedInitParam param;
-	MAF_MEM_SET(&param, 0, sizeof(AudioSpeedInitParam));
+	AudioResampleInitParam param;
+	MAF_MEM_SET(&param, 0, sizeof(AudioResampleInitParam));
 	_basePorting = _memory.Malloc(sizeof(BasePorting));
 	BasePorting* basePorting = (BasePorting*)_basePorting;
 
@@ -48,29 +48,26 @@ maf_int32 MAFA_SpeedCtr::Init()
 	basePorting->Printf = (ALGO_Printf_t)MAF_Printf::Printf;
 
 	param.basePorting = basePorting;
-	param.fsHz = _rate;
+	param.iFs = _rate;
+	param.oFs = _oFs;
 	param.width = _width;
 	param.channels = _ch;
-	param.seekMs = AUDIO_SPEED_REF_VAL_SEEK_MS;
-	param.overlapMs = AUDIO_SPEED_REF_VAL_OVERLAP_MS;
-	param.constMs = AUDIO_SPEED_REF_VAL_CONST_MS;
-	param.speed = _speed;
 #endif
-	AudioSpeedControl_Init(_hd, &param);
+	AudioResample_Init(_hd, &param);
 
 #if 1
 	//set
 	maf_void* ascSetParam[] = {
-		(maf_void*)(maf_uint32)((1.5f) * (1 << 8)),
+		(maf_void*)(maf_uint32)0,
 	};
-	AudioSpeedControl_Set(_hd, AudioSpeedControl_SetChhoose_e::AUDIO_SPEED_CONTROL_SET_CHOOSE_SPEEDQ8, ascSetParam);
+	AudioResample_Set(_hd, AudioResample_SetChhoose_e::AUDIO_RESAMPLE_SET_CHOOSE_MAX, ascSetParam);
 
 	//get
 	maf_int32 speedQ8;
 	maf_void* ascGetParam[] = {
-		(maf_void*)(maf_uint32)(&speedQ8),
+		(maf_void*)(maf_uint32)0,
 	};
-	AudioSpeedControl_Get(_hd, AudioSpeedControl_GetChhoose_e::AUDIO_SPEED_CONTROL_GET_CHOOSE_SPEEDQ8, ascGetParam);
+	AudioResample_Get(_hd, AudioResample_GetChhoose_e::AUDIO_RESAMPLE_GET_CHOOSE_MAX, ascGetParam);
 #endif
 
 	int32_t size;
@@ -83,12 +80,12 @@ maf_int32 MAFA_SpeedCtr::Init()
 	return 0;
 }
 
-maf_int32 MAFA_SpeedCtr::Deinit()
+maf_int32 MAFA_Resample::Deinit()
 {
 	MAF_PRINT();
 #if 1
 	MAF_PRINT("_hd=%x", (maf_uint32)_hd);
-	AudioSpeedControl_DeInit(_hd);
+	AudioResample_DeInit(_hd);
 	_memory.Free(_hd);
 	if(_basePorting)
 		_memory.Free(_basePorting);
@@ -97,20 +94,28 @@ maf_int32 MAFA_SpeedCtr::Deinit()
 	return 0;
 }
 
-maf_int32 MAFA_SpeedCtr::Process(MAF_Data* dataIn, MAF_Data* dataOut)
+maf_int32 MAFA_Resample::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
 	static int num = 0;
 #if 1
-	int32_t inUsed;
+	int32_t inLen;
 	int32_t outLen;
 	
-	outLen = _oDataCache.GetLeftSize();
-	AudioSpeedControl_Run(
+	inLen = dataIn->GetSize();
+	outLen = dataOut->GetLeftSize();
+	AudioResample_Run(
 		_hd,
 		dataIn->GetData(),
-		dataIn->GetSize(),
-		_oDataCache.GetLeftData(),
+		&inLen,
+		dataOut->GetLeftData(),
 		&outLen);
+	if (num == 15)
+		int a = 1;
+	MAF_PRINT("[%d],isize:%d,iUsed:%d,osize:%d", num++, dataIn->GetSize(), inLen, outLen);
+
+	dataIn->Used(inLen);
+	dataOut->Append(outLen);
+#if 0
 	_oDataCache.Append(outLen);
 	if (_oDataCache.GetSize() > 0)
 	{
@@ -120,28 +125,26 @@ maf_int32 MAFA_SpeedCtr::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 		_oDataCache.Used(appendSize);
 		_oDataCache.ClearUsed();
 	}
-
-	//MAF_PRINT("[%d],isize:%d,osize:%d", num++, dataIn->GetSize(), dataOut->GetSize());
-	dataIn->Used(dataIn->GetSize());
+#endif
 #endif
 	return 0;
 }
 
-maf_int32 MAFA_SpeedCtr::Set(const maf_int8* key, maf_void* val)
+maf_int32 MAFA_Resample::Set(const maf_int8* key, maf_void* val)
 {
-	if (MAF_String::StrCompare(key, "speedQ8")){
-		_speed = (maf_float)(maf_uint32)val / (1 << 8); return 0;
+	if (MAF_String::StrCompare(key, "oFs")){
+		_oFs = (maf_uint32)val; return 0;
 	}
 	return MAF_Audio::Set(key, val);
 }
 
-maf_int32 MAFA_SpeedCtr::Get(const maf_int8* key, maf_void* val)
+maf_int32 MAFA_Resample::Get(const maf_int8* key, maf_void* val)
 {
 	return MAF_Audio::Get(key, val);
 }
 
 #if 1
-maf_void* MAFA_SpeedCtr::MallocLocal(int32_t size)
+maf_void* MAFA_Resample::MallocLocal(int32_t size)
 {
 #if 1
 	static maf_int32 sizeTotal = 0;
@@ -154,7 +157,7 @@ maf_void* MAFA_SpeedCtr::MallocLocal(int32_t size)
 #endif	
 }
 
-maf_void MAFA_SpeedCtr::FreeLocal(maf_void* block)
+maf_void MAFA_Resample::FreeLocal(maf_void* block)
 {
 #if 1
 	MAF_PRINT("free, ptr:%x", (maf_uint32)block);

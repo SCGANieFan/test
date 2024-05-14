@@ -3,7 +3,7 @@
 #include"OggTest.h"
 #include"OpusTest.h"
 #include"AudioSpeedCtrTest.h"
-#include"AudioResample.h"
+#include"AudioResampleTest.h"
 #include"MTF_demoTest.h"
 
 int main()
@@ -12,9 +12,9 @@ int main()
 	//StackTest();
 	//testDemo();
 	//OggTest();
-	PlcTest();
+	//PlcTest();
 	//AudioSpeedCtrTest();
-	//AudioResampleTest();
+	AudioResampleTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();

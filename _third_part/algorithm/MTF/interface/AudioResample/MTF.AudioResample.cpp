@@ -7,7 +7,7 @@
 void mtf_auio_resample_register()
 {
 	MTF_Objects::Registe<MTF_AudioResample>("auio_resample");
-	MAF_REGISTER(auio_speedCtr);
+	MAF_REGISTER(auio_resample);
 
 }
 MTF_AudioResample::MTF_AudioResample()
@@ -59,12 +59,11 @@ mtf_int32 MTF_AudioResample::Init()
 	(mtf_void*)_rate,
 	(mtf_void*)_ch,
 	(mtf_void*)_width,
-	//(mtf_void*)_frameSamples,
-	//(mtf_void*)_speedQ8,
+	(mtf_void*)_oFs,
 	};
 
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
-							 ",rate=$5,ch=$6,width=$7,fSamples=$8,speedQ8=$9;";
+							 ",rate=$5,ch=$6,width=$7,oFs=$8;";
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");
@@ -72,6 +71,7 @@ mtf_int32 MTF_AudioResample::Init()
 	//io data
 	mtf_int32 size = _frameBytes;
 	_iData.Init((mtf_uint8*)MTF_MALLOC(size), size);
+	size = 6* size;
 	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
 #endif
 	return 0;
@@ -117,8 +117,8 @@ mtf_int32 MTF_AudioResample::generate(MTF_Data*& oData)
 mtf_int32 MTF_AudioResample::Set(const mtf_int8* key, mtf_void* val)
 {
 #if 1
-	if (MTF_String::StrCompare(key, "speedQ8")) {
-		_speedQ8 = ((mtf_int32)val); return 0;
+	if (MTF_String::StrCompare(key, "oFs")) {
+		_oFs = ((mtf_int32)val); return 0;
 	}
 #endif
 	return MTF_AudioProcess::Set(key, val);
