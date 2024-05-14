@@ -4,7 +4,7 @@
 #include"MAF.Printf.h"
 
 #if 1
-#define MAF_DATA_PRINT(s) MAF_PRINT(s)
+#define MAF_DATA_PRINT(fmt,...) MAF_PRINT(fmt,##__VA_ARGS__)
 #else
 #define MAF_DATA_PRINT(s) 
 #endif
@@ -111,7 +111,7 @@ maf_int32 MAF_Data::Used(maf_int32 size)
 {
 	if (GetSize() < size)
 	{
-		MAF_DATA_PRINT("err,size:%d,usedSize", _size, size);
+		MAF_DATA_PRINT("err,size:%d,usedSize£º%d", _size, size);
 		return -1;
 	}
 	_off += size;

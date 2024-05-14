@@ -28,7 +28,7 @@ typedef struct {
 
 typedef struct
 {
-	BasePorting* basePorting;
+	AlgoBasePorting* basePorting;
 	AudioInfo info;
 	AudioInfo muteInfo;
 
@@ -131,8 +131,8 @@ EXTERNC {
 
 		//
 		MusicPlcState* pPlc = (MusicPlcState*)pMusicPlcStateIn;
-		sampleParam->basePorting->MemSet((u8*)pPlc, 0, MusicPlc_GetStateSize());
-
+		ALGO_MEM_SET((u8*)pPlc, 0, MusicPlc_GetStateSize());
+		
 		pPlc->basePorting = sampleParam->basePorting;
 
 		pPlc->info.Init(sampleParam->fsHz, sampleParam->width, sampleParam->channels);
@@ -391,7 +391,7 @@ EXTERNC {
 					pMusicPlc->muteFactor.GetFPNum());
 			}
 			else {
-				pMusicPlc->basePorting->MemSet(pMusicPlc->infuture.GetBufInSample(0), 0, pMusicPlc->infuture.GetSizeMax());
+				ALGO_MEM_SET(pMusicPlc->infuture.GetBufInSample(0), 0, pMusicPlc->infuture.GetSizeMax());
 			}
 		}
 #endif

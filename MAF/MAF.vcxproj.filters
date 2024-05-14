@@ -22,13 +22,13 @@
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Audio.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA.Info.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Data.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA.Info.cpp">
       <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,10 +55,10 @@
     <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Audio.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA.Info.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Data.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Data.h">
+    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA.Info.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>

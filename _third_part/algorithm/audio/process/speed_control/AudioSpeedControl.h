@@ -21,7 +21,7 @@
 typedef int32_t AudioSpeedControlRet;
 
 typedef struct{
-    BasePorting* basePorting;
+    AlgoBasePorting* basePorting;
     int32_t fsHz;
     int16_t width;
     int16_t channels;

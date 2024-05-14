@@ -1,7 +1,6 @@
 #if 1
-//#include"Algo.AS_Calculator.h"
+#include"Algo.Memory.h"
 #include"Algo.AudioCal.Product.h"
-#include"Algo.AudioData.h"
 #include"AudioResample.h"
 
 using namespace Algo;
@@ -17,7 +16,7 @@ typedef struct {
 
 
 typedef struct {
-    BasePorting* basePorting;
+    AlgoBasePorting* basePorting;
     FuncList* funcList;
     int16_t channels;
     int16_t width;
@@ -64,7 +63,7 @@ EXTERNC{
             return AUDIO_RESAMPLE_RET_INPUT_ERROR;
 
         AudioResampleState* pState = (AudioResampleState*)pStateIn;
-        param->basePorting->MemSet((u8*)pState, 0, sizeof(AudioResampleState));
+        ALGO_MEM_SET((u8*)pState, 0, sizeof(AudioResampleState));
         
         pState->basePorting = param->basePorting;
         
@@ -78,12 +77,10 @@ EXTERNC{
             pState->funcList = &funcList32_g;
         }
 
-
         pState->channels= param->channels;
         pState->width= param->width;
         pState->bytePerSample = pState->channels * pState->width;
 
-        //pState->info.Init(param->iFs, param->width, param->channels);
         pState->iFs = param->iFs;
         pState->oFs = param->oFs;
         pState->KQ20 = (i32)(((i64)pState->iFs << 20) / pState->oFs);
@@ -179,13 +176,14 @@ EXTERNC{
 
             u8* pInNow;
             pInNow = &in[iSamplesCeil * pState->bytePerSample];
-
             pState->funcList->ProductAdd(&out[oSamples * pState->bytePerSample], pInLast, (u8*)&iSamplesFracCeilQ20, 1, pState->channels, 20);
             pState->funcList->ProductAddAcc(&out[oSamples * pState->bytePerSample], pInNow, (u8*)&iSamplesFracFloorQ20, 1, pState->channels, 20);
             pState->oSamplesAcc++;
 
         }
-        pState->iSamplesAcc += iSamplesCeil;
+        i32 usedSample = iSamplesCeil;
+        usedSample = usedSample > iSamplesMax ? iSamplesMax : usedSample;
+        pState->iSamplesAcc += usedSample;
 
 #if 1
         while (pState->iSamplesAcc >= pState->iFs) {
@@ -193,9 +191,9 @@ EXTERNC{
             pState->oSamplesAcc -= pState->oFs;
         }
 #endif
-        * inSize = iSamplesCeil * pState->bytePerSample;
+        *inSize = usedSample * pState->bytePerSample;
         *outSize = oSamples * pState->bytePerSample;
-        pState->basePorting->MemCpy(pState->lastSample, &in[iSamplesFloor * pState->bytePerSample], pState->bytePerSample);
+        ALGO_MEM_CPY(pState->lastSample, &in[(usedSample - 1) * pState->bytePerSample], pState->bytePerSample);
         return AUDIO_RESAMPLE_RET_SUCCESS;
     }
 

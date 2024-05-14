@@ -16,7 +16,7 @@
 typedef int32_t AudioResampleRet;
 
 typedef struct{
-    BasePorting* basePorting;
+    AlgoBasePorting* basePorting;
     int32_t iFs;
     int32_t oFs;
     int16_t width;

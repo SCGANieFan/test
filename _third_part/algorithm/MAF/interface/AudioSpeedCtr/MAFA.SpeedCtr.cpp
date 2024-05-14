@@ -37,16 +37,11 @@ maf_int32 MAFA_SpeedCtr::Init()
 #if 1
 	AudioSpeedInitParam param;
 	MAF_MEM_SET(&param, 0, sizeof(AudioSpeedInitParam));
-	_basePorting = _memory.Malloc(sizeof(BasePorting));
-	BasePorting* basePorting = (BasePorting*)_basePorting;
+	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting));
+	AlgoBasePorting* basePorting = (AlgoBasePorting*)_basePorting;
 
 	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
 	basePorting->Free = (ALGO_Free_t)FreeLocal;
-	basePorting->MemCpy = (ALGO_MemCpy_t)MAF_String::MemCpy;
-	basePorting->MemSet = (ALGO_MemSet_t)MAF_String::MemSet;
-	basePorting->MemMove = (ALGO_MemMove_t)MAF_String::MemMove;
-	basePorting->Printf = (ALGO_Printf_t)MAF_Printf::Printf;
-
 	param.basePorting = basePorting;
 	param.fsHz = _rate;
 	param.width = _width;

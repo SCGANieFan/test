@@ -12,7 +12,7 @@ typedef struct {
 }FuncList;
 
 typedef struct {
-    BasePorting* basePorting;
+    AlgoBasePorting* basePorting;
     AudioInfo info;
     i32 seekSamples;
     i32 overlapSamples;
@@ -136,7 +136,7 @@ EXTERNC{
 
 
         ASC_State* pState = (ASC_State*)pStateIn;
-        param->basePorting->MemSet((u8*)pState, 0, sizeof(ASC_State));
+        ALGO_MEM_SET((u8*)pState, 0, sizeof(ASC_State));
         
         pState->basePorting = param->basePorting;
         pState->info.Init(param->fsHz, param->width, param->channels);

@@ -4,7 +4,6 @@
 #include<string>
 #include"Algo.Type.h"
 namespace Algo {
-
 #define ALGO_MEM_CPY(dst,src,size)	memcpy((void*)dst,(void*)src,(i32)size)
 #define ALGO_MEM_SET(dst,val,size)	memset((void*)dst,(i8)val,(i32)size)
 #define ALGO_MEM_MOVE(dst,src,size) memmove((void*)dst,(void*)src,(i32)size)

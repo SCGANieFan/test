@@ -20,10 +20,6 @@ namespace Algo {
 			AudioSamples() {};
 			~AudioSamples() {};
 		public:
-#if 0
-			INLINE AudioSamples& operator[](i32 sample) { return _buff[sample * _info->_bytesPerSample]; };
-#endif
-		public:
 			//set
 
 			//get

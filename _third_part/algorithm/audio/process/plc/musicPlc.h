@@ -11,7 +11,7 @@
 
 typedef struct
 {
-	BasePorting* basePorting;
+	AlgoBasePorting* basePorting;
 	int32_t fsHz;
 	int16_t channels;
 	int16_t width;

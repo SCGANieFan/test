@@ -1,9 +1,5 @@
 #pragma once
 
-
-
-
-
 #if 0
 
 #include<stdint.h>
@@ -32,16 +28,16 @@ namespace Algo {
 
 
 	struct i24 {
-		u8 _vs[3];
-		i24(i32 v) { *this = v; }
-		inline i32 operator+(i24& v) { return (i32)*this + (i32)v; }
+		u8 x[3];
+		i24(i32 in) { *this = in; }
+		inline i32 operator+(i24& in) { return (i32)*this + (i32)in; }
 		inline i32 operator<<(i32 shf) { return (i32)*this << shf; }
 		inline i32 operator>>(i32 shf) { return (i32)*this >> shf; }
 		inline i32 operator<<=(i32 shf) { return *this = (i32)*this << shf; }
 		inline i32 operator>>=(i32 shf) { return *this = (i32)*this >> shf; }
-		inline i32 operator=(i32 v) { _vs[0] = ((u8*)&v)[0]; _vs[1] = ((u8*)&v)[1]; _vs[2] = ((u8*)&v)[2]; return v; }
-		inline i32 operator=(i24& v) { _vs[0] = v._vs[0]; _vs[1] = v._vs[1]; _vs[2] = v._vs[2]; return v; }
-		inline operator i32()const { return (i32)((_vs[2] << 24) | (_vs[1] << 16) | (_vs[0] << 8)) >> 8; }
+		inline i32 operator=(i32 in) { x[0] = ((u8*)&in)[0]; x[1] = ((u8*)&in)[1]; x[2] = ((u8*)&in)[2]; return in; }
+		inline i32 operator=(i24& in) { x[0] = in.x[0]; x[1] = in.x[1]; x[2] = in.x[2]; return in; }
+		inline operator i32()const { return (i32)((x[2] << 24) | (x[1] << 16) | (x[0] << 8)) >> 8; }
 	};
 }
 
