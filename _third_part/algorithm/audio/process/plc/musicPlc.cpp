@@ -57,21 +57,21 @@ static FuncList funcList16_g = {
 	Algo_Product<i16,i16>,
 	Algo_OverlapAdd<i16>,
 	Get_Algo_WaveFormMatch(sizeof(i16)),
-	Algo_AppendInFixPoint<i16>,
+	Algo_AppendInFixPoint<i16,i32>,
 };
 
 static FuncList funcList24_g = {
 	Algo_Product<i24,i24>,
 	Algo_OverlapAdd<i24>,
 	Get_Algo_WaveFormMatch(sizeof(i24)),
-	Algo_AppendInFixPoint<i24>,
+	Algo_AppendInFixPoint<i24,i32>,
 };
 
 static FuncList funcList32_g = {
 	Algo_Product<i32,i32>,
 	Algo_OverlapAdd<i32>,
 	Get_Algo_WaveFormMatch(sizeof(i32)),
-	Algo_AppendInFixPoint<i32>,
+	Algo_AppendInFixPoint<i32,i32>,
 };
 
 STATIC INLINE i32 MusicPlcGetMuteFactorSamples(i32 frameSamples)
@@ -307,10 +307,12 @@ EXTERNC {
 #if 0
 				pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 #else
+				i32 num = pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow;
 				pMusicPlc->funcList->AppendInFixpoint(
 					pMusicPlc->muteFactor.GetBufInSample(i),
-					pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow,
-					pMusicPlc->decaySamples,
+					(u8*)&num,
+					(u8*)&(pMusicPlc->decaySamples),
+					1,
 					pMusicPlc->muteFactor._info->_channels,
 					pMusicPlc->muteFactor.GetFPNum());
 				pMusicPlc->muteFactor.Append(1);
@@ -360,10 +362,12 @@ EXTERNC {
 #if 0
 					pMusicPlc->asCalculator.AppendInFixPoint(pMusicPlc->muteFactor, pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, pMusicPlc->decaySamples);
 #else
+					i32 num = pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow;
 					pMusicPlc->funcList->AppendInFixpoint(
 						pMusicPlc->muteFactor.GetBufInSample(i),
-						pMusicPlc->decaySamples - pMusicPlc->decaySamplesNow, 
-						pMusicPlc->decaySamples,
+						(u8*)&num,
+						(u8*)&(pMusicPlc->decaySamples),
+						1,
 						pMusicPlc->muteFactor._info->_channels,
 						pMusicPlc->muteFactor.GetFPNum());
 					pMusicPlc->muteFactor.Append(1);

@@ -5,6 +5,7 @@
 #include"AudioSpeedCtrTest.h"
 #include"AudioResampleTest.h"
 #include"MTF_demoTest.h"
+#include"WavTest.h"
 
 int main()
 {
@@ -12,13 +13,13 @@ int main()
 	//StackTest();
 	//testDemo();
 	//OggTest();
-	PlcTest();
-	AudioSpeedCtrTest();
-	AudioResampleTest();
+	//PlcTest();
+	//AudioSpeedCtrTest();
+	//AudioResampleTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();
-	
+	WavTest();
 	return 1;
 }
 

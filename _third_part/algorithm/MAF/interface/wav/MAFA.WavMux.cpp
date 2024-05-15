@@ -1,0 +1,152 @@
+#if 1
+#include "MAFA.WavMux.h"
+#include "MAF.Objects.h"
+#include "MAF.String.h"
+#include "WavDemux.h"
+
+maf_void maf_wav_mux_register()
+{
+	MAF_Object::Registe<MAFA_WavMmux>("wav_mux");
+}
+
+maf_void* MAFA_WavMmux::_malloc = 0;
+maf_void* MAFA_WavMmux::_free = 0;
+
+MAFA_WavMmux::MAFA_WavMmux()
+{
+}
+MAFA_WavMmux::~MAFA_WavMmux()
+{
+}
+
+maf_int32 MAFA_WavMmux::Init()
+{
+	MAF_PRINT();
+#if 0
+	MusicPlcInitParam initParam;
+	MAF_MEM_SET(&initParam, 0, sizeof(MusicPlcInitParam));
+#if 1
+	_malloc = _memory.GetMalloc();
+	_free = _memory.GetFree();
+
+	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting));
+	AlgoBasePorting* basePorting = (AlgoBasePorting*)_basePorting;
+
+	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
+	basePorting->Free = (ALGO_Free_t)FreeLocal;
+	initParam.basePorting = basePorting;
+#endif
+	initParam.fsHz = _rate;
+	initParam.channels = _ch;
+	initParam.width = _width;
+	initParam.frameSamples = _frameSamples;
+	initParam.overlapMs = _overlapMs;
+	initParam.decayTimeMs = _decayMs;
+
+	_hdSize = MusicPlc_GetStateSize();
+	_hd = _memory.Malloc(_hdSize);
+	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
+	if (!_hd)
+	{
+		return -1;
+	}
+
+	maf_int32 ret = MusicPlc_StateInit(_hd, &initParam);
+
+	if (ret < 0)
+	{
+		return -1;
+	}
+	return 0;
+#endif
+	return 0;
+}
+
+maf_int32 MAFA_WavMmux::Deinit()
+{
+	MAF_PRINT();
+#if 0
+	MusicPlc_StateDeInit(_hd);
+	_memory.Free(_hd);
+	_memory.Free(_basePorting);
+#endif
+	return 0;
+}
+
+maf_int32 MAFA_WavMmux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
+{
+#if 0
+	maf_int32 ret;
+
+	maf_int32 outByte = dataOut->GetLeftSize();
+
+	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
+	{
+		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
+		ret = MusicPlc_Run(
+			_hd,
+			NULL,
+			0,
+			dataOut->GetLeftData(),
+			&outByte,
+			true);
+	}
+	else
+	{
+		ret = MusicPlc_Run(
+			_hd,
+			dataIn->GetData(),
+			dataIn->GetSize(),
+			dataOut->GetLeftData(),
+			&outByte,
+			false);
+	}
+	if (ret < 0)
+	{
+		return -1;
+	}
+	dataIn->Used(dataIn->GetSize());
+	dataIn->ClearUsed();
+	dataOut->Append(outByte);
+#endif
+	return 0;
+}
+
+maf_int32 MAFA_WavMmux::Set(const maf_int8* key, maf_void* val)
+{
+	if (MAF_String::StrCompare(key, "decayMs")) {
+		_decayMs = (maf_int16)val; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "overlapMs")) {
+		_overlapMs = (maf_int16)val; return 0;
+	}
+	return MAF_Audio::Set(key, val);
+}
+
+maf_int32 MAFA_WavMmux::Get(const maf_int8* key, maf_void* val)
+{
+	return MAF_Audio::Get(key, val);
+}
+
+maf_void* MAFA_WavMmux::MallocLocal(int32_t size)
+{
+#if 1
+	static maf_int32 sizeTotal = 0;
+	sizeTotal += size;
+	maf_void* ptr = ((ALGO_Malloc_t)_malloc)(size);
+	MAF_PRINT("malloc, ptr:%x, size:%d, sizeTotal:%d,", (maf_uint32)ptr, size, sizeTotal);
+	return ptr;
+#else
+	return ((ALGO_Malloc_t)_malloc)(size);
+#endif	
+}
+
+maf_void MAFA_WavMmux::FreeLocal(maf_void* block)
+{
+#if 1
+	MAF_PRINT("free, ptr:%x", (maf_uint32)block);
+#endif
+	return ((ALGO_Free_t)_free)(block);
+}
+
+#endif
