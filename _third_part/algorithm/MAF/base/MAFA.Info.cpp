@@ -50,9 +50,23 @@ maf_int32 MAFA_Info::Set(const maf_int8* key, maf_void* val)
 
 maf_int32 MAFA_Info::Get(const maf_int8* key, maf_void* val)
 {
-#if 0
-	return MTF_Process::Get(key, val);
-#else
+	if (MAF_String::StrCompare(key, "rate")) {
+		*(maf_uint32*)val = _rate; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "fMs")) {
+		*(maf_uint32*)val = _frameMs; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "fSamples")) {
+		*(maf_uint32*)val = _frameSamples; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "ch")) {
+		*(maf_uint32*)val = _ch; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "width")) {
+		*(maf_uint32*)val= _width; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "isInterlace")) {
+		*(maf_uint32*)val = isInterlace; return 0;
+	}
 	return -1;
-#endif
 }

@@ -1,64 +1,33 @@
 #if 1
 //#include<string.h>
 //#include<stdint.h>
-//#include<stdio.h>
+#include<stdio.h>
 //#include<stdarg.h>
 #include<iostream>
 #include<string>
 //#include<vector>
 
-#if 1
-using namespace std;
-class P
-{
-public:
-	P() {};
-	~P() {};
-public:
-};
-
-class C:public P
-{
-public:
-	C() {};
-	~C() {};
-public:
-	//operator bool()const;
-	//bool Valid()const;
-
-	operator bool() const{
-		//val = 1;
-		return true;
-	}
-	//std::string *operator ->()
-	//std::string& operator *()
-
-	void func(){
-		val = 1;
-	}
-public:
-	int val;
-};
 
 
-#endif
-
+#define PATH "./"
+#define FILE_NAME "text.txt"
 
 bool testDemo()
 {
 	char x[4] = { 1,2,3,4 };
-	//int24_t i24(*((int*)x));
-	//int24_t *i24=(int24_t*)x;
-	//int i24=*((int24_t*)x);
-	//int i24_1 = *((int24_t*)x + 1);
-	//int24_t x24(15);
-	//int24_t x24 = 15;
-	//int24_t x24_2 = 16;
-	//int x32 = (int)x24_2;
-
-
-
+	FILE* fp;
+	fp = fopen(PATH FILE_NAME, "wb");
+	if (!fp)
+		return false;
+	const char* data = "0,1,2";
+	const char* head = "head";
+	fwrite(data, 1, 5, fp);
+	fseek(fp, 0, SEEK_SET);
+	//fwrite(head, 1, 4, fp);
+	fprintf(fp, "%s", head);
+	fclose(fp);
 	return 0;
 }
+
 
 #endif

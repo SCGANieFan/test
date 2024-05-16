@@ -1,74 +1,60 @@
 #if 1
-#include"Algo.AudioSamlpes.h"
-#include"Algo.AudioCal.Basic.h"
-#if 0
-#include"Algo.AudioCal.Product.h"
-#include"Algo.AudioCal.OverlapAdd.h"
-#include"Algo.AudioCal.WaveFormMatch.h"
-#endif
+#include"Algo.Data.h"
 #include"WavMux.h"
 
 using namespace Algo;
-using namespace Audio;
+//using namespace Audio;
 
-#if 0
+
 typedef struct {
-	ALGO_PRODUCT_CB product;
-	ALGO_OVERLAP_ADD_CB Overlapadd;
-	ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
-	ALGO_APPEND_IN_FIXPOINT AppendInFixpoint;
-}FuncList;
-#endif
+	//the RIFF chunk descriptor
+	//the format of concern here is WAVE,
+	//which requires tow sub-chunks:fmt and data
+	u32 chunkID;//"RIFF"
+	u32 chunkSize;//(size of file) - (chunkID + chunkSize)
+	u32 format;//"WAVE"
+}RiffChunk;
+
+typedef struct {
+	//the fmt sub-chunk
+	//describes the format of the sound information in the sub-chunk
+	u32 chunkId;//"fmt "
+	/*
+	* audioFormat:	pcm:1,	micro ADPCM:2,	IEEE float:3,	a-law:6,	u-law:7,	GSM 6.10:49,	ITU G.721 ADPCM:64,	...:65534
+	* subChunkSize:	16,		18,				18,				18,			18,			20,				...,				40
+	* has fac chunk:0,		1,				1,				1,			1,			1,				1,					0
+	*/
+	u32 chunkSize;
+	u16 audioFormat;
+	u16 numChannels;
+	u32 sampleRate;
+	u32 byteRate;//channels*samplerate*width
+	u16 blockAlign;//channels*width
+	u16 bitsPerSample;//width*8, 4,8,12,16,24,32
+}FmtChunk;
+
+typedef struct {
+	//the data sub-chunk
+	//indicates the size of the sound infomation and contains the raw sound data
+	u32 chunkId;
+	u32 chunkSize;
+	//data...
+}DataChunk;
+
+typedef struct {
+	RiffChunk riff;
+	FmtChunk fmt;
+	DataChunk data;
+}WavHead;
+
 
 typedef struct
 {
 	AlgoBasePorting* basePorting;
-	AudioInfo info;
-	AudioInfo muteInfo;
-
-	i32 frameSamples;
-	i32 lostCount;
-	i32 overlapInSamples;
-	i32 frameSamplesInner;
-	i32 decaySamples;
-#if 0
-	FuncList* funcList;
-#endif
-	AudioSamples inHistory;
-	AudioSamples infuture;
-	AudioSamples fillSignal;
-	AudioSamples muteFactor;
-
-	i32 decaySamplesNow;
-	i32 fillSignalSampleIndex;
-	i32 matchSamples;
-	i32 seekSamples;
-
+	WavHead head;
 	b1 isInited;
 }WavMuxState;
 
-#if 0
-static FuncList funcList16_g = {
-	Algo_Product<i16,i16>,
-	Algo_OverlapAdd<i16>,
-	Get_Algo_WaveFormMatch(sizeof(i16)),
-	Algo_AppendInFixPoint<i16,i32>,
-};
-
-static FuncList funcList24_g = {
-	Algo_Product<i24,i24>,
-	Algo_OverlapAdd<i24>,
-	Get_Algo_WaveFormMatch(sizeof(i24)),
-	Algo_AppendInFixPoint<i24,i32>,
-};
-
-static FuncList funcList32_g = {
-	Algo_Product<i32,i32>,
-	Algo_OverlapAdd<i32>,
-	Get_Algo_WaveFormMatch(sizeof(i32)),
-	Algo_AppendInFixPoint<i32,i32>,
-};
-#endif
 
 
 EXTERNC {
@@ -77,94 +63,92 @@ EXTERNC {
 		return sizeof(WavMuxState);
 	}
 
-	int32_t WavMux_StateInit(void* pWavMuxStateIn, WavMuxInitParam* paramIn)
+	int32_t WavMux_StateInit(void* pStateIn, WavMuxInitParam* paramIn)
 	{
 		//check
-		if (!pWavMuxStateIn
+		if (!pStateIn
 			|| !paramIn
-			|| !paramIn->basePorting
-			|| paramIn->overlapMs < 0
-			|| paramIn->decayTimeMs < 0)
+			|| !paramIn->basePorting)
 			return WAV_MUX_RET_FAIL;
 
 		//
-		WavMuxState* pState = (WavMuxState*)pWavMuxStateIn;
+		WavMuxState* pState = (WavMuxState*)pStateIn;
 		ALGO_MEM_SET((u8*)pState, 0, WavMux_GetStateSize());
 		
 		pState->basePorting = paramIn->basePorting;
-
-		pState->info.Init(paramIn->fsHz, paramIn->width, paramIn->channels);
-
-		pState->info.Init(paramIn->fsHz, paramIn->width, paramIn->channels);
-		pState->muteInfo.Init(pState->info._rate, pState->info._width, 1);
 		
+		pState->head.riff.chunkID = *(u32*)"RIFF";
+		//pState->head.riff.chunkSize
+		pState->head.riff.format = *(u32*)"WAVE";
+
+		pState->head.fmt.chunkId = *(u32*)"fmt ";//
+		pState->head.fmt.chunkSize = 16;
+		pState->head.fmt.audioFormat = 1;
 #if 0
-		pState->frameSamples = paramIn->frameSamples;
-		pState->overlapInSamples = paramIn->overlapMs * pState->info._rate / 1000;
-		pState->frameSamplesInner = MAX(pState->frameSamples, pState->info._rate * WAV_MUX_MIN_FRAME_MS / 1000);
-		pState->decaySamples = paramIn->decayTimeMs * pState->info._rate / 1000;
-		if (pState->info._width == 2){
-			pState->funcList = &funcList16_g;
-		}
-		else if (pState->info._width == 3) {
-			pState->funcList = &funcList24_g;
-		}
-		else{
-			pState->funcList = &funcList32_g;
-		}
+		pState->head.fmt.numChannels = paramIn->channels;
+		pState->head.fmt.sampleRate = paramIn->fsHz;
+		pState->head.fmt.byteRate = paramIn->channels * paramIn->fsHz * widht;
+		pState->head.fmt.blockAlign = paramIn->channels * widht;
+		pState->head.fmt.bitsPerSample = widht << 3;
 #endif
-		BufferSamples bufferSamples;
-#if 0
-		bufferSamples._samples = WavMuxGetHistorySamples(pState->overlapInSamples, pState->frameSamplesInner);
-		bufferSamples._buf = (u8*)pState->basePorting->Malloc(bufferSamples._samples * pState->info._bytesPerSample);
-		pState->inHistory.Init(&pState->info, &bufferSamples);
-		pState->inHistory.Append(pState->inHistory, 0, pState->inHistory.GetSamplesMax());
-#endif
+		pState->head.data.chunkId = *(u32*)"data";
+		//pState->head.data.chunkSize
 
 		pState->isInited = true;
 
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_Set(void* pWavMuxStateIn, WavMux_SetChhoose_e choose, void** val)
+	int32_t WavMux_Set(void* pStateIn, WavMux_SetChhoose_e choose, void** val)
 	{
 		//check
-		if (!pWavMuxStateIn
+		if (!pStateIn
 			|| choose >= WAV_MUX_SET_CHOOSE_MAX
 			|| !val)
 			return WAV_MUX_RET_FAIL;
-		WavMuxState* pWavMux = (WavMuxState*)pWavMuxStateIn;
+		WavMuxState* pWavMux = (WavMuxState*)pStateIn;
 		if (pWavMux->isInited == false)
 			return WAV_MUX_RET_FAIL;
 
 		switch (choose)
 		{
+		case WAV_MUX_SET_CHOOSE_BASIC_INFO:
+			i32 rate = (i32)val[0];
+			i16 ch = (i16)val[1];
+			i16 widht = (i16)val[2];
+			pWavMux->head.fmt.numChannels = ch;
+			pWavMux->head.fmt.sampleRate = rate;
+			pWavMux->head.fmt.byteRate = ch * rate * widht;
+			pWavMux->head.fmt.blockAlign = ch * widht;
+			pWavMux->head.fmt.bitsPerSample = widht << 3;
 #if 0
-		case AUDIO_SPEED_CONTROL_SET_CHOOSE_SPEEDQ8:
-			pState->speed = (f32)(u32)val[0] / (1 << 8);
-#endif
 		default:
 			break;
+#endif
 		}
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_Get(void* pWavMuxStateIn, WavMux_GetChhoose_e choose, void** val)
+	int32_t WavMux_Get(void* pStateIn, WavMux_GetChhoose_e choose, void** val)
 	{
 		//check
-		if (!pWavMuxStateIn
+		if (!pStateIn
 			|| choose >= WAV_MUX_GET_CHOOSE_MAX
 			|| !val)
 			return WAV_MUX_RET_FAIL;
-		WavMuxState* pWavMux = (WavMuxState*)pWavMuxStateIn;
+		WavMuxState* pWavMux = (WavMuxState*)pStateIn;
 		if (pWavMux->isInited == false)
 			return WAV_MUX_RET_FAIL;
 		
 		switch (choose)
 		{
-#if 0
-		case AUDIO_SPEED_CONTROL_SET_CHOOSE_SPEEDQ8:
-			pState->speed = (f32)(u32)val[0] / (1 << 8);
+#if 1
+		case WAV_MUX_GET_CHOOSE_HEAD_SIZE:
+			*(u32*)val[0] = sizeof(WavHead);
+			break;
+		case WAV_MUX_GET_CHOOSE_HEAD:
+			ALGO_MEM_CPY(val[0], &pWavMux->head, sizeof(WavHead));
+			break;
 #endif
 		default:
 			break;
@@ -172,46 +156,33 @@ EXTERNC {
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_Run(void* pWavMuxStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen, bool isLost)
+	int32_t WavMux_Run(void* pStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen)
 	{
 		//check
-		if (!pWavMuxStateIn
+		if (!pStateIn
 			||!out
 			||!outLen)
 			return WAV_MUX_RET_FAIL;
-		WavMuxState* pWavMux = (WavMuxState*)pWavMuxStateIn;
-		if (isLost == false) {
-			if (!in
-				|| inLen != (pWavMux->frameSamples * pWavMux->info._bytesPerSample))
-				return WAV_MUX_RET_FAIL;
-		}
-		if (*outLen < pWavMux->frameSamples * pWavMux->info._bytesPerSample)
-			return WAV_MUX_RET_FAIL;
+		WavMuxState* pWavMux = (WavMuxState*)pStateIn;
 
-		BufferSamples bufferSamples;
-#if 0
-		AudioSamples pIn;
-		bufferSamples._buf = in;
-		bufferSamples._samples = pWavMux->frameSamples;
-		pIn.Init(&((WavMuxState*)pWavMuxStateIn)->info, &bufferSamples);
-
-		AudioSamples pOut;
-		bufferSamples._buf = out;
-		bufferSamples._samples = pWavMux->frameSamples;
-		pOut.Init(&((WavMuxState*)pWavMuxStateIn)->info, &bufferSamples);
-#endif
+		pWavMux->head.data.chunkSize += inLen;
+		pWavMux->head.riff.chunkSize = pWavMux->head.data.chunkSize + sizeof(WavHead) - 8;
+		ALGO_MEM_CPY(out, in, inLen);
+		*outLen = inLen;
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_StateDeInit(void* pWavMuxStateIn)
+	int32_t WavMux_StateDeInit(void* pStateIn)
 	{
-		if (!pWavMuxStateIn)
+		if (!pStateIn)
 			return WAV_MUX_RET_FAIL;
-		WavMuxState* pWavMux = (WavMuxState*)pWavMuxStateIn;
+		WavMuxState* pWavMux = (WavMuxState*)pStateIn;
+#if 0
 		pWavMux->basePorting->Free(pWavMux->inHistory.GetBufInSample(0));
 		pWavMux->basePorting->Free(pWavMux->infuture.GetBufInSample(0));
 		pWavMux->basePorting->Free(pWavMux->fillSignal.GetBufInSample(0));
 		pWavMux->basePorting->Free(pWavMux->muteFactor.GetBufInSample(0));
+#endif
 		return WAV_MUX_RET_SUCCESS;
 	}
 }

@@ -20,8 +20,6 @@ private:
 	maf_void* _hd = 0;
 	maf_int32 _hdSize = 0;
 
-	maf_int16 _decayMs = 0;
-	maf_int16 _overlapMs = 0;
 	maf_void* _basePorting;
 
 private:

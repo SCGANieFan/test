@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Algo.Type.h"
+#include"Algo.Macro.h"
 #include"Algo.Memory.h"
 #include"Algo.Buffer.h"
 
@@ -22,6 +23,10 @@ namespace Algo {
 		//get
 		INLINE u8* GetData() {
 			return _buff + _off;
+		};
+
+		INLINE i32 GetSize() {
+			return _size;
 		};
 
 		INLINE u8* GetLeftData() {
@@ -53,6 +58,20 @@ namespace Algo {
 		INLINE b1 Append(u8* buf, i32 size) {
 			ALGO_MEM_CPY(GetLeftData(), buf, size);
 			_size += size;
+			return true;
+		};
+		
+		INLINE b1 Append(i32 size) {
+			_size += size;
+			return true;
+		};
+
+		INLINE b1 AppendFully(u8* buf, i32 size, i32 *usedSize) {
+			i32 appendSize = GetLeftSize();
+			appendSize = appendSize > size ? size : appendSize;
+			Append(buf, appendSize);
+			*usedSize = appendSize;
+			return true;
 		};
 
 		INLINE void Used(i32 usedSize)

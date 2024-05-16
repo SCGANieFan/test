@@ -44,7 +44,8 @@ typedef struct {
 //hd
 EXTERNC MA_Ret MAF_GetHandleSize(const char* type, int32_t* size);
 EXTERNC MA_Ret MAF_Init(void* hd, const char* script, void** param);
-EXTERNC MA_Ret MAF_Set(void* hd, const char* param);
+EXTERNC MA_Ret MAF_Set(void* hd, const char* key,void** val);
+EXTERNC MA_Ret MAF_Get(void* hd, const char* key,void** val);
 EXTERNC MA_Ret MAF_Run(void* hd, AA_Data* dataIn, AA_Data* dataOut);
 EXTERNC MA_Ret MAF_Deinit(void* hd);
 

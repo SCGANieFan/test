@@ -98,8 +98,15 @@ MA_Ret MAF_Deinit(void* hd)
 }
 
 
-MA_Ret MAF_Set(void* hd, const char* param)
+MA_Ret MAF_Set(void* hd, const char* key,void** val)
 {
+	((MAF_Algorithm*)hd)->Set(key, val[0]);
+	return MA_RET_SUCCESS;
+}
+
+MA_Ret MAF_Get(void* hd, const char* key,void** val)
+{
+	((MAF_Algorithm*)hd)->Get(key, val[0]);
 	return MA_RET_SUCCESS;
 }
 

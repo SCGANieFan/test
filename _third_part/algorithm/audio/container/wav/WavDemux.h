@@ -21,6 +21,13 @@ typedef enum {
 }WavDemux_SetChhoose_e;
 
 typedef enum {
+	WAV_DEMUX_GET_CHOOSE_HAS_HEAD=0,
+#if 0
+	WAV_DEMUX_GET_CHOOSE_RATE,
+	WAV_DEMUX_GET_CHOOSE_CH,
+	WAV_DEMUX_GET_CHOOSE_WIDTH,
+#endif
+	WAV_DEMUX_GET_CHOOSE_BASIC_INFO,
 	WAV_DEMUX_GET_CHOOSE_MAX,
 }WavDemux_GetChhoose_e;
 

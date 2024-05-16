@@ -2,7 +2,7 @@
 #include "MAFA.WavMux.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-#include "WavDemux.h"
+#include "WavMux.h"
 
 maf_void maf_wav_mux_register()
 {
@@ -22,9 +22,9 @@ MAFA_WavMmux::~MAFA_WavMmux()
 maf_int32 MAFA_WavMmux::Init()
 {
 	MAF_PRINT();
-#if 0
-	MusicPlcInitParam initParam;
-	MAF_MEM_SET(&initParam, 0, sizeof(MusicPlcInitParam));
+#if 1
+	WavMuxInitParam initParam;
+	MAF_MEM_SET(&initParam, 0, sizeof(WavMuxInitParam));
 #if 1
 	_malloc = _memory.GetMalloc();
 	_free = _memory.GetFree();
@@ -36,14 +36,12 @@ maf_int32 MAFA_WavMmux::Init()
 	basePorting->Free = (ALGO_Free_t)FreeLocal;
 	initParam.basePorting = basePorting;
 #endif
+#if 0
 	initParam.fsHz = _rate;
 	initParam.channels = _ch;
 	initParam.width = _width;
-	initParam.frameSamples = _frameSamples;
-	initParam.overlapMs = _overlapMs;
-	initParam.decayTimeMs = _decayMs;
-
-	_hdSize = MusicPlc_GetStateSize();
+#endif
+	_hdSize = WavMux_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
 	if (!_hd)
@@ -51,7 +49,7 @@ maf_int32 MAFA_WavMmux::Init()
 		return -1;
 	}
 
-	maf_int32 ret = MusicPlc_StateInit(_hd, &initParam);
+	maf_int32 ret = WavMux_StateInit(_hd, &initParam);
 
 	if (ret < 0)
 	{
@@ -65,8 +63,8 @@ maf_int32 MAFA_WavMmux::Init()
 maf_int32 MAFA_WavMmux::Deinit()
 {
 	MAF_PRINT();
-#if 0
-	MusicPlc_StateDeInit(_hd);
+#if 1
+	WavMux_StateDeInit(_hd);
 	_memory.Free(_hd);
 	_memory.Free(_basePorting);
 #endif
@@ -75,32 +73,14 @@ maf_int32 MAFA_WavMmux::Deinit()
 
 maf_int32 MAFA_WavMmux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
-#if 0
+#if 1
 	maf_int32 ret;
-
 	maf_int32 outByte = dataOut->GetLeftSize();
-
-	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
-	{
-		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
-		ret = MusicPlc_Run(
-			_hd,
-			NULL,
-			0,
-			dataOut->GetLeftData(),
-			&outByte,
-			true);
-	}
-	else
-	{
-		ret = MusicPlc_Run(
-			_hd,
-			dataIn->GetData(),
-			dataIn->GetSize(),
-			dataOut->GetLeftData(),
-			&outByte,
-			false);
-	}
+	ret = WavMux_Run(_hd,
+		dataIn->GetData(),
+		dataIn->GetSize(),
+		dataOut->GetLeftData(),
+		&outByte);
 	if (ret < 0)
 	{
 		return -1;
@@ -108,23 +88,30 @@ maf_int32 MAFA_WavMmux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	dataIn->Used(dataIn->GetSize());
 	dataIn->ClearUsed();
 	dataOut->Append(outByte);
+	return 0;
 #endif
 	return 0;
 }
 
 maf_int32 MAFA_WavMmux::Set(const maf_int8* key, maf_void* val)
 {
-	if (MAF_String::StrCompare(key, "decayMs")) {
-		_decayMs = (maf_int16)val; return 0;
+#if 1
+	if (MAF_String::StrCompare(key, "basicInfo")) {
+		void* param[] = {(void*)_rate,(void*)_ch,(void*)_width};
+		WavMux_Set(_hd, WAV_MUX_SET_CHOOSE_BASIC_INFO, param); return 0;
 	}
-	else if (MAF_String::StrCompare(key, "overlapMs")) {
-		_overlapMs = (maf_int16)val; return 0;
-	}
+#endif
 	return MAF_Audio::Set(key, val);
 }
 
 maf_int32 MAFA_WavMmux::Get(const maf_int8* key, maf_void* val)
 {
+	if (MAF_String::StrCompare(key, "headSize")) {
+		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD_SIZE, &val); return 0;
+	}
+	else if (MAF_String::StrCompare(key, "headInfo")) {
+		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD, &val); return 0;
+	}
 	return MAF_Audio::Get(key, val);
 }
 

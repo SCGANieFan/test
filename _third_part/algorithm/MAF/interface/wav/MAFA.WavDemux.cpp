@@ -79,39 +79,12 @@ maf_int32 MAFA_WavDemux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
 	
 	maf_int32 ret;
-	maf_int32 outLen = dataOut->GetLeftSize();
-	
+	maf_int32 outByte = dataOut->GetLeftSize();
 	ret = WavDemux_Run(_hd, 
 		dataIn->GetData(),
 		dataIn->GetSize(),
 		dataOut->GetLeftData(),
-		&outLen);
-#if 0
-	maf_int32 ret;
-
-	maf_int32 outByte = dataOut->GetLeftSize();
-
-	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
-	{
-		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
-		ret = MusicPlc_Run(
-			_hd,
-			NULL,
-			0,
-			dataOut->GetLeftData(),
-			&outByte,
-			true);
-	}
-	else
-	{
-		ret = MusicPlc_Run(
-			_hd,
-			dataIn->GetData(),
-			dataIn->GetSize(),
-			dataOut->GetLeftData(),
-			&outByte,
-			false);
-	}
+		&outByte);
 	if (ret < 0)
 	{
 		return -1;
@@ -119,23 +92,46 @@ maf_int32 MAFA_WavDemux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	dataIn->Used(dataIn->GetSize());
 	dataIn->ClearUsed();
 	dataOut->Append(outByte);
-#endif
 	return 0;
 }
 
 maf_int32 MAFA_WavDemux::Set(const maf_int8* key, maf_void* val)
 {
+#if 0
 	if (MAF_String::StrCompare(key, "decayMs")) {
 		_decayMs = (maf_int16)val; return 0;
 	}
 	else if (MAF_String::StrCompare(key, "overlapMs")) {
 		_overlapMs = (maf_int16)val; return 0;
 	}
+#endif
 	return MAF_Audio::Set(key, val);
 }
 
 maf_int32 MAFA_WavDemux::Get(const maf_int8* key, maf_void* val)
 {
+#if 1
+	if (MAF_String::StrCompare(key, "hasHead")) {
+		maf_uint32 hasHead;
+		void* param[3] = { &hasHead };
+		WavDemux_Get(_hd, WAV_DEMUX_GET_CHOOSE_HAS_HEAD, param);
+		*(maf_uint32*)val = hasHead;
+		if (hasHead > 0)
+		{
+			maf_int32 rate;
+			maf_int32 ch;
+			maf_int32 width;
+			param[0] = &rate;
+			param[1] = &ch;
+			param[2] = &width;
+			WavDemux_Get(_hd, WAV_DEMUX_GET_CHOOSE_BASIC_INFO, param);
+			Set("rate", (void *)rate);
+			Set("ch", (void*)ch);
+			Set("width", (void*)width);
+		}
+		return 0;
+	}
+#endif
 	return MAF_Audio::Get(key, val);
 }
 

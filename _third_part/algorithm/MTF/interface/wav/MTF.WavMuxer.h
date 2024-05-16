@@ -12,9 +12,14 @@ public:
 	virtual mtf_int32 Set(const mtf_int8* key, mtf_void* val) final;
 	virtual mtf_int32 Get(const mtf_int8* key, mtf_void* val) final;
 private:
-	MTF_Data _iData;
-private:
 	void* _pFile = 0;
 	const mtf_int8* _url = 0;
+private:
+	MTF_Data _iData;
+	MTF_Data _oData;
+	MTF_Data _head;
+private:
+	mtf_void* _hd = 0;
+	mtf_int32 _hdSize = 0;
 };
 

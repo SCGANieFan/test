@@ -111,6 +111,29 @@ mtf_int32 MTF_WavDemuxer::generate(MTF_Data*& oData)
 
 	MAF_Run(_hd, &AA_iData, &AA_oData);
 
+
+	
+	mtf_uint32 hasHead;
+	void* param[1] = { &hasHead };
+	MAF_Get(_hd, "hasHead", param);
+	if (hasHead>0)
+	{
+		mtf_uint32 rate;
+		param[0] = &rate;
+		MAF_Get(_hd, "rate", param);
+		Set("rate", (void*)rate);
+
+		mtf_uint32 ch;
+		param[0] = &ch;
+		MAF_Get(_hd, "ch", param);
+		Set("ch", (void*)ch);
+
+		mtf_uint32 width;
+		param[0] = &width;
+		MAF_Get(_hd, "width", param);
+		Set("width", (void*)width);
+	}
+
 	_iData.Used(_iData._size);
 	_oData._size += AA_oData.size;
 

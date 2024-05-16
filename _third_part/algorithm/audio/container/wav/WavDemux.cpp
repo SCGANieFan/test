@@ -1,81 +1,34 @@
 #if 1
-#include"Algo.AudioSamlpes.h"
+#include"Algo.Data.h"
 #include"Algo.AudioCal.Basic.h"
-#if 0
-#include"Algo.AudioCal.Product.h"
-#include"Algo.AudioCal.OverlapAdd.h"
-#include"Algo.AudioCal.WaveFormMatch.h"
-#endif
 #include"WavDemux.h"
 #include"WavDemuxInner.h"
 
 using namespace Algo;
 using namespace Audio;
 
+typedef enum {
+	WavDemuxStage_SearchRIFF=0,
+	WavDemuxStage_RIFF,
+	WavDemuxStage_Format,
+	WavDemuxStage_ExpandFormat,
+	WavDemuxStage_SearchFact,
+	WavDemuxStage_Fact,
+	WavDemuxStage_DataHead,
+	WavDemuxStage_Data,
+}WavDemuxStage;
 
-
-#if 0
-typedef struct {
-	ALGO_PRODUCT_CB product;
-	ALGO_OVERLAP_ADD_CB Overlapadd;
-	ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
-	ALGO_APPEND_IN_FIXPOINT AppendInFixpoint;
-}FuncList;
-#endif
 
 typedef struct
 {
 	AlgoBasePorting* basePorting;
-#if 0
-	AudioInfo info;
-	AudioInfo muteInfo;
-#endif
 	WavHead head;
-
 	i32 frameSamples;
-#if 0
-	i32 lostCount;
-	i32 overlapInSamples;
-	i32 frameSamplesInner;
-	i32 decaySamples;
-	FuncList* funcList;
-	AudioSamples inHistory;
-	AudioSamples infuture;
-	AudioSamples fillSignal;
-	AudioSamples muteFactor;
-
-	i32 decaySamplesNow;
-	i32 fillSignalSampleIndex;
-	i32 matchSamples;
-	i32 seekSamples;
-#endif
-
+	Data iCache;
+	WavDemuxStage stage;
 	b1 isInited;
 	b1 hasDemuxHead;
 }WavDemuxState;
-
-#if 0
-static FuncList funcList16_g = {
-	Algo_Product<i16,i16>,
-	Algo_OverlapAdd<i16>,
-	Get_Algo_WaveFormMatch(sizeof(i16)),
-	Algo_AppendInFixPoint<i16,i32>,
-};
-
-static FuncList funcList24_g = {
-	Algo_Product<i24,i24>,
-	Algo_OverlapAdd<i24>,
-	Get_Algo_WaveFormMatch(sizeof(i24)),
-	Algo_AppendInFixPoint<i24,i32>,
-};
-
-static FuncList funcList32_g = {
-	Algo_Product<i32,i32>,
-	Algo_OverlapAdd<i32>,
-	Get_Algo_WaveFormMatch(sizeof(i32)),
-	Algo_AppendInFixPoint<i32,i32>,
-};
-#endif
 
 
 EXTERNC {
@@ -99,35 +52,11 @@ EXTERNC {
 		pState->basePorting = paramIn->basePorting;
 		pState->frameSamples = paramIn->frameSamples;
 
-#if 0
-
-		pState->info.Init(paramIn->fsHz, paramIn->width, paramIn->channels);
-
-		pState->info.Init(paramIn->fsHz, paramIn->width, paramIn->channels);
-		pState->muteInfo.Init(pState->info._rate, pState->info._width, 1);
-		
-		pState->frameSamples = paramIn->frameSamples;
-		pState->overlapInSamples = paramIn->overlapMs * pState->info._rate / 1000;
-		pState->frameSamplesInner = MAX(pState->frameSamples, pState->info._rate * WAV_DEMUX_MIN_FRAME_MS / 1000);
-		pState->decaySamples = paramIn->decayTimeMs * pState->info._rate / 1000;
-		if (pState->info._width == 2){
-			pState->funcList = &funcList16_g;
-		}
-		else if (pState->info._width == 3) {
-			pState->funcList = &funcList24_g;
-		}
-		else{
-			pState->funcList = &funcList32_g;
-		}
-#endif
-#if 0
-		BufferSamples bufferSamples;
-		bufferSamples._samples = WavDemuxGetHistorySamples(pState->overlapInSamples, pState->frameSamplesInner);
-		bufferSamples._buf = (u8*)pState->basePorting->Malloc(bufferSamples._samples * pState->info._bytesPerSample);
-		pState->inHistory.Init(&pState->info, &bufferSamples);
-		pState->inHistory.Append(pState->inHistory, 0, pState->inHistory.GetSamplesMax());
-#endif
-
+		i32 bufLen = 1024;
+		u8* pBuf= (u8*)pState->basePorting->Malloc(bufLen);
+		Buffer buff;
+		buff.Init(pBuf, bufLen);
+		pState->iCache.Init(&buff);
 		pState->isInited = true;
 
 		return WAV_DEMUX_RET_SUCCESS;
@@ -166,13 +95,30 @@ EXTERNC {
 		WavDemuxState* pWavDemux = (WavDemuxState*)pWavDemuxStateIn;
 		if (pWavDemux->isInited == false)
 			return WAV_DEMUX_RET_FAIL;
-		
+
 		switch (choose)
 		{
+		case WAV_DEMUX_GET_CHOOSE_HAS_HEAD:
+			if(pWavDemux->hasDemuxHead)
+				*(u32*)val[0] = 1;
+			else
+				*(u32*)val[0] = 0;
+			break;
 #if 0
-		case AUDIO_SPEED_CONTROL_SET_CHOOSE_SPEEDQ8:
-			pState->speed = (f32)(u32)val[0] / (1 << 8);
+		case WAV_DEMUX_GET_CHOOSE_RATE:
+			*(u32*)val[0] = pWavDemux->head.fmt.sampleRate;
+			break;
+		case WAV_DEMUX_GET_CHOOSE_CH:
+			*(u32*)val[0] = pWavDemux->head.fmt.numChannels;
+			break;
+		case WAV_DEMUX_GET_CHOOSE_WIDTH:
+			*(u32*)val[0] = pWavDemux->head.fmt.blockAlign / pWavDemux->head.fmt.numChannels;
 #endif
+		case WAV_DEMUX_GET_CHOOSE_BASIC_INFO:
+			*(u32*)val[0] = pWavDemux->head.fmt.sampleRate;
+			*(u32*)val[1] = pWavDemux->head.fmt.numChannels;
+			*(u32*)val[2] = pWavDemux->head.fmt.blockAlign / pWavDemux->head.fmt.numChannels;
+			break;
 		default:
 			break;
 		}
@@ -188,39 +134,219 @@ EXTERNC {
 			return WAV_DEMUX_RET_FAIL;
 		WavDemuxState* pWavDemux = (WavDemuxState*)pStateIn;
 #if 1
-		u8* pIn = in;
-		if (pWavDemux->hasDemuxHead)
+		Buffer buff;
+
+		Data pIn;
+		buff.Init(in, inLen);
+		pIn.Init(&buff);
+		pIn.Append(inLen);
+
+		Data pOut;
+		buff.Init(out, *outLen);
+		pOut.Init(&buff);
+
+
+		while (pIn.GetSize() > 0)
 		{
-		}
-		else
-		{
-			const i8* riffKey = "RIFF";
-			i32 skipByte = 0;
-			i32 inRemByte = inLen;
-			for (i32 b = 0; b < inLen; b++)
+			switch (pWavDemux->stage)
 			{
-				if (*((u32*)(pIn + b)) == (*(u32*)riffKey))
-					break;
-				skipByte++;
+			case WavDemuxStage_SearchRIFF:
+			{
+				const i8* riffKey = "RIFF";
+				//i32 skipByte = 0;
+				i32 inRemByte = inLen;
+				while (pIn.GetSize() > 0)
+				{
+					if (*(u32*)pIn.GetData() == (*(u32*)riffKey))
+					{
+						pWavDemux->stage = WavDemuxStage_RIFF;
+						pWavDemux->iCache.Used(pWavDemux->iCache.GetSize());
+						pWavDemux->iCache.ClearUsed();
+						break;
+					}
+					pIn.Used(1);
+				}
+				break;
 			}
-			pIn += skipByte;
-			int a = 1;
+			case WavDemuxStage_RIFF:
+			{
+				i32 size = sizeof(RiffChunk);
+				if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+				{
+					i32 appendSize = size - pWavDemux->iCache.GetSize();
+					if (appendSize > 0)
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+						pIn.Used(appendSize);
+					}
+
+					pWavDemux->head.riff = *(RiffChunk*)pWavDemux->iCache.GetData();
+					pWavDemux->iCache.Used(size);
+					pWavDemux->stage = WavDemuxStage_Format;
+				}
+				else
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			}
+			case WavDemuxStage_Format:
+			{
+				i32 size = sizeof(FmtChunk);
+				if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+				{
+					i32 appendSize = size - pWavDemux->iCache.GetSize();
+					if (appendSize > 0)
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+						pIn.Used(appendSize);
+					}
+
+					pWavDemux->head.fmt = *(FmtChunk*)pWavDemux->iCache.GetData();
+					pWavDemux->iCache.Used(size);
+					pWavDemux->stage = WavDemuxStage_ExpandFormat;
+				}
+				else
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			}
+			case WavDemuxStage_ExpandFormat:
+			{
+				i32 size = (pWavDemux->head.fmt.chunkSize + 8) - sizeof(FmtChunk);
+				if (size > 0)
+				{
+					if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+					{
+						i32 appendSize = size - pWavDemux->iCache.GetSize();
+						if (appendSize > 0)
+						{
+							pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+							pIn.Used(appendSize);
+						}
+						pWavDemux->head.expandFmt = (ExpandFormatChunk*)pWavDemux->basePorting->Malloc(size);
+						ALGO_MEM_CPY(pWavDemux->head.expandFmt, pWavDemux->iCache.GetData(), size);
+						pWavDemux->iCache.Used(size);
+						pWavDemux->stage = WavDemuxStage_SearchFact;
+					}
+					else
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+						pIn.Used(pIn.GetSize());
+					}
+				}
+				else
+				{
+					pWavDemux->stage = WavDemuxStage_SearchFact;
+				}
+				break;
+			}
+			case WavDemuxStage_SearchFact:
+			{
+				i32 size = 4;
+				if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+				{
+					i32 appendSize = size - pWavDemux->iCache.GetSize();
+					if (appendSize > 0)
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+						pIn.Used(appendSize);
+					}
+					const i8* factKey = "fact";
+					if (*(u32*)pWavDemux->iCache.GetData() == *(u32*)factKey)
+					{
+						pWavDemux->stage = WavDemuxStage_Fact;
+					}
+					else
+					{
+						pWavDemux->stage = WavDemuxStage_DataHead;
+					}
+				}
+				else
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			}
+			case WavDemuxStage_Fact:
+			{
+				i32 size = sizeof(FactChunk);
+				if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+				{
+					i32 appendSize = size - pWavDemux->iCache.GetSize();
+					if (appendSize > 0)
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+						pIn.Used(appendSize);
+					}
+
+					pWavDemux->head.fact = (FactChunk*)pWavDemux->basePorting->Malloc(sizeof(FactChunk));
+					*pWavDemux->head.fact = *(FactChunk*)pWavDemux->iCache.GetData();
+					pWavDemux->iCache.Used(size);
+					pWavDemux->stage = WavDemuxStage_DataHead;
+				}
+				else
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			}
+			case WavDemuxStage_DataHead:
+			{
+				i32 size = sizeof(DataChunk);
+				if ((pIn.GetSize() + pWavDemux->iCache.GetSize()) > size)
+				{
+					i32 appendSize = size - pWavDemux->iCache.GetSize();
+					if (appendSize > 0)
+					{
+						pWavDemux->iCache.Append(pIn.GetData(), appendSize);
+						pIn.Used(appendSize);
+					}
+
+					pWavDemux->head.data = *(DataChunk*)pWavDemux->iCache.GetData();
+					pWavDemux->iCache.Used(size);
+					pWavDemux->hasDemuxHead = true;
+					pWavDemux->stage = WavDemuxStage_Data;
+				}
+				else
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			}
+			case WavDemuxStage_Data:
+			{
+				i32 size;
+				//pOut
+				if (pWavDemux->iCache.GetSize())
+				{
+					pOut.AppendFully(pWavDemux->iCache.GetData(), pWavDemux->iCache.GetSize(), &size);
+					pWavDemux->iCache.Used(size);
+				}
+				if (pOut.GetLeftSize())
+				{
+					pOut.AppendFully(pIn.GetData(), pIn.GetSize(), &size);
+					pIn.Used(size);
+				}
+				if (pIn.GetSize())
+				{
+					pWavDemux->iCache.Append(pIn.GetData(), pIn.GetSize());
+					pIn.Used(pIn.GetSize());
+				}
+				break;
+			default:
+				break;
+			}
+			}
 		}
 #endif
-
-
-#if 0
-		BufferSamples bufferSamples;
-		AudioSamples pIn;
-		bufferSamples._buf = in;
-		bufferSamples._samples = pWavDemux->frameSamples;
-		pIn.Init(&((WavDemuxState*)pWavDemuxStateIn)->info, &bufferSamples);
-
-		AudioSamples pOut;
-		bufferSamples._buf = out;
-		bufferSamples._samples = pWavDemux->frameSamples;
-		pOut.Init(&((WavDemuxState*)pWavDemuxStateIn)->info, &bufferSamples);
-#endif
+		*outLen = pOut.GetSize();
 		return WAV_DEMUX_RET_SUCCESS;
 	}
 
@@ -228,13 +354,17 @@ EXTERNC {
 	{
 		if (!pWavDemuxStateIn)
 			return WAV_DEMUX_RET_FAIL;
-#if 0
 		WavDemuxState* pWavDemux = (WavDemuxState*)pWavDemuxStateIn;
-		pWavDemux->basePorting->Free(pWavDemux->inHistory.GetBufInSample(0));
-		pWavDemux->basePorting->Free(pWavDemux->infuture.GetBufInSample(0));
-		pWavDemux->basePorting->Free(pWavDemux->fillSignal.GetBufInSample(0));
-		pWavDemux->basePorting->Free(pWavDemux->muteFactor.GetBufInSample(0));
-#endif
+		u8* ptr = (u8*)pWavDemux->head.expandFmt;
+		if (ptr)
+			pWavDemux->basePorting->Free(ptr);
+		ptr = (u8*)pWavDemux->head.fact;
+		if (ptr)
+			pWavDemux->basePorting->Free(ptr);
+		ptr = (u8*)pWavDemux->iCache.GetBuf();
+		if (ptr)
+			pWavDemux->basePorting->Free(ptr);
+
 		return WAV_DEMUX_RET_SUCCESS;
 	}
 }
