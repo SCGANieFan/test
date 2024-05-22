@@ -2,12 +2,12 @@
 #define PATH "../../source/audio/resample/"
 
 #if 1
-#define FILE_NAME "chirp_sin_16k1ch.wav"
-#define RATE 16000
+#define FILE_NAME "chirp_sin_48k1ch.pcm"
+#define RATE 48000
 #define CHANNEL 1
 #define WIDTH 2
 #define FRAME_MS 20
-#define O_RATE 48000
+#define O_RATE 44100
 #endif
 
 #if 0
@@ -16,16 +16,16 @@
 #define CHANNEL 4
 #define WIDTH 2
 #define FRAME_MS 20
-#define O_RATE 24999
+#define O_RATE 44100
 #endif
 
 #if 0
-#define FILE_NAME "sin4ch48k32b.pcm"
+#define FILE_NAME "sin5k48k2ch.pcm"
 #define RATE 48000
-#define CHANNEL 4
-#define WIDTH 4
+#define CHANNEL 2
+#define WIDTH 2
 #define FRAME_MS 20
-#define O_RATE 33000
+#define O_RATE 44100
 #endif
 
 //#define O_RATE 32000
@@ -41,7 +41,8 @@ void AudioResampleTest()
 
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
-		(void*)(PATH FILE_NAME ".resample48k.pcm"),
+		//(void*)(PATH FILE_NAME ".resample48k.pcm"),
+		(void*)(PATH FILE_NAME ".resampleCoef44p1k.pcm"),
 		(void*)RATE,
 		(void*)CHANNEL,
 		(void*)WIDTH,

@@ -15,11 +15,11 @@ int main()
 	//OggTest();
 	//PlcTest();
 	//AudioSpeedCtrTest();
-	//AudioResampleTest();
+	AudioResampleTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();
-	WavTest();
+	//WavTest();
 	return 1;
 }
 

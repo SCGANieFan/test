@@ -8,6 +8,41 @@ namespace Algo {
 		/*************************************************************************
 		******************************* shift ************************************
 		*************************************************************************/
+#if 0
+template<class Ti, class To, class Tx=int>
+class CaculatorShift {
+protected:
+	typedef To(*ShiftCB)(Ti x, int8_t shift);
+public:
+	//CaculatorShift() {};
+	inline CaculatorShift(int8_t shift) {
+		_cb = NoShift;
+		if (shift > 0){//left shift
+			_cb = LeftShift;
+		}
+		else if (shift < 0){//right shift
+			_cb = RightShift;
+		}
+	};
+	~CaculatorShift() {};
+public:
+	inline To DoShift(Ti x, int8_t shift) {
+		return _cb(x, shift);
+	};
+protected:
+	static inline To RightShift(Ti x, int8_t shift) {
+		return (To)((Tx)x >> shf);
+	}
+	static inline To LeftShift(Ti x, int8_t shift) {
+		return (To)((Tx)x << shf);
+	}
+	static inline To NoShift(Ti x, int8_t shift) {
+		return (To)x;
+	}
+protected:
+	ShiftCB _cb = 0;
+};
+#endif
 		typedef b1(*ALGO_LEFT_SHIFT)(u8* src, const i32 samples, const i16 bits, const i16 channels);
 		template<class T>
 		STATIC INLINE b1 Algo_LeftShift(u8* src, const i32 samples, const i16 bits, const i16 channels)

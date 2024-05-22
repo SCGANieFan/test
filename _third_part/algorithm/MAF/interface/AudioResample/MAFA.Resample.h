@@ -27,7 +27,7 @@ private:
 
 	//MAF_Data _iDataCache;
 	MAF_Data _oDataCache;
-	maf_void* _basePorting;
+	maf_void* _basePorting = 0;
 	
 private:
 	static maf_void* _malloc;

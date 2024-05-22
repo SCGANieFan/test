@@ -68,15 +68,35 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.inner.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.h" />
     <ClInclude Include="AudioResampleTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resampleCoef.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.ex_c.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.cpp" />
     <ClCompile Include="AudioResampleTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_16k_to_44p1k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_24k_to_44p1k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_32k_to_44p1k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_32k_to_48k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_16k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_24k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_32k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_48k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_8k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_96k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_48k_to_32k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_48k_to_44p1k_filter_for_1600.txt" />
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_8k_to_44p1k_filter_for_1600.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -420,7 +440,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/resample;$(MTF_PATH)/interface/AudioResample;$(MAF_PATH)/interface/AudioResample;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/resample;$(ALGO_AUDIO_PATH)/process/resample/resample_coef;$(MTF_PATH)/interface/AudioResample;$(MAF_PATH)/interface/AudioResample;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>

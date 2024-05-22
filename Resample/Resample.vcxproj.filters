@@ -10,11 +10,17 @@
     <Filter Include="mtf">
       <UniqueIdentifier>{a4502e1e-7e67-4727-8563-2e8c15f16a29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib\audio_resample">
+      <UniqueIdentifier>{5fca6188-5aa3-4d27-a8f5-b58265099071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\resample_coef">
+      <UniqueIdentifier>{db04fcf8-17d2-4770-b902-dc0c2ae0bf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\resample_coef\coef">
+      <UniqueIdentifier>{9e6bf175-a044-4e26-9a00-b440901cbaed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.h">
       <Filter>maf</Filter>
     </ClInclude>
@@ -22,11 +28,17 @@
       <Filter>mtf</Filter>
     </ClInclude>
     <ClInclude Include="AudioResampleTest.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h">
+      <Filter>lib\audio_resample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.h">
+      <Filter>lib\resample_coef</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.inner.h">
+      <Filter>lib\resample_coef</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.cpp">
       <Filter>maf</Filter>
     </ClCompile>
@@ -34,5 +46,58 @@
       <Filter>mtf</Filter>
     </ClCompile>
     <ClCompile Include="AudioResampleTest.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp">
+      <Filter>lib\audio_resample</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.cpp">
+      <Filter>lib\resample_coef</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resampleCoef.cpp">
+      <Filter>lib\resample_coef\coef</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.ex_c.cpp">
+      <Filter>lib\resample_coef</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_32k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_48k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_96k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_48k_to_32k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_48k_to_44p1k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_8k_to_44p1k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_16k_to_44p1k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_24k_to_44p1k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_32k_to_44p1k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_32k_to_48k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_8k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_16k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
+    <Text Include="..\_third_part\algorithm\audio\process\resample\resample_coef\filterCoef\resample_44p1k_to_24k_filter_for_1600.txt">
+      <Filter>lib\resample_coef\coef</Filter>
+    </Text>
   </ItemGroup>
 </Project>

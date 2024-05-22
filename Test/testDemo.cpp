@@ -8,24 +8,17 @@
 //#include<vector>
 
 
+char X[10][10];
 
-#define PATH "./"
-#define FILE_NAME "text.txt"
+void func(char x[][10])
+{
+	int a1 = 1;
+}
 
 bool testDemo()
 {
-	char x[4] = { 1,2,3,4 };
-	FILE* fp;
-	fp = fopen(PATH FILE_NAME, "wb");
-	if (!fp)
-		return false;
-	const char* data = "0,1,2";
-	const char* head = "head";
-	fwrite(data, 1, 5, fp);
-	fseek(fp, 0, SEEK_SET);
-	//fwrite(head, 1, 4, fp);
-	fprintf(fp, "%s", head);
-	fclose(fp);
+	//char x[][10] = X;
+	func(X);
 	return 0;
 }
 
