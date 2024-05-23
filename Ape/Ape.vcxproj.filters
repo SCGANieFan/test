@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{ce62a4e1-330f-44cf-bc65-2fcbe5bf86bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maf">
+      <UniqueIdentifier>{03ff545e-dd44-4845-976a-2cad40b59409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mtf">
+      <UniqueIdentifier>{4cacdb8c-920a-48c5-ac63-a02a8f37380c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ApeTest.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeOri.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.decode.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.init.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.bufferread.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.entropy.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.predictor.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rollbuffer.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ApeTest.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeOri.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.type.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

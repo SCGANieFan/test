@@ -6,20 +6,25 @@
 #include"AudioResampleTest.h"
 #include"MTF_demoTest.h"
 #include"WavTest.h"
+#include"ApeTest.h"
 
 int main()
 {
 	//TestBitPerSampleConvet();
 	//StackTest();
-	//testDemo();
 	//OggTest();
 	//PlcTest();
 	//AudioSpeedCtrTest();
-	AudioResampleTest();
+	//AudioResampleTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();
 	//WavTest();
+	ApeTest();
+	
+	
+	
+	//testDemo();
 	return 1;
 }
 

@@ -8,17 +8,17 @@
 //#include<vector>
 
 
-char X[10][10];
 
-void func(char x[][10])
+template<class T>
+void func0(T x)
 {
-	int a1 = 1;
+	int a1 = x;
 }
 
 bool testDemo()
 {
-	//char x[][10] = X;
-	func(X);
+	int x = 1;
+	func0(x);
 	return 0;
 }
 
