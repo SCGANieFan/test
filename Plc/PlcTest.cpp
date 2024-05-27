@@ -1,7 +1,7 @@
 #include"MTF.h"
 #define PATH "../../source/audio/plc/"
 
-#if 0
+#if 1
 #if 1
 #define FILE_NAME "chirp_sin_16k1ch.wav"
 #define RATE 16000
@@ -21,7 +21,7 @@
 #endif
 #else
 
-#if 1
+#if 0
 #define FILE_NAME "sin1k_48k1ch24b.pcm"
 #define RATE 48000
 #define CHANNEL 1

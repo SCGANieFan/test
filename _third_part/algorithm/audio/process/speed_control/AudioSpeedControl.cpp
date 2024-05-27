@@ -26,17 +26,17 @@ typedef struct {
 }ASC_State;
 
 static FuncList funcList16_g = {
-    Algo_OverlapAdd<i16>,
+    Algo_GetOverlapAdd(sizeof(i16),sizeof(i16)),    
     Get_Algo_WaveFormMatch(sizeof(i16)),
 };
 
 static FuncList funcList24_g = {
-    Algo_OverlapAdd<i24>,
+    Algo_GetOverlapAdd(sizeof(i24),sizeof(i24)),
     Get_Algo_WaveFormMatch(sizeof(i24)),
 };
 
 static FuncList funcList32_g = {
-    Algo_OverlapAdd<i32>,
+    Algo_GetOverlapAdd(sizeof(i32),sizeof(i32)),
     Get_Algo_WaveFormMatch(sizeof(i32)),
 };
 

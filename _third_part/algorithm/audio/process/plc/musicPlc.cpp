@@ -20,10 +20,10 @@ typedef enum {
 }MUTE_MODE;
 
 typedef struct {
-	ALGO_PRODUCT_CB product;
+	ALGO_PRODUCT_WITH_FIXED_POINT_CB product;
 	ALGO_OVERLAP_ADD_CB Overlapadd;
 	ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
-	ALGO_APPEND_IN_FIXPOINT AppendInFixpoint;
+	ALGO_AppendInFixPoint_CB AppendInFixpoint;
 }FuncList;
 
 typedef struct
@@ -52,26 +52,32 @@ typedef struct
 	b1 isInited;
 }MusicPlcState;
 
-
-static FuncList funcList16_g = {
-	Algo_Product<i16,i16>,
-	Algo_OverlapAdd<i16>,
-	Get_Algo_WaveFormMatch(sizeof(i16)),
-	Algo_AppendInFixPoint<i16,i32>,
-};
-
-static FuncList funcList24_g = {
-	Algo_Product<i24,i24>,
-	Algo_OverlapAdd<i24>,
-	Get_Algo_WaveFormMatch(sizeof(i24)),
-	Algo_AppendInFixPoint<i24,i32>,
-};
-
-static FuncList funcList32_g = {
-	Algo_Product<i32,i32>,
-	Algo_OverlapAdd<i32>,
-	Get_Algo_WaveFormMatch(sizeof(i32)),
-	Algo_AppendInFixPoint<i32,i32>,
+static FuncList funcList[4]
+{
+	{
+		Algo_GetProductWithFixedPoint(sizeof(i8),sizeof(i8)),
+		Algo_GetOverlapAdd(sizeof(i8),sizeof(i8)),
+		Get_Algo_WaveFormMatch(sizeof(i8)),
+		Algo_GetAppendInFixedPoint(sizeof(i8),sizeof(i32)),
+	},
+	{
+		Algo_GetProductWithFixedPoint(sizeof(i16),sizeof(i16)),
+		Algo_GetOverlapAdd(sizeof(i16),sizeof(i16)),
+		Get_Algo_WaveFormMatch(sizeof(i16)),
+		Algo_GetAppendInFixedPoint(sizeof(i16),sizeof(i32)),
+	},
+	{
+		Algo_GetProductWithFixedPoint(sizeof(i24),sizeof(i24)),
+		Algo_GetOverlapAdd(sizeof(i24),sizeof(i24)),
+		Get_Algo_WaveFormMatch(sizeof(i24)),
+		Algo_GetAppendInFixedPoint(sizeof(i24),sizeof(i32)),
+	},
+	{
+		Algo_GetProductWithFixedPoint(sizeof(i32),sizeof(i32)),
+		Algo_GetOverlapAdd(sizeof(i32),sizeof(i32)),
+		Get_Algo_WaveFormMatch(sizeof(i32)),
+		Algo_GetAppendInFixedPoint(sizeof(i32),sizeof(i32)),
+	},
 };
 
 STATIC INLINE i32 MusicPlcGetMuteFactorSamples(i32 frameSamples)
@@ -145,15 +151,7 @@ EXTERNC {
 		pPlc->frameSamplesInner = MAX(pPlc->frameSamples, pPlc->info._rate * MUSIC_PLC_MIN_FRAME_MS / 1000);
 		pPlc->decaySamples = sampleParam->decayTimeMs * pPlc->info._rate / 1000;
 
-		if (pPlc->info._width == 2){
-			pPlc->funcList = &funcList16_g;
-		}
-		else if (pPlc->info._width == 3) {
-			pPlc->funcList = &funcList24_g;
-		}
-		else{
-			pPlc->funcList = &funcList32_g;
-		}
+		pPlc->funcList = &funcList[pPlc->info._width - 1];
 		BufferSamples bufferSamples;
 		
 		bufferSamples._samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
@@ -338,9 +336,9 @@ EXTERNC {
 #endif
 				//overlap add
 #if 1
-				pMusicPlc->funcList->Overlapadd(					
-					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
-					pMusicPlc->infuture.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
+				pMusicPlc->funcList->Overlapadd(
+					pMusicPlc->inHistory.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
+					pMusicPlc->inHistory.GetBufInSample(pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples),
 					pMusicPlc->inHistory.GetBufInSample(bestLag),
 					pMusicPlc->overlapInSamples,
 					pMusicPlc->inHistory._info->_channels);

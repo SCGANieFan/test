@@ -10,8 +10,7 @@ using namespace Audio;
 #define MASK_Q20 (ONE_Q20 - 1)
 
 typedef struct {
-    ALGO_DOT_PRODUCT_ADD_CB ProductAdd;
-    ALGO_DOT_PRODUCT_ADD_ACC_CB ProductAddAcc;
+    ALGO_PRODUCT_ADD_WITH_FIXED_POINT_CB ProductAdd;
 }FuncList;
 
 
@@ -31,18 +30,15 @@ typedef struct {
 }AudioResampleState;
 
 static FuncList funcList16_g = {
-    Algo_ProductAdd<i16,i32>,
-    Algo_ProductAddAcc<i16,i64>,
+    Algo_GetProductAddWithFixedPoint(sizeof(i16),sizeof(i32),sizeof(i16)),
 };
 
 static FuncList funcList24_g = {
-    Algo_ProductAdd<i24,i32>,
-    Algo_ProductAddAcc<i24,i64>,
+    Algo_GetProductAddWithFixedPoint(sizeof(i24),sizeof(i32),sizeof(i24)),
 };
 
 static FuncList funcList32_g = {
-    Algo_ProductAdd<i32,i32>,
-    Algo_ProductAddAcc<i32,i64>,
+    Algo_GetProductAddWithFixedPoint(sizeof(i32),sizeof(i32),sizeof(i32)),
 };
 
 EXTERNC{
@@ -157,6 +153,7 @@ EXTERNC{
         i32 iSamplesFloor;
         i32 iSamplesCeil;
         i64 iSamplesQ20 = (i64)(pState->oSamplesAcc) * pState->KQ20;
+        ALGO_MEM_SET(out, 0, *outSize);
         for (oSamples = 0; oSamples < oSamplesMax; oSamples++)
         {
             iSamplesQ20 += pState->KQ20;
@@ -177,7 +174,7 @@ EXTERNC{
             u8* pInNow;
             pInNow = &in[iSamplesCeil * pState->bytePerSample];
             pState->funcList->ProductAdd(&out[oSamples * pState->bytePerSample], pInLast, (u8*)&iSamplesFracCeilQ20, 1, pState->channels, 20);
-            pState->funcList->ProductAddAcc(&out[oSamples * pState->bytePerSample], pInNow, (u8*)&iSamplesFracFloorQ20, 1, pState->channels, 20);
+            pState->funcList->ProductAdd(&out[oSamples * pState->bytePerSample], pInNow, (u8*)&iSamplesFracFloorQ20, 1, pState->channels, 20);
             pState->oSamplesAcc++;
 
         }

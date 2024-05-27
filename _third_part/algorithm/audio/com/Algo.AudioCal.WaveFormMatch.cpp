@@ -140,7 +140,7 @@ i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, u8* ref, u8* cmp, i16 ch
 
 
 
-ALGO_WAVE_FORM_MATCH_CB Algo::Audio::Get_Algo_WaveFormMatch(i16 width)
+EXTERNC ALGO_WAVE_FORM_MATCH_CB Algo::Audio::Get_Algo_WaveFormMatch(i16 width)
 {
 	if (width == 2)
 	{

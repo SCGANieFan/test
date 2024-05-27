@@ -520,6 +520,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp" />
@@ -531,6 +534,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Com.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.h" />

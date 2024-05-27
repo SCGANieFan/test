@@ -43,6 +43,15 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
       <Filter>lib\audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
@@ -95,6 +104,9 @@
       <Filter>lib\audio</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
+      <Filter>lib\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Com.h">
       <Filter>lib\audio</Filter>
     </ClInclude>
   </ItemGroup>

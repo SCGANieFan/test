@@ -2,6 +2,14 @@
 
 namespace Algo {
 
+#ifndef EXTERNC
+#ifndef __cplusplus
+#define EXTERNC
+#else
+#define EXTERNC extern "C"
+#endif
+#endif
+
 #define STATIC static
 #define INLINE inline
 
@@ -10,5 +18,7 @@ namespace Algo {
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)>(b)?(b):(a))
+
+
 
 }

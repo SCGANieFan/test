@@ -1,7 +1,6 @@
 #if 1
 #pragma once
-#include"Algo.Type.h"
-#include"Algo.Macro.h"
+#include"Algo.AudioCal.Com.h"
 namespace Algo {
 	namespace Audio {
 		enum class Algo_WaveformMatchChoose_e {
@@ -11,8 +10,7 @@ namespace Algo {
 		};
 
 		typedef i16(*ALGO_WAVE_FORM_MATCH_CB)(Algo_WaveformMatchChoose_e mode, u8* ref, u8* cmp, i16 channels, i32 seekSample, i32 matchSample);
-
-		ALGO_WAVE_FORM_MATCH_CB Get_Algo_WaveFormMatch(i16 width);
+		EXTERNC ALGO_WAVE_FORM_MATCH_CB Get_Algo_WaveFormMatch(i16 width);
 	}
 }
 
