@@ -7,19 +7,19 @@ using namespace Audio;
 template<class Ti, class To>
 class Algo_OverlapAdd {
 public:
-	STATIC INLINE b1 OverlapAdd(void* dst, void* src0, void* src1, const i32 overlapSample, const i16 channels) {
+	STATIC INLINE b1 OverlapAdd(void* dst, void* srcRise, void* srcDecline, const i16 channels, const i32 startOverlapSample, const i32 endOverlapSample, const i32 overlapSample) {
 		const i32 fixNum = 15;
 		i32 factor;
-		Ti* pSrc0 = (Ti*)src0;
-		Ti* pSrc1 = (Ti*)src1;
+		Ti* pSrcRise = (Ti*)srcRise;
+		Ti* pSrcDecline = (Ti*)srcDecline;
 		To* pDst = (To*)dst;
-		for (i32 s = 0; s < overlapSample; s++) {
+		for (i32 s = startOverlapSample; s < endOverlapSample; s++) {
 			factor = ((i32)s << fixNum) / overlapSample;
 			for (i16 ch = 0; ch < channels; ch++) {
-				*pDst = (To)(((i64)(*pSrc0) * (((i32)1 << fixNum) - factor) + (i64)(*pSrc1) * factor) >> fixNum);
+				*pDst = (To)(((i64)(*pSrcRise) * (((i32)1 << fixNum) - factor) + (i64)(*pSrcDecline) * factor) >> fixNum);
 				pDst++;
-				pSrc0++;
-				pSrc1++;
+				pSrcRise++;
+				pSrcDecline++;
 			}
 		}
 		return true;

@@ -66,7 +66,14 @@ STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 a
 	}
 
 	//outQ10
+#if 0
 	return (i32)((corrQ30 / ((u64)sqrt((*normQ30 < 1) ? 1 : *normQ30))) >> 5);
+#else
+	i64 t0 = (i64)sqrt((*normQ30 < 1) ? 1 : *normQ30);
+	i64 t1 = corrQ30/t0;
+	i64 t2 = t1>>5;
+	return (i32)t2;
+#endif
 }
 
 template<class T>
@@ -88,7 +95,14 @@ STATIC INLINE i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelati
 	}
 	*normQ30 = lnormQ30;
 	//out Q10
+#if 0
 	return (i32)((corrQ30 / ((u64)sqrt((*normQ30 < 1) ? 1 : *normQ30))) >> 5);
+#else
+	i64 t0 = (i64)sqrt((*normQ30 < 1) ? 1 : *normQ30);
+	i64 t1 = corrQ30 / t0;
+	i64 t2 = t1 >> 5;
+	return (i32)t2;
+#endif
 }
 
 template<class T>

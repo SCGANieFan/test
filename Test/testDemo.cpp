@@ -8,46 +8,17 @@
 //#include<vector>
 
 
-template<int shiftType, class Ti, class To, class Tx>
-class Algo_Shift {};
-
-template<class Ti, class To, class Tx>
-class Algo_Shift< 1, Ti, To, Tx > {
-public:
-	inline To DoShift(Ti x, int8_t shiftNum) {
-		return (To)(((Tx)x) >> shiftNum);
-	}
-};
-
-template<class Ti, class To, class Tx>
-class Algo_Shift< -1, Ti, To, Tx > {
-public:
-	inline To DoShift(Ti x, int8_t shiftNum) {
-		return (To)(((Tx)x) << shiftNum);
-	}
-};
-
-template<class Ti, class To, class Tx>
-class Algo_Shift< 0, Ti, To, Tx > {
-public:
-	inline To DoShift(Ti x, int8_t shiftNum) {
-		return (To)(x);
-	}
-};
-
-
 
 bool testDemo()
 {
+#if 0
+	for (int i = 0; i < sizeof(y) / sizeof(y[0]); i++)
+	{
+		printf("y[i]=%x\n", y[i]);
+	}
+#endif
 
-	int x = 3;
-
-	Algo_Shift<-1,int, int, int> lShift;
-	printf("(%d << 1) = %d\n", x, lShift.DoShift(x, 1));
-	Algo_Shift<1,int, int, int> rShift;
-	printf("(%d >> 1) = %d\n", x, rShift.DoShift(x, 1));
 	return 0;
 }
-
 
 #endif

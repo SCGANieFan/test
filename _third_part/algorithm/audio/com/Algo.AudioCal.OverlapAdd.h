@@ -4,7 +4,7 @@
 namespace Algo {
 	namespace Audio {
 #if 1
-		typedef b1(*ALGO_OVERLAP_ADD_CB)(void* dst, void* src0, void* src1, const i32 overlapSample, const i16 channels);
+		typedef b1(*ALGO_OVERLAP_ADD_CB)(void* dst, void* srcRise, void* srcDecline, const i16 channels, const i32 startOverlapSample, const i32 endOverlapSample, const i32 overlapSample);
 		EXTERNC ALGO_OVERLAP_ADD_CB Algo_GetOverlapAdd(i8 iWidth, i8 oWidth);
 #endif
 

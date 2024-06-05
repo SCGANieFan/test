@@ -1,15 +1,16 @@
 #include"MTF.h"
 #define PATH "../../source/audio/plc/"
 
+#if 0
 #if 1
-#if 1
-#define FILE_NAME "chirp_sin_16k1ch.wav"
+//#define FILE_NAME "chirp_sin_16k1ch.wav"
+#define FILE_NAME "stSection_16k1ch.wav"
 #define RATE 16000
 #define CHANNEL 1
 #define WIDTH 2
-#define FRAME_MS 20
-#define DECAY_MS 50
-#define OVERLAP_MS 2
+#define FRAME_MS 10
+#define DECAY_MS 20
+#define OVERLAP_MS 5 //OVERLAP_MS < FRANME_MS,
 #else
 #define FILE_NAME "sin4ch48k16b.wav"
 #define RATE 48000
@@ -30,12 +31,13 @@
 #define DECAY_MS 50
 #define OVERLAP_MS 2
 #else
-#define FILE_NAME "sin4ch48k32b.wav"
+//#define FILE_NAME "sin4ch48k32b.wav"
+#define FILE_NAME "mbz_48k2h.wav"
 #define RATE 48000
-#define CHANNEL 4
-#define WIDTH 4
+#define CHANNEL 2
+#define WIDTH 2
 #define FRAME_MS 2
-#define DECAY_MS 50
+#define DECAY_MS 30
 #define OVERLAP_MS 2
 #endif
 #endif

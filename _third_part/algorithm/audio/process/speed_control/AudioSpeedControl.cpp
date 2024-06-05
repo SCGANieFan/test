@@ -87,8 +87,11 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->tmpBuf.GetBufInSample(0),
         pState->tmpBuf.GetBufInSample(0),
         pIn->GetBufInSample(pIn->GetUsedSamples() + bestLag),
+        pState->tmpBuf._info->_channels,
+        0,
         pState->overlapSamples,
-        pState->tmpBuf._info->_channels);
+        pState->overlapSamples);
+    
         
 #endif
     pOut->Append(

@@ -39,8 +39,8 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.channels = _ch;
 	initParam.width = _width;
 	initParam.frameSamples = _frameSamples;
-	initParam.overlapMs = _overlapMs;
-	initParam.decayTimeMs = _decayMs;
+	initParam.overlapUs = _overlapMs * 1000;
+	initParam.decayTimeUs = _decayMs * 1000;
 
 	_hdSize = MusicPlc_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);
@@ -77,6 +77,7 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 
 	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
 	{
+#if 1
 		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
 		ret = MusicPlc_Run(
 			_hd,
@@ -85,6 +86,10 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 			dataOut->GetLeftData(),
 			&outByte,
 			true);
+#else
+		outByte= _frameSamples* _width *_ch;
+		MAF_MEM_SET(dataOut->GetLeftData(), 0, outByte);
+#endif
 	}
 	else
 	{
