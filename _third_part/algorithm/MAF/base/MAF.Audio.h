@@ -5,6 +5,7 @@
 
 typedef enum {
 	MAFA_FRAME_IS_EMPTY = 1 << 0,
+	MAFA_FRAME_IS_EOS = 2 << 0,
 }MAF_AudioFrameFlag;
 
 

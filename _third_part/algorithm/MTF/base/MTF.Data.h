@@ -2,6 +2,7 @@
 #include"MTF.Type.h"
 enum MTF_DataFlag {
 	MTF_DataFlag_ESO=1<<0,
+	MTF_DataFlag_EMPTY=1<<1,
 };
 
 class MTF_Data

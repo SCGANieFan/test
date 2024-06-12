@@ -1,108 +1,59 @@
+#include"Ape.Inner.context.h"
+
 #if 1
-#include"Algo.Printer.h"
-#include"Algo.Memory.h"
-#include"ApeOri.h"
-#include"Ape.Inner.func.h"
 
-
-
-
-STATIC INLINE void* Ape_Malloc(ApeDecoder* pDec, i32 size)
+/**************************************************************************************************
+WAV header structure
+**************************************************************************************************/
+typedef struct
 {
-    for (i16 i = 0; i < sizeof(pDec->mallocPtr) / sizeof(pDec->mallocPtr[0]); i++)
-    {
-        if (pDec->mallocPtr[i] == 0)
-        {
-            pDec->mallocPtr[i] = pDec->basePorting->Malloc(size);
-            return pDec->mallocPtr[i];
-        }
-    }
-    return 0;
-}
+    // RIFF header
+    i8 cRIFFHeader[4];
+    u32 nRIFFBytes;
 
-STATIC INLINE void Ape_Free(ApeDecoder* pDec, void* block)
-{
-    for (i16 i = 0; i < sizeof(pDec->mallocPtr) / sizeof(pDec->mallocPtr[0]); i++)
-    {
-        if (pDec->mallocPtr[i] == block)
-        {
-            pDec->basePorting->Free(pDec->mallocPtr[i]);
-            pDec->mallocPtr[i] = 0;
-            return;
-        }
-    }
-    return;
-}
+    // data type
+    i8 cDataTypeID[4];
+
+    // wave format
+    i8 cFormatHeader[4];
+    u32 nFormatBytes;
+
+    u16 nFormatTag;
+    u16 nChannels;
+    u32 nSamplesPerSec;
+    u32 nAvgBytesPerSec;
+    u16 nBlockAlign;
+    u16 nBitsPerSample;
+
+    // data chunk header
+    i8 cDataHeader[4];
+    u32 nDataBytes;
+}WaveHeader;
+
+
+typedef struct {
+    u8 cID[4];                         // should equal 'MAC '
+    u16 nVersion;                        // version number * 1000 (3.81 = 3810)
+    u16 nCompressionLevel;               // the compression level
+    u16 nFormatFlags;                    // any format flags (for future use)
+    u16 nChannels;                       // the number of channels (1 or 2)
+    u32 nSampleRate;                     // the sample rate (typically 44100)
+    u32 nHeaderBytes;                    // the bytes after the MAC header that compose the WAV header
+    u32 nTerminatingBytes;               // the bytes after that raw data (for extended info)
+    u32 nTotalFrames;                    // the number of frames in the file
+    u32 nFinalFrameBlocks;               // the number of samples in the final frame
+}ApeHeaderOld;
 
 //inner
 STATIC INLINE i32 GetHeaderSize()
 {
-	i32 size1 = sizeof(ApeDescriptor);
-	i32 size2 = sizeof(ApeHeaderOld);
-	return size1 > size2 ? size1 : size2;
+    i32 size1 = sizeof(ApeDescriptor);
+    i32 size2 = sizeof(ApeHeaderOld);
+    return size1 > size2 ? size1 : size2;
 }
 
 STATIC INLINE i32 GetPraseInBufferByte(u8* in, i32 inLen)
 {
-#if 0
-    //check
-    if (in == NULL
-        || inLen < GetHeaderSize())
-        return -1;
-
-    if (in[0] != 'M'
-        || in[1] != 'A'
-        || in[2] != 'C'
-        || in[3] != ' ')
-        return -1;
-
-    //init
-    u16 fileversion = (*(u16*)(in + 4));
-    u8* pIn = in;
-
-    i32 inBuffSize = 0;
-
-    if (fileversion >= 3980)
-    {
-        ApeDescriptor* descriptor = (ApeDescriptor*)in;
-        inBuffSize = sizeof(ApeDescriptor) + sizeof(ApeHeader) + descriptor->seektablelength + descriptor->wavheaderlength;
-    }
-    else
-    {
-        ApeHeaderOld headerOld;
-        ALGO_MEM_CPY(&headerOld, pIn, sizeof(ApeHeaderOld));
-        pIn += sizeof(ApeHeaderOld);
-        inBuffSize += sizeof(ApeHeaderOld);
-
-        if (headerOld.nTotalFrames == 0)
-            return -1;
-
-        if (headerOld.nFormatFlags & APE_FORMAT_FLAG_HAS_PEAK_LEVEL)
-        {
-            pIn += 4;
-            inBuffSize += 4;
-        }
-
-        //nSeekTableElements
-        i32 seektablelength;
-        if (headerOld.nFormatFlags & APE_FORMAT_FLAG_HAS_SEEK_ELEMENTS)
-        {
-            seektablelength = (*((i32*)pIn)) * 4; pIn += 4;
-            inBuffSize += 4;
-        }
-        else
-            seektablelength = (i32)(headerOld.nTotalFrames * 4);
-        inBuffSize += seektablelength;
-
-        //wavheaderlength
-        uint32_t wavheaderlength;
-        wavheaderlength = (headerOld.nFormatFlags & APE_FORMAT_FLAG_CREATE_WAV_HEADER) ? (int64_t)(sizeof(WaveHeader)) : headerOld.nHeaderBytes;
-        inBuffSize += wavheaderlength;
-
-    }
-    return inBuffSize;
-
-#else
     u8* pIn = in;
     i32 inByteUsed = 0;
     i32 inByteMax = inLen;
@@ -110,7 +61,7 @@ STATIC INLINE i32 GetPraseInBufferByte(u8* in, i32 inLen)
     {
         //search Head
         if (inByteUsed > (inByteMax - 4)) {
-            return 1024*1024;
+            return 1024 * 1024;
         }
         inByteUsed++;
     }
@@ -154,75 +105,48 @@ STATIC INLINE i32 GetPraseInBufferByte(u8* in, i32 inLen)
 
     }
     return inByteUsed;
-#endif
 }
 
-
-//interface 
-i32 Ape_StateInitWithContext(ApeDecoder* pDecIn, AlgoBasePorting* basePorting, ApeContext* context)
+bool ApeContext::GetFrameInfoWithFrameNum(ApeFrameInfo* frame, u32 frameNum)
 {
-	ALGO_PRINT();
-
-    ApeDecoder* pDec = pDecIn;
-    ApeMode mode = pDec->mode;
-    ALGO_MEM_SET(pDec, 0, sizeof(ApeDecoder));
-    pDec->mode= mode;
-    pDec->basePorting = basePorting;
-    pDec->context = *context;
-
-    //clear NN Filter	
-    pDec->fSet = context->header.compressiontype / 1000 - 1;
-    for (u16 ch = 0; ch < APE_MAX_CHANNELS; ch++)
-    {
-        for (i32 i = 0; i < APE_FILTER_LEVELS; i++) {
-            if (!ape_filter_orders[pDec->fSet][i])
-                break;
-            i32 size = (((ape_filter_orders[pDec->fSet][i] + APE_NN_FILTER_ROLL_BUFFER_EXTRA_LENGTH) * sizeof(i16))) * 3;
-            pDec->filterbuf[ch][i] = (i16*)Ape_Malloc(pDec,size);
-            ALGO_MEM_SET(pDec->filterbuf[ch][i], 0, size);
-        }
-    }
-    //buffer read
-    pDec->bufferRead.Init();
-    pDec->blocksMax = APE_BLOCKS_MAX;
-    pDec->isStartFrame = true;
-    pDec->currentframe = 0;
-    pDec->isInited = true;
-
-
-    Buffer buffer;
-    i32 size = 10 * 1024;
-    buffer.Init((u8*)Ape_Malloc(pDec, size), size);
-    pDec->inCache.Init(&buffer);
-	return APERET_SUCCESS;
-}
-
-i32 Ape_StateInitWithBuffer(ApeDecoder* pDecIn, AlgoBasePorting* basePorting, u8* in, i32* inByte)
-{
-	ALGO_PRINT();
-	u8* pIn = in;
-	i32 inByteMax = *inByte;
-	i32 inByteUsed = 0;
-	ApeDecoder* pDec = pDecIn;
-    *inByte = 0;
-    ApeMode mdoe = pDecIn->mode;
-	ALGO_MEM_SET(pDec, 0, sizeof(ApeDecoder));
-    pDecIn->mode = mdoe;
-
-	pDec->basePorting = basePorting;
-	ApeContext* context = &pDec->context;
-
-    //search Head
-	while ((*(u32*)(&pIn[inByteUsed]) != *(u32*)"MAC "))
-	{
-		if (inByteUsed > (inByteMax - 4)) {
-			return APERET_FAIL;
-		}
-		inByteUsed++;
+    //check
+	if (frameNum > _context.header.totalframes - 1)
+		return false;
+    //pos
+    frame->pos = _context.seektable[frameNum];
+    i32 skip = (frame->pos - _context.seektable[0]) & 3;
+	if (skip) {
+		frame->pos -= skip;
 	}
 
+    //nblocks
+    frame->nblocks = _context.header.blocksperframe;
+    if (frameNum == (_context.header.totalframes - 1)) {
+        frame->nblocks = _context.header.finalframeblocks;
+    }
+	return true;
+}
+
+i32 ApeContext::InitWithBuffer(ApeMemManger* mm, u8* in, i32* inByte)
+{
+    // ALGO_PRINT();
+    u8* pIn = in;
+    i32 inByteMax = *inByte;
+    i32 inByteUsed = 0;
+    *inByte = 0;
+    ApeContext_t* context = &_context;
+    memset(context, 0, sizeof(ApeContext_t));
+    //search Head
+    while ((*(u32*)(&pIn[inByteUsed]) != *(u32*)"MAC "))
+    {
+        if (inByteUsed > (inByteMax - 4)) {
+            return APERET_FAIL;
+        }
+        inByteUsed++;
+    }
+
     //inbyte 
-    if ((inByteMax - inByteUsed)< GetPraseInBufferByte(&pIn[inByteUsed], inByteMax - inByteUsed))
+    if ((inByteMax - inByteUsed) < GetPraseInBufferByte(&pIn[inByteUsed], inByteMax - inByteUsed))
         return APERET_FAIL;
 
     ApeDescriptor* descriptor = &context->descriptor;
@@ -246,12 +170,12 @@ i32 Ape_StateInitWithBuffer(ApeDecoder* pDecIn, AlgoBasePorting* basePorting, u8
             inByteUsed += sizeof(ApeHeader);
 
         //seektable
-        context->seektable = (uint32_t*)Ape_Malloc(pDec,descriptor->seektablelength);
+        context->seektable = (uint32_t*)mm->Malloc(descriptor->seektablelength);
         ALGO_MEM_CPY(context->seektable, &pIn[inByteUsed], descriptor->seektablelength);
         inByteUsed += descriptor->seektablelength;
 
         //wav header        
-        context->waveHeader = Ape_Malloc(pDec,descriptor->wavheaderlength);
+        context->waveHeader = mm->Malloc(descriptor->wavheaderlength);
         ALGO_MEM_CPY(context->waveHeader, &pIn[inByteUsed], descriptor->wavheaderlength);
         inByteUsed += descriptor->wavheaderlength;
     }
@@ -270,7 +194,7 @@ i32 Ape_StateInitWithBuffer(ApeDecoder* pDecIn, AlgoBasePorting* basePorting, u8
         i32 nPeakLevel = -1;
         if (headerOld.nFormatFlags & APE_FORMAT_FLAG_HAS_PEAK_LEVEL)
         {
-            nPeakLevel = *((i32*)pIn); 
+            nPeakLevel = *((i32*)pIn);
             inByteUsed += 4;
         }
 #else
@@ -322,62 +246,25 @@ i32 Ape_StateInitWithBuffer(ApeDecoder* pDecIn, AlgoBasePorting* basePorting, u8
         {
             if (headerOld.nHeaderBytes > 1024 * 1024)
                 return APE_RET_INVALID_INPUT_FILE;
-            context->waveHeader = Ape_Malloc(pDec,headerOld.nHeaderBytes);
+            context->waveHeader = mm->Malloc(headerOld.nHeaderBytes);
             ALGO_MEM_CPY(context->waveHeader, &pIn[inByteUsed], headerOld.nHeaderBytes);
             inByteUsed += headerOld.nHeaderBytes;
         }
 
         // get the seek tables (really no reason to get the whole thing if there's extra)
-        context->seektable = (uint32_t*)Ape_Malloc(pDec,descriptor->seektablelength);
+        context->seektable = (uint32_t*)mm->Malloc(descriptor->seektablelength);
         ALGO_MEM_CPY(context->seektable, &pIn[inByteUsed], descriptor->seektablelength);
         inByteUsed += descriptor->seektablelength;
     }
 
+#if 0
     context->junklength = 0;
     context->firstframe = context->junklength + descriptor->descriptorlength
         + descriptor->headerlength + descriptor->seektablelength + descriptor->wavheaderlength;
     context->totalsamples = header->blocksperframe * (header->totalframes - 1) + header->finalframeblocks;
-
+#endif
 
     *inByte = inByteUsed;
-
-    if (pDecIn->mode == ApeMode::APE_MODE_DMUX)
-        return APERET_SUCCESS;
-    else
-    {
-        ApeContext contxtTemp = pDec->context;
-        return Ape_StateInitWithContext(pDec, basePorting, &contxtTemp);
-    }
 }
-
-
-
-
-i32 Ape_StateDeInitInner(ApeDecoder* pDecIn)
-{
-	ALGO_PRINT();
-
-    ApeDecoder* pDec = pDecIn;
-    for (i16 i = 0; i < sizeof(pDec->mallocPtr) / sizeof(pDec->mallocPtr[0]); i++)
-    {
-        if (pDec->mallocPtr[i] != 0)
-        {
-            Ape_Free(pDec, pDec->mallocPtr[i]);
-        }
-    }
-    pDecIn->isInited = false;
-	return APERET_SUCCESS;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 #endif
+

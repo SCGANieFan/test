@@ -2,8 +2,7 @@
 #include "MAFA.Ape.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-//#include "Ape.h"
-#include "ApeOri.h"
+#include "Ape.h"
 
 maf_void maf_ape_register()
 {
@@ -36,9 +35,9 @@ maf_int32 MAFA_Ape::Init()
 	basePorting->Free = (ALGO_Free_t)FreeLocal;
 	initParam.basePorting = basePorting;
 #endif
-	initParam.mode = ApeInitMode::APE_INIT_MODE_DEC_USE_NO_PARAM;
+	initParam.mode = ApeMode::APE_INIT_MODE_DEC;
 
-	_hdSize = Ape_GetStateSize();
+	_hdSize = Ape_GetSize(initParam.mode);
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
 	if (!_hd)
@@ -46,7 +45,7 @@ maf_int32 MAFA_Ape::Init()
 		return -1;
 	}
 
-	maf_int32 ret = Ape_StateInit(_hd, &initParam);
+	maf_int32 ret = Ape_Init(_hd, &initParam);
 	if (ret < 0)
 	{
 		return -1;
@@ -57,10 +56,9 @@ maf_int32 MAFA_Ape::Init()
 maf_int32 MAFA_Ape::Deinit()
 {
 	MAF_PRINT();
-	Ape_StateDeInit(_hd);
+	Ape_DeInit(_hd);
 	_memory.Free(_hd);
 	_memory.Free(_basePorting);
-
 	return 0;
 }
 
@@ -68,6 +66,11 @@ maf_int32 MAFA_Ape::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
 	maf_int32 ret;
 	maf_int32 outByte = dataOut->GetLeftSize();
+	if (dataIn->CheckFlag(MAFA_FRAME_IS_EOS))
+	{
+		void* param[] = { (void*)(maf_uint32)false };
+		Ape_Set(_hd, ApeSetChhoose_e::APESET_DEC_HAS_IN_CACHE, param);
+	}
 	ret = Ape_Run(_hd, dataIn->GetData(), dataIn->GetSize(), dataOut->GetLeftData(), &outByte);
 	if (ret < 0) {
 		return -1;

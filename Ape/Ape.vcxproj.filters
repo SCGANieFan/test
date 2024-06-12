@@ -13,61 +13,73 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApeTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.cpp">
       <Filter>maf</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeOri.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.decode.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.init.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.bufferread.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.entropy.cpp">
-      <Filter>lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.predictor.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.prediction.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rangeCoder.cpp">
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rollbuffer.cpp">
       <Filter>lib</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.context.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.decoder.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApeTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.h">
       <Filter>maf</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeOri.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.mem.manger.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.func.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.type.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.prediction.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rangeCoder.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rollbuffer.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.basic.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.bufferread.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.context.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.decoder.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.demuxer.h">
       <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>

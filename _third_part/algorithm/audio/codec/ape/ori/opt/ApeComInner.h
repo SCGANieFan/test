@@ -254,7 +254,7 @@ typedef struct {
     uint32_t totalsamples;
 
     /*how many bytes have been readed in bitStream*/
-    uint32_t bitStreamReadedIndex;
+    //uint32_t bitStreamReadedIndex;
 } ApeContext;
 
 //demuxer

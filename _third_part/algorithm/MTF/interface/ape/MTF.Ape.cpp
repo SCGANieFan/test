@@ -76,6 +76,7 @@ mtf_int32 MTF_Ape::Init()
 mtf_int32 MTF_Ape::receive(MTF_Data& iData)
 {
 	_iData.Append(iData.Data(), iData._size);
+	_iData._flags = iData._flags;
 	iData.Used(iData._size);
 	return 0;
 }
@@ -88,14 +89,9 @@ mtf_int32 MTF_Ape::generate(MTF_Data*& oData)
 	MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
 	AA_iData.buff = _iData.Data();
 	AA_iData.max = AA_iData.size = _iData._size;
-
+	if (_iData._flags & MTF_DataFlag_ESO)
+		AA_iData.flags = AA_DataFlag_FRAME_IS_EOS;
 	_frames++;
-	if (_frames % FRAMES_TOTAL > (FRAMES_TOTAL - FRAMES_LOST))
-	{
-		AA_iData.flags |= AA_DataFlag_FRAME_IS_EMPTY;
-	}
-	else
-		AA_iData.flags &= ~AA_DataFlag_FRAME_IS_EMPTY;
 
 	AA_Data AA_oData;
 	MTF_MEM_SET(&AA_oData, 0, sizeof(AA_Data));
@@ -106,6 +102,12 @@ mtf_int32 MTF_Ape::generate(MTF_Data*& oData)
 	_iData.Used(_iData._size);
 	_oData._size += AA_oData.size;
 
+	//exit check
+	if ((_iData._flags & MTF_DataFlag_ESO)
+		&& _oData._size <= 0)
+	{
+		return -1;
+	}
 	oData = &_oData;
 	return 0;
 }

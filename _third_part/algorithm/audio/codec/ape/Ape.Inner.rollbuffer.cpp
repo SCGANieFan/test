@@ -1,36 +1,26 @@
 #if 1
+#include"Ape.Inner.rollbuffer.h"
 
-#include"Algo.Printer.h"
-#include"ApeOri.h"
-#include"Ape.Inner.func.h"
-
-
-
-bool ApeRollBufferInit(ApeRollBuffer* rollBuffer, uint8_t* buffer, uint32_t bufferLen, uint32_t bufferLenRemMin)
+bool ApeRollBuffer::Init(uint8_t* buffer, uint32_t bufferLen, uint32_t bufferLenRemMin)
 {
-	rollBuffer->buffer = buffer;
-	rollBuffer->bufferLen = bufferLen;
-	rollBuffer->bufferLenRemMin = bufferLenRemMin;
-	rollBuffer->offset = 0;
-	rollBuffer->bufferLenRem = bufferLen;
+	this->buffer = buffer;
+	this->bufferLen = bufferLen;
+	this->bufferLenRemMin = bufferLenRemMin;
+	this->offset = 0;
+	this->bufferLenRem = bufferLen;
 	return true;
 }
 
-void ApeRollBufferIncrement(ApeRollBuffer* rollBuffer, uint32_t bytes)
+void ApeRollBuffer::Increment(uint32_t bytes)
 {
 #if 1
-	rollBuffer->offset += bytes;
-	rollBuffer->bufferLenRem -= bytes;
-	if (rollBuffer->bufferLenRem < rollBuffer->bufferLenRemMin)
+	offset += bytes;
+	bufferLenRem -= bytes;
+	if (bufferLenRem < bufferLenRemMin)
 	{
-		// for (uint32_t i = 0; i < rollBuffer->bufferLenRem; i++)
-		// {
-		// 	*(rollBuffer->buffer + i) = *(rollBuffer->buffer + i + rollBuffer->offset);
-		// }
-
-		memcpy(rollBuffer->buffer, rollBuffer->buffer + rollBuffer->offset, rollBuffer->bufferLenRem);
-		rollBuffer->offset = 0;
-		rollBuffer->bufferLenRem = rollBuffer->bufferLen;
+		memcpy(buffer, buffer + offset, bufferLenRem);
+		offset = 0;
+		bufferLenRem = bufferLen;
 	}
 #endif
 }

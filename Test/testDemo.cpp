@@ -9,6 +9,10 @@
 
 
 
+
+
+
+
 bool testDemo()
 {
 #if 0
@@ -17,7 +21,8 @@ bool testDemo()
 		printf("y[i]=%x\n", y[i]);
 	}
 #endif
-
+	//DeInterlace<int, int>();
+	//DeInterlace<int, int,1>();
 	return 0;
 }
 

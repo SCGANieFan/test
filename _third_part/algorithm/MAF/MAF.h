@@ -27,6 +27,7 @@ extern void maf_##name##_register();\
 #if 1
 typedef enum {
 	AA_DataFlag_FRAME_IS_EMPTY = 1 << 0,
+	AA_DataFlag_FRAME_IS_EOS = 2 << 0,
 }AA_DataFlag;
 #endif
 

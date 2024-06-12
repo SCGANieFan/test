@@ -49,15 +49,18 @@ mtf_int32 MTF_PcmDemuxer::Init()
 
 mtf_int32 MTF_PcmDemuxer::generate(MTF_Data*& oData)
 {
-	mtf_int32 readedSize = fread(_oData.LeftData(), 1, _oData.LeftSize(), (FILE*)_pFile);
-	if (readedSize <= 0)
+	if (!(_oData._flags & MTF_DataFlag_ESO))
 	{
+		mtf_int32 readedSize = fread(_oData.LeftData(), 1, _oData.LeftSize(), (FILE*)_pFile);
+		if (readedSize < _oData.LeftSize()) {
+			_oData._flags |= MTF_DataFlag_ESO;
+		}
+		_oData._size += readedSize;
 		if (_oData._size <= 0)
-			return -1;
-		_oData._flags &= MTF_DataFlag_ESO;
+			_oData._flags |= MTF_DataFlag_EMPTY;
+		oData = &_oData;
 	}
-	_oData._size += readedSize;
-	oData = &_oData;
+
 	return 0;
 }
 
