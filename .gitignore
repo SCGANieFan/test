@@ -1,6 +1,6 @@
 _lib/
 .vs/
-
+.vscode/
 debug/
 x86/
 x64/
