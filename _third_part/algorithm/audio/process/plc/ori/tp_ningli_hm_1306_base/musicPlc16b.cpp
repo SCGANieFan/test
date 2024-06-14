@@ -7,7 +7,7 @@
 #include"musicPlc16b.h"
 #include"musicPlcComInner.h"
 
-EXTERNC int32_t MusicPlc16bGetStateSize(int32_t overlapSamples, MusicPlcSampleParam* sampleParam)
+EXTERNC int32_t MusicPlc16bGetStateSize(int32_t overlapSamples, int32_t decayTimeSamples, MusicPlcSampleParam* sampleParam)
 {
 	//check
 	if (!sampleParam
@@ -20,11 +20,10 @@ EXTERNC int32_t MusicPlc16bGetStateSize(int32_t overlapSamples, MusicPlcSamplePa
 		return MUSIC_PLC_RET_FAIL;
 
 	int32_t buffSamples = MusicPlcGetBufSamples(overlapSamples, frameSamplesInner, sampleParam->frameSamples);
-	int32_t muteFactorSamples = MusicPlcGetMuteFactorSamples(sampleParam->frameSamples);
+	int32_t muteFactorSamples = MusicPlcGetMuteFactorSamples(decayTimeSamples);
 	int16_t width = sizeof(int16_t);
 	
 	return sizeof(MusicPlcState)
-		+ sizeof(AudioSamples16) * 4
 		+ (buffSamples * sampleParam->channels + muteFactorSamples) * width;
 		
 }
@@ -42,12 +41,7 @@ EXTERNC int32_t MusicPlc16bStateInit(void* pMusicPlcStateIn, int32_t overlapSamp
 	//
 	MusicPlcState* pPlc = (MusicPlcState*)pMusicPlcStateIn;	
 
-	memset(pPlc, 0, MusicPlc16bGetStateSize(overlapSamples, sampleParam));
-
-	pPlc->inHistory = new((uint8_t*)pPlc + sizeof(MusicPlcState)) AudioSamples16();
-	pPlc->infuture = new((uint8_t*)pPlc->inHistory + sizeof(AudioSamples16)) AudioSamples16();
-	pPlc->fillSignal = new((uint8_t*)pPlc->infuture + sizeof(AudioSamples16)) AudioSamples16();
-	pPlc->muteFactor = new((uint8_t*)pPlc->fillSignal + sizeof(AudioSamples16)) AudioSamples16();
+	memset((void*)pPlc, 0, MusicPlc16bGetStateSize(overlapSamples, decayTimeSamples, sampleParam));
 	return MusicPlcStateInitInner(pMusicPlcStateIn, overlapSamples, decayTimeSamples, sampleParam, sizeof(int16_t));
 }
 

@@ -76,6 +76,8 @@ mtf_int32 MTF_MusicPlc::Init()
 
 mtf_int32 MTF_MusicPlc::receive(MTF_Data& iData)
 {
+	if (iData._flags & MTF_DataFlag_ESO)
+		return -1;
 	_iData.Append(iData.Data(), iData._size);
 	iData.Used(iData._size);
 	return 0;

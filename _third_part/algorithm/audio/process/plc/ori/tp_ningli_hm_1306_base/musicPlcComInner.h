@@ -1,7 +1,7 @@
 #pragma once
 
 #include<stdint.h>
-#include"AudioSamples.h"
+#include"AudioSamples16.h"
 
 #if 0
 #define STATIC static
@@ -36,18 +36,16 @@ typedef struct
 	int32_t frameSamplesInner;
 	int32_t decaySamples;
 
-	AudioSamples* inHistory;
-	AudioSamples* infuture;
-	AudioSamples* fillSignal;
-	AudioSamples* muteFactor;
+	AudioSamples16 inHistory;
+	AudioSamples16 infuture;
+	AudioSamples16 fillSignal;
+	AudioSamples16 muteFactor;
 
 	int32_t decaySamplesNow;
+	int32_t decayDir;
 	int32_t fillSignalSampleIndex;
 	int32_t matchSamples;
 	int32_t seekSamples;
-	bool is24bL;
-	bool quickDeal;
-	uint8_t reserve[4];
 }MusicPlcState;
 
 
@@ -62,10 +60,10 @@ STATIC INLINE int32_t MusicPlcGetFutureSamples(int32_t frameSamples);
 
 STATIC INLINE int32_t MusicPlcGetBufSamples(int32_t overlapInSamples, int32_t frameSamplesInner, int32_t frameSamples);
 
-STATIC INLINE bool MusicPlcCheckParam(int32_t overlapMs, int32_t frameSamples,int16_t channels);
+STATIC INLINE bool MusicPlcCheckParam(int32_t overlapMs, int32_t frameSamples, int16_t channels);
 
 
 STATIC int32_t MusicPlcStateInitInner(void* pMusicPlcStateIn, int32_t overlapInSamples,
 	int32_t decayTimeMs, MusicPlcSampleParam* sampleParam, int16_t width);
 
-STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples* pIn, int32_t* inUsed, AudioSamples* pOut, int32_t* outLen, bool isLost);
+STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_t* inUsed, AudioSamples16* pOut, int32_t* outLen, bool isLost);

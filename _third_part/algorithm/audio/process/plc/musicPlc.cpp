@@ -164,19 +164,23 @@ EXTERNC {
 		
 		bufferSamples._samples = MusicPlcGetHistorySamples(pPlc->overlapInSamples, pPlc->frameSamplesInner);
 		bufferSamples._buf = (u8*)pPlc->basePorting->Malloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * pPlc->info._bytesPerSample);
 		pPlc->inHistory.Init(&pPlc->info, &bufferSamples);
 		pPlc->inHistory.Append(pPlc->inHistory, 0, pPlc->inHistory.GetSamplesMax());
 
 		bufferSamples._samples = MusicPlcGetFutureSamples(pPlc->frameSamples);
 		bufferSamples._buf = (u8*)pPlc->basePorting->Malloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * pPlc->info._bytesPerSample);
 		pPlc->infuture.Init(&pPlc->info, &bufferSamples);
 
 		bufferSamples._samples = MusicPlcGetFillSignalSamples(pPlc->inHistory.GetSamplesMax(), pPlc->overlapInSamples);
 		bufferSamples._buf = (u8*)pPlc->basePorting->Malloc(bufferSamples._samples * pPlc->info._bytesPerSample);
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * pPlc->info._bytesPerSample);
 		pPlc->fillSignal.Init(&pPlc->info, &bufferSamples);
 
 		bufferSamples._samples = MusicPlcGetMuteFactorSamples(pPlc->frameSamples);
 		bufferSamples._buf = (u8*)pPlc->basePorting->Malloc(bufferSamples._samples * pPlc->muteInfo._bytesPerSample);
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * pPlc->muteInfo._bytesPerSample);
 		pPlc->muteFactor.Init(&pPlc->muteInfo, &bufferSamples, 14);
 
 		pPlc->fillSignalSampleIndex = 0;
@@ -270,23 +274,12 @@ EXTERNC {
 			if (pMusicPlc->lostCount == 0
 				&& (pMusicPlc->overlapInSamples - pMusicPlc->overlapSamplesNow) == 0)
 			{
-				//infuture
 				if ((pMusicPlc->decaySamplesNow - 1) < 0)
 				{
 					//quickly Deal
-					if ((pMusicPlc->frameSamples - pMusicPlc->overlapInSamples) > 0)
-					{
-						pOut.Append(pMusicPlc->inHistory, pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples, pMusicPlc->overlapInSamples);
-						pOut.Append(pIn, 0, pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
-					}
-					else
-					{
-						pOut.Append(pMusicPlc->inHistory, pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples, pMusicPlc->frameSamples);
-					}
-
-					//shift
 					pMusicPlc->inHistory.Clear(pMusicPlc->frameSamples);
 					pMusicPlc->inHistory.Append(pIn, 0, pMusicPlc->frameSamples);
+					pOut.Append(pMusicPlc->inHistory, pMusicPlc->inHistory.GetSamplesMax() - pMusicPlc->overlapInSamples - pMusicPlc->frameSamples, pMusicPlc->frameSamples);
 					*outLen = pOut.GetValidSamples() * pMusicPlc->info._bytesPerSample;
 					return MUSIC_PLC_RET_SUCCESS;
 				}

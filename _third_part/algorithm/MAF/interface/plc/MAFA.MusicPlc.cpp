@@ -90,9 +90,11 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 		outByte= _frameSamples* _width *_ch;
 		MAF_MEM_SET(dataOut->GetLeftData(), 0, outByte);
 #endif
+		dataOut->Append(outByte);
 	}
 	else
 	{
+#if 0
 		ret = MusicPlc_Run(
 			_hd,
 			dataIn->GetData(),
@@ -100,6 +102,17 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 			dataOut->GetLeftData(),
 			&outByte,
 			false);
+		dataOut->Append(outByte);
+#else
+		dataOut->Append(dataIn->GetData(), dataIn->GetSize());
+		ret = MusicPlc_Run(
+			_hd,
+			dataOut->GetData(),
+			dataOut->GetSize(),
+			dataOut->GetData(),
+			&outByte,
+			false);
+#endif
 	}
 	if (ret < 0)
 	{
@@ -107,7 +120,6 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	}
 	dataIn->Used(dataIn->GetSize());
 	dataIn->ClearUsed();
-	dataOut->Append(outByte);
 	return 0;
 }
 
