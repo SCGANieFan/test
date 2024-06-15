@@ -12,18 +12,25 @@ public:
     i32 InitWithBuffer(AlgoBasePorting* basePorting, u8* in, i32* inByte)
     {
         MM.Init(basePorting);
-        context.InitWithBuffer(&MM, in, inByte);
-        return APERET_SUCCESS;
+        return context.InitWithBuffer(&MM, in, inByte);
     }
     i32 InitWithNoBuffer(AlgoBasePorting* basePorting)
     {
         MM.Init(basePorting);
         return APERET_SUCCESS;
     }
-    i32 Run(uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen)
+    i32 Run(uint8_t* in, int32_t inLen)
     {
         return APERET_SUCCESS;
     }
+
+    i32 DeInit()
+    {
+        ALGO_PRINT();
+        MM.FreeAll();
+        return APERET_SUCCESS;
+    }
+
 //private:
 public:
     ApeMemManger MM;

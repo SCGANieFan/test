@@ -17,31 +17,13 @@ MTF_WavMuxer::MTF_WavMuxer()
 
 MTF_WavMuxer::~MTF_WavMuxer()
 {
-
-	void* param[1];
-	param[0] = (void*)_rate;
-	MAF_Set(_hd, "rate", param);
-	param[0] = (void*)_ch;
-	MAF_Set(_hd, "ch", param);
-	param[0] = (void*)_width;
-	MAF_Set(_hd, "width", param);
-	param[0] = 0;
-	MAF_Set(_hd, "basicInfo", param);
-
-	param[0] = _head.Data();
-	MAF_Get(_hd, "headInfo", param);
-
 	fseek((FILE*)_pFile, 0, SEEK_SET);
+	MAF_Get(_hd, "headInfo", (void**)_head.Data());
 	fwrite(_head.Data(), _head._size, 1, (FILE*)_pFile);
 	if(_hd)
 		MTF_FREE(_hd);
 	if (_pFile)
 		fclose((FILE*)_pFile);
-	if (_iData.Data())
-	{
-		_iData.Used(_iData._size);
-		MTF_FREE(_iData.Data());
-	}
 	if (_oData.Data())
 	{
 		_oData.Used(_oData._size);
@@ -63,8 +45,7 @@ mtf_int32 MTF_WavMuxer::Init()
 		return -1;
 	}
 
-	mtf_int32 size = 1024;
-	_iData.Init((mtf_uint8*)MTF_MALLOC(size), size);
+	mtf_int32 size = 10* _frameBytes;
 	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
 	
 #if 1
@@ -92,14 +73,17 @@ mtf_int32 MTF_WavMuxer::Init()
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");
-	//void* param[1];
 	mtf_int32 headSize;
-	param[0] = &headSize;
-	MAF_Get(_hd, "headSize", param);
+	MAF_Get(_hd, "headSize", (void**)&headSize);
 	mtf_uint8* buf = (mtf_uint8*)MTF_MALLOC(headSize);
 	_head.Init(buf, headSize);
 	_head._size = headSize;
-	fwrite(_head.Data(), _head._size, 1, (FILE*)_pFile);
+	fseek((FILE*)_pFile, headSize, SEEK_SET);
+
+	MAF_Set(_hd, "rate", (void**)_rate);
+	MAF_Set(_hd, "ch", (void**)_ch);
+	MAF_Set(_hd, "width", (void**)_width);
+	MAF_Set(_hd, "basicInfo", 0);
 #endif
 #endif
 	return 0;

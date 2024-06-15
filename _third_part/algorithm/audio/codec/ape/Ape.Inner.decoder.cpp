@@ -16,12 +16,15 @@ STATIC INLINE APE_RET_t ApeDecoderStartFrame(void* decoder, uint8_t* in, uint32_
 	if (pDec->currentframe >= pDec->context.GetHeader()->totalframes)
 		return APE_RET_FINISH;
 	pDec->context.GetFrameInfoWithFrameNum(frame, pDec->currentframe);
-	
-	
-
 	pDec->bufferRead.SetBufferIn(pIn, inLen);
+	if (pDec->isNewFrameStart)
+	{
+		pDec->isNewFrameStart = false;
+		pDec->bufferRead.Read(frame->skip);
+	}
+
 	pDec->CRC = pDec->bufferRead.Read(4);
-	//printf("[%d] CRC:%x\n", pDec->currentframe, pDec->CRC);
+	//ALGO_PRINT("[%d] CRC:%x", pDec->currentframe, pDec->CRC);
 	pDec->frameFlags = 0;
 	if ((descriptor->fileversion > 3820)) {
 		if (pDec->CRC & 0x80000000)
@@ -171,6 +174,7 @@ void ApeDecodeOut(uint8_t* dst, int32_t dstByte, int32_t* src0, int32_t* src1, i
 	int32_t* pSrc0 = (int32_t*)src0;
 	int32_t* pSrc1 = (int32_t*)src1;
 	int16_t* pDst = (int16_t*)dst;
+	i8* pDst8 = (i8*)dst;
 	switch (srcValidByte)
 	{
 	case 1:
@@ -178,7 +182,7 @@ void ApeDecodeOut(uint8_t* dst, int32_t dstByte, int32_t* src0, int32_t* src1, i
 		{
 			for (int32_t i = 0; i < loopNum; i++)
 			{
-				*pDst++ = (int16_t)((*pSrc0++) << 8);
+				*pDst8++ = (i8)((*pSrc0++));
 			}
 		}
 		else
@@ -186,8 +190,8 @@ void ApeDecodeOut(uint8_t* dst, int32_t dstByte, int32_t* src0, int32_t* src1, i
 
 			for (int32_t i = 0; i < loopNum; i++)
 			{
-				*pDst++ = (int16_t)((*pSrc0++) << 8);
-				*pDst++ = (int16_t)((*pSrc1++) << 8);
+				*pDst8++ = (i8)((*pSrc0++));
+				*pDst8++ = (i8)((*pSrc1++));
 			}
 		}
 		break;
@@ -247,8 +251,9 @@ static APE_RET_t ApeDecodeBlocks(ApeDecoder* decoder, uint8_t* in, uint32_t inSi
 	{
 		ret = stereo_decoder_process(pDec, &pDec->blocksDecoded, &pDec->bufferRead);
 	}
+	
 	uint16_t sampleByteIn = header->bps >> 3;
-	uint16_t sampleByteOut = 16 >> 3;
+	uint16_t sampleByteOut = header->bps >> 3;
 	ApeDecodeOut(out, sampleByteOut, pDec->ch0, pDec->ch1, sampleByteIn, header->channels, pDec->blocksDecoded);
 	*inUsed = pDec->bufferRead.GetBufferUsed();
 	*outSize = header->channels * sampleByteOut * pDec->blocksDecoded;
@@ -304,6 +309,7 @@ STATIC i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 		if (num == 4754)
 			int a = 1;
 #endif
+
 		if (outLen < 1){
 			break;
 		}
@@ -321,7 +327,12 @@ STATIC i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 			}
 			pDec->blocksUsed = 0;
 			pDec->isFrameStart = true;
+			if (pDec->currentframe == pDec->context.GetHeader()->totalframes)
+			{
+				break;;
+			}
 		}
+
 	}
 	*outLen = outOffset;
 	return APE_RET_SUCCESS;
@@ -335,7 +346,8 @@ void ApeDecoder::StartNewFrame(u32 frameNum)
 	inCache.ClearUsed();
 	isFrameStart = true;
 	haveInCache = true;
-	currentframe = frameNum;	
+	isNewFrameStart = true;
+	currentframe = frameNum - 1;
 }
 
 
@@ -351,7 +363,6 @@ void ApeDecoder::InitCom()
 	fSet = context.GetCompressType() / 1000 - 1;
 	NNFilter.Init(&MM, fSet, context.GetFileVersion());
 	bufferRead.Init();
-	//blocksMax = APE_BLOCKS_MAX;
 	currentframe = 0;
 	Buffer buffer;
 	i32 size = 3 * 1024;
@@ -364,15 +375,7 @@ void ApeDecoder::InitCom()
 i32 ApeDecoder::InitWithContext(AlgoBasePorting* basePorting, ApeContext_t* contextIn)
 {
 	MM.Init(basePorting);
-	context.InitWithContext(contextIn);
-	InitCom();
-	return APERET_SUCCESS;
-}
-
-i32 ApeDecoder::InitWithBuffer(AlgoBasePorting* basePorting, u8* in, i32* inByte)
-{
-	MM.Init(basePorting);
-	context.InitWithBuffer(&MM, in, inByte);
+	context.InitWithContext(&MM, contextIn);
 	InitCom();
 	return APERET_SUCCESS;
 }

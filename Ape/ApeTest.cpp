@@ -26,47 +26,41 @@ char filenames[][50] = {
 	"demo3_96K2ch.ape",
 	"demo4_48k2ch.ape",
 	"demo5_48k1ch.ape",
-	"demo6_48k2ch8b.ape",
+	"demo6_48k1ch8b.ape",
 	"demo2_44p1k2ch.ape",
 	"Flower_Dance_44p1k2ch.wav.ape",
-#endif
 	"Inuyasha_48k2ch.wav.ape",
+#else
+	//"demo6_48k1ch8b.ape",
+	"Flower_Dance_44p1k2ch.wav.ape",
+#endif
 };
 
-#define RATE 48000
-#define CHANNEL 2
-#define WIDTH 2
-
-#define FRAME_MS 20
 
 void ApeTest()
 {
 	MultiemdiaTestInit();
 
-	MTF_REGISTER(pcm_demuxer);
-	MTF_REGISTER(ape);
-	MTF_REGISTER(pcm_muxer);
+	MTF_REGISTER(ape_demux);
+	MTF_REGISTER(ape_dec);
+	MTF_REGISTER(wav_muxer);
 
 	char fNameIn[256];
 	char fNameOut[256];
 	for (int i = 0; i < sizeof(filenames) / sizeof(filenames[0]);i++)
 	{
 		sprintf(fNameIn, "%s%s", PATH, filenames[i]);
-		sprintf(fNameOut, "%s.pcm", fNameIn);
+		sprintf(fNameOut, "%s.wav", fNameIn);
 
 		void* param[] = {
 			(void*)(fNameIn),
 			(void*)(fNameOut),
-			(void*)RATE,
-			(void*)CHANNEL,
-			(void*)WIDTH,
-			(void*)FRAME_MS,
 		};
 
 		const char* str = {
-		"|pcm_demuxer,url=$0,rate=$2,ch=$3,width=$4,fMs=$5|-->"
-		"|ape|-->"
-		"|pcm_muxer,url=$1|"
+		"|ape_demux,url=$0|-->"
+		"|ape_dec|-->"
+		"|wav_muxer,url=$1|"
 		};
 		MultiemdiaApi(str, param);
 	}

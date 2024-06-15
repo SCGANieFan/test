@@ -518,19 +518,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.context.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.decoder.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.prediction.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rangeCoder.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rollbuffer.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeDec.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeDemux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDec.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDemux.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDec.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDemux.cpp" />
     <ClCompile Include="ApeTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.basic.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.bufferread.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.context.h" />
@@ -541,8 +543,13 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.prediction.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rangeCoder.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rollbuffer.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.Ape.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.Ape.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeCom.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeDec.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeDemux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDec.h" />
+    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDemux.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDec.h" />
+    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDemux.h" />
     <ClInclude Include="ApeTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

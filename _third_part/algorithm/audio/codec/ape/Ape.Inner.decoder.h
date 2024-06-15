@@ -19,7 +19,7 @@ public:
     i32 Init(AlgoBasePorting* basePorting);
     void InitCom();
     i32 InitWithContext(AlgoBasePorting* basePorting, ApeContext_t* contextIn);
-    i32 InitWithBuffer(AlgoBasePorting* basePorting, u8* in, i32* inByte);
+    //i32 InitWithBuffer(AlgoBasePorting* basePorting, u8* in, i32* inByte);
     i32 Run(uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen);
     i32 DeInitInner();
 
@@ -59,4 +59,5 @@ public:
     Data inCache;
     b1 isFrameStart;
     b1 haveInCache;
+    b1 isNewFrameStart;
 };

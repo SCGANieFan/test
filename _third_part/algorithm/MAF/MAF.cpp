@@ -100,35 +100,42 @@ MA_Ret MAF_Deinit(void* hd)
 
 MA_Ret MAF_Set(void* hd, const char* key,void** val)
 {
-	((MAF_Algorithm*)hd)->Set(key, val[0]);
+	((MAF_Algorithm*)hd)->Set(key, (void*)val);
 	return MA_RET_SUCCESS;
 }
 
 MA_Ret MAF_Get(void* hd, const char* key,void** val)
 {
-	((MAF_Algorithm*)hd)->Get(key, val[0]);
+	((MAF_Algorithm*)hd)->Get(key, (void*)val);
 	return MA_RET_SUCCESS;
 }
 
 MA_Ret MAF_Run(void* hd, AA_Data * dataIn, AA_Data * dataOut)
 {
 	MAF_Data iData;
-	iData.Init(dataIn->buff + dataIn->off, dataIn->size);	
-	iData.SetFlag(dataIn->flags);
+	MAF_MEM_SET(&iData, 0, sizeof(MAF_Data));
+	if (dataIn){
+		iData.Init(dataIn->buff + dataIn->off, dataIn->size);
+		iData.SetFlag(dataIn->flags);
+	}
 		
 	MAF_Data oData;
-	oData.Init(dataOut->buff + dataOut->off + dataOut->size, 0, dataOut->max - dataOut->off - dataOut->size);
+	MAF_MEM_SET(&oData, 0, sizeof(MAF_Data));
+	if (dataOut){
+		oData.Init(dataOut->buff + dataOut->off + dataOut->size, 0, dataOut->max - dataOut->off - dataOut->size);
+	}
 
 	((MAF_Algorithm*)hd)->Process(&iData, &oData);
-	
-	int32_t used = dataIn->size - iData.GetSize();
-	dataIn->off += used;
-	dataIn->size -= used;
-	dataIn->flags = iData.GetFlags();
-
-	dataOut->size += oData.GetSize();
-	dataOut->flags = oData.GetFlags();
-
+	if (dataIn) {
+		int32_t used = dataIn->size - iData.GetSize();
+		dataIn->off += used;
+		dataIn->size -= used;
+		dataIn->flags = iData.GetFlags();
+	}
+	if (dataOut) {
+		dataOut->size += oData.GetSize();
+		dataOut->flags = oData.GetFlags();
+	}
 	return MA_RET_SUCCESS;
 }
 }

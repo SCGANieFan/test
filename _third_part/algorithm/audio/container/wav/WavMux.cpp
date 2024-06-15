@@ -99,7 +99,7 @@ EXTERNC {
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_Set(void* pStateIn, WavMux_SetChhoose_e choose, void** val)
+	int32_t WavMux_Set(void* pStateIn, WavMux_SetChhoose_e choose, void* val)
 	{
 		//check
 		if (!pStateIn
@@ -113,9 +113,9 @@ EXTERNC {
 		switch (choose)
 		{
 		case WAV_MUX_SET_CHOOSE_BASIC_INFO:
-			i32 rate = (i32)val[0];
-			i16 ch = (i16)val[1];
-			i16 widht = (i16)val[2];
+			i32 rate = (i32)((void**)val)[0];
+			i16 ch = (i16)((void**)val)[1];
+			i16 widht = (i16)((void**)val)[2];
 			pWavMux->head.fmt.numChannels = ch;
 			pWavMux->head.fmt.sampleRate = rate;
 			pWavMux->head.fmt.byteRate = ch * rate * widht;
@@ -129,7 +129,7 @@ EXTERNC {
 		return WAV_MUX_RET_SUCCESS;
 	}
 
-	int32_t WavMux_Get(void* pStateIn, WavMux_GetChhoose_e choose, void** val)
+	int32_t WavMux_Get(void* pStateIn, WavMux_GetChhoose_e choose, void* val)
 	{
 		//check
 		if (!pStateIn
@@ -144,10 +144,10 @@ EXTERNC {
 		{
 #if 1
 		case WAV_MUX_GET_CHOOSE_HEAD_SIZE:
-			*(u32*)val[0] = sizeof(WavHead);
+			*(u32*)val = sizeof(WavHead);
 			break;
 		case WAV_MUX_GET_CHOOSE_HEAD:
-			ALGO_MEM_CPY(val[0], &pWavMux->head, sizeof(WavHead));
+			ALGO_MEM_CPY(val, &pWavMux->head, sizeof(WavHead));
 			break;
 #endif
 		default:
@@ -168,7 +168,16 @@ EXTERNC {
 		pWavMux->head.data.chunkSize += inLen;
 		pWavMux->head.riff.chunkSize = pWavMux->head.data.chunkSize + sizeof(WavHead) - 8;
 		ALGO_MEM_CPY(out, in, inLen);
+		if (pWavMux->head.fmt.bitsPerSample == 8)
+		{
+			for (i32 i = 0; i < inLen; i++)
+			{
+				out[i] += 0x80;
+			}
+		}
+
 		*outLen = inLen;
+		
 		return WAV_MUX_RET_SUCCESS;
 	}
 

@@ -6,7 +6,7 @@
 #include<iostream>
 #include<string>
 //#include<vector>
-
+#include<assert.h>
 
 
 
@@ -23,6 +23,11 @@ bool testDemo()
 #endif
 	//DeInterlace<int, int>();
 	//DeInterlace<int, int,1>();
+	int a = 1;
+	assert(a == 1);
+	assert(a > 1);
+	assert(a < 1);
+
 	return 0;
 }
 

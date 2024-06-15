@@ -107,10 +107,10 @@ maf_int32 MAFA_WavMmux::Set(const maf_int8* key, maf_void* val)
 maf_int32 MAFA_WavMmux::Get(const maf_int8* key, maf_void* val)
 {
 	if (MAF_String::StrCompare(key, "headSize")) {
-		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD_SIZE, &val); return 0;
+		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD_SIZE, val); return 0;
 	}
 	else if (MAF_String::StrCompare(key, "headInfo")) {
-		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD, &val); return 0;
+		WavMux_Get(_hd, WAV_MUX_GET_CHOOSE_HEAD, val); return 0;
 	}
 	return MAF_Audio::Get(key, val);
 }

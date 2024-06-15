@@ -107,6 +107,50 @@ STATIC INLINE i32 GetPraseInBufferByte(u8* in, i32 inLen)
     return inByteUsed;
 }
 
+
+
+u32 ApeContext::GetStartPosFromFrame(u32 frame) {
+#if 0
+    ApeContext* pContext = ((ApeDemuxer*)demuxer)->context;
+
+    if (Pos < pContext->seektable[0])
+    {
+        info->pos = pContext->seektable[0];
+        info->FrameNum = 1;
+    }
+    else if (Pos > pContext->seektable[pContext->header.totalframes - 1])
+    {
+        info->pos = pContext->seektable[pContext->header.totalframes - 1];
+        info->FrameNum = pContext->header.totalframes;
+        return;
+    }
+    else
+    {
+        for (int f = 1; f < pContext->header.totalframes; f++)
+        {
+            if (Pos < pContext->seektable[f])
+            {
+                info->pos = pContext->seektable[f - 1];
+                info->FrameNum = f;
+                break;
+            }
+        }
+    }
+    int skip = (info->pos - pContext->seektable[0]) & 3;
+#if 0
+    if (skip)
+        info->pos += 4 - skip;
+#else
+    info->pos -= skip;
+#endif
+#endif
+
+    u32 pos = _context.seektable[frame - 1];
+    int skip = (pos - _context.seektable[0]) & 3;
+    pos -= skip;
+    return pos;
+}
+
 bool ApeContext::GetFrameInfoWithFrameNum(ApeFrameInfo* frame, u32 frameNum)
 {
     //check
@@ -114,16 +158,14 @@ bool ApeContext::GetFrameInfoWithFrameNum(ApeFrameInfo* frame, u32 frameNum)
 		return false;
     //pos
     frame->pos = _context.seektable[frameNum];
-    i32 skip = (frame->pos - _context.seektable[0]) & 3;
-	if (skip) {
-		frame->pos -= skip;
-	}
 
     //nblocks
     frame->nblocks = _context.header.blocksperframe;
     if (frameNum == (_context.header.totalframes - 1)) {
         frame->nblocks = _context.header.finalframeblocks;
     }
+
+    frame->skip = (frame->pos - _context.seektable[0])&3;
 	return true;
 }
 
@@ -265,6 +307,7 @@ i32 ApeContext::InitWithBuffer(ApeMemManger* mm, u8* in, i32* inByte)
 #endif
 
     *inByte = inByteUsed;
+    return APERET_SUCCESS;
 }
 #endif
 

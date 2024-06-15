@@ -6,6 +6,7 @@ typedef struct {
     i64 pos;
     i32 nblocks;
     //i32 size;
+    i32 skip;
 } ApeFrameInfo;
 
 typedef struct {
@@ -61,9 +62,16 @@ public:
     INLINE ApeDescriptor* GetDescriptor() { return &_context.descriptor; }
     INLINE u32* GetSeekTable() { return _context.seektable; }
     INLINE ApeContext_t* GetContext() { return &_context; }
+    u32 GetStartPosFromFrame(u32 frame);
 public:
     bool GetFrameInfoWithFrameNum(ApeFrameInfo* frame, u32 frameNum);
-    void InitWithContext(ApeContext_t *context){_context=*context;};
+    void InitWithContext(ApeMemManger* mm, ApeContext_t *context){
+        _context = *context;
+        _context.seektable = (uint32_t*)mm->Malloc(_context.descriptor.seektablelength);
+        ALGO_MEM_CPY(_context.seektable, context->seektable, _context.descriptor.seektablelength);
+        _context.waveHeader = (uint32_t*)mm->Malloc(_context.descriptor.wavheaderlength);
+        ALGO_MEM_CPY(_context.waveHeader, context->waveHeader, _context.descriptor.wavheaderlength);
+    };
     i32 InitWithBuffer(ApeMemManger* mm, u8* in, i32* inByte);
 private:
     ApeContext_t _context;

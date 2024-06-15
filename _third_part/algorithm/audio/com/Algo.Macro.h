@@ -1,4 +1,5 @@
 #pragma once
+#include <assert.h>
 
 namespace Algo {
 
@@ -19,6 +20,6 @@ namespace Algo {
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)>(b)?(b):(a))
 
-
+#define ALGO_ASSERT(s) assert(s)
 
 }

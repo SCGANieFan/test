@@ -38,7 +38,7 @@ typedef enum {
 
 EXTERNC int32_t WavMux_GetStateSize();
 EXTERNC int32_t WavMux_StateInit(void* pStateIn, WavMuxInitParam* paramIns);
-EXTERNC int32_t WavMux_Set(void* pStateIn, WavMux_SetChhoose_e choose, void** val);
-EXTERNC int32_t WavMux_Get(void* pStateIn, WavMux_GetChhoose_e choose, void** val);
+EXTERNC int32_t WavMux_Set(void* pStateIn, WavMux_SetChhoose_e choose, void* val);
+EXTERNC int32_t WavMux_Get(void* pStateIn, WavMux_GetChhoose_e choose, void* val);
 EXTERNC int32_t WavMux_Run(void* pStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen);
 EXTERNC int32_t WavMux_StateDeInit(void* pStateIn);

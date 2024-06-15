@@ -1,11 +1,11 @@
 #pragma once
 #include"MAF.Audio.h"
 
-class MAFA_Ape :public MAF_Audio
+class MAFA_ApeDemux :public MAF_Audio
 {
 public:
-	MAFA_Ape();
-	~MAFA_Ape();
+	MAFA_ApeDemux();
+	~MAFA_ApeDemux();
 public:
 	virtual maf_int32 Init() final;
 	virtual maf_int32 Deinit() final;

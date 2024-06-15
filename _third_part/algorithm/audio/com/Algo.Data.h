@@ -84,6 +84,10 @@ namespace Algo {
 		{
 			if (_off)
 			{
+				ALGO_ASSERT(_off > 0);
+				ALGO_ASSERT(_size > 0);
+				if (_size < 0)
+					int a1 = 1;
 				ALGO_MEM_MOVE(_buff, GetData(), _size);
 				_off = 0;
 			}

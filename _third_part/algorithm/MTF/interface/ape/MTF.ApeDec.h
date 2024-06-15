@@ -1,10 +1,10 @@
 #pragma once
 #include"MTF.AudioProcess.h"
-class MTF_Ape :public MTF_AudioProcess
+class MTF_ApeDec :public MTF_AudioProcess
 {
 public:
-	MTF_Ape();
-	~MTF_Ape();
+	MTF_ApeDec();
+	~MTF_ApeDec();
 protected:
 	virtual mtf_int32 Init() final;
 	virtual mtf_int32 receive(MTF_Data& iData) final;

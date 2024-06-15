@@ -121,7 +121,7 @@ maf_int32 MAF_Data::Used(maf_int32 size)
 
 maf_bool MAF_Data::CheckFlag(maf_uint32 flag)
 {
-	return (maf_bool)(_flags &= flag);
+	return (maf_bool)(_flags & flag);
 }
 
 maf_int32 MAF_Data::ClearFlag(maf_uint32 flag)
