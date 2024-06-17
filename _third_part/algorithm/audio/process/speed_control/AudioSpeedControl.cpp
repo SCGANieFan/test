@@ -83,6 +83,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pIn->GetUsedSamples() + bestLag,
         pState->overlapSamples);
 #else
+#if 0
     pState->funcList->OverlapAdd(
         pState->tmpBuf.GetBufInSample(0),
         pState->tmpBuf.GetBufInSample(0),
@@ -91,7 +92,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         0,
         pState->overlapSamples,
         pState->overlapSamples);
-    
+#endif
         
 #endif
     pOut->Append(

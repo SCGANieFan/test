@@ -20,8 +20,8 @@
 #define DECAY_MS 50
 #define OVERLAP_MS 2
 #endif
-#else
 
+#else
 #if 0
 #define FILE_NAME "sin1k_48k1ch24b.pcm"
 #define RATE 48000
@@ -38,9 +38,10 @@
 #define WIDTH 2
 #define FRAME_MS 2
 #define DECAY_MS 30
-#define OVERLAP_MS 2
+#define OVERLAP_MS 4
 #endif
 #endif
+
 void PlcTest()
 {
 	MultiemdiaTestInit();

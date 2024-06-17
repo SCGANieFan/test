@@ -111,7 +111,9 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_
 				pMusicPlc->infuture.Append(&(pMusicPlc->fillSignal)[pMusicPlc->fillSignalSampleIndex], 1);
 				pMusicPlc->fillSignalSampleIndex = (pMusicPlc->fillSignalSampleIndex + 1) % pMusicPlc->fillSignal.GetValidSamples();
 			}
+#if 1
 			pMusicPlc->infuture.OverlapAdd(&(*pIn)[0], pMusicPlc->overlapInSamples);
+#endif
 			pMusicPlc->infuture.Append(&(*pIn)[pMusicPlc->overlapInSamples], pMusicPlc->frameSamples - pMusicPlc->overlapInSamples);
 			pMusicPlc->infuture.Append(&(*pIn)[0], pMusicPlc->frameSamples);
 		}
@@ -144,7 +146,7 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_
 		if (pMusicPlc->lostCount == 1)
 		{
 			pMusicPlc->decaySamplesNow = 0;
-#if 0
+#if 1
 			int32_t bestLag = pMusicPlc->inHistory.WaveFormMatch(
 				&(pMusicPlc->inHistory)[pMusicPlc->inHistory.GetSamples() - pMusicPlc->overlapInSamples],
 				pMusicPlc->seekSamples,
@@ -154,10 +156,11 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_
 			int32_t bestLag = 0;
 #endif
 			//overlap add
+#if 1
 			pMusicPlc->inHistory.OverlapAdd(
 				&(pMusicPlc->inHistory)[bestLag],
 				pMusicPlc->overlapInSamples);
-
+#endif
 			//fill signal
 			pMusicPlc->fillSignal.Clear();
 			pMusicPlc->fillSignal.Append(
@@ -179,6 +182,7 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_
 	}
 
 	//muting
+#if 1
 	if (muteMode == MUTE_MODE_DOMUTE)
 	{
 		pMusicPlc->infuture.ProductWithEverySamlpe(pMusicPlc->muteFactor, pMusicPlc->decaySamplesNow, pMusicPlc->decayDir, pMusicPlc->frameSamples);
@@ -197,6 +201,7 @@ STATIC int32_t MusicPlcRun(MusicPlcState* pMusicPlc, AudioSamples16* pIn, int32_
 	{
 		memset(&(pMusicPlc->infuture)[0], 0, pMusicPlc->infuture.GetSizeInByte());
 	}
+#endif
 
 	//out
 	if (outLen)

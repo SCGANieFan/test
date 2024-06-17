@@ -216,8 +216,8 @@ public:
 		return true;
 	}
 	inline int16_t WaveFormMatch(uint8_t* comp, int32_t seekSample, int32_t matchSample){
-		int32_t matchFactor = 0;
-		int32_t matchFactorOpt = 0;
+		int64_t matchFactor = 0;
+		int64_t matchFactorOpt = 0;
 		int16_t lagOpt = 0;
 
 		int16_t* pTempl = (int16_t*)_buff;
@@ -227,7 +227,7 @@ public:
 			matchFactor = 0;
 			for (int16_t m = 0; m < matchSample; m++) {
 				for (int16_t ch = 0; ch < _channels; ch++) {
-					matchFactor += ((int32_t)pTempl[m * _channels + ch] * pComp[(s + m) * _channels + ch]) >> 8;
+					matchFactor += ((int32_t)pTempl[(s + m) * _channels + ch] * pComp[m * _channels + ch]) >> 8;
 				}
 			}
 			if (matchFactorOpt < matchFactor)

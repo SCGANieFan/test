@@ -7,16 +7,22 @@ using namespace Audio;
 template<class Ti, class To>
 class Algo_OverlapAdd {
 public:
-	STATIC INLINE b1 OverlapAdd(void* dst, void* srcRise, void* srcDecline, const i16 channels, const i32 startOverlapSample, const i32 endOverlapSample, const i32 overlapSample) {
+	STATIC INLINE b1 OverlapAdd(void* dst, void* srcDecline, void* srcRise, const i16 channels, i32* factor, const i32 startOverlapSample, const i32 endOverlapSample,i32 overlapSample){
 		const i32 fixNum = 15;
-		i32 factor;
+		//i32 factor;
 		Ti* pSrcRise = (Ti*)srcRise;
 		Ti* pSrcDecline = (Ti*)srcDecline;
 		To* pDst = (To*)dst;
 		for (i32 s = startOverlapSample; s < endOverlapSample; s++) {
-			factor = ((i32)s << fixNum) / overlapSample;
+			//factor = ((i32)s << fixNum) / overlapSample;
 			for (i16 ch = 0; ch < channels; ch++) {
+				//*pDst = (To)((((i64)(*pSrcRise) * factor + (i64)(*pSrcDecline) * ((i32)1 << fixNum) - factor)) >> fixNum);
+#if 0
 				*pDst = (To)(((i64)(*pSrcRise) * (((i32)1 << fixNum) - factor) + (i64)(*pSrcDecline) * factor) >> fixNum);
+#else
+				//* pDst = (To)(((i64)(*pSrcRise) * factor + (i64)(*pSrcDecline) * (((i32)1 << fixNum) - factor)) >> fixNum);
+				* pDst = (To)(((i64)(*pSrcRise) * factor[overlapSample-s-1] + (i64)(*pSrcDecline) * factor[s]) >> fixNum);
+#endif
 				pDst++;
 				pSrcRise++;
 				pSrcDecline++;

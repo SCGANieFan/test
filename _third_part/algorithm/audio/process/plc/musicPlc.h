@@ -16,8 +16,8 @@ typedef struct
 	int16_t channels;
 	int16_t width;
 	int16_t frameSamples;
-	int32_t overlapUs;
-	int32_t decayTimeUs;
+	int32_t overlapSamples;
+	int32_t decaySamples;
 }MusicPlcInitParam;
 
 

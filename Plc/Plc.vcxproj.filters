@@ -34,5 +34,23 @@
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.h">
       <Filter>maf</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcMem.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcInner.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcMuter.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcFillSignal.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcOverlap.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcWaveFormatMatch.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -39,8 +39,8 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.channels = _ch;
 	initParam.width = _width;
 	initParam.frameSamples = _frameSamples;
-	initParam.overlapUs = _overlapMs * 1000;
-	initParam.decayTimeUs = _decayMs * 1000;
+	initParam.overlapSamples = _overlapMs * _rate / 1000;
+	initParam.decaySamples = _decayMs * _rate / 1000;
 
 	_hdSize = MusicPlc_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);

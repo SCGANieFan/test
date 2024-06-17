@@ -11,8 +11,8 @@
 #define INLINE
 #endif
 
-#define MUSIC_PLC_MIN_FRAME_MS 10
-#define MUSIC_PLC_SEEK_MS_DEFAULT 2
+#define MUSIC_PLC_MIN_FRAME_MS 12
+#define MUSIC_PLC_SEEK_MS_DEFAULT 4
 #define MUSIC_PLC_MATCH_MS_DEFAULT 2
 
 #define MAX(x1,x2) ((x1)>(x2)?(x1):(x2))

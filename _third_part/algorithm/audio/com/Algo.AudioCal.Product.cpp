@@ -7,16 +7,30 @@ using namespace Audio;
 template<class Ti, class Tx, class To = i32>
 class Algo_Product {
 public:
-	STATIC INLINE b1 ProductWidFixedPoint(void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum) {
+	STATIC INLINE b1 ProductWidFixedPoint(void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum, i8 dir) {
 		Ti* pSrc = (Ti*)src;
 		Tx* pFac = (Tx*)fac;
-		for (i32 s = 0; s < productSample; s++) {
-			for (i8 ch = 0; ch < channels; ch++) {
-				*pSrc = (Ti)((((i64)(*pSrc)) * *pFac) >> facFpNum);
-				pSrc++;
+		if (dir > 0)
+		{
+			for (i32 s = 0; s < productSample; s++) {
+				for (i8 ch = 0; ch < channels; ch++) {
+					*pSrc = (Ti)((((i64)(*pSrc)) * *pFac) >> facFpNum);
+					pSrc++;
+				}
+				pFac++;
 			}
-			pFac++;
 		}
+		else
+		{
+			for (i32 s = 0; s < productSample; s++) {
+				for (i8 ch = 0; ch < channels; ch++) {
+					*pSrc = (Ti)((((i64)(*pSrc)) * *pFac) >> facFpNum);
+					pSrc++;
+				}
+				pFac--;
+			}
+		}
+		
 		return true;
 	}
 

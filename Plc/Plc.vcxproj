@@ -532,6 +532,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcFillSignal.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcInner.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcMem.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcMuter.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcOverlap.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcWaveFormatMatch.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.h" />
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h" />
     <ClInclude Include="PlcTest.h" />
