@@ -126,6 +126,7 @@ MA_Ret MAF_Run(void* hd, AA_Data * dataIn, AA_Data * dataOut)
 	}
 
 	((MAF_Algorithm*)hd)->Process(&iData, &oData);
+
 	if (dataIn) {
 		int32_t used = dataIn->size - iData.GetSize();
 		dataIn->off += used;

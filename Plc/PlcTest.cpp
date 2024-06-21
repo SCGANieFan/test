@@ -46,13 +46,13 @@ void PlcTest()
 {
 	MultiemdiaTestInit();
 
-	MTF_REGISTER(pcm_demuxer);
+	MTF_REGISTER(wav_demuxer);
 	MTF_REGISTER(music_plc);
-	MTF_REGISTER(pcm_muxer);
+	MTF_REGISTER(wav_muxer);
 
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
-		(void*)(PATH FILE_NAME ".plc.pcm"),
+		(void*)(PATH FILE_NAME ".plc.wav"),
 		(void*)RATE,
 		(void*)CHANNEL,
 		(void*)WIDTH,
@@ -60,12 +60,19 @@ void PlcTest()
 		(void*)DECAY_MS,
 		(void*)OVERLAP_MS,
 	};
-
+#if 0
 	const char* str = {
-	"|pcm_demuxer,url=$0,rate=$2,ch=$3,width=$4,fMs=$5|-->"
+	"|wav_demuxer,url=$0,rate=$2,ch=$3,width=$4,fMs=$5|-->"
 	"|music_plc,decayMs=$6,overlapMs=$7|-->"
-	"|pcm_muxer,url=$1|"
+	"|wav_muxer,url=$1|"
 	};
+#else
+	const char* str = {
+	"|wav_demuxer,url=$0,fMs=$5|-->"
+	"|music_plc,decayMs=$6,overlapMs=$7|-->"
+	"|wav_muxer,url=$1|"
+	};
+#endif
 
 	MultiemdiaApi(str, param);
 }

@@ -19,17 +19,16 @@ MTF_WavDemuxer ::~MTF_WavDemuxer ()
 {
 	if (_pFile)
 		fclose((FILE*)_pFile);
-	if (_iData.Data())
-	{
-		_iData.Used(_iData._size);
-		MTF_FREE(_iData.Data());
-	}
 	if (_oData.Data())
 	{
 		_oData.Used(_oData._size);
 		MTF_FREE(_oData.Data());
 	}
-	
+	if (_hd)
+	{
+		MAF_Deinit(_hd);
+		MTF_FREE(_hd);
+	}
 }
 
 mtf_int32 MTF_WavDemuxer::Init()
@@ -44,10 +43,6 @@ mtf_int32 MTF_WavDemuxer::Init()
 		MTF_PRINT("error, no such file:%s", _url);
 		return -1;
 	}
-	//mtf_int32 size = _frameBytes;
-	mtf_int32 size = 1024;
-	_iData.Init((mtf_uint8*)MTF_MALLOC(size), size);
-	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
 	
 #if 1
 	const mtf_int8* type = "wav_demux";
@@ -76,6 +71,49 @@ mtf_int32 MTF_WavDemuxer::Init()
 		MTF_PRINT("err");
 
 #endif
+
+#if 1
+	const mtf_int32 readDataByte = 1024;
+	mtf_uint8 readData[readDataByte];
+	while (1){
+		mtf_int32 readedSize = fread(readData, 1, readDataByte, (FILE*)_pFile);
+		if (readedSize <= 0)
+			return -1;
+
+		AA_Data AA_iData;
+		MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
+		AA_iData.buff = readData;
+		AA_iData.max = AA_iData.size = readDataByte;
+
+		MAF_Run(_hd, &AA_iData, 0);
+
+		mtf_uint32 hasHead;
+		MAF_Get(_hd, "hasHead", (void**)&hasHead);
+		if ((mtf_bool)hasHead == true){
+			mtf_uint32 rate;
+			mtf_uint32 ch;
+			mtf_uint32 width;
+			mtf_uint32 dataPos;
+
+			MAF_Get(_hd, "rate", (void**)&rate);
+			MAF_Get(_hd, "ch", (void**)&ch);
+			MAF_Get(_hd, "width", (void**)&width);
+			MAF_Get(_hd, "dataPos", (void**)&dataPos);
+
+			Set("rate", (void*)rate);
+			Set("ch", (void*)ch);
+			Set("width", (void*)width);
+
+			fseek((FILE*)_pFile, dataPos, SEEK_SET);
+			break;
+		}
+	}
+
+#endif
+	mtf_int32 size = 1024;
+	if (_frameBytes)
+		size = _frameBytes;
+	_oData.Init((mtf_uint8*)MTF_MALLOC(size), size);
 #endif
 	return 0;
 }
@@ -84,63 +122,17 @@ mtf_int32 MTF_WavDemuxer::Init()
 mtf_int32 MTF_WavDemuxer::generate(MTF_Data*& oData)
 {
 #if 1
-	mtf_int32 readedSize = fread(_iData.LeftData(), 1, _iData.LeftSize(), (FILE*)_pFile);
-	if (readedSize <= 0)
-	{
-		if (_iData._size <= 0)
-			return -1;
-		_iData._flags &= MTF_DataFlag_ESO;
+	mtf_int32 readedSize = fread(_oData.LeftData(), 1, _oData.LeftSize(), (FILE*)_pFile);
+	if (readedSize <= 0){
+		if (_oData._size <= 0)
+			_oData._flags |= MTF_DataFlag_EMPTY;
+		_oData._flags |= MTF_DataFlag_ESO;
 	}
-	_iData._size += readedSize;
-#if 0
-	oData = &_iData;
-	return 0;
-#endif
-#endif
-#if 1
-	AA_Data AA_iData;
-	MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
-	AA_iData.buff = _iData.Data();
-	AA_iData.max = AA_iData.size = _iData._size;
-
-	
-	AA_Data AA_oData;
-	MTF_MEM_SET(&AA_oData, 0, sizeof(AA_Data));
-	AA_oData.buff = _oData.LeftData();
-	AA_oData.max = _oData.LeftSize();
-
-	MAF_Run(_hd, &AA_iData, &AA_oData);
-
-
-	
-	mtf_uint32 hasHead;
-	void* param[1] = { &hasHead };
-	MAF_Get(_hd, "hasHead", param);
-	if (hasHead>0)
-	{
-		mtf_uint32 rate;
-		param[0] = &rate;
-		MAF_Get(_hd, "rate", param);
-		Set("rate", (void*)rate);
-
-		mtf_uint32 ch;
-		param[0] = &ch;
-		MAF_Get(_hd, "ch", param);
-		Set("ch", (void*)ch);
-
-		mtf_uint32 width;
-		param[0] = &width;
-		MAF_Get(_hd, "width", param);
-		Set("width", (void*)width);
-	}
-
-	_iData.Used(_iData._size);
-	_oData._size += AA_oData.size;
-
+	_oData._size += readedSize;
 	oData = &_oData;
 	return 0;
 #endif
-	return 0;
+
 }
 
 

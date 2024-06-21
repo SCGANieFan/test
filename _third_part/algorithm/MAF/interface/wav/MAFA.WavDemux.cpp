@@ -45,7 +45,7 @@ maf_int32 MAFA_WavDemux::Init()
 #endif
 #endif
 
-	_hdSize = WavDemux_GetStateSize();
+	_hdSize = WavDemux_GetSize();
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
 	if (!_hd)
@@ -53,7 +53,7 @@ maf_int32 MAFA_WavDemux::Init()
 		return -1;
 	}
 
-	maf_int32 ret = WavDemux_StateInit(_hd, &initParam);
+	maf_int32 ret = WavDemux_Init(_hd, &initParam);
 
 	if (ret < 0)
 	{
@@ -68,7 +68,7 @@ maf_int32 MAFA_WavDemux::Deinit()
 {
 	MAF_PRINT();
 #if 1
-	WavDemux_StateDeInit(_hd);
+	WavDemux_DeInit(_hd);
 	_memory.Free(_hd);
 	_memory.Free(_basePorting);
 #endif
@@ -82,9 +82,7 @@ maf_int32 MAFA_WavDemux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	maf_int32 outByte = dataOut->GetLeftSize();
 	ret = WavDemux_Run(_hd, 
 		dataIn->GetData(),
-		dataIn->GetSize(),
-		dataOut->GetLeftData(),
-		&outByte);
+		dataIn->GetSize());
 	if (ret < 0)
 	{
 		return -1;
@@ -130,6 +128,9 @@ maf_int32 MAFA_WavDemux::Get(const maf_int8* key, maf_void* val)
 			Set("width", (void*)width);
 		}
 		return 0;
+	}
+	else if (MAF_String::StrCompare(key, "dataPos")) {
+		WavDemux_Get(_hd, WAV_DEMUX_GET_CHOOSE_DATA_POS, (void **)val); return 0;
 	}
 #endif
 	return MAF_Audio::Get(key, val);

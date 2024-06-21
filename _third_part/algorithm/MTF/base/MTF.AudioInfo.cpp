@@ -23,7 +23,10 @@ mtf_int32 MTF_AudioInfo::Set(const mtf_int8* key, mtf_void* val)
 {
 	if (MTF_String::StrCompare(key, "rate")) {
 		_rate = (mtf_int32)val;
-		_frameSamples = _rate * _frameMs / 1000;
+		if (_frameMs)
+			_frameSamples = _rate * _frameMs / 1000;
+		else
+			_frameMs = _frameSamples * 1000 / _rate;
 		_frameBytes = _frameSamples * _width * _ch;
 		return 0;
 	}
@@ -35,7 +38,9 @@ mtf_int32 MTF_AudioInfo::Set(const mtf_int8* key, mtf_void* val)
 	}
 	else if (MTF_String::StrCompare(key, "fSamples")) {
 		_frameSamples = (mtf_int32)val;
-		_frameMs = _frameSamples * 1000 / _rate;
+		if (_rate){
+			_frameMs = _frameSamples * 1000 / _rate;
+		}
 		_frameBytes = _frameSamples * _width * _ch;
 		return 0;
 	}

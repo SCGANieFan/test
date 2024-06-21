@@ -518,8 +518,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Com.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Demuxer.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.HeadType.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Muxer.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\container\wav\WavDemux.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\WavDemuxInner.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\container\wav\WavMux.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\wav\MAFA.WavDemux.h" />
     <ClInclude Include="..\_third_part\algorithm\MAF\interface\wav\MAFA.WavMux.h" />
@@ -528,6 +531,8 @@
     <ClInclude Include="WavTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Demuxer.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Muxer.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\container\wav\WavDemux.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\container\wav\WavMux.cpp" />
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\wav\MAFA.WavDemux.cpp" />

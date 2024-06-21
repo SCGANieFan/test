@@ -1,9 +1,9 @@
 #pragma once
 
 #include"Algo.Type.h"
+#include"Algo.Macro.h"
 
 using namespace Algo;
-//using namespace Audio;
 
 typedef struct {
 	//ExpandFormatChunk, size = FmtChunk.chunkSize - 16
@@ -53,7 +53,7 @@ typedef struct {
 	//indicates the size of the sound infomation and contains the raw sound data
 	u32 subChunkId2;
 	u32 subChunkSize2;
-	
+
 	//data...
 }WavHead;
 #endif
@@ -100,3 +100,5 @@ typedef struct {
 	FactChunk* fact;
 	DataChunk data;
 }WavHead;
+
+

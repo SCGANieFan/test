@@ -19,10 +19,11 @@ void WavTest()
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
 		(void*)(PATH FILE_NAME ".wavtest.wav"),
+		(void*)(RATE * FRAME_MS / 1000),
 	};
 
 	const char* str = {
-	"|wav_demuxer,url=$0|-->"
+	"|wav_demuxer,url=$0,fSamples=$2|-->"
 	"|wav_muxer,url=$1|"
 	};
 

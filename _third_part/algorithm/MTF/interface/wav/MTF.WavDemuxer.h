@@ -17,7 +17,6 @@ private:
 	void* _pFile = 0;
 	const mtf_int8* _url = 0;
 private:
-	MTF_Data _iData;
 	MTF_Data _oData;
 private:
 	mtf_void* _hd = 0;

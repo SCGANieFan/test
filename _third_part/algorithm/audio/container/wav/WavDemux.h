@@ -12,7 +12,6 @@
 typedef struct
 {
 	AlgoBasePorting* basePorting;
-	int16_t frameSamples;
 }WavDemuxInitParam;
 
 
@@ -22,18 +21,14 @@ typedef enum {
 
 typedef enum {
 	WAV_DEMUX_GET_CHOOSE_HAS_HEAD=0,
-#if 0
-	WAV_DEMUX_GET_CHOOSE_RATE,
-	WAV_DEMUX_GET_CHOOSE_CH,
-	WAV_DEMUX_GET_CHOOSE_WIDTH,
-#endif
-	WAV_DEMUX_GET_CHOOSE_BASIC_INFO,
+	WAV_DEMUX_GET_CHOOSE_BASIC_INFO,//rate,ch,width
+	WAV_DEMUX_GET_CHOOSE_DATA_POS,
 	WAV_DEMUX_GET_CHOOSE_MAX,
 }WavDemux_GetChhoose_e;
 
-EXTERNC int32_t WavDemux_GetStateSize();
-EXTERNC int32_t WavDemux_StateInit(void* pStateIn, WavDemuxInitParam* paramIns);
+EXTERNC int32_t WavDemux_GetSize();
+EXTERNC int32_t WavDemux_Init(void* pStateIn, WavDemuxInitParam* paramIns);
 EXTERNC int32_t WavDemux_Set(void* pStateIn, WavDemux_SetChhoose_e choose, void** val);
 EXTERNC int32_t WavDemux_Get(void* pStateIn, WavDemux_GetChhoose_e choose, void** val);
-EXTERNC int32_t WavDemux_Run(void* pStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen);
-EXTERNC int32_t WavDemux_StateDeInit(void* pStateIn);
+EXTERNC int32_t WavDemux_Run(void* pStateIn, uint8_t* in, int32_t inLen);
+EXTERNC int32_t WavDemux_DeInit(void* pStateIn);

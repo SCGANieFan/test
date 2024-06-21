@@ -41,7 +41,7 @@ maf_int32 MAFA_WavMmux::Init()
 	initParam.channels = _ch;
 	initParam.width = _width;
 #endif
-	_hdSize = WavMux_GetStateSize();
+	_hdSize = WavMux_GetSize();
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
 	if (!_hd)
@@ -49,7 +49,7 @@ maf_int32 MAFA_WavMmux::Init()
 		return -1;
 	}
 
-	maf_int32 ret = WavMux_StateInit(_hd, &initParam);
+	maf_int32 ret = WavMux_Init(_hd, &initParam);
 
 	if (ret < 0)
 	{
@@ -64,7 +64,7 @@ maf_int32 MAFA_WavMmux::Deinit()
 {
 	MAF_PRINT();
 #if 1
-	WavMux_StateDeInit(_hd);
+	WavMux_DeInit(_hd);
 	_memory.Free(_hd);
 	_memory.Free(_basePorting);
 #endif
@@ -75,19 +75,20 @@ maf_int32 MAFA_WavMmux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
 #if 1
 	maf_int32 ret;
-	maf_int32 outByte = dataOut->GetLeftSize();
 	ret = WavMux_Run(_hd,
 		dataIn->GetData(),
 		dataIn->GetSize(),
-		dataOut->GetLeftData(),
-		&outByte);
+		0, 0);
+		
 	if (ret < 0)
 	{
 		return -1;
 	}
+#if 0
 	dataIn->Used(dataIn->GetSize());
 	dataIn->ClearUsed();
 	dataOut->Append(outByte);
+#endif
 	return 0;
 #endif
 	return 0;

@@ -34,7 +34,16 @@
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="WavTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\WavDemuxInner.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.HeadType.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Com.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Demuxer.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Muxer.h">
       <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,5 +67,11 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="WavTest.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Muxer.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\container\wav\Wav.Inner.Demuxer.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
