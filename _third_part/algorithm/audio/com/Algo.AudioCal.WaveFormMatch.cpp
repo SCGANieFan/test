@@ -1,11 +1,40 @@
-#include<math.h>
+#pragma once
 #include"Algo.AudioCal.WaveFormMatch.h"
+#include<math.h>
+#if 1
 
 using namespace Algo;
 using namespace Audio;
-#if 1
+
+WaveFormMatch_c::WAVE_FORM_MATCH_CB WaveFormMatch_c::GetFunc(FuncMode_e mode, i16 width) {
+	if (mode == FuncMode_e::SUM) {
+		if (width == 2) {
+			return WaveFormMatch_Sum<i16>;
+		}
+		else if (width == 3) {
+			return WaveFormMatch_Sum<i24>;
+		}
+		else if (width == 4) {
+			return WaveFormMatch_Sum<i32>;
+		}
+	}
+
+	else if (mode == FuncMode_e::ACCORELATION) {
+		if (width == 2) {
+			return WaveFormMatch_Accorelation<i16>;
+		}
+		else if (width == 3) {
+			return WaveFormMatch_Accorelation<i24>;
+		}
+		else if (width == 4) {
+			return WaveFormMatch_Accorelation<i32>;
+		}
+	}
+	return 0;
+}
+		
 template<class T>
-STATIC INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
+INLINE i64 WaveFormMatch_c::Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
 {
 	i64 matchFactor = 0;
 	for (i16 m = 0; m < matchSample; m++) {
@@ -18,21 +47,19 @@ STATIC INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSa
 	return matchFactor;
 }
 
-
 template<class T>
-STATIC INLINE i16 SumMatch_Local(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
-{
+i16 WaveFormMatch_c::WaveFormMatch_Sum(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample) {
 	i64 matchFactor = 0;
 	i64 matchFactorOpt = 0;
 	i16 lagOpt = 0;
-	auto pRef = ref;
-	auto pTemp = temp;
+	T* pRef = (T*)ref;
+	T* pCmp = (T*)cmp;
 	for (i16 s = 0; s < seekSample; s++) {
 		//get matchFactor
-		pRef = ref + s * channels;
-		pTemp = temp;
-		matchFactor = Sum(pRef, pTemp, channels, seekSample, matchSample);
-
+		//pRef = ref + s * channels;
+		pRef += channels;
+		//pCmp = cmp;
+		matchFactor = Sum(pRef, pCmp, channels, seekSample, matchSample);
 		//choose best matchFactor
 		if (matchFactorOpt < matchFactor) {
 			matchFactorOpt = matchFactor;
@@ -42,8 +69,9 @@ STATIC INLINE i16 SumMatch_Local(T* ref, T* temp, i16 channels, i32 seekSample, 
 	return lagOpt;
 }
 
+
 template<class T>
-STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 accorelationSamples, u64* normQ30)
+INLINE i32 WaveFormMatch_c::CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 accorelationSamples, u64* normQ30)
 {
 	i64 corrQ30;
 	i16 i;
@@ -70,14 +98,14 @@ STATIC INLINE i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 a
 	return (i32)((corrQ30 / ((u64)sqrt((*normQ30 < 1) ? 1 : *normQ30))) >> 5);
 #else
 	i64 t0 = (i64)sqrt((*normQ30 < 1) ? 1 : *normQ30);
-	i64 t1 = corrQ30/t0;
-	i64 t2 = t1>>5;
+	i64 t1 = corrQ30 / t0;
+	i64 t2 = t1 >> 5;
 	return (i32)t2;
 #endif
 }
 
 template<class T>
-STATIC INLINE i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelationSample, u64* normQ30)
+INLINE i32 WaveFormMatch_c::CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelationSample, u64* normQ30)
 {
 	i64 corrQ30;
 	u64 lnormQ30;
@@ -105,23 +133,25 @@ STATIC INLINE i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelati
 #endif
 }
 
+
 template<class T>
-STATIC INLINE i16 AccorelationMatch_Local(T* ref, T* temp, i16 channels, i32 seekSample, i32 accorrelationSample)
-{
+i16 WaveFormMatch_c::WaveFormMatch_Accorelation(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample) {
 	i16 lagOpt = 0;
 	u64 normQ30 = 0;
 	i32 bestCorrQ10 = 0;
-	auto pRef = ref;
-	auto pTemp = temp;
-	bestCorrQ10 = CrossCorr<T>(ref, pTemp, channels, accorrelationSample, &normQ30);
+	i32 accorrelationSample = matchSample;
+	T* pRef = (T*)ref;
+	T* pCmp = (T*)cmp;
+	bestCorrQ10 = CrossCorr<T>(pRef, pCmp, channels, accorrelationSample, &normQ30);
 	//start 1
 	for (i16 s = 1; s < seekSample; s++) {
 		//get matchFactor
-		pRef = ref + s * channels;
-		pTemp = temp;
+		//pRef = ref + s * channels;
+		pRef += channels;
+		//pCmp = cmp;
 
 		i32 corrQ10;
-		corrQ10 = CrossCorrAccumulate(pRef, pTemp, channels, accorrelationSample, &normQ30);
+		corrQ10 = CrossCorrAccumulate(pRef, pCmp, channels, accorrelationSample, &normQ30);
 		if (bestCorrQ10 < corrQ10) {
 			bestCorrQ10 = corrQ10;
 			lagOpt = s;
@@ -130,45 +160,7 @@ STATIC INLINE i16 AccorelationMatch_Local(T* ref, T* temp, i16 channels, i32 see
 	return lagOpt;
 }
 
-template<class T>
-i16 Algo_WaveFormMatch(Algo_WaveformMatchChoose_e mode, u8* ref, u8* cmp, i16 channels, i32 seekSample, i32 matchSample)
-{
-	T* pRef = (T*)ref;
-	T* pCmp = (T*)cmp;
-	switch (mode)
-	{
-	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM:
-		return SumMatch_Local<T>(pRef, pCmp, channels, seekSample, matchSample);
-		break;
-	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_ACCORELATION:
-		return AccorelationMatch_Local<T>(pRef, pCmp, channels, seekSample, matchSample);
-		break;
-	case Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_MAX:
-		break;
-	default:
-		break;
-	}
-}
+
+
 
 #endif
-
-
-
-EXTERNC ALGO_WAVE_FORM_MATCH_CB Algo::Audio::Get_Algo_WaveFormMatch(i16 width)
-{
-	if (width == 2)
-	{
-		return Algo_WaveFormMatch<i16>;
-	}
-	else if (width == 3)
-	{
-		return Algo_WaveFormMatch<i24>;
-	}
-	else if (width == 4)
-	{
-		return Algo_WaveFormMatch<i32>;
-	}
-	return 0;
-}
-
-

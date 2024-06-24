@@ -1,5 +1,4 @@
 #pragma once
-#include"MusicPlcMem.h"
 #include"Algo.AudioSamlpes.h"
 
 using namespace Algo;
@@ -12,7 +11,7 @@ public:
 	MusicPlcFillSignal_c() {};
 	~MusicPlcFillSignal_c() {};
 public:
-	INLINE void Init(MusicPlcMem_c* _MM,i32 fillSignalSample,AudioInfo *info) {
+	INLINE void Init(MemoryManger_c* _MM,i32 fillSignalSample,AudioInfo *info) {
 		BufferSamples bufferSamples;
 		bufferSamples._samples = fillSignalSample;
 		bufferSamples._buf = (u8*)_MM->Malloc(bufferSamples._samples * info->_bytesPerSample);
@@ -22,7 +21,6 @@ public:
 	}
 	INLINE void Input(AudioSamples& src, i32 srcSample, i32 appendSample)
 	{
-	
 		fillSignal.Clear(fillSignal.GetValidSamples());
 		fillSignal.Append(
 			src,

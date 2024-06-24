@@ -28,28 +28,22 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="MTF_demoTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.cpp">
-      <Filter>lib\audio</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp">
       <Filter>maf</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp">
       <Filter>lib\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
-      <Filter>lib\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioData.cpp">
-      <Filter>lib\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.cpp">
-      <Filter>lib\audio</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp">
       <Filter>lib\audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
       <Filter>lib\audio</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,6 +101,15 @@
       <Filter>lib\audio</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Com.h">
+      <Filter>lib\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.Inner.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.h">
+      <Filter>lib\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.BufferGenerator.h">
       <Filter>lib\audio</Filter>
     </ClInclude>
   </ItemGroup>

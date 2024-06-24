@@ -1,25 +1,64 @@
-#if 1
 #pragma once
+#if 1
 #include"Algo.AudioCal.Com.h"
 namespace Algo {
 	namespace Audio {
-#if 1
-		typedef enum {
-			AlgoShiftChoose_L = 0,
-			AlgoShiftChoose_R,
-		}AlgoShiftChoose_E;
-		typedef void (*ALGO_SHIFT_CB)(void* in, void* out, i32 samples, i8 shiftNum);
-		EXTERNC ALGO_SHIFT_CB Algo_GetShift(i8 iWidth, i8 oWidth, AlgoShiftChoose_E choose);
 
+#if 1	//shift
+		template<i16 dir, class Ti, class To, class Tx>
+		class Shift_c {
+		public:
+			Shift_c() {};
+			~Shift_c() {};
+		public:
+			STATIC INLINE To Shift(Ti in, i16 sht) {
+				if (dir == 1)
+					return (To)(((Tx)in) >> sht);
+				else if (dir == 1)
+					return (To)(((Tx)in) << sht);
+				else
+					return (To)(Tx)in;
+			}
+		};
+
+		template<class Ti, class To, class Tx>
+		class Shift_c<1,Ti,To, Tx> {
+		public:
+			Shift_c() {};
+			~Shift_c() {};
+		public:
+			STATIC INLINE To Shift(Ti in, i16 sht) {
+				return (To)(((Tx)in) >> sht);
+			}
+		};
+
+		template<class Ti, class To, class Tx>
+		class Shift_c<-1, Ti, To, Tx> {
+		public:
+			Shift_c() {};
+			~Shift_c() {};
+		public:
+			To Shift(Ti in, i16 sht) {
+				return (To)(((Tx)in) << sht);
+			}
+		};
+
+		template<class Ti, class To, class Tx>
+		class Shift_c<0, Ti, To, Tx> {
+		public:
+			Shift_c() {};
+			~Shift_c() {};
+		public:
+			STATIC INLINE To Shift(Ti in, i16 sht) {
+				return (To)(Tx)in;
+			}
+		};
 #endif
 
-#if 1
-		typedef b1(*ALGO_AppendInFixPoint_CB)(void* src, void* num, void* den, const i32 samples, const i8 channels, const i8 fpNum);
-		EXTERNC ALGO_AppendInFixPoint_CB Algo_GetAppendInFixedPoint(i8 iWidth, i8 fpWidth);
-#endif
 
 
-		
+
+
 }
 
 }

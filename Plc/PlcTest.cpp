@@ -1,8 +1,8 @@
 #include"MTF.h"
 #define PATH "../../source/audio/plc/"
 
-#if 0
 #if 1
+#if 0
 //#define FILE_NAME "chirp_sin_16k1ch.wav"
 #define FILE_NAME "stSection_16k1ch.wav"
 #define RATE 16000
@@ -52,11 +52,8 @@ void PlcTest()
 
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
-		(void*)(PATH FILE_NAME ".plc.wav"),
-		(void*)RATE,
-		(void*)CHANNEL,
-		(void*)WIDTH,
-		(void*)FRAME_MS,
+		(void*)(PATH FILE_NAME ".plc.wav"),		
+		(void*)(FRAME_MS),
 		(void*)DECAY_MS,
 		(void*)OVERLAP_MS,
 	};
@@ -68,8 +65,8 @@ void PlcTest()
 	};
 #else
 	const char* str = {
-	"|wav_demuxer,url=$0,fMs=$5|-->"
-	"|music_plc,decayMs=$6,overlapMs=$7|-->"
+	"|wav_demuxer,url=$0,fMs=$2|-->"
+	"|music_plc,decayMs=$3,overlapMs=$4|-->"
 	"|wav_muxer,url=$1|"
 	};
 #endif

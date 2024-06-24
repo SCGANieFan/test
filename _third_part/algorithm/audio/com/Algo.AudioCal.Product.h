@@ -4,25 +4,26 @@
 namespace Algo {
 	namespace Audio {
 
-#if 1
-		typedef b1(*ALGO_PRODUCT_WITH_FIXED_POINT_CB)(void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum, i8 dir);
-		EXTERNC ALGO_PRODUCT_WITH_FIXED_POINT_CB Algo_GetProductWithFixedPoint(i8 iWidth, i8 fpWidth);
-#endif
+		class Product_c
+		{
+		public:
+			enum class FuncMode_e {
+				PRODUCT_WITH_FIXED_POINT = 0,
+				PRODUCT_ADD_WITH_FIXED_POINT,
+			};
+			typedef b1(*PRODUCT_WITH_FIXED_POINT_CB)(void* dst, void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum, i8 facDir);
+		public:
+			Product_c() {};
+			~Product_c() {};
+		public:
+			STATIC PRODUCT_WITH_FIXED_POINT_CB GetFunc_FixedPoint(FuncMode_e mode, i16 iWidth, i16 fpWidth);
+		private:
+			template<class Ti, class To, class Tx>
+			STATIC b1 ProductWithFixedPoint(void* dst, void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum, i8 facDir);
 
-#if 1
-		typedef b1(*ALGO_DOT_PRODUCT_WITH_FIXED_POINT_CB)(void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum);
-		EXTERNC ALGO_DOT_PRODUCT_WITH_FIXED_POINT_CB Algo_GetDotProductWithFixedPoint(i8 iWidth, i8 fpWidth);
-#endif
-
-#if 1
-		typedef b1(*ALGO_PRODUCT_ADD_WITH_FIXED_POINT_CB)(void* dst, void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum);
-		EXTERNC ALGO_PRODUCT_ADD_WITH_FIXED_POINT_CB Algo_GetProductAddWithFixedPoint(i8 iWidth, i8 fpWidth, i8 oWidth);
-#endif
-
-#if 1
-		typedef b1(*ALGO_DOT_PRODUCT_ADD_WITH_FIXED_POINT_CB)(void* dst, void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum);
-		EXTERNC ALGO_DOT_PRODUCT_ADD_WITH_FIXED_POINT_CB Algo_GetDotProductAddWithFixedPoint(i8 iWidth, i8 fpWidth, i8 oWidth);
-#endif
+			template<class Ti, class To, class Tx>
+			STATIC b1 ProductAddWithFixedPoint(void* dst, void* src, void* fac, const i32 productSample, const i8 channels, const i8 facFpNum, i8 facDir);
+		};
 	}
 }
 

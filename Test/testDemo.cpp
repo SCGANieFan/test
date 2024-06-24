@@ -9,9 +9,12 @@
 #include<assert.h>
 
 
+void func(int a,int b)
+{
+	printf("%d\n", a);
+}
 
-
-
+#define FUNC(...) func(__VA_ARGS__);
 
 bool testDemo()
 {
@@ -21,13 +24,7 @@ bool testDemo()
 		printf("y[i]=%x\n", y[i]);
 	}
 #endif
-	//DeInterlace<int, int>();
-	//DeInterlace<int, int,1>();
-	int a = 1;
-	assert(a == 1);
-	assert(a > 1);
-	assert(a < 1);
-
+	FUNC(1,2);
 	return 0;
 }
 

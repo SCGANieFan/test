@@ -64,6 +64,7 @@
     "initializer_list": "cpp",
     "utility": "cpp",
     "*.tcc": "cpp",
-    "streambuf": "cpp"
+    "streambuf": "cpp",
+    "istream": "cpp"
   }
 }

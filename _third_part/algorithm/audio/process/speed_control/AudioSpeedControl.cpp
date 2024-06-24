@@ -7,8 +7,10 @@
 using namespace Algo;
 using namespace Audio;
 typedef struct {
+#if 0
     ALGO_OVERLAP_ADD_CB OverlapAdd;
     ALGO_WAVE_FORM_MATCH_CB WaveFormMatch;
+#endif
 }FuncList;
 
 typedef struct {
@@ -26,18 +28,24 @@ typedef struct {
 }ASC_State;
 
 static FuncList funcList16_g = {
+#if 0
     Algo_GetOverlapAdd(sizeof(i16),sizeof(i16)),    
     Get_Algo_WaveFormMatch(sizeof(i16)),
+#endif
 };
 
 static FuncList funcList24_g = {
+#if 0
     Algo_GetOverlapAdd(sizeof(i24),sizeof(i24)),
     Get_Algo_WaveFormMatch(sizeof(i24)),
+#endif
 };
 
 static FuncList funcList32_g = {
+#if 0
     Algo_GetOverlapAdd(sizeof(i32),sizeof(i32)),
     Get_Algo_WaveFormMatch(sizeof(i32)),
+#endif
 };
 
 STATIC INLINE int32_t AudioSpeedControl_InMinSamlpes(ASC_State* pState)
@@ -67,6 +75,7 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pState->seekSamples,
         pState->overlapSamples);
 #else
+#if 0
     bestLag = pState->funcList->WaveFormMatch(
         Algo_WaveformMatchChoose_e::ALGO_WAVEFORM_MATCH_SUM,
         pIn->GetBufInSample(pIn->GetUsedSamples()),
@@ -74,6 +83,9 @@ AudioSpeedControlRet AudioSpeedControl_RunInner(ASC_State* pState, AudioSamples*
         pIn->_info->_channels,
         pState->seekSamples,
         pState->overlapSamples);
+#else
+    bestLag = 0;
+#endif
 #endif
 #if 0
     pState->asCalculator.OverlapAdd(

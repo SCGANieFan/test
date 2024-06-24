@@ -14,7 +14,7 @@ namespace Algo {
 			AudioInfo() {};
 			~AudioInfo() {};
 		public:
-			b1 Init(i32 rate, i16 width, i16 channels) {
+			INLINE b1 Init(i32 rate, i16 width, i16 channels) {
 				_rate = rate;
 				_width = width;
 				_channels = channels;
@@ -28,15 +28,17 @@ namespace Algo {
 			i32 _bytesPerSample = 0;
 		};
 
-
-
 		class AudioData :protected Data
 		{
 		public:
 			AudioData() {};
 			~AudioData() {};
 		public:
-			b1 Init(const AudioInfo* pInfo, Buffer* buffer);
+			INLINE b1 Init(const AudioInfo* pInfo, Buffer* buffer) {
+				AudioData::Data::Init(buffer);
+				_info = pInfo;
+				return true;
+			}
 		public:
 			const AudioInfo* _info = 0;
 		};

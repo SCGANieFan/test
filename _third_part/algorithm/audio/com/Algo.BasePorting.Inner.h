@@ -1,15 +1,16 @@
 #pragma once
-#include"Algo.BasePorting.h"
 #include"Algo.Macro.h"
 #include"Algo.Type.h"
+#include"Algo.BasePorting.h"
 
-using namespace Algo;
 
-class MusicPlcMem_c
+namespace Algo{
+
+class MemoryManger_c
 {
 public:
-	MusicPlcMem_c() {};
-	~MusicPlcMem_c() {};
+	MemoryManger_c() {};
+	~MemoryManger_c() {};
 public:
 	INLINE void Init(AlgoBasePorting *basePorting) {
 		_basePorting = basePorting;
@@ -51,4 +52,14 @@ private:
 	AlgoBasePorting* _basePorting;
 	void* _allocList[10];
 };
+
+
+
+}
+
+
+
+
+
+
 

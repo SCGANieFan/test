@@ -33,8 +33,26 @@ namespace Algo {
 			INLINE b1 IsFull() { return GetValidSamples() == GetSamplesMax(); };
 
 			//
-			b1 Init(const AudioInfo* pInfo, Buffer* buffer, i16 fpNum = 0);
-			b1 Init(const AudioInfo* pInfo, BufferSamples* buffer, i16 fpNum = 0);
+			INLINE b1 Init(const AudioInfo* pInfo, Buffer* buffer, i16 fpNum = 0) {
+				_samples = buffer->_max / pInfo->_bytesPerSample;
+				_validSamples = 0;
+				_samplesTotal = _samples * pInfo->_channels;
+				_fpNum = fpNum;
+				return AudioData::Init(pInfo, buffer);
+			}
+
+			INLINE b1 Init(const AudioInfo* pInfo, BufferSamples* bufferSamples, i16 fpNum = 0) {
+				_samples = bufferSamples->_samples;
+				_validSamples = 0;
+				_samplesTotal = _samples * pInfo->_channels;
+				_fpNum = fpNum;
+
+				Buffer buffer;
+				buffer._buf = bufferSamples->_buf;
+				buffer._max = _samples * pInfo->_bytesPerSample;
+				return AudioData::Init(pInfo, &buffer);
+			}
+
 			INLINE b1 Append(AudioSamples& src, i32 srcSample, i32 appendSample) {
 				i32 copyByte = appendSample * _info->_bytesPerSample;
 				ALGO_MEM_CPY(GetLeftData(), src.GetBufInSample(srcSample), copyByte);

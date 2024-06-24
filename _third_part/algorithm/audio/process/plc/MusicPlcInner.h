@@ -1,14 +1,13 @@
 #pragma once
-#include"Algo.BasePorting.h"
+#include"Algo.BasePorting.Inner.h"
 #include"Algo.Macro.h"
 #include"Algo.Type.h"
 #include"Algo.AudioSamlpes.h"
-
-#include"MusicPlcMem.h"
-#include"MusicPlcMuter.h"
+#include"Algo.AudioCal.OverlapAdd.h"
+#include"Algo.AudioCal.Muter.h"
 #include"MusicPlcFillSignal.h"
-#include"MusicPlcOverlap.h"
-#include"MusicPlcWaveFormatMatch.h"
+//#include"MusicPlcWaveFormatMatch.h"
+#include"Algo.AudioCal.WaveFormMatch.h"
 #include"MusicPlc.h"
 
 using namespace Algo;
@@ -28,21 +27,21 @@ public:
 	void GoodFrame()
 	{
 		if (lostCount > 0){
-			overalpAdd.Start();
+			_overlapAdd.Start();
 			lostCount = 0;
-			muter.SetMuteAmplification();
+			muter.SetDir(Muter_c::DirChoose_e::AMPLIFICATION);
 		}
 
 		if (muter.IsMuteFinish()
-			&& overalpAdd.IsFinish()){
+			&& _overlapAdd.IsFinish()){
 			isQuickDeal = true;
 			return;
 		}
 		
 		//infuture
-		if (!overalpAdd.IsFinish()){
+		if (!_overlapAdd.IsFinish()){
 			fillSignal.Output(infuture, frameSamples);
-			overalpAdd.DoOverlapAdd(
+			_overlapAdd.DoOverlapAdd(
 				infuture.GetBufInSample(0),
 				infuture.GetBufInSample(0),
 				pIn.GetBufInSample(0),
@@ -57,9 +56,8 @@ public:
 		lostCount += 1;
 		if (lostCount == 1)
 		{
-			muter.SetMuteAttenuation();
 #if 1
-			i32 bestLag = waveFormMatch.DoWaveFormMatch(
+			i32 bestLag = _waveFormMatch.DoWaveFormMatch(
 				inHistory.GetBufInSample(0),
 				inHistory.GetBufInSample(inHistory.GetSamplesMax() - overlapSamples));
 #else		
@@ -67,8 +65,8 @@ public:
 #endif
 			//overlap add
 #if 1
-			overalpAdd.Start();
-			overalpAdd.DoOverlapAdd(
+			_overlapAdd.Start();
+			_overlapAdd.DoOverlapAdd(
 				inHistory.GetBufInSample(inHistory.GetSamplesMax() - overlapSamples),
 				inHistory.GetBufInSample(inHistory.GetSamplesMax() - overlapSamples),
 				inHistory.GetBufInSample(bestLag),
@@ -81,7 +79,7 @@ public:
 				inHistory.GetSamplesMax() - (bestLag + overlapSamples));
 
 			//state updata
-			muter.SetMuteStart();
+			muter.Reset(Muter_c::DirChoose_e::ATTENUATION);
 		}
 		//infuture
 		fillSignal.Output(infuture, infuture.GetSamplesMax());
@@ -117,12 +115,14 @@ public:
 		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * info._bytesPerSample);
 		infuture.Init(&info, &bufferSamples);
 		fillSignal.Init(&MM, inHistory.GetSamplesMax() - overlapSamples, &info);
-		muter.Init(&MM, decaySamplesIn, &info);
-		overalpAdd.Init(&MM, overlapSamples, &info);
-		waveFormMatch.Init(
+		muter.Init(&MM, &info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::AMPLIFICATION, decaySamplesIn);
+		_overlapAdd.Init(&MM,&info, OverlapAdd_c::WindowChoose::Line, overlapSamples);
+		_waveFormMatch.Init(
+			WaveFormMatch_c::FuncMode_e::ACCORELATION,
+			&info,
 			MUSIC_PLC_SEEK_MS_DEFAULT * info._rate / 1000,
-			MUSIC_PLC_MATCH_MS_DEFAULT * info._rate / 1000,
-			&info);
+			MUSIC_PLC_MATCH_MS_DEFAULT * info._rate / 1000);
+			
 		return MUSIC_PLC_RET_SUCCESS;
 	}
 	i32 DeInit() {
@@ -177,7 +177,7 @@ public:
 		return MUSIC_PLC_RET_SUCCESS;
 	}
 private:
-	MusicPlcMem_c MM;
+	MemoryManger_c MM;
 	AudioInfo info;
 	i32 frameSamples;
 	i32 lostCount;
@@ -187,11 +187,11 @@ private:
 	AudioSamples inHistory;
 	AudioSamples infuture;
 	MusicPlcFillSignal_c fillSignal;
-	MusicPlcMuter_c muter;
-	MusicPlcOverlap_c overalpAdd;
-	MusicPlcWaveFormMatch_c waveFormMatch;
+	Muter_c muter;
+	OverlapAdd_c _overlapAdd;
+	//MusicPlcWaveFormMatch_c waveFormMatch;
+	WaveFormMatch_c _waveFormMatch;
 	b1 isQuickDeal;
-private:
 
 };
 
