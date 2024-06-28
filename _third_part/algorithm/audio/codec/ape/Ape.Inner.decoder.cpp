@@ -15,7 +15,12 @@ STATIC INLINE APE_RET_t ApeDecoderStartFrame(void* decoder, uint8_t* in, uint32_
 
 	if (pDec->currentframe >= pDec->context.GetHeader()->totalframes)
 		return APE_RET_FINISH;
-	pDec->context.GetFrameInfoWithFrameNum(frame, pDec->currentframe);
+	//nblocks
+	frame->nblocks = pDec->context.GetHeader()->blocksperframe;
+	if (pDec->currentframe == (pDec->context.GetHeader()->totalframes- 1)) {
+		frame->nblocks = pDec->context.GetHeader()->finalframeblocks;
+	}
+	frame->skip = pDec->firstSkip;
 	pDec->bufferRead.SetBufferIn(pIn, inLen);
 	if (pDec->isNewFrameStart)
 	{
@@ -265,7 +270,7 @@ static APE_RET_t ApeDecodeBlocks(ApeDecoder* decoder, uint8_t* in, uint32_t inSi
 }
 
 static int num;
-STATIC i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen)
+STATIC INLINE i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen)
 {
 	ApeDecoder* pDec = pMusicPlcStateIn;
 	int32_t inOffset = 0;
@@ -293,7 +298,6 @@ STATIC i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 				break;
 			pDec->isFrameStart = false;
 			pDec->inCache.Used(bufferUsed);
-			//pDec->blocksMax = APE_BLOCKS_MAX;
 		}
 
 		pDec->blocksMax = pDec->frame.nblocks - pDec->blocksUsed;
@@ -338,45 +342,24 @@ STATIC i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t inLen, 
 	return APE_RET_SUCCESS;
 }
 
-
-void ApeDecoder::StartNewFrame(u32 frameNum)
+i32 ApeDecoder::Init(AlgoBasePorting* basePorting, ApeContext_t* contextIn, u32 startFrameNum, u32 skip)
 {
-	//clear in chache
-	inCache.Used(inCache.GetSize());
-	inCache.ClearUsed();
-	isFrameStart = true;
-	haveInCache = true;
-	isNewFrameStart = true;
-	currentframe = frameNum - 1;
-}
-
-
-i32 ApeDecoder::Init(AlgoBasePorting* basePorting) {
-	//ALGO_MEM_SET(this, 0, sizeof(ApeDecoder));
 	MM.Init(basePorting);
-	return APERET_SUCCESS;
-}
+	context.InitWithContext(&MM, contextIn);
 
-void ApeDecoder::InitCom()
-{
 	//clear NN Filter	
 	fSet = context.GetCompressType() / 1000 - 1;
 	NNFilter.Init(&MM, fSet, context.GetFileVersion());
 	bufferRead.Init();
-	currentframe = 0;
 	Buffer buffer;
 	i32 size = 3 * 1024;
 	buffer.Init((u8*)MM.Malloc(size), size);
 	inCache.Init(&buffer);
 	isFrameStart = true;
 	haveInCache = true;
-}
-
-i32 ApeDecoder::InitWithContext(AlgoBasePorting* basePorting, ApeContext_t* contextIn)
-{
-	MM.Init(basePorting);
-	context.InitWithContext(&MM, contextIn);
-	InitCom();
+	isNewFrameStart = true;
+	currentframe = startFrameNum - 1;
+	firstSkip = skip;
 	return APERET_SUCCESS;
 }
 

@@ -538,7 +538,6 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.context.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.decoder.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.demuxer.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.mem.manger.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.prediction.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.rangeCoder.h" />

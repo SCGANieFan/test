@@ -1,9 +1,9 @@
 #include"Ape.Inner.basic.h"
-#include"Ape.Inner.mem.manger.h"
 #include"Ape.Inner.context.h"
 #include"Ape.Inner.rangeCoder.h"
 #include"Ape.Inner.NNfilter.h"
 #include"Ape.Inner.prediction.h"
+#include"Algo.BasePorting.Inner.h"
 
 class ApeDecoder
 {
@@ -11,21 +11,16 @@ public:
     ApeDecoder() {};
     ~ApeDecoder() {};
 public:
-    ApeMemManger* GetMM() { return &MM; }
-public:
-    void StartNewFrame(u32 frameNum);
+    MemoryManger_c* GetMM() { return &MM; }
 
 public:
-    i32 Init(AlgoBasePorting* basePorting);
-    void InitCom();
-    i32 InitWithContext(AlgoBasePorting* basePorting, ApeContext_t* contextIn);
-    //i32 InitWithBuffer(AlgoBasePorting* basePorting, u8* in, i32* inByte);
+    i32 Init(AlgoBasePorting* basePorting, ApeContext_t* contextIn, u32 startFrameNum, u32 skip);
     i32 Run(uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen);
     i32 DeInitInner();
 
     //private:
 public:
-    ApeMemManger MM;
+    MemoryManger_c MM;
     ApeContext context;
 
     //rang decode
@@ -60,4 +55,5 @@ public:
     b1 isFrameStart;
     b1 haveInCache;
     b1 isNewFrameStart;
+    u32 firstSkip;
 };

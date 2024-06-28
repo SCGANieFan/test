@@ -20,7 +20,7 @@
 
 
 char filenames[][50] = {
-#if 1
+#if 0
 	"demo1_48k2ch.ape",
 	"demo2_44p1k2ch.ape",
 	"demo3_96K2ch.ape",
@@ -32,7 +32,8 @@ char filenames[][50] = {
 	"Inuyasha_48k2ch.wav.ape",
 #else
 	//"demo6_48k1ch8b.ape",
-	"Flower_Dance_44p1k2ch.wav.ape",
+	//"Flower_Dance_44p1k2ch.ape",
+	"demo5_48k1ch.ape",
 #endif
 };
 

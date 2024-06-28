@@ -4,7 +4,9 @@
 #include "MTF.Objects.h"
 #include "MAF.h"
 
-void mtf_ape_demux_register()
+#define MIN(a,b) (a)<(b)?(a):(b)
+
+mtf_void mtf_ape_demux_register()
 {
 	MTF_Objects::Registe<MTF_ApeDemux>("ape_demux");
 	MAF_REGISTER(ape_demux);
@@ -28,6 +30,8 @@ MTF_ApeDemux::~MTF_ApeDemux()
 	}
 	if (_pFile)
 		fclose((FILE*)_pFile);
+	if(_seekTableManger._seektableRead)
+		MTF_FREE(_seekTableManger._seektableRead);
 }
 
 mtf_int32 MTF_ApeDemux::Init()
@@ -70,10 +74,65 @@ mtf_int32 MTF_ApeDemux::Init()
 
 #if 1
 	MTF_MEM_SET(&_extraInfo, 0, sizeof(ExtraInfo_t));
-	_extraInfo.startFrame = 2;
+	//_extraInfo.startFrame = 1;
 	mtf_int32 readDataMaxLen = 2*1024;
 	mtf_int32 readDataLen = 0;
 	mtf_uint8* readData = (mtf_uint8*)MTF_MALLOC(readDataMaxLen);
+#if 1
+	while (1){
+		//MAF_Get(_hd, "apeHeader", (mtf_void**)&_extraInfo.apeHeader)
+		mtf_int32 readedSize = fread(readData + readDataLen, 1, 512, (FILE*)_pFile);
+		readDataLen += readedSize;
+		AA_Data AA_iData;
+		MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
+		AA_iData.buff = readData;
+		AA_iData.size = readDataLen;
+		MAF_Run(_hd, &AA_iData, 0);
+		MAF_Get(_hd, "apeHeader", (mtf_void**)&_extraInfo.apeHeader);
+		if (_extraInfo.apeHeader) {
+			break;
+		}
+	}
+#if 0
+	MAF_Get(_hd, "seekTablePos", (mtf_void**)&_seekTableManger._seekTablePos);
+	MAF_Get(_hd, "seekTableBytes", (mtf_void**)&_seekTableManger._seekTableSizeByte);
+#else
+	mtf_void *param0[]={&_seekTableManger._seekTablePos,&_seekTableManger._seekTableSizeByte};
+	MAF_Get(_hd, "seekTable", (mtf_void**)param0);
+#endif	
+	_seekTableManger._seekTableNum = _seekTableManger._seekTableSizeByte >> 2;
+	const uint32_t tableNumTmp = 2;
+	_seekTableManger._seektableReadSizeByte = tableNumTmp * 4;
+	_seekTableManger._seektableRead = (mtf_uint32*)MTF_MALLOC(readDataMaxLen);
+	//fseek((FILE*)_pFile, _seekTableManger._seekTablePos + _seekTableManger._seekTableUsedSizeByte, SEEK_SET);
+	fseek((FILE*)_pFile, _seekTableManger._seekTablePos, SEEK_SET);
+	mtf_uint32 _startPosTmp;
+	while (1) {
+		_seekTableManger._seektableReadValidSizeByte = _seekTableManger._seekTableSizeByte - _seekTableManger._seekTableUsedSizeByte;
+		_seekTableManger._seektableReadValidSizeByte = MIN(_seekTableManger._seektableReadValidSizeByte, _seekTableManger._seektableReadSizeByte);
+		fread(_seekTableManger._seektableRead, 1, _seekTableManger._seektableReadValidSizeByte, (FILE*)_pFile);
+#if 0
+		MAF_Set(_hd, "seekTable", (mtf_void**)&_seekTableManger._seektableRead);
+		MAF_Set(_hd, "seekTableBytes", (mtf_void**)&_seekTableManger._seektableReadValidSizeByte);
+#else
+		mtf_void *param1[]={&_seekTableManger._seektableRead,&_seekTableManger._seektableReadValidSizeByte};
+		MAF_Set(_hd, "seekTable", (mtf_void**)param1);
+#endif
+		_startPosTmp = _startPos;
+		mtf_uint32 seekTableNumOffset;
+		mtf_uint32 skip;
+		mtf_void* param2[3] = { &_startPosTmp, &seekTableNumOffset ,&skip };
+		if (MAF_Get(_hd, "startInfoFromPos", (mtf_void**)param2)== MA_RET_SUCCESS){
+			_startPos = _startPosTmp;
+			_extraInfo.startFrame += seekTableNumOffset;
+			_extraInfo.skip = skip;
+			MTF_PRINT("startFrame:%d, startPos:%d,_startSkip:%d", _extraInfo.startFrame, _startPos, _extraInfo.skip);
+			break;
+		}
+		_extraInfo.startFrame += tableNumTmp;
+	}
+
+#else
 	while (1)
 	{
 		
@@ -84,30 +143,40 @@ mtf_int32 MTF_ApeDemux::Init()
 		AA_iData.buff = readData;
 		AA_iData.size = readDataLen;
 		MAF_Run(_hd, &AA_iData, 0);
-		MAF_Get(_hd, "apeHeader", (void**) &_extraInfo.apeHeader);
+		MAF_Get(_hd, "apeHeader", (mtf_void**) &_extraInfo.apeHeader);
 		if (_extraInfo.apeHeader){
 			_startPos = _extraInfo.startFrame;
-			MAF_Get(_hd, "startPosFromFrame", (void**)&_startPos);
+			MAF_Get(_hd, "startPosFromFrame", (mtf_void**)&_startPos); 
+			_extraInfo.skip = _extraInfo.startFrame;
+			MAF_Get(_hd, "startSkip", (mtf_void**)&_extraInfo.skip);
+			MTF_PRINT("startFrame:%d, startPos:%d,_startSkip:%d", _extraInfo.startFrame, _startPos, _extraInfo.skip);
 			fseek((FILE*)_pFile, _startPos, SEEK_SET);
-			MTF_PRINT("startFrame:%d, startPos:%d", _extraInfo.startFrame, _startPos);
 			break;
 		}
 
 	}	
+#endif
 	_extraDataLen = sizeof(sizeof(ExtraInfo_t));
 	_isFirstFrame = true;
 #endif
+#if 0
 	mtf_uint32 rate;
 	mtf_uint32 ch;
 	mtf_uint32 width;
-	MAF_Get(_hd, "rate", (void**)&rate);
-	MAF_Get(_hd, "ch", (void**)&ch);
-	MAF_Get(_hd, "width", (void**)&width);
-
-	MTF_AudioDemuxer::Set("rate", (void*)rate);
-	MTF_AudioDemuxer::Set("ch", (void*)ch);
-	MTF_AudioDemuxer::Set("width", (void*)width);
-	MTF_AudioDemuxer::Set("fMs", (void*)20);
+	MAF_Get(_hd, "rate", (mtf_void**)&rate);
+	MAF_Get(_hd, "ch", (mtf_void**)&ch);
+	MAF_Get(_hd, "width", (mtf_void**)&width);
+#else
+	mtf_uint32 rate;
+	mtf_uint32 ch;
+	mtf_uint32 width;
+	mtf_void* param3[3] = { &rate,&ch, &width };
+	MAF_Get(_hd, "audioInfo", (mtf_void**)param3);
+#endif
+	MTF_AudioDemuxer::Set("rate", (mtf_void*)rate);
+	MTF_AudioDemuxer::Set("ch", (mtf_void*)ch);
+	MTF_AudioDemuxer::Set("width", (mtf_void*)width);
+	MTF_AudioDemuxer::Set("fMs", (mtf_void*)20);
 
 	//io data
 	mtf_int32 size = _frameBytes;

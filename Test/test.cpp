@@ -13,14 +13,14 @@ int main()
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//OggTest();
-	PlcTest();
+	//PlcTest();
 	//AudioSpeedCtrTest();
 	//AudioResampleTest();
 	//OggTest();
 	//OpusTest();
 	//MTF_demo_Test();
 	//WavTest();
-	//ApeTest();
+	ApeTest();
 	
 	
 	

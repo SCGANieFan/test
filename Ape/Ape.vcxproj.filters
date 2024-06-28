@@ -58,9 +58,6 @@
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDec.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.mem.manger.h">
-      <Filter>lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.h">
       <Filter>lib</Filter>
     </ClInclude>

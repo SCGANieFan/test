@@ -70,7 +70,8 @@ namespace Algo {
 			i32 appendSize = GetLeftSize();
 			appendSize = appendSize > size ? size : appendSize;
 			Append(buf, appendSize);
-			*usedSize = appendSize;
+			if(usedSize)
+				*usedSize = appendSize;
 			return true;
 		};
 

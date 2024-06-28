@@ -33,7 +33,7 @@ maf_int32 MAFA_ApeDemux::Init()
 	basePorting->Free = (ALGO_Free_t)FreeLocal;
 	initParam.basePorting = basePorting;
 #endif
-	initParam.mode = ApeDemuxInitMode_e::APE_DEMUX_INIT_MODE_DMUX;
+	//initParam.mode = ApeDemuxInitMode_e::APE_DEMUX_INIT_MODE_DMUX;
 
 	_hdSize = ApeDemux_GetSize();
 	_hd = _memory.Malloc(_hdSize);
@@ -75,11 +75,15 @@ maf_int32 MAFA_ApeDemux::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 maf_int32 MAFA_ApeDemux::Set(const maf_int8* key, maf_void* val)
 {
 #if 0
-	if (MAF_String::StrCompare(key, "decayMs")) {
-		_decayMs = (maf_int16)val; return 0;
+	if (MAF_String::StrCompare(key, "seekTable")) {
+		//ApeDemux_Set(_hd, ApeDemuxSet_e::APE_DEMUX_GET_START_POS_FROM_FRAME, val); return 0;
 	}
-	else if (MAF_String::StrCompare(key, "overlapMs")) {
-		_overlapMs = (maf_int16)val; return 0;
+	else if (MAF_String::StrCompare(key, "seekTableBytes")) {
+		//ApeDemux_Set(_hd, ApeDemuxSet_e::APE_DEMUX_GET_START_POS_FROM_FRAME, val); return 0;
+	}
+#else
+	if (MAF_String::StrCompare(key, "seekTable")) {
+		ApeDemux_Set(_hd, ApeDemuxSet_e::APE_DEMUX_SET_SEEK_TABLE, val); return 0;
 	}
 #endif
 	return MAF_Audio::Set(key, val);
@@ -91,9 +95,20 @@ maf_int32 MAFA_ApeDemux::Get(const maf_int8* key, maf_void* val)
 	if (MAF_String::StrCompare(key, "apeHeader")) {
 		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_HEADE, val); return 0;
 	}
-	else if (MAF_String::StrCompare(key, "startPosFromFrame")) {
-		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_START_POS_FROM_FRAME, val); return 0;
+#if 0
+	else if (MAF_String::StrCompare(key, "seekTablePos")) {
+		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_SEEK_TABLE_BYTES, val); return 0;
 	}
+	else if (MAF_String::StrCompare(key, "seekTableBytes")) {
+		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_SEEK_TABLE_POS, val); return 0;
+	}
+#else
+
+#endif
+	else if (MAF_String::StrCompare(key, "seekTable")) {
+		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_SEEK_TABLE, val); return 0;
+	}
+#if 0
 	else if (MAF_String::StrCompare(key, "rate")) {
 		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_RATE, val); return 0;
 	}
@@ -103,6 +118,16 @@ maf_int32 MAFA_ApeDemux::Get(const maf_int8* key, maf_void* val)
 	else if (MAF_String::StrCompare(key, "width")) {
 		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_WIDTH, val); return 0;
 	}
+#else
+	else if (MAF_String::StrCompare(key, "audioInfo")) {
+		ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_AUDIO_INFO, val); return 0;
+	}
+	else if (MAF_String::StrCompare(key, "startInfoFromPos")) {
+		if(ApeDemux_Get(_hd, ApeDemuxGet_e::APE_DEMUX_GET_START_INFO_FROM_POS, val) == APERET_SUCCESS)
+			return 0;
+		return -1;
+	}
+#endif
 	return MAF_Audio::Get(key, val);
 }
 

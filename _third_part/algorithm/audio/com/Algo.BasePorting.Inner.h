@@ -12,6 +12,8 @@ public:
 	MemoryManger_c() {};
 	~MemoryManger_c() {};
 public:
+	INLINE AlgoBasePorting* GetBasePorting() { return _basePorting; }
+public:
 	INLINE void Init(AlgoBasePorting *basePorting) {
 		_basePorting = basePorting;
 		for (void*& p : _allocList) {

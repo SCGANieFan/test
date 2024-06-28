@@ -7,6 +7,7 @@ namespace Algo {
 	{
 	public:
 		Buffer() {};
+		Buffer(u8* buf, i32 max) { _buf = buf; _max = max; };
 		//INLINE Buffer(u8* buf, i32 max) { _buf = buf; _max = max; };
 		~Buffer() {};
 	public:

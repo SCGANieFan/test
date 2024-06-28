@@ -2,6 +2,36 @@
 #include"MTF.AudioDemuxer.h"
 class MTF_ApeDemux :public MTF_AudioDemuxer
 {
+
+private:
+	typedef struct {
+		mtf_void* apeHeader;
+		mtf_uint32 startFrame;
+		mtf_uint32 skip;
+	}ExtraInfo_t;
+
+	class SeekTableManger{
+	public:
+		SeekTableManger() {}
+		~SeekTableManger() {}
+#if 0
+	public:
+		SetSeekTablePos(mtf_uint32 seekTablePos) { _seekTablePos }
+	//public:
+	private:
+#endif
+	public:
+		mtf_uint32 _seekTablePos = 0;
+		mtf_uint32 _seekTableSizeByte = 0;
+		mtf_uint32 _seekTableUsedSizeByte = 0;
+		mtf_uint32 _seekTableNum = 0;
+
+		mtf_uint32* _seektableRead = 0;
+		mtf_uint32 _seektableReadValidSizeByte = 0;
+		mtf_uint32 _seektableReadSizeByte = 0;
+	};
+
+
 public:
 	MTF_ApeDemux();
 	~MTF_ApeDemux();
@@ -13,11 +43,8 @@ public:
 	virtual mtf_int32 Set(const mtf_int8* key, mtf_void* val) final;
 	virtual mtf_int32 Get(const mtf_int8* key, mtf_void* val) final;
 
-private:
-	typedef struct {
-		mtf_void* apeHeader;
-		mtf_uint32 startFrame;
-	}ExtraInfo_t;
+
+
 private:
 	MTF_Data _oData;
 	mtf_void* _hd = 0;
@@ -27,6 +54,8 @@ private:
 	ExtraInfo_t _extraInfo;
 	mtf_uint32 _extraDataLen = 0;
 	mtf_bool _isFirstFrame = false;
+	SeekTableManger _seekTableManger;
+	
 private:
 	void* _pFile = 0;
 	const mtf_int8* _url = 0;

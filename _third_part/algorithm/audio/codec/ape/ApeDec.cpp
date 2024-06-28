@@ -29,27 +29,17 @@ EXTERNC {
 		//check
 		if (!pStateIn
 			|| !sampleParam
-			|| !sampleParam->basePorting
-			|| sampleParam->mode >= APE_DEC_INIT_MODE_MAX)
+			|| !sampleParam->basePorting)
 			return APERET_FAIL;
 		ApeDecState* pState = (ApeDecState*)pStateIn;
 		ALGO_MEM_SET(pState, 0, ApeDec_GetSize());
 		ApeDecoder* pDec = &pState->dec;
 		i32 ret;
-		switch (sampleParam->mode)
-		{
-		case ApeDecInitMode_e::APE_DEC_INIT_MODE_DEC_USE_CONTEXT:
-			ret=pDec->InitWithContext(sampleParam->basePorting, (ApeContext_t*)sampleParam->contextInit_t.context);
-			if (ret == APERET_SUCCESS)
-			{
-				pDec->StartNewFrame(sampleParam->contextInit_t.startFrame);
-				pState->isInited = true;
-			}			
-			return ret;
-		case ApeDecInitMode_e::APE_DEC_INIT_MODE_DEC:
-			pState->isInited = false;
-			return pDec->Init(sampleParam->basePorting);
+		ret = pDec->Init(sampleParam->basePorting, (ApeContext_t*)sampleParam->context, sampleParam->startFrame, sampleParam->skip);
+		if (ret == APERET_SUCCESS) {
+			pState->isInited = true;
 		}
+		return ret;
 	}
 
 	int32_t ApeDec_Set(void* pStateIn, ApeDecSet_e choose, void* val)
@@ -67,7 +57,7 @@ EXTERNC {
 		case APE_DEC_SET_E_HAS_IN_CACHE:
 			pDec->haveInCache= (b1)(u32)val; break;
 		case APE_DEC_SET_E_START_NEW_FRAME:
-			pDec->StartNewFrame((u32)val); break;
+			//pDec->StartNewFrame((u32)val); break;
 		default:
 			break;
 		}

@@ -17,6 +17,8 @@ private:
 	static maf_void* MallocLocal(int32_t size);
 	static maf_void FreeLocal(maf_void* block);
 private:
+	maf_bool HdInit(MAF_Data* dataIn);
+private:
 	maf_void* _hd = 0;
 	maf_int32 _hdSize = 0;
 	maf_void* _basePorting;

@@ -119,7 +119,7 @@ void ApeNNFilters::Reset()
 		}
 	}
 }
-void ApeNNFilters::Init(ApeMemManger* MM, u16 fSet, u16 fileVersion)
+void ApeNNFilters::Init(MemoryManger_c* MM, u16 fSet, u16 fileVersion)
 {
 	_fset = fSet;
 	_fileVersion = fileVersion;

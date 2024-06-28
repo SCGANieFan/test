@@ -1,8 +1,6 @@
 #pragma once
 #include"Ape.Inner.basic.h"
-#include"Ape.Inner.mem.manger.h"
 #include"Ape.Inner.rollbuffer.h"
-
 /** Filters applied to the decoded data */
 class ApeNNFilter {
 public:
@@ -24,7 +22,7 @@ public:
     ~ApeNNFilters() {};
 public:
     void Reset();
-    void Init(ApeMemManger* MM, u16 fSet, u16 fileVersion);
+    void Init(MemoryManger_c* MM, u16 fSet, u16 fileVersion);
     void DoFilter(i16 ch,int32_t* inOut);
 
 private:

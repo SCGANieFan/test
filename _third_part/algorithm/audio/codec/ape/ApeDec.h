@@ -12,16 +12,9 @@ typedef enum {
 typedef struct
 {
 	AlgoBasePorting* basePorting;
-	ApeDecInitMode_e mode;
-	union
-	{
-		struct{
-			void* context;
-			uint32_t startFrame;
-		}contextInit_t;
-		struct{
-		}noParam_t;
-	};
+	void* context;
+	uint32_t startFrame;
+	uint32_t skip;
 }ApeDecInitParam_t;
 
 

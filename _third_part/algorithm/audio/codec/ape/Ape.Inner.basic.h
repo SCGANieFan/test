@@ -2,6 +2,7 @@
 #if 1
 #include"Algo.Type.h"
 #include"Algo.BasePorting.h"
+#include"Algo.BasePorting.Inner.h"
 #include"Algo.Macro.h"
 #include"Algo.Memory.h"
 #include"Algo.Data.h"
