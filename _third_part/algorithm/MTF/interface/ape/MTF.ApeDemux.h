@@ -13,22 +13,52 @@ private:
 	class SeekTableManger{
 	public:
 		SeekTableManger() {}
-		~SeekTableManger() {}
-#if 0
+		~SeekTableManger() {
+			if(_seektableRead)
+				MTF_FREE(_seektableRead);
+		}
 	public:
-		SetSeekTablePos(mtf_uint32 seekTablePos) { _seekTablePos }
-	//public:
-	private:
-#endif
-	public:
-		mtf_uint32 _seekTablePos = 0;
-		mtf_uint32 _seekTableSizeByte = 0;
-		mtf_uint32 _seekTableUsedSizeByte = 0;
-		mtf_uint32 _seekTableNum = 0;
+		void Init(int seekTablePos ,int seekTableSizeByte, void *pFile) {
+			_seekTablePos = seekTablePos;
+			_seekTableSizeByte = seekTableSizeByte;
+			_seekTableUsedSizeByte = 0;
+			_seekTableNum = _seekTableSizeByte >> 2;
+			const uint32_t tableNumTmp = 2;
+			_seektableReadSizeByte = tableNumTmp * 4;
+			_seektableRead = (mtf_int32*)MTF_MALLOC(_seektableReadSizeByte);
+			_pFile = pFile;
+			fseek((FILE*)_pFile, _seekTablePos, SEEK_SET);
 
-		mtf_uint32* _seektableRead = 0;
-		mtf_uint32 _seektableReadValidSizeByte = 0;
-		mtf_uint32 _seektableReadSizeByte = 0;
+		}
+		void UpdataSeektable() {
+			_seektableReadValidSizeByte = _seekTableSizeByte - _seekTableUsedSizeByte;
+			_seektableReadValidSizeByte = _seektableReadValidSizeByte < _seektableReadSizeByte ? _seektableReadValidSizeByte : _seektableReadSizeByte;
+			if(_seektableReadValidSizeByte)
+				fread(_seektableRead, 1, _seektableReadValidSizeByte, (FILE*)_pFile);
+		}
+		mtf_int32 GetValidSeekTableNum() {
+			return _seektableReadValidSizeByte>>2;
+		}
+		mtf_int32* GetValidSeekTable() {
+			return _seektableRead;
+		}
+		mtf_int32 GetValidSeekTableByte() {
+			return _seektableReadValidSizeByte;
+		}
+		void Used() {
+			_seekTableUsedSizeByte += _seektableReadValidSizeByte;
+			_seektableReadValidSizeByte = 0;
+		}
+	public:
+		mtf_int32 _seekTablePos = 0;
+		mtf_int32 _seekTableSizeByte = 0;
+		mtf_int32 _seekTableUsedSizeByte = 0;
+		mtf_int32 _seekTableNum = 0;
+
+		mtf_int32* _seektableRead = 0;
+		mtf_int32 _seektableReadValidSizeByte = 0;
+		mtf_int32 _seektableReadSizeByte = 0;
+		void* _pFile = 0;
 	};
 
 
@@ -50,12 +80,9 @@ private:
 	mtf_void* _hd = 0;
 	mtf_int32 _hdSize = 0;
 	mtf_int32 _frames = 0;
-	mtf_uint32 _startPos = 0;	
+	mtf_uint32 _startPos = 0;
 	ExtraInfo_t _extraInfo;
-	mtf_uint32 _extraDataLen = 0;
 	mtf_bool _isFirstFrame = false;
-	SeekTableManger _seekTableManger;
-	
 private:
 	void* _pFile = 0;
 	const mtf_int8* _url = 0;

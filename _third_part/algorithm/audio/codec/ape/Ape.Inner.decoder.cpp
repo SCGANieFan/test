@@ -121,7 +121,7 @@ static APE_RET_t mono_decoder_process(ApeDecoder* dec, uint16_t* blocksDecoded, 
 	}
 	return APE_RET_SUCCESS;
 }
-i32 frames = 0;
+
 static APE_RET_t stereo_decoder_process(ApeDecoder* dec, uint16_t* blocksDecoded, void* bufferRead) {
 	//1.init
 	int32_t* ch0, * ch1;
@@ -146,14 +146,6 @@ static APE_RET_t stereo_decoder_process(ApeDecoder* dec, uint16_t* blocksDecoded
 				return APE_RET_ENTROPY_DECODE_ERROR;
 			if (!dec->rc.EntropyDecode(&dec->riceX, &dec->bufferRead, &X, dec->context.GetFileVersion()))
 				return APE_RET_ENTROPY_DECODE_ERROR;
-
-#if 0
-			frames++;
-			//ALGO_PRINT("[%d] nY:%x,\tnX:%x", frames, Y, X);
-			if (frames == 8859)
-				int a = 1;
-
-#endif			
 
 			//3.NN filter
 			dec->NNFilter.DoFilter(0, &Y);
@@ -290,7 +282,6 @@ STATIC INLINE i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t 
 			if (pDec->inCache.GetLeftSize() > 0)
 				break;
 		}
-
 		//start frame
 		if (pDec->isFrameStart == true) {
 			APE_RET_t startRet = ApeDecoderStartFrame(pDec, pDec->inCache.GetData(), pDec->inCache.GetSize(), &bufferUsed);
@@ -317,7 +308,10 @@ STATIC INLINE i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t 
 		if (outLen < 1){
 			break;
 		}
+		int ssize = pDec->inCache.GetSize();
 		pDec->inCache.Used(bufferUsed);
+		if (pDec->inCache.GetSize() < 0)
+			int a1 = 1;
 		pDec->blocksUsed += pDec->blocksDecoded;
 		outOffset += outLen;
 
@@ -345,15 +339,14 @@ STATIC INLINE i32 Ape_Decode(ApeDecoder* pMusicPlcStateIn, uint8_t* in, int32_t 
 i32 ApeDecoder::Init(AlgoBasePorting* basePorting, ApeContext_t* contextIn, u32 startFrameNum, u32 skip)
 {
 	MM.Init(basePorting);
-	context.InitWithContext(&MM, contextIn);
-
+#if 1
+	context.InitWithContext(contextIn);
+#endif
 	//clear NN Filter	
 	fSet = context.GetCompressType() / 1000 - 1;
 	NNFilter.Init(&MM, fSet, context.GetFileVersion());
 	bufferRead.Init();
-	Buffer buffer;
-	i32 size = 3 * 1024;
-	buffer.Init((u8*)MM.Malloc(size), size);
+	Buffer buffer((u8*)MM.Malloc(3 * 1024), 3 * 1024);
 	inCache.Init(&buffer);
 	isFrameStart = true;
 	haveInCache = true;

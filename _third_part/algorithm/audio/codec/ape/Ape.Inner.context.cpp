@@ -108,54 +108,7 @@ STATIC INLINE i32 GetPraseInBufferByte(u8* in, i32 inLen)
 }
 
 
-#if 0
-u32 ApeContext::GetStartPosFromFrame(u32 frame) {
-#if 0
-    ApeContext* pContext = ((ApeDemuxer*)demuxer)->context;
-
-    if (Pos < pContext->seektable[0])
-    {
-        info->pos = pContext->seektable[0];
-        info->FrameNum = 1;
-    }
-    else if (Pos > pContext->seektable[pContext->header.totalframes - 1])
-    {
-        info->pos = pContext->seektable[pContext->header.totalframes - 1];
-        info->FrameNum = pContext->header.totalframes;
-        return;
-    }
-    else
-    {
-        for (int f = 1; f < pContext->header.totalframes; f++)
-        {
-            if (Pos < pContext->seektable[f])
-            {
-                info->pos = pContext->seektable[f - 1];
-                info->FrameNum = f;
-                break;
-            }
-        }
-    }
-    int skip = (info->pos - pContext->seektable[0]) & 3;
-#if 0
-    if (skip)
-        info->pos += 4 - skip;
-#else
-    info->pos -= skip;
-#endif
-#endif
-
-    u32 pos = _context.seektable[frame - 1];
-    int skip = (pos - _context.seektable[0]) & 3;
-    pos -= skip;
-    return pos;
-}
-
-u32 ApeContext::GetStartSkip(u32 frame) {
-    return (_context.seektable[frame - 1] - _context.seektable[0]) & 3;
-}
-#endif
-i32 ApeContext::Parser(MemoryManger_c* mm, u8* in, i32 inByte)
+i32 ApeContext::Parser(u8* in, i32 inByte)
 {
     // ALGO_PRINT();
     u8* pIn = in;
@@ -198,21 +151,10 @@ i32 ApeContext::Parser(MemoryManger_c* mm, u8* in, i32 inByte)
             inByteUsed += sizeof(ApeHeader);
 
         //seektable
-#if 0
-        context->seektable = (uint32_t*)mm->Malloc(descriptor->seektablelength);
-        ALGO_MEM_CPY(context->seektable, &pIn[inByteUsed], descriptor->seektablelength);
-        inByteUsed += descriptor->seektablelength;
-
-        //wav header        
-        context->waveHeader = mm->Malloc(descriptor->wavheaderlength);
-        ALGO_MEM_CPY(context->waveHeader, &pIn[inByteUsed], descriptor->wavheaderlength);
-        inByteUsed += descriptor->wavheaderlength;
-#else
         seektablePos = inByteUsed;
         inByteUsed += descriptor->seektablelength;
         waveHeaderPos = inByteUsed;
         inByteUsed += descriptor->wavheaderlength;
-#endif
     }
     else {
         //headerOld
@@ -281,31 +223,14 @@ i32 ApeContext::Parser(MemoryManger_c* mm, u8* in, i32 inByte)
         {
             if (headerOld.nHeaderBytes > 1024 * 1024)
                 return APE_RET_INVALID_INPUT_FILE;
-#if 0
-            context->waveHeader = mm->Malloc(headerOld.nHeaderBytes);
-            ALGO_MEM_CPY(context->waveHeader, &pIn[inByteUsed], headerOld.nHeaderBytes);
-#else
             waveHeaderPos = inByteUsed;
-#endif
             inByteUsed += headerOld.nHeaderBytes;
         }
 
         // get the seek tables (really no reason to get the whole thing if there's extra)
-#if 0
-        context->seektable = (uint32_t*)mm->Malloc(descriptor->seektablelength);
-        ALGO_MEM_CPY(context->seektable, &pIn[inByteUsed], descriptor->seektablelength);
-#else
         seektablePos = inByteUsed;
-#endif
         inByteUsed += descriptor->seektablelength;
     }
-
-#if 0
-    context->junklength = 0;
-    context->firstframe = context->junklength + descriptor->descriptorlength
-        + descriptor->headerlength + descriptor->seektablelength + descriptor->wavheaderlength;
-    context->totalsamples = header->blocksperframe * (header->totalframes - 1) + header->finalframeblocks;
-#endif
     return APERET_SUCCESS;
 }
 #endif

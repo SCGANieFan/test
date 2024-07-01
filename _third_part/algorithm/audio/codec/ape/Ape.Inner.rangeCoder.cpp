@@ -67,16 +67,6 @@ bool ApeRangecoder::range_get_symbol(const uint16_t counts[], const uint16_t cou
 	range_dec_normalize(bufferRead);
 	_range = _range >> 16;
 	cf = _low / _range;
-	
-#if 0
-	frames++;
-	if (frames > 16000)
-	{
-		//ALGO_PRINT("[%lld] _buffer:%x,\tlow:%x,\trange:%x,\tnRangeTotal:%x", frames, _buffer, _low, _range, cf);
-		if (frames >= 17716)
-			int a = 1;
-	}
-#endif
 	if (cf > 65492) {
 		out = cf - 65535 + 63;
 		_low -= _range * cf;

@@ -56,8 +56,6 @@ EXTERNC {
 		{
 		case APE_DEC_SET_E_HAS_IN_CACHE:
 			pDec->haveInCache= (b1)(u32)val; break;
-		case APE_DEC_SET_E_START_NEW_FRAME:
-			//pDec->StartNewFrame((u32)val); break;
 		default:
 			break;
 		}

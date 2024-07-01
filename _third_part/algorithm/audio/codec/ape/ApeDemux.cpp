@@ -25,33 +25,16 @@ EXTERNC {
 		return sizeof(ApeDemuxState);
 	}
 
-	int32_t ApeDemux_Init(void* pStateIn, ApeDemuxInitParam_t* sampleParam)
+	int32_t ApeDemux_Init(void* pStateIn)
 	{
 		//check
-		if (!pStateIn
-			|| !sampleParam
-			|| !sampleParam->basePorting)
+		if (!pStateIn)
 			return APERET_FAIL;
 		ApeDemuxState* pState = (ApeDemuxState*)pStateIn;
 		ALGO_MEM_SET(pState, 0, ApeDemux_GetSize());
 		ApeDemuxer* pDemux = &pState->demux;
-		i32 ret;
-#if 0
-		switch (sampleParam->mode)
-		{
-		case ApeDemuxInitMode_e::APE_DEMUX_INIT_MODE_DMUX_USE_BUFFER:
-			ret=pDemux->InitWithBuffer(sampleParam->basePorting, (u8*)sampleParam->bufferInit_t.buffer, (i32*)sampleParam->bufferInit_t.size);			
-			if(ret== APERET_SUCCESS)
-				pState->isInited = true;
-			return ret;
-		case ApeDemuxInitMode_e::APE_DEMUX_INIT_MODE_DMUX:
-			pState->isInited = false;
-			return pDemux->InitWithNoBuffer(sampleParam->basePorting);
-		}
-#else
 		pState->isInited = true;
-		return pDemux->InitWithNoBuffer(sampleParam->basePorting);
-#endif
+		return pDemux->Init();
 	}
 
 	int32_t ApeDemux_Set(void* pStateIn, ApeDemuxSet_e choose, void* val)
@@ -66,7 +49,6 @@ EXTERNC {
 		ApeDemuxer* pDemux = &pState->demux;
 		switch (choose)
 		{
-#if 1
 		case APE_DEMUX_SET_SEEK_TABLE:
 		{
 			void** pVal = (void**)val;
@@ -74,7 +56,6 @@ EXTERNC {
 		}
 		default:
 			break;
-#endif
 		}
 		return APERET_SUCCESS;
 	}
@@ -92,34 +73,14 @@ EXTERNC {
 			return APERET_FAIL;
 
 		ApeDemuxer* pDemux = &pState->demux;
-		b1 ret;
 		switch (choose)
 		{
+		case APE_DEMUX_GET_IS_RUN_FINISH:
+			*(u32*)val = (u32)pDemux->_isDemuxRunFinish;
+			break;
 		case APE_DEMUX_GET_HEADE:
-			*(u32*)val = (u32)pDemux->_isDemuxHeadSuccess;
+			*(void**)val = &pDemux->context._context;
 			break;
-		case APE_DEMUX_GET_START_POS_FROM_FRAME:
-			ret = pDemux->seekTable.GetStartPosFromFrame(*(u32*)val, (u32*)val);
-			if (!ret)return APERET_FAIL;
-			break;
-		case APE_DEMUX_GET_START_SKIP:
-			ret = pDemux->seekTable.GetStartSkip(*(u32*)val, (u32*)val);
-			if (!ret)return APERET_FAIL;
-			break;
-		case APE_DEMUX_GET_FRAME_INFO_FROM_POS:
-			//*(u32*)val = pDemux->context.GetStartPosFromFrame(*(u32*)val);
-			break;
-#if 0
-		case APE_DEMUX_GET_RATE:
-			*(u32*)val = pDemux->context.GetHeader()->samplerate;
-			break;
-		case APE_DEMUX_GET_CH:
-			*(u32*)val = pDemux->context.GetHeader()->channels;
-			break;
-		case APE_DEMUX_GET_WIDTH:
-			*(u32*)val = pDemux->context.GetHeader()->bps>>3;			
-			break;
-#else
 		case APE_DEMUX_GET_AUDIO_INFO:
 		{
 			void** pVal = (void**)val;
@@ -128,33 +89,17 @@ EXTERNC {
 			*(u32*)pVal[2] = pDemux->context.GetHeader()->bps >> 3; 
 			break;
 		}
-#endif
-
-#if 0
-		case APE_DEMUX_GET_SEEK_TABLE_BYTES:
-			*(u32*)val = pDemux->context._context.descriptor.seektablelength;
-			break;
-		case APE_DEMUX_GET_SEEK_TABLE_POS:
-			*(u32*)val = pDemux->context._context.seektablePos;
-			break;
-#else
 		case APE_DEMUX_GET_SEEK_TABLE:
 			*(u32*)((void**)val)[0] = pDemux->context.seektablePos;
 			*(u32*)((void**)val)[1] = pDemux->context._context.descriptor.seektablelength;
 			break;
-#endif
 		case APE_DEMUX_GET_START_INFO_FROM_POS:
-#if 0
-			*(u32*)((void**)val)[0] = pDemux->context.seektablePos;
-			*(u32*)((void**)val)[1] = pDemux->context._context.descriptor.seektablelength;
-			ret = pDemux->seekTable.GetStartPosFromFrame(*(u32*)val, (u32*)val);
-#endif
-			{
-				void** pVal = (void**)val;
-				if (!pDemux->seekTable.GetStartInfoFromPos((i32*)pVal[0], (i32*)pVal[1], (i32*)pVal[2]))
-					return APERET_FAIL;
-				break;
-			}
+		{
+			void** pVal = (void**)val;
+			if (!pDemux->seekTable.GetStartInfoFromPos((i32*)pVal[0], (i32*)pVal[1], (i32*)pVal[2]))
+				return APERET_FAIL;
+			break;
+		}
 		default:
 			break;
 		}

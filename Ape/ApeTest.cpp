@@ -28,12 +28,12 @@ char filenames[][50] = {
 	"demo5_48k1ch.ape",
 	"demo6_48k1ch8b.ape",
 	"demo2_44p1k2ch.ape",
-	"Flower_Dance_44p1k2ch.wav.ape",
-	"Inuyasha_48k2ch.wav.ape",
+	"Flower_Dance_44p1k2ch.ape",
+	"Inuyasha_48k2ch.ape",
 #else
 	//"demo6_48k1ch8b.ape",
-	//"Flower_Dance_44p1k2ch.ape",
-	"demo5_48k1ch.ape",
+	"Flower_Dance_44p1k2ch.ape",
+	//"demo5_48k1ch.ape",
 #endif
 };
 

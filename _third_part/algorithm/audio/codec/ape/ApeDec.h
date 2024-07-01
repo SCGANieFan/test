@@ -20,7 +20,6 @@ typedef struct
 
 typedef enum {
 	APE_DEC_SET_E_HAS_IN_CACHE=0,
-	APE_DEC_SET_E_START_NEW_FRAME,
 	APE_DEC_SET_E_MAX,
 }ApeDecSet_e;
 
