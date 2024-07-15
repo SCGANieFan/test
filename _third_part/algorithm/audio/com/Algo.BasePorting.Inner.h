@@ -11,8 +11,8 @@ class MemoryManger_c
 public:
 	MemoryManger_c() {};
 	~MemoryManger_c() {};
-public:
-	INLINE AlgoBasePorting* GetBasePorting() { return _basePorting; }
+//public:
+	//INLINE AlgoBasePorting* GetBasePorting() { return _basePorting; }
 public:
 	INLINE void Init(AlgoBasePorting *basePorting) {
 		_basePorting = basePorting;

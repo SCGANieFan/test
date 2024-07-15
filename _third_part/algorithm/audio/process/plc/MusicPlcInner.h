@@ -6,7 +6,6 @@
 #include"Algo.AudioCal.OverlapAdd.h"
 #include"Algo.AudioCal.Muter.h"
 #include"MusicPlcFillSignal.h"
-//#include"MusicPlcWaveFormatMatch.h"
 #include"Algo.AudioCal.WaveFormMatch.h"
 #include"MusicPlc.h"
 
@@ -90,7 +89,7 @@ public:
 		if (!basePorting->Malloc
 			|| !basePorting->Free)
 			return MUSIC_PLC_RET_FAIL;
-		if (channels != 1 && channels != 2 && channels != 4)
+		if (channels < 1)
 			return MUSIC_PLC_RET_FAIL;
 		if (width != 2 && width != 3 && width != 4)
 			return MUSIC_PLC_RET_FAIL;
@@ -189,7 +188,6 @@ private:
 	MusicPlcFillSignal_c fillSignal;
 	Muter_c muter;
 	OverlapAdd_c _overlapAdd;
-	//MusicPlcWaveFormMatch_c waveFormMatch;
 	WaveFormMatch_c _waveFormMatch;
 	b1 isQuickDeal;
 
