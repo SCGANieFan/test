@@ -88,7 +88,7 @@ INLINE i32 WaveFormMatch_c::CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 chann
 	}
 
 	corrQ30 = 0;
-	for (; i < accorelationSamples * channels; i++)
+	for (i = 0; i < accorelationSamples * channels; i++)
 	{
 		corrQ30 += (i64)refQ15[i] * tempQ15[i];
 	}
