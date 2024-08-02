@@ -26,7 +26,10 @@ EXTERNC {
 			sampleParam->fsHz,
 			sampleParam->frameSamples,
 			sampleParam->overlapSamples,
-			sampleParam->decaySamples);
+			sampleParam->attenuateSamplesAfterLost,
+			sampleParam->gainSamplesAfterNoLost,
+			sampleParam->seekSamples,
+			sampleParam->matchSamples);
 	}
 
 	int32_t MusicPlc_Set(void* pMusicPlcStateIn, MusicPlc_SetChhoose_e choose, void** val)

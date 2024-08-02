@@ -57,11 +57,12 @@ mtf_int32 MTF_MusicPlc::Init()
 	(mtf_void*)_width,
 	(mtf_void*)_frameSamples,
 	(mtf_void*)_decayMs,
+	(mtf_void*)_gainMs,
 	(mtf_void*)_overlapMs,
 	};
 
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
-							 ",rate=$5,ch=$6,width=$7,fSamples=$8,decayMs=$9,overlapMs=$10;";
+							 ",rate=$5,ch=$6,width=$7,fSamples=$8,decayMs=$9,gainMs=$10,overlapMs=$11;";
 	ret = MAF_Init(_hd, script, param);
 	if (ret != MA_RET_SUCCESS)
 		MTF_PRINT("err");
@@ -121,6 +122,9 @@ mtf_int32 MTF_MusicPlc::Set(const mtf_int8* key, mtf_void* val)
 #if 1
 	if (MTF_String::StrCompare(key, "decayMs")) {
 		_decayMs = (mtf_int16)val; return 0;
+	}
+	else if (MTF_String::StrCompare(key, "gainMs")) {
+		_gainMs = (mtf_int16)val; return 0;
 	}
 	else if (MTF_String::StrCompare(key, "overlapMs")) {
 		_overlapMs = (mtf_int16)val; return 0;

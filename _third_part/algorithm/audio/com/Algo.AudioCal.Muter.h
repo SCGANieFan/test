@@ -3,6 +3,7 @@
 #include"Algo.AudioCal.Com.h"
 #include"Algo.BasePorting.Inner.h"
 #include"Algo.AudioData.h"
+#include"Algo.Math.h"
 
 namespace Algo {
 	namespace Audio {
@@ -24,6 +25,10 @@ namespace Algo {
 			~Muter_c() {};
 		public:
 			INLINE void SetDir(DirChoose_e dir) { _dir = dir; }
+			INLINE void Sync(Muter_c dst) {
+				//_muteSamplesNow = dst._muteSamplesNow * _muteSamplesMax / dst._muteSamplesMax;
+				_muteSamplesNow = Math_c::DivisionLocal(dst._muteSamplesNow * _muteSamplesMax, dst._muteSamplesMax);
+			}
 			INLINE void Reset(DirChoose_e dir) {
 				_dir = dir;
 				if (_dir == DirChoose_e::ATTENUATION)

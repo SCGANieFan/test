@@ -65,6 +65,8 @@
     "utility": "cpp",
     "*.tcc": "cpp",
     "streambuf": "cpp",
-    "istream": "cpp"
+    "istream": "cpp",
+    "functional": "cpp",
+    "iostream": "cpp"
   }
 }

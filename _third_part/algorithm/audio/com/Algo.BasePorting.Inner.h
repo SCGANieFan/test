@@ -1,4 +1,6 @@
 #pragma once
+#include<new>
+#include"Algo.BasePorting.h"
 #include"Algo.Macro.h"
 #include"Algo.Type.h"
 #include"Algo.BasePorting.h"
@@ -32,6 +34,14 @@ public:
 		return 0;
 	}
 
+	template<class T>
+	INLINE void* New(i32 size){
+		void *ptr = Malloc(size);
+		if(!ptr)
+			return 0;
+		return new(ptr) T();
+	}
+
 	INLINE void Free(void *ptr) {
 		for (void*& p : _allocList) {
 			if (p== ptr) {
@@ -40,6 +50,12 @@ public:
 				return;
 			}
 		}
+	}
+
+	template<class T>
+	INLINE void* Delete(void *ptr){
+		(T*)ptr->~T();
+		Free(ptr);
 	}
 
 	INLINE void FreeAll () {
@@ -52,7 +68,7 @@ public:
 	}
 private:
 	AlgoBasePorting* _basePorting;
-	void* _allocList[10];
+	void* _allocList[100];
 };
 
 

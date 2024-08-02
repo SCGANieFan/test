@@ -17,7 +17,10 @@ typedef struct
 	int16_t width;
 	int16_t frameSamples;
 	int32_t overlapSamples;
-	int32_t decaySamples;
+	int32_t attenuateSamplesAfterLost;	//Attenuation after packet loss
+	int32_t gainSamplesAfterNoLost;//Gain after obtaining the package
+	int32_t seekSamples;
+	int32_t matchSamples;
 }MusicPlcInitParam;
 
 

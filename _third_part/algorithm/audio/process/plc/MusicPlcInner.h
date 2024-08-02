@@ -14,8 +14,8 @@ using namespace Audio;
 
 
 #define MUSIC_PLC_MIN_FRAME_MS (15)
-#define MUSIC_PLC_SEEK_MS_DEFAULT (8)
-#define MUSIC_PLC_MATCH_MS_DEFAULT (2)
+//#define MUSIC_PLC_SEEK_MS_DEFAULT (8)
+//#define MUSIC_PLC_MATCH_MS_DEFAULT (2)
 
 class MusicPlc_c
 {
@@ -28,10 +28,10 @@ public:
 		if (lostCount > 0){
 			_overlapAdd.Start();
 			lostCount = 0;
-			muter.SetDir(Muter_c::DirChoose_e::AMPLIFICATION);
+			muterAfterNoLost.Sync(muterAfterLost);
 		}
 
-		if (muter.IsMuteFinish()
+		if (muterAfterNoLost.IsMuteFinish()
 			&& _overlapAdd.IsFinish()){
 			isQuickDeal = true;
 			return;
@@ -58,7 +58,9 @@ public:
 #if 1
 			i32 bestLag = _waveFormMatch.DoWaveFormMatch(
 				inHistory.GetBufInSample(0),
-				inHistory.GetBufInSample(inHistory.GetSamplesMax() - overlapSamples));
+				inHistory.GetBufInSample(inHistory.GetSamplesMax() - overlapSamples),
+				_seekSamples,
+				_matchSamples);
 #else		
 			i32 bestLag = 0;
 #endif
@@ -78,14 +80,16 @@ public:
 				inHistory.GetSamplesMax() - (bestLag + overlapSamples));
 
 			//state updata
-			muter.Reset(Muter_c::DirChoose_e::ATTENUATION);
+			muterAfterLost.Sync(muterAfterNoLost);
 		}
 		//infuture
 		fillSignal.Output(infuture, infuture.GetSamplesMax());
 	}
 
 public:
-	i32 Init(AlgoBasePorting *basePorting,i16 channels, i16 width,i32 sampleRate, i32 frameSamplesIn, i32 overlapSamplesIn,i32 decaySamplesIn) {
+	i32 Init(AlgoBasePorting *basePorting,i16 channels, i16 width,i32 sampleRate,
+			i32 frameSamplesIn, i32 overlapSamplesIn,i32 attenSamplesAfterLostIn,i32 gainSamplesAfterNoLostIn,
+			i32 seekSamplesIn, i32 matchSamplesIn) {
 		if (!basePorting->Malloc
 			|| !basePorting->Free)
 			return MUSIC_PLC_RET_FAIL;
@@ -95,7 +99,10 @@ public:
 			return MUSIC_PLC_RET_FAIL;
 		if (frameSamplesIn < 1
 			|| overlapSamplesIn < 0
-			|| decaySamplesIn < 0)
+			|| attenSamplesAfterLostIn < 0
+			|| gainSamplesAfterNoLostIn < 0
+			|| seekSamplesIn < 0
+			|| matchSamplesIn < 0)
 			return MUSIC_PLC_RET_FAIL;
 
 		ALGO_MEM_SET(this, 0, sizeof(MusicPlc_c));
@@ -114,14 +121,14 @@ public:
 		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * info._bytesPerSample);
 		infuture.Init(&info, &bufferSamples);
 		fillSignal.Init(&MM, inHistory.GetSamplesMax() - overlapSamples, &info);
-		muter.Init(&MM, &info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::AMPLIFICATION, decaySamplesIn);
+		muterAfterLost.Init(&MM, &info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::ATTENUATION, attenSamplesAfterLostIn);
+		muterAfterNoLost.Init(&MM, &info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::AMPLIFICATION, gainSamplesAfterNoLostIn);
 		_overlapAdd.Init(&MM,&info, OverlapAdd_c::WindowChoose::Line, overlapSamples);
-		_waveFormMatch.Init(
-			WaveFormMatch_c::FuncMode_e::ACCORELATION,
-			&info,
-			MUSIC_PLC_SEEK_MS_DEFAULT * info._rate / 1000,
-			MUSIC_PLC_MATCH_MS_DEFAULT * info._rate / 1000);
-			
+
+		_seekSamples = seekSamplesIn;
+		_matchSamples = matchSamplesIn;
+
+		_waveFormMatch.Init(WaveFormMatch_c::FuncMode_e::ACCORELATION, &info);
 		return MUSIC_PLC_RET_SUCCESS;
 	}
 	i32 DeInit() {
@@ -164,7 +171,12 @@ public:
 		}
 
 		//muting
-		muter.DoMute(infuture.GetBufInSample(0), frameSamples);
+		if (isLost == false){
+			muterAfterNoLost.DoMute(infuture.GetBufInSample(0), frameSamples);
+		}
+		else{
+			muterAfterLost.DoMute(infuture.GetBufInSample(0), frameSamples);
+		}
 
 		//out
 		inHistory.Clear(frameSamples);
@@ -181,16 +193,18 @@ private:
 	i32 frameSamples;
 	i32 lostCount;
 	i32 overlapSamples;
+	i32 _seekSamples;
+	i32 _matchSamples;
 	AudioSamples pIn;
 	AudioSamples pOut;
 	AudioSamples inHistory;
 	AudioSamples infuture;
 	MusicPlcFillSignal_c fillSignal;
-	Muter_c muter;
+	Muter_c muterAfterLost;
+	Muter_c muterAfterNoLost;
 	OverlapAdd_c _overlapAdd;
 	WaveFormMatch_c _waveFormMatch;
 	b1 isQuickDeal;
-
 };
 
 

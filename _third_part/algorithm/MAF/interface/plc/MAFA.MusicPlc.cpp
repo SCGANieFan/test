@@ -40,8 +40,10 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.width = _width;
 	initParam.frameSamples = _frameSamples;
 	initParam.overlapSamples = _overlapMs * _rate / 1000;
-	initParam.decaySamples = _decayMs * _rate / 1000;
-
+	initParam.attenuateSamplesAfterLost = _decayMs * _rate / 1000;
+	initParam.gainSamplesAfterNoLost= _gainMs * _rate / 1000;
+	initParam.seekSamples = 8 *_rate / 1000;
+	initParam.matchSamples = 3 *_rate / 1000;
 	_hdSize = MusicPlc_GetStateSize();
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
@@ -127,6 +129,9 @@ maf_int32 MAFA_MusicPlc::Set(const maf_int8* key, maf_void* val)
 {
 	if (MAF_String::StrCompare(key, "decayMs")) {
 		_decayMs = (maf_int16)val; return 0;
+	}
+	else if (MAF_String::StrCompare(key, "gainMs")) {
+		_gainMs = (maf_int16)val; return 0;
 	}
 	else if (MAF_String::StrCompare(key, "overlapMs")) {
 		_overlapMs = (maf_int16)val; return 0;

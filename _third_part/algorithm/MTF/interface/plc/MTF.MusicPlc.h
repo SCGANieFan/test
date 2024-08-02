@@ -21,6 +21,7 @@ private:
 	mtf_int32 _hdSize = 0;
 
 	mtf_int16 _decayMs = 0;
+	mtf_int16 _gainMs = 0;
 	mtf_int16 _overlapMs = 0;
 
 	mtf_int32 _frames = 0;
