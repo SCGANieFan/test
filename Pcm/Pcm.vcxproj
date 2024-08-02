@@ -67,16 +67,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.cpp" />
+    <ClCompile Include="..\_third_part\MAF\interface\pcm\MAFA.PcmDemux.cpp" />
+    <ClCompile Include="..\_third_part\MAF\interface\pcm\MAFA.PcmMux.cpp" />
+    <ClCompile Include="..\_third_part\MTF\interface\pcm\MTF.PcmDemuxer.cpp" />
+    <ClCompile Include="..\_third_part\MTF\interface\pcm\MTF.PcmMuxer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.h" />
+    <ClInclude Include="..\_third_part\MAF\interface\pcm\MAFA.PcmDemux.h" />
+    <ClInclude Include="..\_third_part\MAF\interface\pcm\MAFA.PcmMux.h" />
+    <ClInclude Include="..\_third_part\MTF\interface\pcm\MTF.PcmDemuxer.h" />
+    <ClInclude Include="..\_third_part\MTF\interface\pcm\MTF.PcmMuxer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

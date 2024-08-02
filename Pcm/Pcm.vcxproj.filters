@@ -12,30 +12,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.cpp">
+    <ClCompile Include="..\_third_part\MTF\interface\pcm\MTF.PcmMuxer.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.cpp">
+    <ClCompile Include="..\_third_part\MTF\interface\pcm\MTF.PcmDemuxer.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.cpp">
+    <ClCompile Include="..\_third_part\MAF\interface\pcm\MAFA.PcmMux.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.cpp">
+    <ClCompile Include="..\_third_part\MAF\interface\pcm\MAFA.PcmDemux.cpp">
       <Filter>maf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmMuxer.h">
+    <ClInclude Include="..\_third_part\MTF\interface\pcm\MTF.PcmMuxer.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\pcm\MTF.PcmDemuxer.h">
+    <ClInclude Include="..\_third_part\MTF\interface\pcm\MTF.PcmDemuxer.h">
       <Filter>mtf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmMux.h">
+    <ClInclude Include="..\_third_part\MAF\interface\pcm\MAFA.PcmDemux.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\pcm\MAFA.PcmDemux.h">
+    <ClInclude Include="..\_third_part\MAF\interface\pcm\MAFA.PcmMux.h">
       <Filter>maf</Filter>
     </ClInclude>
   </ItemGroup>

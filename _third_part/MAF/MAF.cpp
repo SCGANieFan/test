@@ -1,4 +1,3 @@
-
 #include "MAF.Objects.h"
 #include "MAF.String.h"
 #include "MAF.Algorithm.h"

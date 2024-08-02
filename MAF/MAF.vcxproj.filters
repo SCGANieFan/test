@@ -6,60 +6,63 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Objects.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Objects.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Algorithm.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Printf.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Memory.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.String.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\MAF.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.String.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAFA.Info.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Audio.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Algorithm.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Data.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Audio.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAF.Printf.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.AudioInfo.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\base\MAFA.Info.cpp">
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Data.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Memory.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\MAF.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Memory.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Objects.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Printf.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Printf.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Objects.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.String.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Algorithm.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Type.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\MAF.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.String.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAFA.Info.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Type.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Algorithm.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Audio.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Audio.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAF.Data.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Data.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\base\MAFA.Info.h">
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Memory.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\MAF.h" />
   </ItemGroup>
 </Project>

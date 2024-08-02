@@ -6,108 +6,108 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Memory.cpp">
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Element.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Object.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Interface.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Objects.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Memory.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Port.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Object.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Printer.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Objects.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Process.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Port.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Sink.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Printer.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Source.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Process.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.String.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Sink.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Source.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.String.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Data.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Type.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Element.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioDemuxer.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Interface.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioInfo.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioMuxer.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.cpp">
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioProcess.h">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\MTF.cpp" />
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Data.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\MTF.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Memory.h">
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Interface.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Object.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Memory.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Objects.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Object.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Port.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Objects.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Printer.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Port.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Process.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Printer.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Sink.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Process.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Source.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Sink.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.String.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Source.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Type.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.String.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioDemuxer.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioInfo.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Data.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioMuxer.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Element.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioProcess.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Interface.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Data.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.h">
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Element.cpp">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\MTF.h" />
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\MTF.cpp" />
   </ItemGroup>
 </Project>

@@ -408,7 +408,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/speed_control;$(MTF_PATH)/interface/AudioSpeedCtr;$(MAF_PATH)/interface/AudioSpeedCtr;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/process/speed_control;$(MTF_PATH)/interface/AudioSpeedCtr;$(MAF_PATH)/interface/AudioSpeedCtr;$(ALGO_PATH)/base;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
@@ -525,14 +525,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControl.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioSpeedCtr\MAFA.SpeedCtr.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\AudioSpeedCtr\MTF.AudioSpeedCtr.h" />
+    <ClInclude Include="..\_third_part\MAF\interface\AudioSpeedCtr\MAFA.SpeedCtr.h" />
+    <ClInclude Include="..\_third_part\MTF\interface\AudioSpeedCtr\MTF.AudioSpeedCtr.h" />
     <ClInclude Include="AudioSpeedCtrTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\audio\process\speed_control\AudioSpeedControl.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioSpeedCtr\MAFA.SpeedCtr.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioSpeedCtr\MTF.AudioSpeedCtr.cpp" />
+    <ClCompile Include="..\_third_part\MAF\interface\AudioSpeedCtr\MAFA.SpeedCtr.cpp" />
+    <ClCompile Include="..\_third_part\MTF\interface\AudioSpeedCtr\MTF.AudioSpeedCtr.cpp" />
     <ClCompile Include="AudioSpeedCtrTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

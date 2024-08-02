@@ -21,12 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.h">
-      <Filter>maf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.h">
-      <Filter>mtf</Filter>
-    </ClInclude>
     <ClInclude Include="AudioResampleTest.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\resample\AudioResample.h">
       <Filter>lib\audio_resample</Filter>
@@ -37,14 +31,14 @@
     <ClInclude Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.inner.h">
       <Filter>lib\resample_coef</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\AudioResample\MAFA.Resample.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\AudioResample\MTF.AudioResample.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\AudioResample\MAFA.Resample.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\AudioResample\MTF.AudioResample.cpp">
-      <Filter>mtf</Filter>
-    </ClCompile>
     <ClCompile Include="AudioResampleTest.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\process\resample\AudioResample.cpp">
       <Filter>lib\audio_resample</Filter>
@@ -57,6 +51,12 @@
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\process\resample\resample_coef\resamples.ex_c.cpp">
       <Filter>lib\resample_coef</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\AudioResample\MAFA.Resample.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\AudioResample\MTF.AudioResample.cpp">
+      <Filter>mtf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

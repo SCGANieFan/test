@@ -19,43 +19,43 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Data.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Element.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Interface.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Memory.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Object.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Objects.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Port.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Printer.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Process.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Sink.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.Source.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\base\MTF.String.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\MTF.cpp" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioDemuxer.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioInfo.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioMuxer.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.AudioProcess.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Data.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Element.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Interface.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Memory.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Object.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Objects.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Port.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Printer.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Process.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Sink.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Source.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.String.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.Type.h" />
+    <ClInclude Include="..\_third_part\MTF\MTF.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioDemuxer.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioInfo.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioMuxer.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.AudioProcess.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Data.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Element.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Interface.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Memory.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Object.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Objects.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Port.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Printer.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Process.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Sink.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Source.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.String.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\base\MTF.Type.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\MTF.h" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioDemuxer.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioInfo.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioMuxer.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.AudioProcess.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Data.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Element.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Interface.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Memory.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Object.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Objects.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Port.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Printer.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Process.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Sink.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.Source.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.String.cpp" />
+    <ClCompile Include="..\_third_part\MTF\MTF.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -98,6 +98,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\_vsconfig\include path.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -118,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../_third_part/algorithm/MTF;../_third_part/algorithm/MTF/base</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MTF_PATH);$(MTF_PATH)/base</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

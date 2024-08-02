@@ -4,8 +4,9 @@
   <PropertyGroup Label="UserMacros">
     <ALGO_PATH>../_third_part/algorithm</ALGO_PATH>
     <ALGO_AUDIO_PATH>../_third_part/algorithm/audio</ALGO_AUDIO_PATH>
-    <MAF_PATH>../_third_part/algorithm/MAF</MAF_PATH>
-    <MTF_PATH>../_third_part/algorithm/MTF</MTF_PATH>
+    <ALGO_VIDEO_PATH>../_third_part/algorithm/video</ALGO_VIDEO_PATH>
+    <MAF_PATH>../_third_part/MAF</MAF_PATH>
+    <MTF_PATH>../_third_part/MTF</MTF_PATH>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)_lib\</OutDir>
@@ -28,6 +29,9 @@
     </BuildMacro>
     <BuildMacro Include="ALGO_AUDIO_PATH">
       <Value>$(ALGO_AUDIO_PATH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="ALGO_VIDEO_PATH">
+      <Value>$(ALGO_VIDEO_PATH)</Value>
     </BuildMacro>
     <BuildMacro Include="MAF_PATH">
       <Value>$(MAF_PATH)</Value>

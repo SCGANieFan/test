@@ -13,32 +13,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlcTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.cpp">
-      <Filter>mtf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.cpp">
+    <ClCompile Include="..\_third_part\MAF\interface\plc\MAFA.MusicPlc.cpp">
       <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.cpp">
+      <Filter>mtf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlcTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\plc\MTF.MusicPlc.h">
-      <Filter>mtf</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.h">
       <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\plc\MAFA.MusicPlc.h">
-      <Filter>maf</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcInner.h">
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcFillSignal.h">
       <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\plc\MAFA.MusicPlc.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.h">
+      <Filter>mtf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

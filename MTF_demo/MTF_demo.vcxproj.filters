@@ -16,110 +16,113 @@
     <Filter Include="lib\base">
       <UniqueIdentifier>{2f11cfcc-daa8-4a86-94bc-c0e09dc9e04d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\audio">
+    <Filter Include="lib\audioCom">
       <UniqueIdentifier>{9a300a1b-4737-4b2d-84f6-386ebbf5f6bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.cpp">
-      <Filter>mtf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\demo\audiodemo.cpp">
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="MTF_demoTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.cpp">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\demo\MAF.demo.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\demo\MTF.demo.cpp">
+      <Filter>mtf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
-      <Filter>mtf</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\demo\audiodemo.h">
       <Filter>lib</Filter>
     </ClInclude>
     <ClInclude Include="MTF_demoTest.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioSamlpes.h">
-      <Filter>lib\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Type.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\demo\MAF.demo.h">
-      <Filter>maf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buffer.h">
-      <Filter>lib\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h">
-      <Filter>lib\base</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioData.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Com.h">
-      <Filter>lib\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.Inner.h">
-      <Filter>lib\base</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.BufferGenerator.h">
-      <Filter>lib\audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Math.h">
-      <Filter>lib\base</Filter>
+      <Filter>lib\audioCom</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.h">
-      <Filter>lib\audio</Filter>
+      <Filter>lib\audioCom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Math.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Matrix.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Memory.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Printer.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Type.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.BasePorting.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.BasePorting.Inner.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Buffer.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Data.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Macro.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\demo\MAF.demo.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\demo\MTF.demo.h">
+      <Filter>mtf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,12 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ApeTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDec.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDec.cpp">
-      <Filter>mtf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.cpp">
       <Filter>lib</Filter>
     </ClCompile>
@@ -37,27 +31,27 @@
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.decoder.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDemux.cpp">
-      <Filter>maf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDemux.cpp">
-      <Filter>mtf</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeDemux.cpp">
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\algorithm\audio\codec\ape\ApeDec.cpp">
       <Filter>lib</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\ape\MAFA.ApeDemux.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\ape\MAFA.ApeDec.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\ape\MTF.ApeDemux.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\ape\MTF.ApeDec.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApeTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDec.h">
-      <Filter>maf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDec.h">
-      <Filter>mtf</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.NNfilter.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -85,12 +79,6 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\Ape.Inner.demuxer.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MAF\interface\ape\MAFA.ApeDemux.h">
-      <Filter>maf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\MTF\interface\ape\MTF.ApeDemux.h">
-      <Filter>mtf</Filter>
-    </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeDec.h">
       <Filter>lib</Filter>
     </ClInclude>
@@ -99,6 +87,18 @@
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\ape\ApeCom.h">
       <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\ape\MAFA.ApeDemux.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\ape\MAFA.ApeDec.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\ape\MTF.ApeDemux.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\ape\MTF.ApeDec.h">
+      <Filter>mtf</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
