@@ -1,6 +1,7 @@
 #pragma once
 #include"Algo.AudioCal.Com.h"
 #include"Algo.AudioData.h"
+#include"Algo.AudioCal.Accorelation.h"
 #if 1
 
 namespace Algo {
@@ -13,46 +14,31 @@ namespace Algo {
 				ACCORELATION,
 			};
 		private:
-			typedef i16(*WAVE_FORM_MATCH_CB)(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample);
-
+			typedef i32(*WaveFormMatch_Sum_CB)(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample);
+			typedef i32(*WAVE_FORM_MATCH_CB)(WaveFormMatch_c *hd, void* ref, void* cmp, i32 seekSample, i32 matchSample);
 		public:
 			WaveFormMatch_c() {};
 			~WaveFormMatch_c() {};
 		public:
-			INLINE void Init(FuncMode_e mode, AudioInfo* info,i32 seekSample, i32 matchSample) {
-					_info = info;
-					_seekSample = seekSample;
-					_matchSample = matchSample;
-					_waveFormMatch = GetFunc(mode, _info->_width);
-			}
+			void Init(FuncMode_e mode, AudioInfo* info);
 
-			INLINE i32 DoWaveFormMatch(void* ref, void* cmp) {
+			INLINE i32 DoWaveFormMatch(void* ref, void* cmp, i32 seekSample, i32 matchSample) {
 				return _waveFormMatch(
+					this,
 					ref,
 					cmp,
-					_info->_channels,
-					_seekSample,
-					_matchSample);
+					seekSample,
+					matchSample);
 			}
 		private:
-			STATIC WAVE_FORM_MATCH_CB GetFunc(FuncMode_e mode, i16 width);
-			template<class T>
-			STATIC i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample);
-			template<class T>
-			STATIC i16 WaveFormMatch_Sum(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample);
-			template<class T>
-			STATIC i32 CrossCorrAccumulate(T* refQ15, T* tempQ15, i16 channels, i32 accorelationSamples, u64* normQ30);
-			template<class T>
-			STATIC i32 CrossCorr(T* refQ15, T* tempQ15, i16 channels, i32 accorrelationSample, u64* normQ30);
-			template<class T>
-			STATIC i16 WaveFormMatch_Accorelation(void* ref, void* cmp, i16 channels, i32 seekSample, i32 matchSample);
+			static i32 WaveFormMatch_Sum(WaveFormMatch_c* hd, void* ref, void* cmp, i32 seekSample, i32 matchSample);
+			static i32 WaveFormMatch_Accorelation(WaveFormMatch_c* hd, void* ref, void* cmp, i32 seekSample, i32 matchSample);
 		private:
 			WAVE_FORM_MATCH_CB _waveFormMatch;
-			i32 _seekSample;
-			i32 _matchSample;
+			Accorelation_c _accorelation;
+			WaveFormMatch_Sum_CB _waveFormMatch_Sum;
 			AudioInfo* _info;
 		};
-
 	}
 }
 

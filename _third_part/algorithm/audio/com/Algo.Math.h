@@ -17,9 +17,9 @@ namespace Algo {
 				return 0;
 			u64 left = 1;
 			u64 right = x;
-			while (left <= right){
-				u64 mid = left + (right - left);
-				if (x>=(mid * mid)) {
+			while (left <= right) {
+				u64 mid = left + ((right - left) >> 1);
+				if (x >= (mid * mid)) {
 					if (x < (mid + 1) * (mid + 1)) {
 						return mid;
 					}
@@ -31,6 +31,7 @@ namespace Algo {
 					right = mid - 1;
 				}
 			}
+			return 0;
 		}
 
 		STATIC INLINE i64 DivisionLocal(i64 dividend, i64 divisor) {
@@ -38,9 +39,9 @@ namespace Algo {
 			if (dividend == 0) return 0;
 			if (dividend < divisor) return 0;
 
-			i32 result = 0;
-			i32 temp_divisor = divisor;
-			i32 multiple = 1;
+			i64 result = 0;
+			i64 temp_divisor = divisor;
+			i64 multiple = 1;
 			while (dividend >= (temp_divisor << 1)) {
 				temp_divisor <<= 1;
 				multiple <<= 1;

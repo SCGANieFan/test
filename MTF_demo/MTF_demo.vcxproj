@@ -520,6 +520,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp" />
@@ -531,6 +532,7 @@
     <ClCompile Include="MTF_demoTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Basic.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.BufferGenerator.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Com.h" />
@@ -545,6 +547,7 @@
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Buffer.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Data.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Macro.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Math.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Memory.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.BasePorting.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Printer.h" />

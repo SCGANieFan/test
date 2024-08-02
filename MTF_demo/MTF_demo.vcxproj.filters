@@ -46,6 +46,9 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
       <Filter>lib\audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.cpp">
+      <Filter>lib\audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\algorithm\MTF\interface\demo\MTF.demo.h">
@@ -110,6 +113,12 @@
       <Filter>lib\audio</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.BufferGenerator.h">
+      <Filter>lib\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.Math.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Accorelation.h">
       <Filter>lib\audio</Filter>
     </ClInclude>
   </ItemGroup>
