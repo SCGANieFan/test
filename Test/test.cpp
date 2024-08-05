@@ -13,7 +13,7 @@ int main()
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//OggTest();
-	PlcTest();
+	//PlcTest();
 	//AudioSpeedCtrTest();
 	//AudioResampleTest();
 	//OggTest();
@@ -24,7 +24,7 @@ int main()
 	
 	
 	
-	//testDemo();
+	testDemo();
 	return 1;
 }
 

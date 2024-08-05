@@ -30,7 +30,7 @@ INLINE i32 CrossCorrAccumulate(void* refQ15, void* tempQ15, i16 channels, i32 ac
 	//outQ10
 	//(corrQ30/Sqrt(normQ30))>>5
 	u64 t1 = ((u64)Math_c::Sqrt((*normQ30 < 1) ? 1 : *normQ30));
-	t1 = Math_c::DivisionLocal(corrQ30,t1);
+	t1 = Math_c::Division(corrQ30,t1);
 	return (i32)(t1 >> 5);
 }
 
@@ -55,7 +55,7 @@ INLINE i32 CrossCorr(void* refQ15, void* tempQ15, i16 channels, i32 accorrelatio
 	//out Q10
 	//(corrQ30/Sqrt(normQ30))>>5
 	u64 t1 = ((u64)Math_c::Sqrt((*normQ30 < 1) ? 1 : *normQ30));
-	t1 = Math_c::DivisionLocal(corrQ30,t1);
+	t1 = Math_c::Division(corrQ30,t1);
 	return (i32)(t1 >> 5);
 }
 

@@ -27,7 +27,7 @@ namespace Algo {
 			INLINE void SetDir(DirChoose_e dir) { _dir = dir; }
 			INLINE void Sync(Muter_c dst) {
 				//_muteSamplesNow = dst._muteSamplesNow * _muteSamplesMax / dst._muteSamplesMax;
-				_muteSamplesNow = Math_c::DivisionLocal(dst._muteSamplesNow * _muteSamplesMax, dst._muteSamplesMax);
+				_muteSamplesNow = Math_c::Division(dst._muteSamplesNow * _muteSamplesMax, dst._muteSamplesMax);
 			}
 			INLINE void Reset(DirChoose_e dir) {
 				_dir = dir;

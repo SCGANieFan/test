@@ -34,7 +34,7 @@ namespace Algo {
 			return 0;
 		}
 
-		STATIC INLINE i64 DivisionLocal(i64 dividend, i64 divisor) {
+		STATIC INLINE i64 Division(i64 dividend, i64 divisor) {
 			if (divisor == 0) return -1;
 			if (dividend == 0) return 0;
 			if (dividend < divisor) return 0;
