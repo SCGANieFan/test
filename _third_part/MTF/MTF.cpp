@@ -43,12 +43,23 @@ bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** para
 		pStr += posStart + 1;
 		strLen0 -= posStart + 1;
 		posStart = MTF_String::Search(pStr, "=", 0, strLen0 - 1);
+		uint8_t shift = 1;
 		if (*(pStr + posStart + 1) == '$')
 		{
-			(*ele)->Set(pStr, param[*(pStr + posStart + 2)-48]);
+			uint8_t index;
+			index = *(pStr + posStart + 2) - 48;
+			shift = 3;
+			if (*(pStr + posStart + 3) != ','
+				&& *(pStr + posStart + 3) != ';'
+				&& *(pStr + posStart + 3) != '|')
+			{
+				index = 10 * index + *(pStr + posStart + 3) - 48;
+				shift = 4;
+			}
+			(*ele)->Set(pStr, param[index]);
 		}
-		pStr += posStart + 3;
-		strLen0 -= posStart + 3;
+		pStr += posStart + shift;
+		strLen0 -= posStart + shift;
 	}
 }
 

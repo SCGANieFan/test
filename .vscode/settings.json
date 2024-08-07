@@ -67,6 +67,7 @@
     "streambuf": "cpp",
     "istream": "cpp",
     "functional": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "string": "cpp"
   }
 }

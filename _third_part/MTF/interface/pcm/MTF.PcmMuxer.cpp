@@ -46,6 +46,8 @@ mtf_int32 MTF_PcmMuxer::Init()
 
 mtf_int32 MTF_PcmMuxer::receive(MTF_Data& iData)
 {
+	if (iData._flags & MTF_DataFlag_ESO)
+		return -1;
 	fwrite(iData.Data(), 1, iData._size, (FILE*)_pFile);
 	iData.Used(iData._size);
 	return 0;

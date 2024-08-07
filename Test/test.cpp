@@ -7,6 +7,7 @@
 #include"MTF_demoTest.h"
 #include"WavTest.h"
 #include"ApeTest.h"
+#include"SbcTest.h"
 
 int main()
 {
@@ -21,10 +22,10 @@ int main()
 	//MTF_demo_Test();
 	//WavTest();
 	//ApeTest();
+	SbcTest();
 	
 	
-	
-	testDemo();
+	//testDemo();
 	return 1;
 }
 

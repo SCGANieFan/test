@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="SbcTest.cpp" />
+    <ClCompile Include="..\_third_part\MTF\interface\sbc\MTF.SbcEnc.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\sbc\MTF.SbcDec.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\sbc\MAFA.SbcDec.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\sbc\MAFA.SbcEnc.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band4.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band8.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_make_header.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_quant.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_scale_factor.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_info.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_mute.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_bits_alloc.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_crc.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band4.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band8.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_sbsamples.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SbcTest.h" />
+    <ClInclude Include="..\_third_part\MTF\interface\sbc\MTF.SbcDec.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\sbc\MTF.SbcEnc.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\sbc\MAFA.SbcEnc.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\sbc\MAFA.SbcDec.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_priv.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_arth.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_priv.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_dec.h">
+      <Filter>lib\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_enc.h">
+      <Filter>lib\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_com.h">
+      <Filter>lib\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{b389aca5-4e86-4886-a170-41680765a2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maf">
+      <UniqueIdentifier>{f48788de-108a-4526-b4a0-3fea0f057fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mtf">
+      <UniqueIdentifier>{21881b44-ecfe-4a44-8f1b-f565e7dca603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\inc">
+      <UniqueIdentifier>{212f46c2-d297-47c0-bcd5-6537d792395a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
