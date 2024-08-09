@@ -23,15 +23,13 @@ enum Sbc_Mode_E {
 };
 #endif
 
+#if 0
 //#define FILE_NAME "mbz_48k2h.wav"
 //#define FILE_NAME "mbz_48k2h_10ms.wav"
-#define FILE_NAME "sin5k48k2ch.wav"
-
+//#define FILE_NAME "sin5k48k2ch.wav"
 #define RATE 48000
 #define CHANNEL 2
 #define WIDTH 2
-
-
 //SBC
 #define SBC_BIT_POOL 51
 #define SBC_BLOCKS 16
@@ -39,13 +37,31 @@ enum Sbc_Mode_E {
 #define SBC_CHANNEL_MODE SbcChannelMode_e::SBC_CHNL_MODE_STEREO_E
 #define SBC_ALLOC_METHOD SbcAllocMethod_e::SBC_ALLOC_METHOD_LOUDNESS_E
 #define SBC_MODE Sbc_Mode_E::SBC_MODE_NORMAL
+#endif
 
 
+#if 1
+#define FILE_NAME "usedForThd_48k1ch.wav"
+#define RATE 48000
+#define CHANNEL 1
+#define WIDTH 2
+//SBC
+#define SBC_BIT_POOL 102
+//#define SBC_BIT_POOL 51
+#define SBC_BLOCKS 16
+#define SBC_SUB_BAND 8
+#define SBC_CHANNEL_MODE SbcChannelMode_e::SBC_CHNL_MODE_MONO_E
+#define SBC_ALLOC_METHOD SbcAllocMethod_e::SBC_ALLOC_METHOD_LOUDNESS_E
+#define SBC_MODE Sbc_Mode_E::SBC_MODE_NORMAL
+#endif
+
+#if 1
 //PLC
 #define FRAME_SAMPLES ((int)SBC_BLOCKS*SBC_SUB_BAND)
 #define DECAY_MS 30
 #define GAIN_MS 10
 #define OVERLAP_MS 4
+#endif
 
 
 void SbcTest()

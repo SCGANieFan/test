@@ -30,7 +30,20 @@ public:
 	}
 
 	INLINE void GetHead(void* headOut) {
-		ALGO_MEM_CPY(headOut, &_head, sizeof(WavHead));
+		//ALGO_MEM_CPY(headOut, &_head, sizeof(WavHead));
+		u32 off=0;
+		u32 ssize;
+		ssize = sizeof(RiffChunk);
+		ALGO_MEM_CPY(((u8*)headOut + off), &_head.riff, ssize);
+		off += ssize;
+
+		ssize = sizeof(FmtChunk);
+		ALGO_MEM_CPY(((u8*)headOut + off), &_head.fmt, ssize);
+		off += ssize;
+
+		ssize = sizeof(DataChunk);
+		ALGO_MEM_CPY(((u8*)headOut + off), &_head.data, ssize);
+		off += ssize;
 	}
 public:
 	b1 Init(AlgoBasePorting* basePorting);

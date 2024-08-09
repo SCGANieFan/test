@@ -12,7 +12,7 @@ b1 WavMuxer_c::Init(AlgoBasePorting* basePorting) {
 
 	ALGO_MEM_SET(this, 0, sizeof(WavMuxer_c));
 	_head.riff.chunkID = *(u32*)"RIFF";
-	//_head.riff.chunkSize
+	_head.riff.chunkSize = sizeof(RiffChunk)+ sizeof(FmtChunk) + sizeof(DataChunk) - 8;
 	_head.riff.format = *(u32*)"WAVE";
 
 	_head.fmt.chunkId = *(u32*)"fmt ";//
