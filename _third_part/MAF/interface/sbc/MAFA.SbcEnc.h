@@ -26,9 +26,8 @@ private:
 	maf_uint8 _channelMode = 0;
 	maf_uint8 _allocMethod = 0;
 	maf_uint8 _sbcMode = 0;
-	maf_uint16 _ch0[512];
-	maf_uint16 _ch1[512];
-	void *_pInfo;
+	maf_uint16 _pcmSize;
+	maf_uint16 _vlcSize;
 private:
 	static maf_void* _malloc;
 	static maf_void* _free;

@@ -26,9 +26,8 @@ private:
 	maf_void* _basePorting;
 
 	maf_bool _isFirst = true;
-	maf_void* _pInfo;
-	maf_uint16 _ch0[512];
-	maf_uint16 _ch1[512];
+	maf_int32 _vlcSize;
+	maf_int32 _pcmSize;
 private:
 	static maf_void* _malloc;
 	static maf_void* _free;

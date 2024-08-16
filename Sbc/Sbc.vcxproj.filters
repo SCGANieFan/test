@@ -14,49 +14,49 @@
     <ClCompile Include="..\_third_part\MAF\interface\sbc\MAFA.SbcEnc.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band4.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Band4.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band8.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Band8.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_make_header.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Sbsamples.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_quant.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Interface.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_scale_factor.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Band4.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_info.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Band8.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_mute.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.HeaderMake.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_bits_alloc.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Quant.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_crc.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.ScaleFactor.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.BitsAlloc.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band4.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.CRC.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band8.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.cpp">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_sbsamples.cpp">
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Interface.cpp">
       <Filter>lib</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,29 +74,23 @@
     <ClInclude Include="..\_third_part\MAF\interface\sbc\MAFA.SbcDec.h">
       <Filter>maf</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_priv.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_arth.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_priv.h">
-      <Filter>lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_dec.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\inc\SbcEnc.Interface.h">
       <Filter>lib\inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_enc.h">
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\BitStream.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\inc\SbcDec.Interface.h">
       <Filter>lib\inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_com.h">
-      <Filter>lib\inc</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.h">
+      <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

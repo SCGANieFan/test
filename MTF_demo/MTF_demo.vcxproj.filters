@@ -124,5 +124,8 @@
     <ClInclude Include="..\_third_part\MTF\interface\demo\MTF.demo.h">
       <Filter>mtf</Filter>
     </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Logical.h">
+      <Filter>lib\base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

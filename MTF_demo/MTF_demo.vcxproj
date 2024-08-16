@@ -553,6 +553,7 @@
     <ClInclude Include="..\_third_part\algorithm\base\Algo.BasePorting.Inner.h" />
     <ClInclude Include="..\_third_part\algorithm\base\Algo.Buffer.h" />
     <ClInclude Include="..\_third_part\algorithm\base\Algo.Data.h" />
+    <ClInclude Include="..\_third_part\algorithm\base\Algo.Logical.h" />
     <ClInclude Include="..\_third_part\algorithm\base\Algo.Macro.h" />
     <ClInclude Include="..\_third_part\algorithm\base\Algo.Math.h" />
     <ClInclude Include="..\_third_part\algorithm\base\Algo.Matrix.h" />

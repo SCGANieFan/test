@@ -354,7 +354,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/codec/sbc;$(ALGO_AUDIO_PATH)/codec/sbc/ori/inc;$(MTF_PATH)/interface/sbc;$(MAF_PATH)/interface/sbc;$(ALGO_PATH)/base;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ALGO_AUDIO_PATH)/codec/sbc/now;$(ALGO_AUDIO_PATH)/codec/sbc/now/inc;$(MTF_PATH)/interface/sbc;$(MAF_PATH)/interface/sbc;$(ALGO_PATH)/base;$(ALGO_AUDIO_PATH)/com;$(MAF_PATH);$(MAF_PATH)/base;$(MAF_PATH)/inc;$(MTF_PATH);$(MTF_PATH)/base;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -518,21 +518,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band4.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_band8.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_sbsamples.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band4.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_band8.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_make_header.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_quant.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_scale_factor.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_info.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_mute.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_bits_alloc.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv_crc.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.CRC.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Interface.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Band4.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Band8.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.Sbsamples.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Interface.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Band4.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Band8.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.HeaderMake.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.Quant.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.ScaleFactor.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.BitsAlloc.cpp" />
     <ClCompile Include="..\_third_part\MAF\interface\sbc\MAFA.SbcDec.cpp" />
     <ClCompile Include="..\_third_part\MAF\interface\sbc\MAFA.SbcEnc.cpp" />
     <ClCompile Include="..\_third_part\MTF\interface\sbc\MTF.SbcDec.cpp" />
@@ -540,14 +540,12 @@
     <ClCompile Include="SbcTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\bs.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_com.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_dec.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\inc\sbc_enc.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_arth.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_dec_priv.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_enc_priv.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\ori\sbc_priv.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\BitStream.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\inc\SbcDec.Interface.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\inc\SbcEnc.Interface.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcCom.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcEnc.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\sbc\now\SbcDec.h" />
     <ClInclude Include="..\_third_part\MAF\interface\sbc\MAFA.SbcDec.h" />
     <ClInclude Include="..\_third_part\MAF\interface\sbc\MAFA.SbcEnc.h" />
     <ClInclude Include="..\_third_part\MTF\interface\sbc\MTF.SbcDec.h" />

@@ -2,7 +2,7 @@
 #include "MAFA.SbcEnc.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-#include "sbc_enc.h"
+#include "SbcEnc.Interface.h"
 
 maf_void maf_sbc_enc_register()
 {
@@ -22,196 +22,55 @@ MAFA_SbcEnc::~MAFA_SbcEnc()
 maf_int32 MAFA_SbcEnc::Init()
 {
 	MAF_PRINT();
-#if 0
-	MusicPlcInitParam initParam;
-	MAF_MEM_SET(&initParam, 0, sizeof(MusicPlcInitParam));
-#if 1
-	_malloc = _memory.GetMalloc();
-	_free = _memory.GetFree();
+	_hdSize  = SbcEnc_GetSize();
+	_hd = _memory.Malloc(_hdSize);
 
-	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting));
-	AlgoBasePorting* basePorting = (AlgoBasePorting*)_basePorting;
-
-	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
-	basePorting->Free = (ALGO_Free_t)FreeLocal;
-	initParam.basePorting = basePorting;
-#endif
-	initParam.fsHz = _rate;
+	SbcEncInitParam_t initParam;
+	MAF_MEM_SET(&initParam, 0, sizeof(SbcEncInitParam_t));
+	initParam.sampleRate = _rate;
 	initParam.channels = _ch;
-	initParam.width = _width;
-	initParam.frameSamples = _frameSamples;
-	initParam.overlapSamples = _overlapMs * _rate / 1000;
-	initParam.attenuateSamplesAfterLost = _decayMs * _rate / 1000;
-	initParam.gainSamplesAfterNoLost= _gainMs * _rate / 1000;
-	initParam.seekSamples = 8 *_rate / 1000;
-	initParam.matchSamples = 3 *_rate / 1000;
-	_hdSize = MusicPlc_GetStateSize();
-	_hd = _memory.Malloc(_hdSize);
-	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
-	if (!_hd)
-	{
-		return -1;
-	}
-
-	maf_int32 ret = MusicPlc_StateInit(_hd, &initParam);
-
-	if (ret < 0)
-	{
-		return -1;
-	}
-#else
-	_hdSize  = sbc_encoder_get_size();
-	_hd = _memory.Malloc(_hdSize);
-	_pInfo = _memory.Malloc(_hdSize);
-	sbc_info_t *pInfo = (sbc_info_t *)_pInfo;
-	MAF_MEM_SET(_pInfo,0,sizeof(sbc_info_t));
-	pInfo->bitPool=_bitPool;
-	switch (_rate)
-	{
-	case 16000:pInfo->sampleFreq=SbcSampleRate_e::SBC_SAMPLE_FREQ_16K;break;
-	case 32000:pInfo->sampleFreq=SbcSampleRate_e::SBC_SAMPLE_FREQ_32K;break;
-	case 44100:pInfo->sampleFreq=SbcSampleRate_e::SBC_SAMPLE_FREQ_44K1;break;
-	case 48000:pInfo->sampleFreq=SbcSampleRate_e::SBC_SAMPLE_FREQ_48K;break;
-	default:
-		break;
-	}
-	pInfo->channelMode=(SbcChannelMode_e)_channelMode;
-	pInfo->allocMethod=(SbcAllocMethod_e)_allocMethod;
-	pInfo->numBlocks=_blocks;
-	pInfo->numSubBands=_subBands;
-	pInfo->numChannels=_ch;
-	pInfo->sbcMode=(Sbc_Mode_E)_sbcMode;
-	pInfo->sampleRate=_rate;
-	// info.vlc_size=;
-	// info.pcm_size=;
-	// info.pcm_samples=;
-
-	bool ret = sbc_encoder_init(_hd, pInfo);
+	initParam.bitPool = _bitPool;
+	initParam.channelMode = (SbcInterfaceChannelMode_e)_channelMode;
+	initParam.allocMethod = (SbcInterfaceAllocMethod_e)_allocMethod;
+	initParam.blocks = (SbcInterfaceBlocks_e)_blocks;
+	initParam.subBands = (SbcInterfaceSubBandS_e)_subBands;
+	
+	bool ret = SbcEnc_Init(_hd, &initParam);
 	if(!ret){
 		MAF_PRINT("sbc_encoder_init error");
 		return -1;
 	}
-		
+	maf_uint32 val;
+	ret = SbcEnc_Get(_hd, SBC_ENC_GET_PCM_SIZE, &val);
+	if(ret !=SBC_RET_SUCCESS)return -1;
+	_pcmSize = val;
 
+	SbcEnc_Get(_hd, SBC_ENC_GET_VLC_SIZE, &val);
+	if (ret != SBC_RET_SUCCESS)return -1;
+	_vlcSize = val;
 	return 0;
-#endif
 }
 
 maf_int32 MAFA_SbcEnc::Deinit()
 {
 	MAF_PRINT();
-#if 0
-	MusicPlc_StateDeInit(_hd);
 	_memory.Free(_hd);
-	_memory.Free(_basePorting);
-#endif
-	_memory.Free(_hd);
-	_memory.Free(_pInfo);
 	return 0;
 }
 
 maf_int32 MAFA_SbcEnc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
-#if 0
-	maf_int32 ret;
-
-	maf_int32 outByte = dataOut->GetLeftSize();
-
-	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
-	{
-#if 1
-		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
-		ret = MusicPlc_Run(
-			_hd,
-			NULL,
-			0,
-			dataOut->GetLeftData(),
-			&outByte,
-			true);
-#else
-		outByte= _frameSamples* _width *_ch;
-		MAF_MEM_SET(dataOut->GetLeftData(), 0, outByte);
-#endif
-		dataOut->Append(outByte);
-	}
-	else
-	{
-#if 0
-		ret = MusicPlc_Run(
-			_hd,
-			dataIn->GetData(),
-			dataIn->GetSize(),
-			dataOut->GetLeftData(),
-			&outByte,
-			false);
-		dataOut->Append(outByte);
-#else
-		dataOut->Append(dataIn->GetData(), dataIn->GetSize());
-		ret = MusicPlc_Run(
-			_hd,
-			dataOut->GetData(),
-			dataOut->GetSize(),
-			dataOut->GetData(),
-			&outByte,
-			false);
-#endif
-	}
-	if (ret < 0)
-	{
-		return -1;
-	}
-	dataIn->Used(dataIn->GetSize());
-	dataIn->ClearUsed();
-#else
-#if 1
 	while (1) {
-		if (dataIn->GetSize() < ((sbc_info_t*)_pInfo)->pcm_size) {
+		if (dataIn->GetSize() < _pcmSize) {
 			break;
 		}
-		pcm_s16_t pcm;
-		MAF_MEM_SET(&pcm, 0, sizeof(pcm_s16_t));
 
-
-#if 0
-		if (_ch == 1) {
-			maf_uint16* pIn = (maf_uint16*)dataIn->GetData();
-			for (maf_int32 s = 0; s < ((sbc_info_t*)_pInfo)->numBlocks * ((sbc_info_t*)_pInfo)->numSubBands; s++) {
-				_ch0[s] = pIn[0];
-				pIn++;
-			}
-		}
-		else if (_ch == 2) {
-			maf_uint16* pIn0 = (maf_uint16*)dataIn->GetData();
-			maf_uint16* pIn1 = (maf_uint16*)dataIn->GetData() + 1;
-			for (maf_int32 s = 0; s < ((sbc_info_t*)_pInfo)->numBlocks * ((sbc_info_t*)_pInfo)->numSubBands; s++) {
-				_ch0[s] = pIn0[0];
-				_ch1[s] = pIn1[0];
-				pIn0+=2;
-				pIn1+=2;
-			}
-		}
-		pcm.ch0 = (maf_int16*)&_ch0[0];
-		pcm.ch1 = (maf_int16*)&_ch1[0];
-#else
-		pcm.ch0 = (maf_int16*)dataIn->GetData();
-		//pcm.ch1 = (maf_int16*)dataIn->GetData() + 1;
-		pcm.flags = PCM_S16_FLAGS_INTERLACE;
-#endif
-		pcm.samples = dataIn->GetSize() / _ch/_width;
-		int ret = sbc_encode(_hd, &pcm, dataOut->GetLeftData(), dataOut->GetLeftSize());
-		dataOut->Append(((sbc_info_t*)_pInfo)->vlc_size);
-		dataIn->Used(((sbc_info_t*)_pInfo)->pcm_size);
+		int ret = SbcEnc_Run(_hd, dataIn->GetData(), dataIn->GetSize(), dataOut->GetLeftData(), dataOut->GetLeftSize());
+		dataOut->Append(_vlcSize);
+		dataIn->Used(_pcmSize);
 		dataIn->ClearUsed();
 	}
 	return 0;
-#else
-	
-	dataOut->Append(dataIn->GetData(), dataIn->GetSize());
-	dataIn->Used(dataIn->GetSize());
-	dataIn->ClearUsed();
-	return 0;
-#endif
-#endif
 }
 
 maf_int32 MAFA_SbcEnc::Set(const maf_int8* key, maf_void* val)

@@ -6,6 +6,8 @@
 // #include"Algo.Buffer.h"
 
 namespace Algo {
+#define ALGO_ABS(x) ((x)>0?(x):(-x))
+
 	class Math_c
 	{
 	public:

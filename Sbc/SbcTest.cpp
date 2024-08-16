@@ -23,10 +23,10 @@ enum Sbc_Mode_E {
 };
 #endif
 
-#if 0
+#if 1
 //#define FILE_NAME "mbz_48k2h.wav"
 //#define FILE_NAME "mbz_48k2h_10ms.wav"
-//#define FILE_NAME "sin5k48k2ch.wav"
+#define FILE_NAME "sin5k48k2ch.wav"
 #define RATE 48000
 #define CHANNEL 2
 #define WIDTH 2
@@ -40,14 +40,13 @@ enum Sbc_Mode_E {
 #endif
 
 
-#if 1
+#if 0
 #define FILE_NAME "usedForThd_48k1ch.wav"
 #define RATE 48000
 #define CHANNEL 1
 #define WIDTH 2
 //SBC
-#define SBC_BIT_POOL 102
-//#define SBC_BIT_POOL 51
+#define SBC_BIT_POOL 51
 #define SBC_BLOCKS 16
 #define SBC_SUB_BAND 8
 #define SBC_CHANNEL_MODE SbcChannelMode_e::SBC_CHNL_MODE_MONO_E
@@ -76,9 +75,11 @@ void SbcTest()
 	
 	char fNameIn[256];
 	char fNameOut[256];
-
 	sprintf(fNameIn, "%s%s", PATH, FILE_NAME);
-	sprintf(fNameOut, "%s.sbc.wav", fNameIn);
+
+#if 0
+	// juse enc
+	sprintf(fNameOut, "%s.sbc", fNameIn);
 	void* param[] = {
 		(void*)(fNameIn),
 		(void*)(fNameOut),
@@ -89,11 +90,56 @@ void SbcTest()
 		(void*)(SBC_CHANNEL_MODE),
 		(void*)(SBC_ALLOC_METHOD),
 		(void*)(SBC_MODE),
-		(void*)(DECAY_MS),
-		(void*)(GAIN_MS),
-		(void*)(OVERLAP_MS),
 	};
+	const char* str = {
+	"|wav_demuxer,url=$0,fSamples=$2|-->"
+	"|sbc_enc,bitPool=$3,blocks=$4,subBands=$5,channelMode=$6,allocMethod=$7,sbcMode=$8,|-->"
+	"|pcm_muxer,url=$1|"
+	};
+#endif
+
+#if 1
+	//enc and dec
+	sprintf(fNameOut, "%s.sbc.wav", fNameIn);
+	void* param[] = {
+	(void*)(fNameIn),
+	(void*)(fNameOut),
+	(void*)(FRAME_SAMPLES),
+	(void*)(SBC_BIT_POOL),
+	(void*)(SBC_BLOCKS),
+	(void*)(SBC_SUB_BAND),
+	(void*)(SBC_CHANNEL_MODE),
+	(void*)(SBC_ALLOC_METHOD),
+	(void*)(SBC_MODE),
+	(void*)(DECAY_MS),
+	(void*)(GAIN_MS),
+	(void*)(OVERLAP_MS),
+	};
+	const char* str = {
+	"|wav_demuxer,url=$0,fSamples=$2|-->"
+	"|sbc_enc,bitPool=$3,blocks=$4,subBands=$5,channelMode=$6,allocMethod=$7,sbcMode=$8,|-->"
+	"|sbc_dec|-->"
+	"|wav_muxer,url=$1|"
+	};
+#endif
+
 #if 0
+	//enc, dec and plc
+	sprintf(fNameOut, "%s.sbc.wav", fNameIn);
+	void* param[] = {
+	(void*)(fNameIn),
+	(void*)(fNameOut),
+	(void*)(FRAME_SAMPLES),
+	(void*)(SBC_BIT_POOL),
+	(void*)(SBC_BLOCKS),
+	(void*)(SBC_SUB_BAND),
+	(void*)(SBC_CHANNEL_MODE),
+	(void*)(SBC_ALLOC_METHOD),
+	(void*)(SBC_MODE),
+	(void*)(DECAY_MS),
+	(void*)(GAIN_MS),
+	(void*)(OVERLAP_MS),
+	};
 	const char* str = {
 	"|wav_demuxer,url=$0,fSamples=$2|-->"
 	"|sbc_enc,bitPool=$3,blocks=$4,subBands=$5,channelMode=$6,allocMethod=$7,sbcMode=$8,|-->"
@@ -103,23 +149,6 @@ void SbcTest()
 	};
 #endif
 
-#if 1
-	const char* str = {
-	"|wav_demuxer,url=$0,fSamples=$2|-->"
-	"|sbc_enc,bitPool=$3,blocks=$4,subBands=$5,channelMode=$6,allocMethod=$7,sbcMode=$8,|-->"
-	"|sbc_dec|-->"
-	"|wav_muxer,url=$1|"
-	};
-#endif
-
-
-#if 0
-	const char* str = {
-	"|wav_demuxer,url=$0,fSamples=$2|-->"
-	"|sbc_enc,bitPool=$3,blocks=$4,subBands=$5,channelMode=$6,allocMethod=$7,sbcMode=$8,|-->"
-	"|pcm_muxer,url=$1|"
-	};
-#endif
 
 	MultiemdiaApi(str, param);
 }
