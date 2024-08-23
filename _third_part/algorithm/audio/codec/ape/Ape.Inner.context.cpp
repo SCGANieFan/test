@@ -160,7 +160,8 @@ i32 ApeContext::Parser(u8* in, i32 inByte)
         //headerOld
         ApeHeaderOld headerOld;
         ALGO_MEM_CPY(&headerOld, pIn, sizeof(ApeHeaderOld));
-        pIn += sizeof(ApeHeaderOld);
+        // pIn += sizeof(ApeHeaderOld);
+        inByteUsed += sizeof(ApeHeaderOld);
 
         // fail on 0 length APE files (catches non-finalized APE files)
         if (headerOld.nTotalFrames == 0)
