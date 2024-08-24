@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\H265Dec.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\H265Dec.Interface.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\deblock.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\decctx.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\dpb.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback-dct.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback-motion.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\image.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\intrapred.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\md5.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\motion.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\nal.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\nal-parser.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\pps.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\refpic.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sao.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\scan.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sei.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\slice.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sps.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\threads.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\transform.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\util.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\visualize.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\vps.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\bitstream.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\cabac.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\de265.cc">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\h265\MAFV.H265Dec.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\h265\MTF.H265Dec.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="H265Test.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\win32cond.c">
+      <Filter>lib\dec</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\inc\H265Dec.Interface.h">
+      <Filter>lib\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\H265Dec.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\deblock.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\decctx.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\dpb.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback-dct.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\fallback-motion.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\image.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\intrapred.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\md5.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\motion.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\nal.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\nal-parser.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\pps.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\refpic.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sao.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\scan.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sei.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\slice.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\sps.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\threads.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\transform.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\util.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\visualize.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\vps.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\acceleration.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\bitstream.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\cabac.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\de265.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\h265\MAFV.H265Dec.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\h265\MTF.H265Dec.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="H265Test.h" />
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\de265-version.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\win32cond.h">
+      <Filter>lib\dec</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lib">
+      <UniqueIdentifier>{b389aca5-4e86-4886-a170-41680765a2a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="maf">
+      <UniqueIdentifier>{f48788de-108a-4526-b4a0-3fea0f057fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mtf">
+      <UniqueIdentifier>{21881b44-ecfe-4a44-8f1b-f565e7dca603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\inc">
+      <UniqueIdentifier>{212f46c2-d297-47c0-bcd5-6537d792395a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\dec">
+      <UniqueIdentifier>{561285f4-8a76-496f-b1ee-95b9f3c95b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\enc">
+      <UniqueIdentifier>{89f364c0-f9da-4441-a6ec-bf3098c2f5ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\_third_part\algorithm\video\codec\h265\thirdPart\dec\de265-version.h.in">
+      <Filter>lib\dec</Filter>
+    </None>
+  </ItemGroup>
+</Project>

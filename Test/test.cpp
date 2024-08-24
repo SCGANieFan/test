@@ -8,6 +8,7 @@
 #include"WavTest.h"
 #include"ApeTest.h"
 #include"SbcTest.h"
+#include"H265Test.h"
 
 int main()
 {
@@ -22,10 +23,10 @@ int main()
 	//MTF_demo_Test();
 	//WavTest();
 	//ApeTest();
-	SbcTest();
+	//SbcTest();
+	//H265Test();
 	
-	
-	//testDemo();
+	testDemo();
 	return 1;
 }
 

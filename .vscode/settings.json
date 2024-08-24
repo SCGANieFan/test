@@ -68,6 +68,8 @@
     "istream": "cpp",
     "functional": "cpp",
     "iostream": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "*.iosourceh": "c",
+    "mtf.source.h": "c"
   }
 }

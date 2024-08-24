@@ -146,4 +146,38 @@ MA_Ret MAF_Run(void* hd, AA_Data * dataIn, AA_Data * dataOut)
 	}
 	return MA_RET_SUCCESS;
 }
+
+MA_Ret MAF_Receive(void* hd, AA_Data* dataIn){
+	MAF_Data iData;
+	MAF_MEM_SET(&iData, 0, sizeof(MAF_Data));
+	if (dataIn){
+		iData.Init(dataIn->buff + dataIn->off, dataIn->size);
+		iData.SetFlag(dataIn->flags);
+	}
+	((MAF_Algorithm*)hd)->Rceive(&iData);
+	if (dataIn) {
+		int32_t used = dataIn->size - iData.GetSize();
+		dataIn->off += used;
+		dataIn->size -= used;
+		dataIn->flags = iData.GetFlags();
+	}
+	return MA_RET_SUCCESS;
+}
+MA_Ret MAF_Generate(void* hd, AA_Data* dataOut){
+
+	MAF_Data oData;
+	MAF_MEM_SET(&oData, 0, sizeof(MAF_Data));
+	if (dataOut){
+		oData.Init(dataOut->buff + dataOut->off + dataOut->size, 0, dataOut->max - dataOut->off - dataOut->size);
+	}
+
+	((MAF_Algorithm*)hd)->Generate(&oData);
+
+	if (dataOut) {
+		dataOut->size += oData.GetSize();
+		dataOut->flags = oData.GetFlags();
+	}
+	return MA_RET_SUCCESS;
+}
+
 }

@@ -4,6 +4,9 @@
     <Filter Include="base">
       <UniqueIdentifier>{58e8d8a4-7957-4031-a670-5e9f9eaacb52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{01f02e1a-21ec-4075-aa83-1617ff16fb60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\MTF\base\MTF.Element.h">
@@ -58,6 +61,18 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\MTF\MTF.h" />
+    <ClInclude Include="..\_third_part\MTF\base\MTF.VideoProcess.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\base\MTF.VideoInfo.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\io\MTF.IOSource.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\io\MTF.IOSink.h">
+      <Filter>interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\MTF\base\MTF.Interface.cpp">
@@ -109,5 +124,17 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\MTF\MTF.cpp" />
+    <ClCompile Include="..\_third_part\MTF\base\MTF.VideoInfo.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\base\MTF.VideoProcess.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\io\MTF.IOSource.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\io\MTF.IOSink.cpp">
+      <Filter>interface</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

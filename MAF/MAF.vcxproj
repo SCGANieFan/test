@@ -75,7 +75,9 @@
     <ClCompile Include="..\_third_part\MAF\base\MAF.Objects.cpp" />
     <ClCompile Include="..\_third_part\MAF\base\MAF.Printf.cpp" />
     <ClCompile Include="..\_third_part\MAF\base\MAF.String.cpp" />
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Video.cpp" />
     <ClCompile Include="..\_third_part\MAF\base\MAFA.Info.cpp" />
+    <ClCompile Include="..\_third_part\MAF\base\MAFV.Info.cpp" />
     <ClCompile Include="..\_third_part\MAF\MAF.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +89,9 @@
     <ClInclude Include="..\_third_part\MAF\base\MAF.Printf.h" />
     <ClInclude Include="..\_third_part\MAF\base\MAF.String.h" />
     <ClInclude Include="..\_third_part\MAF\base\MAF.Type.h" />
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Video.h" />
     <ClInclude Include="..\_third_part\MAF\base\MAFA.Info.h" />
+    <ClInclude Include="..\_third_part\MAF\base\MAFV.Info.h" />
     <ClInclude Include="..\_third_part\MAF\MAF.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

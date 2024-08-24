@@ -34,6 +34,12 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\MAF\MAF.cpp" />
+    <ClCompile Include="..\_third_part\MAF\base\MAF.Video.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\base\MAFV.Info.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\_third_part\MAF\base\MAF.Objects.h">
@@ -64,5 +70,11 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\MAF\MAF.h" />
+    <ClInclude Include="..\_third_part\MAF\base\MAF.Video.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\base\MAFV.Info.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

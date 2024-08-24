@@ -18,7 +18,9 @@ public:
 public:
 	virtual maf_int32 Init() = 0;
 	virtual maf_int32 Deinit() = 0;
-	virtual maf_int32 Process(MAF_Data* dataIn, MAF_Data* dataOut) = 0;
+	virtual maf_int32 Process(MAF_Data* dataIn, MAF_Data* dataOut)override{return 0;}
+	virtual maf_int32 Rceive(MAF_Data* dataIn)override{return 0;}
+	virtual maf_int32 Generate(MAF_Data* dataOut)override{return 0;}
 protected:
 	virtual maf_int32 Set(const maf_int8* key, maf_void* val) override;
 	virtual maf_int32 Get(const maf_int8* key, maf_void* val) override;
