@@ -22,10 +22,12 @@
     <ClCompile Include="BitPerSampleConvert.cpp" />
     <ClCompile Include="codec_test.cpp" />
     <ClCompile Include="FrameTest.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="StackTest.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="testDemo.cpp" />
     <ClCompile Include="testInner.h" />
+    <ClCompile Include="testThread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h" />

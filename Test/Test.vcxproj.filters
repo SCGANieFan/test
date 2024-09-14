@@ -30,6 +30,10 @@
     <ClCompile Include="testDemo.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="testThread.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h">

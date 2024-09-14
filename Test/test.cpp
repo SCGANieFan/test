@@ -10,7 +10,7 @@
 #include"SbcTest.h"
 #include"H265Test.h"
 
-int main()
+void test()
 {
 	//TestBitPerSampleConvet();
 	//StackTest();
@@ -26,7 +26,7 @@ int main()
 	//SbcTest();
 	//H265Test();
 	
-	testDemo();
-	return 1;
+	//testDemo();
+	testThread();
 }
 
