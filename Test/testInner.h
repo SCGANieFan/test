@@ -30,3 +30,5 @@ bool FrameTest();
 void FuncRun();
 
 bool testThread();
+
+void testFFT();

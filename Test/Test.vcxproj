@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="BitPerSampleConvert.cpp" />
     <ClCompile Include="codec_test.cpp" />
+    <ClCompile Include="testFFT.cpp" />
     <ClCompile Include="FrameTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="StackTest.cpp" />
