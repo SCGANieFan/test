@@ -26,8 +26,9 @@ void test()
 	//SbcTest();
 	//H265Test();
 	
-	testDemo();
+	//testDemo();
 	//testThread();
 	//testFFT();
+	testDataTypeConvert();
 }
 

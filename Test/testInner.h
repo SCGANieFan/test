@@ -9,8 +9,8 @@
 #include<vector>
 #include<assert.h>
 
-#define LOG(fmt,...) printf("<%s>(%s)[%d]" fmt "\n", __FILE__,__func__,__LINE__,##__VA_ARGS__)
 
+#define LOG(fmt,...) printf("<%s>(%s)[%d]" fmt "\n", strrchr(__FILE__,'\\') + 1,__func__,__LINE__,##__VA_ARGS__)
 
 
 //
@@ -32,3 +32,6 @@ void FuncRun();
 bool testThread();
 
 void testFFT();
+
+bool testDataTypeConvert();
+
