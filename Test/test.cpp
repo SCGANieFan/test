@@ -15,7 +15,7 @@ void test()
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//OggTest();
-	//PlcTest();
+	PlcTest();
 	//AudioSpeedCtrTest();
 	//AudioResampleTest();
 	//OggTest();
@@ -27,6 +27,6 @@ void test()
 	//H265Test();
 	
 	//testDemo();
-	testThread();
+	//testThread();
 }
 
