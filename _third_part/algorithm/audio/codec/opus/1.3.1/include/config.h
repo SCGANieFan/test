@@ -35,6 +35,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #define OPUS_BUILD            1
 
+#define DISABLE_FLOAT_API 1
+#define FIXED_POINT 1
+#define WIN32 1
+
 #if 0
 #if defined(_M_IX86) || defined(_M_X64)
 /* Can always compile SSE intrinsics (no special compiler flags necessary) */
@@ -58,8 +62,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #endif
-#endif
 
-#include "version.h"
+#endif
+//#include "version.h"
+
+
 
 #endif /* CONFIG_H */

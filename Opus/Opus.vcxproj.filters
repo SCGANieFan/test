@@ -19,9 +19,6 @@
     <Filter Include="lib\src">
       <UniqueIdentifier>{b5198e52-0370-4873-ba75-82f637ad660a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lib\win32">
-      <UniqueIdentifier>{e14fc3c1-facd-4a23-a57c-ed194164d876}</UniqueIdentifier>
-    </Filter>
     <Filter Include="maf">
       <UniqueIdentifier>{5299ca94-20ac-4f74-8551-e9256afbbe0d}</UniqueIdentifier>
     </Filter>
@@ -31,17 +28,47 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OpusTest.h" />
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\win32\version.h">
-      <Filter>lib\win32</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_projection.h">
+      <Filter>lib\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\win32\config.h">
-      <Filter>lib\win32</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_types.h">
+      <Filter>lib\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_private.h">
-      <Filter>lib\src</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus.h">
+      <Filter>lib\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\tansig_table.h">
-      <Filter>lib\src</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_custom.h">
+      <Filter>lib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_defines.h">
+      <Filter>lib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_multistream.h">
+      <Filter>lib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\opus\MAFA.OpusEnc.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\opus\MAFA.OpusDec.h">
+      <Filter>maf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\config.h">
+      <Filter>lib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\OpusApi.h">
+      <Filter>lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_memory.h">
+      <Filter>lib\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\opus\MTF.OpusDec.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MTF\interface\opus\MTF.OpusEnc.h">
+      <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\MAF\interface\opus\OpusMemory.h">
+      <Filter>maf</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\analysis.h">
       <Filter>lib\src</Filter>
@@ -52,17 +79,11 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mlp.h">
       <Filter>lib\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\main_FIX.h">
-      <Filter>lib\silk\fixed</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_private.h">
+      <Filter>lib\src</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\structs_FIX.h">
-      <Filter>lib\silk\fixed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tuning_parameters.h">
-      <Filter>lib\silk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\typedef.h">
-      <Filter>lib\silk</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\tansig_table.h">
+      <Filter>lib\src</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\API.h">
       <Filter>lib\silk</Filter>
@@ -121,41 +142,17 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables.h">
       <Filter>lib\silk</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_projection.h">
-      <Filter>lib\include</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tuning_parameters.h">
+      <Filter>lib\silk</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_types.h">
-      <Filter>lib\include</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\typedef.h">
+      <Filter>lib\silk</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus.h">
-      <Filter>lib\include</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\main_FIX.h">
+      <Filter>lib\silk\fixed</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_custom.h">
-      <Filter>lib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_defines.h">
-      <Filter>lib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\include\opus_multistream.h">
-      <Filter>lib\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\stack_alloc.h">
-      <Filter>lib\celt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_fixed.h">
-      <Filter>lib\celt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_fixed_arm_ne10.h">
-      <Filter>lib\celt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_float.h">
-      <Filter>lib\celt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_float_arm_ne10.h">
-      <Filter>lib\celt</Filter>
-    </ClInclude>
-    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\vq.h">
-      <Filter>lib\celt</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\structs_FIX.h">
+      <Filter>lib\silk\fixed</Filter>
     </ClInclude>
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\_kiss_fft_guts.h">
       <Filter>lib\celt</Filter>
@@ -229,418 +226,440 @@
     <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\rate.h">
       <Filter>lib\celt</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\MAF\interface\opus\MAFA.OpusEnc.h">
-      <Filter>maf</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\stack_alloc.h">
+      <Filter>lib\celt</Filter>
     </ClInclude>
-    <ClInclude Include="..\_third_part\MAF\interface\opus\MAFA.OpusDec.h">
-      <Filter>maf</Filter>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_fixed.h">
+      <Filter>lib\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_fixed_arm_ne10.h">
+      <Filter>lib\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_float.h">
+      <Filter>lib\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\static_modes_float_arm_ne10.h">
+      <Filter>lib\celt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\vq.h">
+      <Filter>lib\celt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpusTest.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mlp_data.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_decoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_encoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream_decoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream_encoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_decoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_encoder.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\repacketizer.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\analysis.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mapping_matrix.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mlp.c">
-      <Filter>lib\src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\corrMatrix_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\encode_frame_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_LPC_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_LTP_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_pitch_lags_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_pred_coefs_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\k2a_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\k2a_Q16_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\LTP_analysis_filter_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\LTP_scale_ctrl_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\noise_shape_analysis_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\pitch_analysis_core_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\process_gains_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\regularize_correlations_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\residual_energy_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\residual_energy16_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\schur_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\schur64_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\vector_ops_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\warped_autocorrelation_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\apply_sine_window_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\autocorr_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\burg_modified_FIX.c">
-      <Filter>lib\silk\fixed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_gain.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_LTP.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_NLSF_CB_NB_MB.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_NLSF_CB_WB.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_other.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_pitch_lag.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_pulses_per_block.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\VAD.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\VQ_WMat_EC.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\A2NLSF.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\ana_filt_bank_1.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\biquad_alt.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\bwexpander.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\bwexpander_32.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\check_control_input.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\CNG.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\code_signs.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_audio_bandwidth.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_codec.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_SNR.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\debug.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\dec_API.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_core.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_frame.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_indices.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_parameters.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_pitch.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_pulses.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decoder_set_fs.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\enc_API.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\encode_indices.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\encode_pulses.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\gain_quant.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\HP_variable_cutoff.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\init_decoder.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\init_encoder.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\inner_prod_aligned.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\interpolate.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\lin2log.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\log2lin.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LP_variable_cutoff.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_analysis_filter.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_fit.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_inv_pred_gain.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_decode.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_del_dec_quant.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_encode.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_stabilize.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_unpack.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_VQ.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_VQ_weights_laroia.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF2A.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NSQ.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NSQ_del_dec.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\pitch_est_tables.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\PLC.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\process_NLSFs.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\quant_LTP_gains.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_down2.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_down2_3.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_AR2.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_down_FIR.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_IIR_FIR.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_up2_HQ.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_rom.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\shell_coder.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sigm_Q15.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sort.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_decode_pred.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_encode_pred.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_find_predictor.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_LR_to_MS.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_MS_to_LR.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_quant_pred.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sum_sqr_shift.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\table_LSF_cos.c">
-      <Filter>lib\silk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\vq.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\bands.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_decoder.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_encoder.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_lpc.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\cwrs.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entcode.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entdec.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entenc.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\kiss_fft.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\laplace.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\mathops.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\mdct.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\modes.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\pitch.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\quant_bands.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\rate.c">
-      <Filter>lib\celt</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\MAF\interface\opus\MAFA.OpusEnc.cpp">
       <Filter>maf</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\MAF\interface\opus\MAFA.OpusDec.cpp">
       <Filter>maf</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\win32\genversion.bat">
-      <Filter>lib\win32</Filter>
-    </None>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\OpusApi.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\opus\MTF.OpusDec.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MTF\interface\opus\MTF.OpusEnc.cpp">
+      <Filter>mtf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\MAF\interface\opus\OpusMemory.cpp">
+      <Filter>maf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\analysis.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mapping_matrix.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mlp.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\mlp_data.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_decoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_encoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_memory.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream_decoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_multistream_encoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_decoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\opus_projection_encoder.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\src\repacketizer.cpp">
+      <Filter>lib\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\A2NLSF.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\ana_filt_bank_1.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\biquad_alt.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\bwexpander.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\bwexpander_32.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\check_control_input.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\CNG.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\code_signs.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_audio_bandwidth.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_codec.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\control_SNR.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\debug.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\dec_API.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_core.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_frame.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_indices.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_parameters.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_pitch.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decode_pulses.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\decoder_set_fs.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\enc_API.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\encode_indices.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\encode_pulses.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\gain_quant.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\HP_variable_cutoff.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\init_decoder.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\init_encoder.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\inner_prod_aligned.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\interpolate.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\lin2log.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\log2lin.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LP_variable_cutoff.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_analysis_filter.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_fit.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\LPC_inv_pred_gain.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_decode.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_del_dec_quant.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_encode.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_stabilize.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_unpack.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_VQ.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF_VQ_weights_laroia.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NLSF2A.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NSQ.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\NSQ_del_dec.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\pitch_est_tables.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\PLC.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\process_NLSFs.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\quant_LTP_gains.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_down2.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_down2_3.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_AR2.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_down_FIR.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_IIR_FIR.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_private_up2_HQ.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\resampler_rom.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\shell_coder.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sigm_Q15.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sort.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_decode_pred.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_encode_pred.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_find_predictor.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_LR_to_MS.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_MS_to_LR.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\stereo_quant_pred.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\sum_sqr_shift.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\table_LSF_cos.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_gain.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_LTP.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_NLSF_CB_NB_MB.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_NLSF_CB_WB.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_other.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_pitch_lag.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\tables_pulses_per_block.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\VAD.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\VQ_WMat_EC.cpp">
+      <Filter>lib\silk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\apply_sine_window_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\autocorr_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\burg_modified_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\corrMatrix_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\encode_frame_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_LPC_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_LTP_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_pitch_lags_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\find_pred_coefs_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\k2a_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\k2a_Q16_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\LTP_analysis_filter_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\LTP_scale_ctrl_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\noise_shape_analysis_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\pitch_analysis_core_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\process_gains_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\regularize_correlations_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\residual_energy_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\residual_energy16_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\schur_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\schur64_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\vector_ops_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\silk\fixed\warped_autocorrelation_FIX.cpp">
+      <Filter>lib\silk\fixed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\bands.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_decoder.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_encoder.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\celt_lpc.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\cwrs.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entcode.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entdec.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\entenc.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\kiss_fft.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\laplace.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\mathops.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\mdct.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\modes.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\pitch.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\quant_bands.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\rate.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\codec\opus\1.3.1\celt\vq.cpp">
+      <Filter>lib\celt</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

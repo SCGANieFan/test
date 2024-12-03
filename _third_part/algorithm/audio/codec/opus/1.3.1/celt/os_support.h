@@ -37,6 +37,7 @@
 
 #include "opus_types.h"
 #include "opus_defines.h"
+#include "opus_memory.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -46,7 +47,12 @@
 #ifndef OVERRIDE_OPUS_ALLOC
 static OPUS_INLINE void *opus_alloc (size_t size)
 {
+#if 0
    return malloc(size);
+#else
+   return opus_malloc_inner(size);
+
+#endif
 }
 #endif
 
@@ -63,7 +69,11 @@ static OPUS_INLINE void *opus_alloc_scratch (size_t size)
 #ifndef OVERRIDE_OPUS_FREE
 static OPUS_INLINE void opus_free (void *ptr)
 {
+#if 0
    free(ptr);
+#else
+   opus_free_inner(ptr);
+#endif
 }
 #endif
 
