@@ -14,7 +14,14 @@ typedef struct {
 }AlgoBasePorting;
 
 
-
+class AlgoBasePorting_c {
+public:
+	AlgoBasePorting_c() {}
+	~AlgoBasePorting_c() {}
+public:
+	virtual void* Malloc(int32_t size) = 0;
+	virtual void Free(void* block) = 0;
+};
 
 
 

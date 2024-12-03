@@ -19,7 +19,7 @@ public:
 	MemoryManger_c() {};
 	~MemoryManger_c() {};
 public:
-	INLINE void Init(AlgoBasePorting *basePorting) {
+	INLINE void Init(AlgoBasePorting_c*basePorting) {
 		_basePorting = basePorting;
 		for (void*& p : _allocList) {
 			p = 0;
@@ -89,7 +89,7 @@ public:
 		}
 	}
 private:
-	AlgoBasePorting* _basePorting;
+	AlgoBasePorting_c* _basePorting;
 	void* _allocList[100];
 };
 

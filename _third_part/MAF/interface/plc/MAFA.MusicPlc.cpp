@@ -2,7 +2,8 @@
 #include "MAFA.MusicPlc.h"
 #include "MAF.Objects.h"
 #include "MAF.String.h"
-#include "MusicPlc.h"
+#include "Plc.h"
+using namespace Plc_ns;
 
 maf_void maf_music_plc_register()
 {
@@ -19,32 +20,84 @@ MAFA_MusicPlc::~MAFA_MusicPlc()
 {
 }
 
+class PlcMemoryLocal_c : public PlcMemory_c {
+public:
+	PlcMemoryLocal_c() {}
+	~PlcMemoryLocal_c() {}
+public:
+	void Init(MAF_Memory* memory) {
+		_memory = memory;
+	}
+	virtual void* Malloc(int32_t size) final {
+#if 1
+		static maf_int32 sizeTotal = 0;
+		sizeTotal += size;
+		maf_void* ptr = _memory->Malloc(size);
+		MAF_PRINT("malloc, ptr:%x, size:%d, sizeTotal:%d,", (maf_uint32)ptr, size, sizeTotal);
+		return ptr;
+#else
+		return ((ALGO_Malloc_t)_malloc)(size);
+#endif
+	};
+	virtual void Free(void* block) final {
+#if 1
+		MAF_PRINT("free, ptr:%x", (maf_uint32)block);
+#endif
+		return _memory->Free(block);
+	};
+private:
+	MAF_Memory* _memory;
+};
+static PlcMemoryLocal_c plcMemoryLocal;
 maf_int32 MAFA_MusicPlc::Init()
 {
 	MAF_PRINT();
-	MusicPlcInitParam initParam;
-	MAF_MEM_SET(&initParam, 0, sizeof(MusicPlcInitParam));
+	PlcParam_t initParam;
+	MAF_MEM_SET(&initParam, 0, sizeof(PlcParam_t));
 #if 1
 	_malloc = _memory.GetMalloc();
 	_free = _memory.GetFree();
 
-	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting));
-	AlgoBasePorting* basePorting = (AlgoBasePorting*)_basePorting;
-
-	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
-	basePorting->Free = (ALGO_Free_t)FreeLocal;
-	initParam.basePorting = basePorting;
 #endif
+#if 0
+	typedef struct {
+		//common
+		enum PlcMode_e mode;
+		union {
+			//music plc
+			struct {
+				int32_t overlapSamples;
+				int32_t holdSamples;
+				int32_t fadeSamples;
+				int32_t gainSamples;
+				int32_t seekSamples;
+				int32_t matchSamples;
+				uint16_t channelSelect;
+			}MusicPlcParam;
+			//other
+			struct {
+			}otherParam;
+		};
+		PlcMemory_c* memory;
+		void* other;
+	}PlcParam_t;
+#endif
+
 	initParam.fsHz = _rate;
 	initParam.channels = _ch;
-	initParam.width = _width;
 	initParam.frameSamples = _frameSamples;
-	initParam.overlapSamples = _overlapMs * _rate / 1000;
-	initParam.attenuateSamplesAfterLost = _decayMs * _rate / 1000;
-	initParam.gainSamplesAfterNoLost= _gainMs * _rate / 1000;
-	initParam.seekSamples = 8 *_rate / 1000;
-	initParam.matchSamples = 3 *_rate / 1000;
-	_hdSize = MusicPlc_GetStateSize();
+	initParam.width = _width;
+	initParam.mode = PlcMode_e::PlcModeMusicPlc;
+	initParam.MusicPlcParam.overlapSamples = _overlapMs * _rate / 1000;
+	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.fadeSamples = _decayMs * _rate / 1000;
+	initParam.MusicPlcParam.gainSamples = _gainMs * _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 8 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 3* _rate / 1000;
+	initParam.MusicPlcParam.channelSelect = 0xffff;
+	plcMemoryLocal.Init(&_memory);
+	initParam.memory = (PlcMemory_c*) & plcMemoryLocal;
+	_hdSize = Plc_c::GetStateSize(&initParam);
 	_hd = _memory.Malloc(_hdSize);
 	MAF_PRINT("_hd=%x,size:%d", (maf_uint32)_hd, _hdSize);
 	if (!_hd)
@@ -52,7 +105,7 @@ maf_int32 MAFA_MusicPlc::Init()
 		return -1;
 	}
 
-	maf_int32 ret = MusicPlc_StateInit(_hd, &initParam);
+	maf_int32 ret = Plc_c::Init(_hd, &initParam);
 
 	if (ret < 0)
 	{
@@ -64,9 +117,8 @@ maf_int32 MAFA_MusicPlc::Init()
 maf_int32 MAFA_MusicPlc::Deinit()
 {
 	MAF_PRINT();
-	MusicPlc_StateDeInit(_hd);
+	Plc_c::Deinit(_hd);
 	_memory.Free(_hd);
-	_memory.Free(_basePorting);
 
 	return 0;
 }
@@ -81,9 +133,10 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 	{
 #if 1
 		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
-		ret = MusicPlc_Run(
+		ret = Plc_c::Run(
 			_hd,
 			NULL,
+			0,
 			0,
 			dataOut->GetLeftData(),
 			&outByte,
@@ -107,10 +160,11 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 		dataOut->Append(outByte);
 #else
 		dataOut->Append(dataIn->GetData(), dataIn->GetSize());
-		ret = MusicPlc_Run(
+		ret = Plc_c::Run(
 			_hd,
 			dataOut->GetData(),
 			dataOut->GetSize(),
+			0,
 			dataOut->GetData(),
 			&outByte,
 			false);
@@ -142,27 +196,6 @@ maf_int32 MAFA_MusicPlc::Set(const maf_int8* key, maf_void* val)
 maf_int32 MAFA_MusicPlc::Get(const maf_int8* key, maf_void* val)
 {
 	return MAF_Audio::Get(key, val);
-}
-
-maf_void* MAFA_MusicPlc::MallocLocal(int32_t size)
-{
-#if 1
-	static maf_int32 sizeTotal = 0;
-	sizeTotal += size;
-	maf_void* ptr = ((ALGO_Malloc_t)_malloc)(size);
-	MAF_PRINT("malloc, ptr:%x, size:%d, sizeTotal:%d,", (maf_uint32)ptr, size, sizeTotal);
-	return ptr;
-#else
-	return ((ALGO_Malloc_t)_malloc)(size);
-#endif	
-}
-
-maf_void MAFA_MusicPlc::FreeLocal(maf_void* block)
-{
-#if 1
-	MAF_PRINT("free, ptr:%x", (maf_uint32)block);
-#endif
-	return ((ALGO_Free_t)_free)(block);
 }
 
 #endif

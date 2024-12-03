@@ -22,6 +22,9 @@
     <ClCompile Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\Plc.cpp">
+      <Filter>lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlcTest.h" />
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.h">
       <Filter>mtf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\Plc.h">
+      <Filter>lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

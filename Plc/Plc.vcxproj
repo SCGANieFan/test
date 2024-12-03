@@ -526,6 +526,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\audio\process\plc\Plc.cpp" />
     <ClCompile Include="..\_third_part\MAF\interface\plc\MAFA.MusicPlc.cpp" />
     <ClCompile Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.cpp" />
     <ClCompile Include="PlcTest.cpp" />
@@ -534,6 +535,7 @@
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlc.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcFillSignal.h" />
     <ClInclude Include="..\_third_part\algorithm\audio\process\plc\MusicPlcInner.h" />
+    <ClInclude Include="..\_third_part\algorithm\audio\process\plc\Plc.h" />
     <ClInclude Include="..\_third_part\MAF\interface\plc\MAFA.MusicPlc.h" />
     <ClInclude Include="..\_third_part\MTF\interface\plc\MTF.MusicPlc.h" />
     <ClInclude Include="PlcTest.h" />
