@@ -5,13 +5,13 @@
 #include"MTF.Element.h"
 #include"MTF.String.h"
 
-#include"MTF.h"
 #include"MTF.Memory.h"
+#include"MTF.h"
 
 
 
 
-
+namespace MTFApi_ns {
 bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** param)
 {
 
@@ -65,7 +65,7 @@ bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** para
 
 
 
-int32_t MultiemdiaTestInit()
+int32_t MTFApi::Init()
 {
 	MTF_Memory::Init(malloc, realloc, calloc, free);
 #if 0
@@ -78,7 +78,7 @@ int32_t MultiemdiaTestInit()
 
 MTF_Element* eles[10];
 
-int32_t MultiemdiaApi(const char* str, void** param)
+int32_t MTFApi::Api(const char* str, void** param)
 {
 	const char* pStr = str;
 	int32_t strLen = MTF_String::StrLen(pStr);
@@ -113,3 +113,4 @@ int32_t MultiemdiaApi(const char* str, void** param)
 }
 
 
+}

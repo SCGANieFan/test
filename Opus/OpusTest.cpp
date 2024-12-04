@@ -1,4 +1,6 @@
 #include"MTF.h"
+using namespace MTFApi_ns;
+
 #define PATH "../../source/audio/opus/"
 
 
@@ -10,8 +12,7 @@
 
 void OpusTest()
 {
-	MultiemdiaTestInit();
-
+	MTFApi::Init();
 	MTF_REGISTER(wav_demuxer);
 	MTF_REGISTER(opus_enc);
 	MTF_REGISTER(opus_dec);
@@ -32,6 +33,5 @@ void OpusTest()
 	"|opus_dec|-->"
 	"|wav_muxer,url=$1|"
 	};
-
-	MultiemdiaApi(str, param);
+	MTFApi::Api(str, param);
 }

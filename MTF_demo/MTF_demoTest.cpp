@@ -12,7 +12,7 @@ void MTF_demo_Test()
 	MTF_REGISTER(pcm_demuxer);
 	MTF_REGISTER(audio_demo);
 	MTF_REGISTER(pcm_muxer);
-
+#if 0
 	MultiemdiaTestInit();
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
@@ -30,4 +30,5 @@ void MTF_demo_Test()
 	};
 
 	MultiemdiaApi(str, param);
+#endif
 }
