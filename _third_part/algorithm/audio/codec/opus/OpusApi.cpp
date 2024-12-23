@@ -54,7 +54,7 @@ OpusApiRet_t OpusApi::create_encoder(void** pHd, int fs, int channels, bool isWi
     *pHd = (void*)enc;
     return OPUS_API_RET_SUCCESS;
 }
-#include<stdlib.h>
+
 OpusApiRet_t OpusApi::destory_encoder(void* hd) {
     OpusEnc_t* enc = (OpusEnc_t*)hd;
     if (enc) {
@@ -88,25 +88,7 @@ static OpusApiRet_t toOpusFrameDuration(int in, int *out) {
 }
 
 OpusApiRet_t OpusApi::encoder_set(void *hd, OpusApi_EncSetChhoose_e choose, void* val){
-#if 0
-      OpusEncoder *enc = *pHd;
-      opus_int32 skip = 0;
-      opus_encoder_ctl(enc, OPUS_SET_BITRATE(_bitrate));
-      //opus_encoder_ctl(enc, OPUS_SET_BANDWIDTH(OPUS_AUTO));
-      opus_encoder_ctl(enc, OPUS_SET_BANDWIDTH(OPUS_BANDWIDTH_WIDEBAND));
-      opus_encoder_ctl(enc, OPUS_SET_VBR(__USE_VBR));
-      opus_encoder_ctl(enc, OPUS_SET_VBR_CONSTRAINT(__CONSTRAINT_USE_VBR));
-      opus_encoder_ctl(enc, OPUS_SET_COMPLEXITY(_complexity));
-      opus_encoder_ctl(enc, OPUS_SET_INBAND_FEC(__USE_INBANDFEC));
-      opus_encoder_ctl(enc, OPUS_SET_FORCE_CHANNELS(OPUS_AUTO));
-      opus_encoder_ctl(enc, OPUS_SET_DTX(__USE_DTX));
-      opus_encoder_ctl(enc, OPUS_SET_PACKET_LOSS_PERC(__PACKET_LOSS_PERC));
-      opus_encoder_ctl(enc, OPUS_GET_LOOKAHEAD(&skip));
-      opus_encoder_ctl(enc, OPUS_SET_LSB_DEPTH(_lsb_depth));
-      opus_encoder_ctl(enc, OPUS_SET_FORCE_CHANNELS(_channels));
-      opus_encoder_ctl(enc, OPUS_SET_EXPERT_FRAME_DURATION(toOpusFrameDuration(_frameDMs)));
-#endif
-
+    // int opus_encoder_ctl(OpusEncoder *st, int request, ...)
    if(!hd
    ||choose>=OpusApi_EncSetChhoose_e::OPUS_API_ENC_SET_MAX)
       return OPUS_API_RET_FAIL;
@@ -206,17 +188,8 @@ OpusApiRet_t OpusApi::encoder_run(void *hd, short* in, int inSample, unsigned ch
    ||*outByte<=0)
       return OPUS_API_RET_FAIL;
 #endif
-#if 0
-   int ret = opus_encode((OpusEncoder *)hd, in, inSample, out, outByte);
-   if(ret<0){
-      LOG("enc fail, %d, (%p,%p,%d,%p,%d)",ret,hd,in,inSample,out,outByte);
-      return OPUS_API_RET_FAIL;
-   }
-   return OPUS_API_RET_SUCCESS;
-#else
    OpusEnc_t* enc = (OpusEnc_t*)hd;
    return enc->run_cb(enc->hd, in, inSample, out, outByte);
-#endif
 }
 
 //dec

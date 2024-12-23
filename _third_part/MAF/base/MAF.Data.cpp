@@ -111,7 +111,7 @@ maf_int32 MAF_Data::Used(maf_int32 size)
 {
 	if (GetSize() < size)
 	{
-		MAF_DATA_PRINT("err,size:%d,usedSize£º%d", _size, size);
+		MAF_DATA_PRINT("err,size:%d,usedSize:%d", _size, size);
 		return -1;
 	}
 	_off += size;
