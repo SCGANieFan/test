@@ -18,8 +18,6 @@ public:
 
 enum PlcMode_e {
 	PlcModeMusicPlc = 0,
-	PlcModeSbcPlc,
-	PlcModeOther,
 	PlcModeMax,
 };
 

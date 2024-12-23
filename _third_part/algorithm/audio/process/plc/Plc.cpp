@@ -73,11 +73,11 @@ PlcRet Plc_c::Init(void* plcStateIn, PlcParam_t* param)
 		sampleParam.holdSamplesAfterLost = param->MusicPlcParam.holdSamples;
 		sampleParam.attenuateSamplesAfterLost = param->MusicPlcParam.fadeSamples;
 		sampleParam.gainSamplesAfterNoLost = param->MusicPlcParam.gainSamples;
+		sampleParam.seekSamples= param->MusicPlcParam.seekSamples;
+		sampleParam.matchSamples = param->MusicPlcParam.matchSamples;
 		ret = MusicPlc_c::StateInit(plcState->state, &sampleParam);
 		if (ret != MUSIC_PLC_RET_SUCCESS)
 			return PLC_RET_FAIL;
-		MusicPlc_c::Set(plcState->state, MusicPlc_SetChhoose_e::MUSIC_PLC_SET_SEEK_SAMPLES, (void*)param->MusicPlcParam.seekSamples);
-		MusicPlc_c::Set(plcState->state, MusicPlc_SetChhoose_e::MUSIC_PLC_SET_MATCH_SAMPLES, (void*)param->MusicPlcParam.matchSamples);
 		MusicPlc_c::Set(plcState->state, MusicPlc_SetChhoose_e::MUSIC_PLC_SET_CHANNEL_SELECT, (void*)(int32_t)(param->MusicPlcParam.channelSelect));
 		plcState->plcProcess = MusicPlc_c::Run;
 		break;

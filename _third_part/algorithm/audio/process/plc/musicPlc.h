@@ -15,6 +15,8 @@ typedef struct
 	int32_t holdSamplesAfterLost;
 	int32_t attenuateSamplesAfterLost;	//Attenuation after packet loss
 	int32_t gainSamplesAfterNoLost;//Gain after obtaining the package
+	int32_t seekSamples;
+	int32_t matchSamples;
 }MusicPlcInitParam_t;
 
 

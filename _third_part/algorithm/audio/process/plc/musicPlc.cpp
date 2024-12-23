@@ -31,7 +31,9 @@ int32_t MusicPlc_c::StateInit(void* pMusicPlcStateIn, MusicPlcInitParam_t* sampl
 		sampleParam->overlapSamples,
 		sampleParam->holdSamplesAfterLost,
 		sampleParam->attenuateSamplesAfterLost,
-		sampleParam->gainSamplesAfterNoLost);
+		sampleParam->gainSamplesAfterNoLost,
+		sampleParam->seekSamples,
+		sampleParam->matchSamples);
 	if (ret == MUSIC_PLC_RET_FAIL)
 		return MUSIC_PLC_RET_FAIL;
 	((MusicPlcState*)pMusicPlcStateIn)->isInited = true;
@@ -50,10 +52,12 @@ int32_t MusicPlc_c::Set(void* pMusicPlcStateIn, MusicPlc_SetChhoose_e choose, vo
 
 	switch (choose)
 	{
+#if 0
 	case MUSIC_PLC_SET_SEEK_SAMPLES:
 		pMusicPlc->musicplc.Set_SeekSamples((u32)val); break;
 	case MUSIC_PLC_SET_MATCH_SAMPLES:
 		pMusicPlc->musicplc.Set_MatchSamples((u32)val); break;
+#endif
 	case MUSIC_PLC_SET_CHANNEL_SELECT:
 		pMusicPlc->musicplc.Set_ChannelSelect((u32)val); break;
 	default:

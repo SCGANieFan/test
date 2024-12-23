@@ -335,7 +335,8 @@ public:
 	~MusicPlcInner_c() {};
 public:
 	i32 Init(AlgoBasePorting_c* basePorting, i16 channels, i16 width, i32 sampleRate,
-		i32 frameSamplesIn, i32 overlapSamplesIn, i32 holdSamplesAfterLostIn, i32 attenSamplesAfterLostIn, i32 gainSamplesAfterNoLostIn
+		i32 frameSamplesIn, i32 overlapSamplesIn, i32 holdSamplesAfterLostIn, i32 attenSamplesAfterLostIn, i32 gainSamplesAfterNoLostIn,
+		i32 seekSamplesIn, i32 matchSamplesIn
 	) {
 		if (!basePorting)
 			return MUSIC_PLC_RET_FAIL;
@@ -347,7 +348,9 @@ public:
 			|| overlapSamplesIn < 0
 			|| attenSamplesAfterLostIn < 0
 			|| gainSamplesAfterNoLostIn < 0
-			|| holdSamplesAfterLostIn < 0)
+			|| holdSamplesAfterLostIn < 0
+			|| seekSamplesIn < 0
+			|| matchSamplesIn < 0)
 			return MUSIC_PLC_RET_FAIL;
 
 		ALGO_MEM_SET(this, 0, sizeof(MusicPlcInner_c));
@@ -355,8 +358,16 @@ public:
 		_com.info.Init(sampleRate, width, channels);
 		_com.frameSamples = frameSamplesIn;
 		_com.overlapSamples = overlapSamplesIn;
+		_com._seekSamples = seekSamplesIn;
+		_com._matchSamples = matchSamplesIn;
+
 		BufferSamples bufferSamples;
+#if 0
 		bufferSamples._samples = _com.overlapSamples + MAX(_com.frameSamples, (i32)(_com.info._rate * MUSIC_PLC_MIN_FRAME_MS / (1000)));
+#else
+		bufferSamples._samples = _com.frameSamples + _com.overlapSamples;
+		bufferSamples._samples = MAX(bufferSamples._samples, _com._seekSamples + _com._matchSamples + (5 * _com.info._rate) / 1000);
+#endif
 		bufferSamples._buf = (u8*)_com.MM.Malloc(bufferSamples._samples * _com.info._bytesPerSample);
 		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * _com.info._bytesPerSample);
 		_com.inHistory.Init(&_com.info, &bufferSamples);
@@ -377,8 +388,8 @@ public:
 #endif
 		_com._overlapAdd.Init(&_com.MM, &_com.info, OverlapAdd_c::WindowChoose::Line, _com.overlapSamples);
 		_com._holdSamplesAfterLost = holdSamplesAfterLostIn;
-		Set_SeekSamples(MUSIC_PLC_SEEK_MS_DEFAULT * sampleRate / 1000);
-		Set_MatchSamples(MUSIC_PLC_MATCH_MS_DEFAULT * sampleRate / 1000);
+		//Set_SeekSamples(MUSIC_PLC_SEEK_MS_DEFAULT * sampleRate / 1000);
+		//Set_MatchSamples(MUSIC_PLC_MATCH_MS_DEFAULT * sampleRate / 1000);
 		_com._waveFormMatch.Init(
 			WaveFormMatch_c::FuncMode_e::ACCORELATION,
 			&_com.info);
@@ -429,6 +440,7 @@ public:
 		return MUSIC_PLC_RET_SUCCESS;
 	}
 public:
+#if 0
 	void Set_SeekSamples(i32 seekSamples) {
 		if (seekSamples < 0)
 			return;
@@ -445,6 +457,7 @@ public:
 		if ((_com._matchSamples + _com._seekSamples) > _com.inHistory.GetSamplesMax())
 			_com._matchSamples = _com.inHistory.GetSamplesMax() - _com._seekSamples;
 	}
+#endif
 	void Set_ChannelSelect(u16 channelSelect) {
 		_channelSelect = channelSelect;
 	}
