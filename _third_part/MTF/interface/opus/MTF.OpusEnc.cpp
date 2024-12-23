@@ -87,6 +87,11 @@ mtf_int32 MTF_OpusEnc::receive(MTF_Data& iData)
 
 mtf_int32 MTF_OpusEnc::generate(MTF_Data*& oData)
 {
+	if (_iData._flags & MTF_DataFlag_ESO){
+		_oData._flags |= MTF_DataFlag_ESO;
+		oData = &_oData;
+		return 0;
+	}
 	AA_Data AA_iData;
 	MTF_MEM_SET(&AA_iData, 0, sizeof(AA_Data));
 	AA_iData.buff = _iData.Data();
@@ -100,9 +105,9 @@ mtf_int32 MTF_OpusEnc::generate(MTF_Data*& oData)
 	MAF_Run(_hd, &AA_iData, &AA_oData);
 	_iData.Used(_iData._size);
 	_oData._size += AA_oData.size;
-
-	if (_iData._flags & MTF_DataFlag_ESO){
-		_oData._flags |= MTF_DataFlag_ESO;
+	if (AA_oData.flags & AA_DataFlag_FRAME_IS_EOS) {
+		//_oData._flags |= MTF_DataFlag_ESO;
+		return -1;
 	}
 	oData = &_oData;
 	return 0;

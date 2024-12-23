@@ -70,6 +70,10 @@ maf_int32 MAFA_OpusEnc::Deinit()
 
 maf_int32 MAFA_OpusEnc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
+	if (dataIn->GetSize() < _frameBytes) {
+		dataOut->SetFlag(MAFA_FRAME_IS_EOS);
+		return -1;
+	}
 	maf_int32 outLen;
 	maf_int16 *iBuff = (maf_int16 *)dataIn->GetData();
 	maf_uint8 *oBuff = (maf_uint8 *)dataOut->GetData();
