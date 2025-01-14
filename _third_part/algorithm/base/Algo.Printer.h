@@ -1,7 +1,8 @@
 #pragma once
 #include"Algo.Type.h"
 
-#if 1
+#if WIN32
+#if 0
 #include<stdio.h>
 #include<stdarg.h>
 namespace Algo {
@@ -22,5 +23,11 @@ namespace Algo {
 
 #define ALGO_PRINT(fmt,...)		Printer::Printf("[%s](%d)" fmt "\n",__func__, __LINE__, ##__VA_ARGS__)
 }
+#else
+#include<stdio.h>
+#include<string.h>
+#define ALGO_PRINT(fmt,...)		printf("(%s)[%s]<%d>" fmt "\n", strrchr(__FILE__, '\\') + 1, __func__, __LINE__, ##__VA_ARGS__)
 #endif
-
+#else
+#define ALGO_PRINT(fmt,...)		
+#endif

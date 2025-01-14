@@ -1,25 +1,64 @@
 #pragma once
+#include"Algo.BasePorting.h"
 #include"Algo.BasePorting.Inner.h"
 #include"Algo.Macro.h"
 #include"Algo.Type.h"
 #include"Algo.AudioSamlpes.h"
 #include"Algo.AudioCal.OverlapAdd.h"
 #include"Algo.AudioCal.Muter.h"
-#include"MusicPlcFillSignal.h"
 #include"Algo.AudioCal.WaveFormMatch.h"
-#include"MusicPlc.h"
+#include"MusicPlcFillSignal.h"
 
+namespace MusicPlc_ns{
 using namespace Algo;
 using namespace Audio;
 
-namespace MusicPlc_ns{
+#define MUSIC_PLC_RET_SUCCESS 0
+#define MUSIC_PLC_RET_FAIL -1
 
+#ifdef WIN32
 #define MUSIC_PLC_SUPPORT_CH_SELECT 0
-#define MUSIC_PLC_SEEK_MS_DEFAULT (8)
-#define MUSIC_PLC_MATCH_MS_DEFAULT (2)
-#define MUSIC_PLC_MIN_FRAME_MS (MUSIC_PLC_SEEK_MS_DEFAULT+MUSIC_PLC_MATCH_MS_DEFAULT+5)
+#endif
+typedef struct
+{
+	AlgoBasePorting_c* basePorting;
+	int32_t fsHz;
+	int16_t channels;
+	int16_t width;
+	int16_t frameSamples;
+	int32_t overlapSamples;
+	int32_t holdSamplesAfterLost;
+	int32_t attenuateSamplesAfterLost;	//Attenuation after packet loss
+	int32_t gainSamplesAfterNoLost;//Gain after obtaining the package
+	int32_t seekSamples;
+	int32_t matchSamples;
+}MusicPlcParam_t;
+
+
+typedef enum {
+	MUSIC_PLC_SET_SEEK_SAMPLES = 0,
+	MUSIC_PLC_SET_MATCH_SAMPLES,
+	MUSIC_PLC_SET_CHANNEL_SELECT,
+	MUSIC_PLC_SET_CHOOSE_MAX,
+}MusicPlc_SetChhoose_e;
+
+typedef enum {
+	MUSIC_PLC_GET_CHOOSE_MAX,
+}MusicPlc_GetChhoose_e;
+
+
+template<class T, i8 type = (TypeIdentify_c::IsI16<T>() ? 0 : (TypeIdentify_c::IsI32<T>() ? 1 : 2))>
+struct WaveFormMatchPlc_c : WaveFormMatch_c<i16, i16, u64>{};
+template<class T>
+struct WaveFormMatchPlc_c<T, 0> : WaveFormMatch_c<i16, i16, i64, 15> {};
+template<class T>
+struct WaveFormMatchPlc_c<T, 1> : WaveFormMatch_c<i32, i32, i64, 47> {};
+template<class T>
+struct WaveFormMatchPlc_c<T, 2> : WaveFormMatch_c<f32, f32, f32> {};
 
 #if 1
+
+template<class T>
 class MusicPlcCom_c {
 public:
 	MusicPlcCom_c() {}
@@ -35,14 +74,15 @@ public:
 	AudioSamples inHistory;
 	AudioSamples infuture;
 	MusicPlcFillSignal_c fillSignal;
-	Muter_c muterAfterLost;
-	Muter_c muterAfterNoLost;
-	OverlapAdd_c _overlapAdd;
-	WaveFormMatch_c _waveFormMatch;
+	Muter_c<T> muterAfterLost;
+	Muter_c<T> muterAfterNoLost;
+	OverlapAdd_c<T> _overlapAdd;
+	WaveFormMatchPlc_c<T> _waveFormMatch;
 };
 #endif
 
 #if MUSIC_PLC_SUPPORT_CH_SELECT
+template<class T>
 class MusicPlcCh_c {
 public:
 	MusicPlcCh_c() {};
@@ -85,9 +125,9 @@ private:
 		{
 			_holdAfterLostSamplesNow[ch] = 0;
 #if 1
-			i32 bestLag = _com->_waveFormMatch.DoWaveFormMatch(
-				_com->inHistory.GetBufInSample(0, 0),
-				_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples, 0),
+			i32 bestLag = _com->_waveFormMatch.DoWaveFormMatchCh(
+				(T*)_com->inHistory.GetBufInSample(0, 0),
+				(T*)_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples, 0),
 				1 << ch,
 				_com->_seekSamples,
 				_com->_matchSamples);
@@ -120,7 +160,7 @@ private:
 	}
 
 public:
-	INLINE void Init(MusicPlcCom_c* com) {
+	INLINE void Init(MusicPlcCom_c<T>* com) {
 		_com = com;
 		for (i32 ch = 0; ch < 16; ch++) {
 			_lostCount[ch] = 0;
@@ -165,7 +205,7 @@ public:
 		if (isLost == false) {
 			_com->muterAfterNoLost.DoMute(_com->infuture.GetBufInSample(0, ch), _com->frameSamples, ch);
 		}
-		else { 
+		else {
 			i32 holdSamples = _com->_holdSamplesAfterLost - _holdAfterLostSamplesNow[ch];
 			holdSamples = MIN(holdSamples, _com->frameSamples);
 			i32 doMuteSamples = _com->frameSamples - holdSamples;
@@ -192,10 +232,10 @@ private:
 	i32 _lostCount[16];
 	b1 _isQuickDeal[16];
 	i32 _holdAfterLostSamplesNow[16];
-	MusicPlcCom_c* _com;
+	MusicPlcCom_c<T>* _com;
 };
 #else
-
+template<class T>
 class MusicPlcChAll_c {
 public:
 	MusicPlcChAll_c() {};
@@ -237,9 +277,9 @@ private:
 		{
 			_holdAfterLostSamplesNow = 0;
 #if 1
-			i32 bestLag = _com->_waveFormMatch.DoWaveFormMatch(
-				_com->inHistory.GetBufInSample(0),
-				_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples),
+			i32 bestLag = _com->_waveFormMatch.DoWaveFormMatchAllCh(
+				(T*)_com->inHistory.GetBufInSample(0),
+				(T*)_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples),
 				_com->_seekSamples,
 				_com->_matchSamples);
 #else		
@@ -266,7 +306,7 @@ private:
 		_com->fillSignal.Output(_com->infuture, _com->infuture.GetSamplesMax());
 	}
 public:
-	INLINE void Init(MusicPlcCom_c* com) {
+	INLINE void Init(MusicPlcCom_c<T>* com) {
 		_com = com;
 		_lostCount = 0;
 		_isQuickDeal = 0;
@@ -289,12 +329,11 @@ public:
 				_com->inHistory,
 				_com->inHistory.GetSamplesMax() - _com->overlapSamples - _com->frameSamples,
 				_com->frameSamples);
-			//*outLen = pOut.GetValidSamples(ch) * _com->info._bytesPerSample;
 			return MUSIC_PLC_RET_SUCCESS;
 		}
 
-		//muting
 #if 1
+		//muting
 		if (isLost == false) {
 			_com->muterAfterNoLost.DoMute(_com->infuture.GetBufInSample(0), _com->frameSamples);
 		}
@@ -315,7 +354,6 @@ public:
 			_com->frameSamples);
 
 		_com->infuture.Clear(_com->infuture.GetValidSamples());
-		//*outLen = pOut.GetValidSamples() * info._bytesPerSample;
 		return MUSIC_PLC_RET_SUCCESS;
 #endif
 	}
@@ -324,88 +362,119 @@ private:
 	i32 _lostCount;
 	b1 _isQuickDeal;
 	i32 _holdAfterLostSamplesNow;
-	MusicPlcCom_c* _com;
+	MusicPlcCom_c<T>* _com;
 };
 #endif
 
-class MusicPlcInner_c
+template<class T>
+class MusicPlc_c
 {
 public:
-	MusicPlcInner_c() {};
-	~MusicPlcInner_c() {};
+	MusicPlc_c() {}
+	~MusicPlc_c() {}
 public:
-	i32 Init(AlgoBasePorting_c* basePorting, i16 channels, i16 width, i32 sampleRate,
-		i32 frameSamplesIn, i32 overlapSamplesIn, i32 holdSamplesAfterLostIn, i32 attenSamplesAfterLostIn, i32 gainSamplesAfterNoLostIn,
-		i32 seekSamplesIn, i32 matchSamplesIn
-	) {
-		if (!basePorting)
+	static inline i32 Create(void **pHd, MusicPlcParam_t* param) {
+		if (!param
+			|| !param->basePorting
+			|| param->channels < 1)
 			return MUSIC_PLC_RET_FAIL;
-		if (channels < 1)
+#if 0
+		if (param->width != 2 && param->width != 3 && param->width != 4)
 			return MUSIC_PLC_RET_FAIL;
-		if (width != 2 && width != 3 && width != 4)
-			return MUSIC_PLC_RET_FAIL;
-		if (frameSamplesIn < 1
-			|| overlapSamplesIn < 0
-			|| attenSamplesAfterLostIn < 0
-			|| gainSamplesAfterNoLostIn < 0
-			|| holdSamplesAfterLostIn < 0
-			|| seekSamplesIn < 0
-			|| matchSamplesIn < 0)
+#endif
+		if (param->frameSamples < 1
+			|| param->overlapSamples < 0
+			|| param->holdSamplesAfterLost < 0
+			|| param->attenuateSamplesAfterLost < 0
+			|| param->gainSamplesAfterNoLost < 0
+			|| param->seekSamples < 0
+			|| param->matchSamples < 0)
 			return MUSIC_PLC_RET_FAIL;
 
-		ALGO_MEM_SET(this, 0, sizeof(MusicPlcInner_c));
-		_com.MM.Init(basePorting);
-		_com.info.Init(sampleRate, width, channels);
-		_com.frameSamples = frameSamplesIn;
-		_com.overlapSamples = overlapSamplesIn;
-		_com._seekSamples = seekSamplesIn;
-		_com._matchSamples = matchSamplesIn;
+#if 1
+		int size = sizeof(MusicPlc_c);
+		MusicPlc_c* hd = (MusicPlc_c*)param->basePorting->Malloc(size);
+		if (!hd) {
+			return MUSIC_PLC_RET_FAIL;
+		}
+		new(hd) MusicPlc_c();
+#endif
+		hd->_basePorting = param->basePorting;
+		MusicPlcCom_c<T>* pCom = &hd->_com;
+		pCom->MM.Init(hd->_basePorting);
+		pCom->info.Init(param->fsHz, param->width, param->channels);
+		pCom->frameSamples = param->frameSamples;
+		pCom->overlapSamples = param->overlapSamples;
+		pCom->_seekSamples = param->seekSamples;
+		pCom->_matchSamples = param->matchSamples;
 
 		BufferSamples bufferSamples;
 #if 0
-		bufferSamples._samples = _com.overlapSamples + MAX(_com.frameSamples, (i32)(_com.info._rate * MUSIC_PLC_MIN_FRAME_MS / (1000)));
+		bufferSamples._samples =pCom->overlapSamples + MAX(pCom->frameSamples, (i32)(pCom->info._rate * MUSIC_PLC_MIN_FRAME_MS / (1000)));
 #else
-		bufferSamples._samples = _com.frameSamples + _com.overlapSamples;
-		bufferSamples._samples = MAX(bufferSamples._samples, _com._seekSamples + _com._matchSamples + (5 * _com.info._rate) / 1000);
+		bufferSamples._samples = pCom->_seekSamples + pCom->_matchSamples + (5 * pCom->info._rate) / 1000;
+		bufferSamples._samples = MAX(bufferSamples._samples, pCom->frameSamples + pCom->overlapSamples);
 #endif
-		bufferSamples._buf = (u8*)_com.MM.Malloc(bufferSamples._samples * _com.info._bytesPerSample);
-		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * _com.info._bytesPerSample);
-		_com.inHistory.Init(&_com.info, &bufferSamples);
-		//inHistory.Append(inHistory, 0, inHistory.GetSamplesMax());
-		for (i16 ch = 0; ch < _com.info._channels; ch++)
-			_com.inHistory.Append(_com.inHistory.GetSamplesMax(), ch);
-		bufferSamples._samples = _com.frameSamples;
-		bufferSamples._buf = (u8*)_com.MM.Malloc(bufferSamples._samples * _com.info._bytesPerSample);
-		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples * _com.info._bytesPerSample);
-		_com.infuture.Init(&_com.info, &bufferSamples);
-		_com.fillSignal.Init(&_com.MM, _com.inHistory.GetSamplesMax() - _com.overlapSamples, &_com.info);
-#if 1
-		_com.muterAfterLost.Init(&_com.MM, &_com.info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::ATTENUATION, attenSamplesAfterLostIn);
-		_com.muterAfterNoLost.Init(&_com.MM, &_com.info, Muter_c::WindowChoose_e::COSINE, Muter_c::DirChoose_e::AMPLIFICATION, gainSamplesAfterNoLostIn);
-#else
-		_com.muterAfterLost.Init(&_com.MM, &_com.info, Muter_c::WindowChoose_e::LINE, Muter_c::DirChoose_e::ATTENUATION, attenSamplesAfterLostIn);
-		_com.muterAfterNoLost.Init(&_com.MM, &_com.info, Muter_c::WindowChoose_e::LINE, Muter_c::DirChoose_e::AMPLIFICATION, gainSamplesAfterNoLostIn);
-#endif
-		_com._overlapAdd.Init(&_com.MM, &_com.info, OverlapAdd_c::WindowChoose::Line, _com.overlapSamples);
-		_com._holdSamplesAfterLost = holdSamplesAfterLostIn;
-		//Set_SeekSamples(MUSIC_PLC_SEEK_MS_DEFAULT * sampleRate / 1000);
-		//Set_MatchSamples(MUSIC_PLC_MATCH_MS_DEFAULT * sampleRate / 1000);
-		_com._waveFormMatch.Init(
-			WaveFormMatch_c::FuncMode_e::ACCORELATION,
-			&_com.info);
-		_channelSelect = 0xffff;
+		bufferSamples._buf = (u8*)pCom->MM.Malloc(bufferSamples._samples *pCom->info._bytesPerSample);
+		if (!bufferSamples._buf) {
+			return MUSIC_PLC_RET_FAIL;
+		}
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples *pCom->info._bytesPerSample);
+		pCom->inHistory.Init(&pCom->info, &bufferSamples);
+		for (i16 ch = 0; ch <pCom->info._channels; ch++)
+			pCom->inHistory.Append(pCom->inHistory.GetSamplesMax(), ch);
+		bufferSamples._samples = pCom->frameSamples;
+		bufferSamples._buf = (u8*)pCom->MM.Malloc(bufferSamples._samples * pCom->info._bytesPerSample);
+		if (!bufferSamples._buf) {
+			return MUSIC_PLC_RET_FAIL;
+		}
+		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples *pCom->info._bytesPerSample);
+		pCom->infuture.Init(&pCom->info, &bufferSamples);
+		pCom->fillSignal.Init(&pCom->MM,pCom->inHistory.GetSamplesMax() -pCom->overlapSamples, &pCom->info);
+		pCom->muterAfterLost.Init(
+			&pCom->MM, &pCom->info, 
+			MuterWindowChoose_e::MUTER_WINDOW_CHOOSE_COSINE, MuterDirChoose_e::MUTER_DIR_CHOOSE_ATTENUATION, 
+			param->attenuateSamplesAfterLost);
+		pCom->muterAfterNoLost.Init(
+			&pCom->MM, &pCom->info, 
+			MuterWindowChoose_e::MUTER_WINDOW_CHOOSE_COSINE, MuterDirChoose_e::MUTER_DIR_CHOOSE_AMPLIFICATION, 
+			param->gainSamplesAfterNoLost);
+		pCom->_overlapAdd.Init(&pCom->MM, &pCom->info, OverlapAddWindowChoose_e::Line,pCom->overlapSamples);
+		pCom->_holdSamplesAfterLost = param->holdSamplesAfterLost;
+		pCom->_waveFormMatch.Init(WaveFormMatchFuncMode_e::WAVE_FORM_MATCH_FUNC_MODE_ACCORELATION, &pCom->info);
+		hd->_channelSelect = 0xffff;
 #if MUSIC_PLC_SUPPORT_CH_SELECT
-		_musicPlcCh.Init(&_com);
+		hd->_musicPlcCh.Init(pCom);
 #else
-		_musicPlcChAll.Init(&_com);
+		hd->_musicPlcChAll.Init(pCom);
 #endif
+		*pHd = hd;
 		return MUSIC_PLC_RET_SUCCESS;
 	}
-	i32 DeInit() {
-		_com.MM.FreeAll();
+	static inline int32_t Set(void* hd, MusicPlc_SetChhoose_e choose, void* val) {
+		if (!hd
+			|| choose >= MUSIC_PLC_SET_CHOOSE_MAX)
+			return MUSIC_PLC_RET_FAIL;
+		MusicPlc_c<T>* pMusicPlc = (MusicPlc_c<T>*)hd;
+		switch (choose)
+		{
+#if 0
+		case MUSIC_PLC_SET_SEEK_SAMPLES:
+			pMusicPlc->_musicplc.Set_SeekSamples((u32)val); break;
+		case MUSIC_PLC_SET_MATCH_SAMPLES:
+			pMusicPlc->_musicplc.Set_MatchSamples((u32)val); break;
+		case MUSIC_PLC_SET_CHANNEL_SELECT:
+			pMusicPlc->_musicplc->Set_ChannelSelect((u32)val); break;
+#endif
+		default:
+			break;
+		}
 		return MUSIC_PLC_RET_SUCCESS;
 	}
-	i32 Run(uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen, u16 isLost)
+	static inline int32_t Get(void* hd, MusicPlc_GetChhoose_e choose, void* val) {
+		return MUSIC_PLC_RET_SUCCESS;
+	}
+	static inline i32 Run(void* hd, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen, uint16_t isLost)
 	{
 #if 0
 		if (isLost == false) {
@@ -416,30 +485,42 @@ public:
 		if (*outLen < frameSamples * info._bytesPerSample)
 			return MUSIC_PLC_RET_FAIL;
 #endif
+		MusicPlc_c* plc = (MusicPlc_c*)hd;
+		MusicPlcCom_c<T>* pCom = &plc->_com;
+		
 		BufferSamples bufferSamples;
 		bufferSamples._buf = in;
-		bufferSamples._samples = _com.frameSamples;
+		bufferSamples._samples = pCom->frameSamples;
 		AudioSamples pIn;
-		pIn.Init(&_com.info, &bufferSamples);
+		pIn.Init(&pCom->info, &bufferSamples);
 
 		bufferSamples._buf = out;
-		bufferSamples._samples = _com.frameSamples;
+		bufferSamples._samples = pCom->frameSamples;
 		AudioSamples pOut;
-		pOut.Init(&_com.info, &bufferSamples);
+		pOut.Init(&pCom->info, &bufferSamples);
 #if MUSIC_PLC_SUPPORT_CH_SELECT
-		for (i16 ch = 0; ch < _com.info._channels; ch++) {
-			b1 isSelectCh = _channelSelect & (1 << ch);
+		for (i16 ch = 0; ch < pCom->info._channels; ch++) {
+			b1 isSelectCh = plc->_channelSelect & (1 << ch);
 			b1 isLostCh = isLost & (1 << ch);
-			_musicPlcCh.Run(pIn, pOut, ch, isLostCh, isSelectCh);
+			plc->_musicPlcCh.Run(pIn, pOut, ch, isLostCh, isSelectCh);
 		}
 #else
-		b1 isLost0 = isLost ? true : false;
-		_musicPlcChAll.Run(pIn, pOut, isLost0);
+		plc->_musicPlcChAll.Run(pIn, pOut, isLost ? true : false);
 #endif
-		* outLen = pOut.GetValidSamples(0) * _com.info._bytesPerSample;
+		*outLen = pOut.GetValidSamples(0) * pCom->info._bytesPerSample;
 		return MUSIC_PLC_RET_SUCCESS;
 	}
-public:
+
+	static inline i32 Destory(void* hd) {
+		MusicPlc_c* plc = (MusicPlc_c*)hd;
+		plc->_com.MM.FreeAll();
+		AlgoBasePorting_c* basePorting = plc->_basePorting;
+		plc->~MusicPlc_c();
+		basePorting->Free(plc);
+		return MUSIC_PLC_RET_SUCCESS;
+	}
+
+private:
 #if 0
 	void Set_SeekSamples(i32 seekSamples) {
 		if (seekSamples < 0)
@@ -463,14 +544,14 @@ public:
 	}
 private:
 
-	MusicPlcCom_c _com;
+	MusicPlcCom_c<T> _com;
 #if MUSIC_PLC_SUPPORT_CH_SELECT
-	MusicPlcCh_c _musicPlcCh;
+	MusicPlcCh_c<T> _musicPlcCh;
 #else
-	MusicPlcChAll_c _musicPlcChAll;
+	MusicPlcChAll_c<T> _musicPlcChAll;
 #endif
 	u16 _channelSelect;
+	AlgoBasePorting_c* _basePorting;
 };
-
 
 }

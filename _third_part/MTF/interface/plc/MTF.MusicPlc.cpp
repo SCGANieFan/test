@@ -84,7 +84,7 @@ mtf_int32 MTF_MusicPlc::receive(MTF_Data& iData)
 	return 0;
 }
 
-#define FRAMES_LOST 15
+#define FRAMES_LOST 10
 #define FRAMES_TOTAL 50
 mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 {

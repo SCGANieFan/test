@@ -1,8 +1,7 @@
-#pragma once
 #include"Algo.Math.h"
 #include"Algo.AudioCal.Accorelation.h"
 
-#if 1
+#if 0
 
 namespace Algo{
 namespace Audio{
@@ -354,23 +353,6 @@ struct Accorelation_t<T, -1> {
 		return lagOpt;
 	}
 };
-
-void Accorelation_c::Init(i16 width, i16 channels){
-	if(width==2){
-		_Accorelation = Accorelation_t<i16,-1>::run;
-		_AccorelationAllCh = Accorelation_t<i16, -1>::runAllCh;
-	}
-#if 0
-	else if(width==3){
-		_Accorelation = Accorelation_t<i24,-1>::run;
-	}
-#endif
-	else if(width==4){
-		_Accorelation = Accorelation_t<i32,-1>::run;
-		_AccorelationAllCh = Accorelation_t<i32, -1>::runAllCh;
-	}
-	_channels = channels;
-}
 
 
 }

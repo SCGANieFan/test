@@ -1,6 +1,5 @@
-#if 1
+#if 0
 
-#pragma once
 #include"Algo.AudioCal.Com.h"
 #include"Algo.AudioCal.OverlapAdd.h"
 #include"Algo.AudioCal.BufferGenerator.h"

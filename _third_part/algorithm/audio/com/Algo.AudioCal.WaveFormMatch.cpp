@@ -1,11 +1,10 @@
-#pragma once
 #include"Algo.Math.h"
 #include"Algo.AudioCal.WaveFormMatch.h"
 #if 1
 
 namespace Algo{
 namespace Audio{
-
+#if 0
 template<class T>
 INLINE i64 Sum(T* ref, T* temp, i16 channels, i32 seekSample, i32 matchSample)
 {
@@ -56,7 +55,10 @@ void WaveFormMatch_c::Init(FuncMode_e mode, AudioInfo* info) {
 		_waveFormMatch = WaveFormMatch_Sum;
 	}
 	else if (mode == FuncMode_e::ACCORELATION) {
-		_accorelation.Init(_info->_width, _info->_channels);
+		if(_info->_width==2)
+			_accorelation.Init<i16>(_info->_channels);
+		else if (_info->_width == 4)
+			_accorelation.Init<i32>(_info->_channels);
 		_waveFormMatch = WaveFormMatch_Accorelation;
 		_waveFormMatchAllCh = WaveFormMatch_Accorelation_AllCh;
 	}
@@ -75,7 +77,7 @@ i32 WaveFormMatch_c::WaveFormMatch_Accorelation_AllCh(WaveFormMatch_c* hd, void*
 i32 WaveFormMatch_c::WaveFormMatch_Sum(WaveFormMatch_c* hd, void* ref, void* cmp, u16 chSelect, i32 seekSample, i32 matchSample) {
 	return hd->_waveFormMatch_Sum(ref, cmp, hd->_info->_channels, seekSample, matchSample);
 }
-
+#endif
 }
 }
 

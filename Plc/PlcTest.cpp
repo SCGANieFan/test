@@ -32,10 +32,17 @@
 #define DECAY_MS 50
 #define OVERLAP_MS 2
 #else
+
+#define FILE_NAME "sin4ch48k16b.wav"
 //#define FILE_NAME "sin4ch48k32b.wav"
-#define FILE_NAME "mbz_48k2h.wav"
+//#define FILE_NAME "sin1ch48k32b_1.wav"
+//#define FILE_NAME "sin1ch48k32b_2.wav"
+//#define FILE_NAME "sin1ch48k32b_3.wav"
+//#define FILE_NAME "sin1ch48k32b_4.wav"
+//#define FILE_NAME "sin4ch48k32bFloat.wav"
+//#define FILE_NAME "mbz_48k2h.wav"
 #define RATE 48000
-#define CHANNEL 2
+#define CHANNEL 4
 #define WIDTH 2
 #define FRAME_MS 2
 #define DECAY_MS 30
@@ -43,6 +50,8 @@
 #define OVERLAP_MS 4
 #endif
 #endif
+
+#define FRAME_LEN ((FRAME_MS*RATE/1000)-7)
 
 void PlcTest()
 {
@@ -55,7 +64,8 @@ void PlcTest()
 	void* param[] = {
 		(void*)(PATH FILE_NAME),
 		(void*)(PATH FILE_NAME ".plc.wav"),		
-		(void*)(FRAME_MS),
+		//(void*)(FRAME_MS),
+		(void*)(FRAME_LEN),
 		(void*)DECAY_MS,
 		(void*)GAIN_MS,
 		(void*)OVERLAP_MS,
@@ -68,7 +78,7 @@ void PlcTest()
 	};
 #else
 	const char* str = {
-	"|wav_demuxer,url=$0,fMs=$2|-->"
+	"|wav_demuxer,url=$0,fSamples=$2|-->"
 	"|music_plc,decayMs=$3,gainMs=$4,overlapMs=$5|-->"
 	"|wav_muxer,url=$1|"
 	};

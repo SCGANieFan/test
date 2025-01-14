@@ -1,4 +1,5 @@
 #include"testInner.h"
+#include"testInner.h"
 #include"PlcTest.h"
 #include"OggTest.h"
 #include"OpusTest.h"
@@ -15,7 +16,7 @@ void test()
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//OggTest();
-	// PlcTest();
+	 PlcTest();
 	//AudioSpeedCtrTest();
 	//AudioResampleTest();
 	//OggTest();
