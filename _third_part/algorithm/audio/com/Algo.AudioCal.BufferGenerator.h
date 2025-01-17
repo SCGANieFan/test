@@ -3,18 +3,9 @@
 #include"Algo.AudioCal.Com.h"
 namespace Algo {
 	namespace Audio {
-		class BufferGenerator_c
-		{
-		public:
-			enum class BufferChoose_e {
-				WINDOW_LINE_FADE = 0,
-				WINDOW_COSINE_FADE,
-			};
-		public:
-			BufferGenerator_c() {};
-			~BufferGenerator_c() {};
-		private:
-			template<class T>
+
+		template<class T>
+		struct BufferGenerator_t {
 			STATIC INLINE void GenerateLine(T* factor, i32 samples, i16 fpNum = 0) {
 				i64 samplesInner = samples + 1;
 				for (i32 i = 0; i < samples; i++) {
@@ -22,15 +13,6 @@ namespace Algo {
 					factor[i] = (T)((num << fpNum) / samplesInner);
 				}
 			}
-			template<>
-			STATIC INLINE void GenerateLine<f32>(f32* factor, i32 samples, i16 fpNum) {
-				f32 samplesInner = samples + 1;
-				for (i32 i = 0; i < samples; i++) {
-					f32 num = samplesInner - 1 - i;
-					factor[i] = num / samplesInner;
-				}
-			}
-			template<class T>
 			STATIC INLINE void GenerateCos(T* factor, i32 samples, i16 fpNum = 0) {
 				STATIC const i32 _PI_Q15 = 102943;
 				i32 PI_QFp = _PI_Q15 >> (15 - fpNum);
@@ -50,8 +32,18 @@ namespace Algo {
 					factor[i] = ONE_QFp - factor[xx - i];
 				}
 			}
-			template<>
-			STATIC INLINE void GenerateCos<f32>(f32* factor, i32 samples, i16 fpNum) {
+		};
+
+		template<>
+		struct BufferGenerator_t<f32> {
+			STATIC INLINE void GenerateLine(f32* factor, i32 samples, i16 fpNum = 0) {
+				f32 samplesInner = samples + 1;
+				for (i32 i = 0; i < samples; i++) {
+					f32 num = samplesInner - 1 - i;
+					factor[i] = num / samplesInner;
+				}
+			}
+			STATIC INLINE void GenerateCos(f32* factor, i32 samples, i16 fpNum = 0) {
 				STATIC const f32 _PI = 3.1415926f;
 				for (i32 i = 0; i < (samples + 1) / 2; i++) {
 					f32 x = _PI * i / samples;
@@ -66,15 +58,27 @@ namespace Algo {
 					factor[i] = 1 - factor[xx - i];
 				}
 			}
+		};
+
+		class BufferGenerator_c
+		{
+		public:
+			enum class BufferChoose_e {
+				WINDOW_LINE_FADE = 0,
+				WINDOW_COSINE_FADE,
+			};
+		public:
+			BufferGenerator_c() {};
+			~BufferGenerator_c() {};
 		public:
 			template<class T>
 			STATIC INLINE void Generate(BufferChoose_e choose, T* factor, i32 samples, i16 fpNum = 0) {
 				fpNum = TypeIdentify_c::IsFloat<T>() ? 0 : MIN(fpNum, 15);
 				if (choose == BufferChoose_e::WINDOW_LINE_FADE) {
-					GenerateLine(factor, samples, fpNum);
+					BufferGenerator_t<T>::GenerateLine(factor, samples, fpNum);
 				}
 				else if (choose == BufferChoose_e::WINDOW_COSINE_FADE) {
-					GenerateCos(factor, samples, fpNum);
+					BufferGenerator_t<T>::GenerateCos(factor, samples, fpNum);
 				}
 			}
 		};

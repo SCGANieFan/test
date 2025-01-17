@@ -72,7 +72,7 @@ public:
 				break;
 		}
 	}
-private:
+public:
 	AudioSamples fillSignal;
 	i32 fillSignalSampleIndex[16];
 };

@@ -28,26 +28,14 @@
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp">
       <Filter>lib\audioCom</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp">
-      <Filter>lib\audioCom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.cpp">
-      <Filter>lib\audioCom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp">
-      <Filter>lib\audioCom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp">
-      <Filter>lib\audioCom</Filter>
-    </ClCompile>
     <ClCompile Include="..\_third_part\MAF\interface\demo\MAF.demo.cpp">
       <Filter>maf</Filter>
     </ClCompile>
     <ClCompile Include="..\_third_part\MTF\interface\demo\MTF.demo.cpp">
       <Filter>mtf</Filter>
     </ClCompile>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveMatchByCrossCor.cpp">
-      <Filter>lib\audioCom</Filter>
+    <ClCompile Include="..\_third_part\algorithm\base\Algo.Memory.cpp">
+      <Filter>lib\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

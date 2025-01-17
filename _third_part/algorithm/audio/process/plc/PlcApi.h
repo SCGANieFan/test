@@ -10,10 +10,10 @@
 #endif
 
 
-#define PLC_RET_SUCCESS			(0)
-#define PLC_RET_INPUT_ERROR		(-1)
-#define PLC_RET_FAIL			(-2)
-#define PLC_RET_NOT_SUPPORT		(-3)
+#define PLC_API_RET_SUCCESS			(0)
+#define PLC_API_RET_INPUT_ERROR		(-1)
+#define PLC_API_RET_FAIL			(-2)
+#define PLC_API_RET_NOT_SUPPORT		(-3)
 
 enum PlcApiMode_e {
 	PLC_API_MODE_MUSIC_PLC = 0,

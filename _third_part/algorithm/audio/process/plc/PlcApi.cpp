@@ -7,7 +7,7 @@ using namespace Algo;
 #ifdef WIN32
 #define USE_MUSIC_PLC 1
 #define LOG(func,fmt,...) if(func) func("[%s](%d)" fmt "\n",__func__, __LINE__, ##__VA_ARGS__)
-#define PLC_DATA_TYPE_SHORT_16	(1)
+#define PLC_DATA_TYPE_SHORT_16	(0)
 #define PLC_DATA_TYPE_INT_32	(0&(!PLC_DATA_TYPE_SHORT_16))
 #define PLC_DATA_TYPE_FLOAT_32  (1&(!PLC_DATA_TYPE_SHORT_16)&(!PLC_DATA_TYPE_INT_32))
 #else
@@ -41,19 +41,19 @@ public:
 	~PlcApiCom_c() {}
 public:
 	virtual PlcApiRet Create(void** pHd, PlcApiParam_t* param, PlcApiBasePort_c *plcMemory) const {
-		return PLC_RET_NOT_SUPPORT;
+		return PLC_API_RET_NOT_SUPPORT;
 	}
 	virtual PlcApiRet Run(void* hd, uint8_t* in, int32_t inLen, int32_t* inUsed, uint8_t* out, int32_t* pOutLen, uint16_t isLost) const {
-		return PLC_RET_NOT_SUPPORT;
+		return PLC_API_RET_NOT_SUPPORT;
 	}
 	virtual PlcApiRet Set(void* hd, PlcApiSet_e choose, void* val) const {
-		return PLC_RET_NOT_SUPPORT;
+		return PLC_API_RET_NOT_SUPPORT;
 	}
 	virtual PlcApiRet Get(void* hd, PlcApiGet_e choose, void* val) const {
-		return PLC_RET_NOT_SUPPORT;
+		return PLC_API_RET_NOT_SUPPORT;
 	}
 	virtual PlcApiRet Destory(void* hd) const {
-		return PLC_RET_NOT_SUPPORT;
+		return PLC_API_RET_NOT_SUPPORT;
 	}
 };
 
@@ -65,6 +65,10 @@ public:
 #if USE_MUSIC_PLC
 public:
 	virtual PlcApiRet Create(void** pHd, PlcApiParam_t* param, PlcApiBasePort_c* plcMemory) const {
+		*pHd = 0;
+		if (param->width != sizeof(T)) {
+			return PLC_API_RET_NOT_SUPPORT;
+		}
 		MusicPlc_ns::MusicPlcParam_t musicplcParam;
 		ALGO_MEM_SET(&musicplcParam, 0, sizeof(MusicPlc_ns::MusicPlcParam_t));
 		musicplcParam.basePorting = (AlgoBasePorting_c*)plcMemory;
@@ -78,27 +82,39 @@ public:
 		musicplcParam.gainSamplesAfterNoLost = param->MusicPlcParam.gainSamples;
 		musicplcParam.seekSamples = param->MusicPlcParam.seekSamples;
 		musicplcParam.matchSamples = param->MusicPlcParam.matchSamples;
+		LOG(param->cb_printf, "plc api musicplc, (%p,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)",
+			musicplcParam.basePorting,
+			musicplcParam.fsHz,
+			musicplcParam.channels,
+			musicplcParam.width,
+			musicplcParam.frameSamples,
+			musicplcParam.overlapSamples,
+			musicplcParam.holdSamplesAfterLost,
+			musicplcParam.attenuateSamplesAfterLost,
+			musicplcParam.gainSamplesAfterNoLost,
+			musicplcParam.seekSamples,
+			musicplcParam.matchSamples);
 		void* plc;
 		int32_t ret = MusicPlc_ns::MusicPlc_c<T>::Create(&plc, &musicplcParam);
 		if (!plc) {
 			LOG(plcMemory->print_cb, "plc api create fail, %d", ret);
-			return PLC_RET_FAIL;
+			return PLC_API_RET_FAIL;
 		}
 		MusicPlc_ns::MusicPlc_c<T>::Set(plc, MusicPlc_ns::MusicPlc_SetChhoose_e::MUSIC_PLC_SET_CHANNEL_SELECT, (void*)(int32_t)(param->MusicPlcParam.channelSelect));
 		*pHd = plc;
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 	virtual PlcApiRet Run(void* hd, uint8_t* in, int32_t inLen, int32_t* inUsed, uint8_t* out, int32_t* pOutLen, uint16_t isLost) const {
 		int32_t ret = MusicPlc_ns::MusicPlc_c<T>::Run(hd, in, inLen, out, pOutLen, isLost);
-		if (ret != MUSIC_PLC_RET_SUCCESS) {
-			return PLC_RET_FAIL;
+		if (ret != MUSIC_PLC_API_RET_SUCCESS) {
+			return PLC_API_RET_FAIL;
 		}
 		if (inUsed)
 			*inUsed = inLen;
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 	virtual PlcApiRet Set(void* hd, PlcApiSet_e choose, void* val) const {
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 	virtual PlcApiRet Get(void* hd, PlcApiGet_e choose, void* val) const {
 		switch (choose)
@@ -126,16 +142,16 @@ public:
 			break;
 		}
 		case PLC_API_GET_MAX:
-			return PLC_RET_SUCCESS;
+			return PLC_API_RET_SUCCESS;
 			break;
 		default:
 			break;
 		}
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 	virtual PlcApiRet Destory(void* hd) const {
 		MusicPlc_ns::MusicPlc_c<T>::Destory(hd);
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 #endif
 };
@@ -148,7 +164,7 @@ public:
 };
 
 #if PLC_DATA_TYPE_SHORT_16
-const static PlcApiMusic_c<int16_t> plcApiMusic;
+const static PlcApiMusic_c<int16_t> plcApiMusic = PlcApiMusic_c<int16_t>::PlcApiMusic_c();
 #elif PLC_DATA_TYPE_INT_32
 const static PlcApiMusic_c<int32_t> plcApiMusic;
 #elif PLC_DATA_TYPE_FLOAT_32
@@ -165,13 +181,13 @@ public:
 	static inline PlcApiRet Create(void** pHd, PlcApiParam_t* param) {
 		if (!pHd
 			|| !param)
-			return PLC_RET_INPUT_ERROR;
-		LOG(param->cb_printf, "plc api, (%p,%p)", pHd, param);
+			return PLC_API_RET_INPUT_ERROR;
+		LOG(param->cb_printf, " version %s, plc api, (%p,%p)", version, pHd, param);
 		int32_t size = sizeof(PlcApi_c);
 		PlcApi_c* plcApi = (PlcApi_c*)param->cb_malloc(size);
 		if (!plcApi) {
 			LOG(param->cb_printf, "plc api malloc fail, (%p,%d)", param->cb_malloc, size);
-			return PLC_RET_FAIL;
+			return PLC_API_RET_FAIL;
 		}
 		new(plcApi) PlcApi_c();
 		plcApi->_basePort.malloc_cb = param->cb_malloc;
@@ -185,31 +201,36 @@ public:
 		default:
 			LOG(plcApi->_basePort.print_cb, "plc api mode error, %d", param->mode);
 			Destory(plcApi);
-			return PLC_RET_FAIL;
+			return PLC_API_RET_FAIL;
 			break;
 		}
-		plcApi->_plcCom->Create(&plcApi->_plc, param, &plcApi->_basePort);
+		PlcApiRet ret = plcApi->_plcCom->Create(&plcApi->_plc, param, &plcApi->_basePort);
+		if (ret != PLC_API_RET_SUCCESS) {
+			LOG(param->cb_printf, "plc api create fail, %d", ret);
+			Destory(plcApi);
+			return ret;
+		}
 		*pHd = plcApi;
 		LOG(param->cb_printf, "plc api create success, (%p,%p)", plcApi, plcApi->_plc);
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 
 	static PlcApiRet Run(void* hd, uint8_t* in, int32_t inLen, int32_t* inUsed, uint8_t* out, int32_t* pOutLen, uint16_t isLost) {
 		if (!hd)
-			return PLC_RET_INPUT_ERROR;
+			return PLC_API_RET_INPUT_ERROR;
 		if (!isLost){
 			if (!in
 				|| inLen < 1)
-				return PLC_RET_INPUT_ERROR;
+				return PLC_API_RET_INPUT_ERROR;
 		}
 		if (!out)
-			return PLC_RET_INPUT_ERROR;
+			return PLC_API_RET_INPUT_ERROR;
 		PlcApi_c *plcApi = (PlcApi_c*)hd;
 		return plcApi->_plcCom->Run(plcApi->_plc, in, inLen, inUsed, out, pOutLen, isLost);
 	}
 	static PlcApiRet Set(void* hd, PlcApiSet_e choose, void* val) {
 		if (!hd) {
-			return PLC_RET_INPUT_ERROR;
+			return PLC_API_RET_INPUT_ERROR;
 		}
 		PlcApi_c* plcApi = (PlcApi_c*)hd;
 		LOG(plcApi->_basePort.print_cb, "plc api set, (%p,%d,%d)", hd, choose, val);
@@ -217,7 +238,7 @@ public:
 	}
 	static PlcApiRet Get(void* hd, PlcApiGet_e choose, void* val) {
 		if (!hd) {
-			return PLC_RET_INPUT_ERROR;
+			return PLC_API_RET_INPUT_ERROR;
 		}
 		PlcApi_c* plcApi = (PlcApi_c*)hd;
 		LOG(plcApi->_basePort.print_cb, "plc api get, (%p,%d,%d)", hd, choose, val);
@@ -225,19 +246,21 @@ public:
 	}
 	static PlcApiRet Destory(void* hd) {
 		if (!hd)
-			return PLC_RET_INPUT_ERROR;
+			return PLC_API_RET_INPUT_ERROR;
 		PlcApi_c* plcApi = (PlcApi_c*)hd;
 		LOG(plcApi->_basePort.print_cb, "plc api destory");
-		plcApi->_plcCom->Destory(plcApi->_plc);
+		if(plcApi->_plc)
+			plcApi->_plcCom->Destory(plcApi->_plc);
 		PlcApiBasePort_c basePort = plcApi->_basePort;
 		plcApi->~PlcApi_c();
 		basePort.Free(hd);
-		return PLC_RET_SUCCESS;
+		return PLC_API_RET_SUCCESS;
 	}
 public:
 	PlcApiBasePort_c _basePort;
 	const PlcApiCom_c* _plcCom;
 	void* _plc;
+	constexpr static const char* version = "1.0.0.0";
 };
 
 

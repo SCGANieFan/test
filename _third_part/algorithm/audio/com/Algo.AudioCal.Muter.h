@@ -18,9 +18,7 @@ enum class MuterDirChoose_e {
 	MUTER_DIR_CHOOSE_ATTENUATION = 0,
 	MUTER_DIR_CHOOSE_AMPLIFICATION,
 };
-template<class T>
-class Muter_c
-{
+
 #if 1
 template<class T, i8 type=(TypeIdentify_c::IsI16<T>() ? 0 : (TypeIdentify_c::IsI32<T>() ? 1 : 2))>
 class MuterProduct_c : public Product_c<T, T, T, T> {};
@@ -32,6 +30,9 @@ class MuterProduct_c<T, 1> : public Product_c<T, T, i16, i64, 14> {};
 //class MuterProduct_c<T, 1> : public Product_c<T, T, T, T> {};
 #endif
 
+template<class T>
+class Muter_c
+{
 public:
 	Muter_c() {}
 	~Muter_c() {}

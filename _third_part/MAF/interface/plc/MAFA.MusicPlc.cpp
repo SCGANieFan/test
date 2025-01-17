@@ -125,12 +125,12 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
 	initParam.MusicPlcParam.fadeSamples = _decayMs * _rate / 1000;
 	initParam.MusicPlcParam.gainSamples = _gainMs * _rate / 1000;
-	initParam.MusicPlcParam.seekSamples = 8 * _rate / 1000;
-	initParam.MusicPlcParam.matchSamples = 3* _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 2 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 1* _rate / 1000;
 	initParam.MusicPlcParam.channelSelect = 0xffff;
 	_hd = _memory.Malloc(_hdSize);
-	PlcApiCreate(&_hd, &initParam);
-	if (!_hd){
+	PlcApiRet ret = PlcApiCreate(&_hd, &initParam);
+	if (ret!=PLC_API_RET_SUCCESS){
 		return -1;
 	}
 	return 0;

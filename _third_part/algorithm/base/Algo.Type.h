@@ -59,13 +59,41 @@ namespace Algo {
 	typedef bool b1;
 
 
-	class TypeIdentify_c
+	namespace TypeIdentify_c
 	{
-	public:
-		TypeIdentify_c() {}
-		~TypeIdentify_c() {}
+		STATIC INLINE b1 IsFloatNan(f32 v) {
+			u32* intPtr = reinterpret_cast<u32*>(&v);
+			u32 intValue = *intPtr;
+			const u32 expMask = 0x7F800000;
+			const u32 fracMask = 0x007FFFFF;
+			return (intValue & expMask) == expMask && (intValue & fracMask) != 0;
+		}
+		STATIC INLINE b1 IsFloatInf(f32 v) {
+			u32* intPtr = reinterpret_cast<u32*>(&v);
+			u32 intValue = *intPtr;
+			const u32 expMask = 0x7F800000;
+			const u32 fracMask = 0x007FFFFF;
+			return (intValue & expMask) == expMask && (intValue & fracMask) == 0;
+		}
+		STATIC INLINE b1 IsFloatValid(f32 v) {
+			return !(IsFloatInf(v) || IsFloatNan(v));
+		}
+		template<class T>
+		STATIC INLINE constexpr i32 Width() { return 0; }
+		template<> STATIC INLINE constexpr i32 Width<b1>() { return 0; }
+		template<> STATIC INLINE constexpr i32 Width<u8>() { return 1; }
+		template<> STATIC INLINE constexpr i32 Width<i8>() { return 1; }
+		template<> STATIC INLINE constexpr i32 Width<u16>() { return 2; }
+		template<> STATIC INLINE constexpr i32 Width<i16>() { return 2; }
+		template<> STATIC INLINE constexpr i32 Width<u24>() { return 3; }
+		template<> STATIC INLINE constexpr i32 Width<i24>() { return 3; }
+		template<> STATIC INLINE constexpr i32 Width<u32>() { return 4; }
+		template<> STATIC INLINE constexpr i32 Width<i32>() { return 4; }
+		template<> STATIC INLINE constexpr i32 Width<f32>() { return 4; }
+		template<> STATIC INLINE constexpr i32 Width<u64>() { return 8; }
+		template<> STATIC INLINE constexpr i32 Width<i64>() { return 8; }
+		template<> STATIC INLINE constexpr i32 Width<f64>() { return 8; }
 
-	public:
 		template<class T>
 		STATIC INLINE constexpr bool IsF64() { return false; }
 		template<> STATIC INLINE constexpr bool IsF64<f64>() { return true; }

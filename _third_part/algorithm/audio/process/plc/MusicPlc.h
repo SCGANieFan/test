@@ -13,8 +13,8 @@ namespace MusicPlc_ns{
 using namespace Algo;
 using namespace Audio;
 
-#define MUSIC_PLC_RET_SUCCESS 0
-#define MUSIC_PLC_RET_FAIL -1
+#define MUSIC_PLC_API_RET_SUCCESS 0
+#define MUSIC_PLC_API_RET_FAIL -1
 
 #ifdef WIN32
 #define MUSIC_PLC_SUPPORT_CH_SELECT 0
@@ -50,9 +50,9 @@ typedef enum {
 template<class T, i8 type = (TypeIdentify_c::IsI16<T>() ? 0 : (TypeIdentify_c::IsI32<T>() ? 1 : 2))>
 struct WaveFormMatchPlc_c : WaveFormMatch_c<i16, i16, u64>{};
 template<class T>
-struct WaveFormMatchPlc_c<T, 0> : WaveFormMatch_c<i16, i16, i64, 15> {};
+struct WaveFormMatchPlc_c<T, 0> : WaveFormMatch_c<i16, i16, i64, (15 - 4), 0> {};
 template<class T>
-struct WaveFormMatchPlc_c<T, 1> : WaveFormMatch_c<i32, i32, i64, 47> {};
+struct WaveFormMatchPlc_c<T, 1> : WaveFormMatch_c<i32, i32, i64, 0, (47 - 4)> {};
 template<class T>
 struct WaveFormMatchPlc_c<T, 2> : WaveFormMatch_c<f32, f32, f32> {};
 
@@ -179,7 +179,7 @@ public:
 				_com->inHistory.GetSamplesMax() - _com->overlapSamples - _com->frameSamples,
 				_com->frameSamples,
 				ch);
-			return MUSIC_PLC_RET_SUCCESS;
+			return MUSIC_PLC_API_RET_SUCCESS;
 		}
 		if (isLost == false) {
 			GoodFrame(pIn, pOut, ch);
@@ -197,7 +197,7 @@ public:
 				_com->frameSamples,
 				ch);
 			//*outLen = pOut.GetValidSamples(ch) * _com->info._bytesPerSample;
-			return MUSIC_PLC_RET_SUCCESS;
+			return MUSIC_PLC_API_RET_SUCCESS;
 		}
 
 		//muting
@@ -224,7 +224,7 @@ public:
 
 		_com->infuture.Clear(_com->infuture.GetValidSamples(ch), ch);
 		//*outLen = pOut.GetValidSamples() * info._bytesPerSample;
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 #endif
 	}
 public:
@@ -295,10 +295,17 @@ private:
 				_com->overlapSamples);
 #endif
 			//fill signal
+#if 1
 			_com->fillSignal.Input(
 				_com->inHistory,
 				bestLag + _com->overlapSamples,
 				_com->inHistory.GetSamplesMax() - (bestLag + _com->overlapSamples));
+#else
+			_com->fillSignal.fillSignal.Clear(_com->fillSignal.fillSignal.GetValidSamples());
+			_com->fillSignal.fillSignal.Append(_com->fillSignal.fillSignal.GetSamplesMax());
+			ALGO_MEM_SET(_com->fillSignal.fillSignal.GetBufInSample(0), 0, _com->fillSignal.fillSignal.GetSizeMax());
+			_com->fillSignal.fillSignalSampleIndex[0] = 0;
+#endif
 			//state updata
 			_com->muterAfterLost.Sync(_com->muterAfterNoLost);
 		}
@@ -329,7 +336,7 @@ public:
 				_com->inHistory,
 				_com->inHistory.GetSamplesMax() - _com->overlapSamples - _com->frameSamples,
 				_com->frameSamples);
-			return MUSIC_PLC_RET_SUCCESS;
+			return MUSIC_PLC_API_RET_SUCCESS;
 		}
 
 #if 1
@@ -354,7 +361,7 @@ public:
 			_com->frameSamples);
 
 		_com->infuture.Clear(_com->infuture.GetValidSamples());
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 #endif
 	}
 public:
@@ -377,10 +384,10 @@ public:
 		if (!param
 			|| !param->basePorting
 			|| param->channels < 1)
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 #if 0
 		if (param->width != 2 && param->width != 3 && param->width != 4)
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 #endif
 		if (param->frameSamples < 1
 			|| param->overlapSamples < 0
@@ -389,13 +396,13 @@ public:
 			|| param->gainSamplesAfterNoLost < 0
 			|| param->seekSamples < 0
 			|| param->matchSamples < 0)
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 
 #if 1
 		int size = sizeof(MusicPlc_c);
 		MusicPlc_c* hd = (MusicPlc_c*)param->basePorting->Malloc(size);
 		if (!hd) {
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 		}
 		new(hd) MusicPlc_c();
 #endif
@@ -409,15 +416,14 @@ public:
 		pCom->_matchSamples = param->matchSamples;
 
 		BufferSamples bufferSamples;
-#if 0
-		bufferSamples._samples =pCom->overlapSamples + MAX(pCom->frameSamples, (i32)(pCom->info._rate * MUSIC_PLC_MIN_FRAME_MS / (1000)));
-#else
-		bufferSamples._samples = pCom->_seekSamples + pCom->_matchSamples + (5 * pCom->info._rate) / 1000;
-		bufferSamples._samples = MAX(bufferSamples._samples, pCom->frameSamples + pCom->overlapSamples);
+#if 1
+		i32 histSamples = pCom->_seekSamples + pCom->_matchSamples + (5 * pCom->info._rate) / 1000;
+		histSamples = MAX(histSamples, pCom->frameSamples);
+		bufferSamples._samples = histSamples + pCom->overlapSamples;
 #endif
 		bufferSamples._buf = (u8*)pCom->MM.Malloc(bufferSamples._samples *pCom->info._bytesPerSample);
 		if (!bufferSamples._buf) {
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 		}
 		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples *pCom->info._bytesPerSample);
 		pCom->inHistory.Init(&pCom->info, &bufferSamples);
@@ -426,7 +432,7 @@ public:
 		bufferSamples._samples = pCom->frameSamples;
 		bufferSamples._buf = (u8*)pCom->MM.Malloc(bufferSamples._samples * pCom->info._bytesPerSample);
 		if (!bufferSamples._buf) {
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 		}
 		ALGO_MEM_SET(bufferSamples._buf, 0, bufferSamples._samples *pCom->info._bytesPerSample);
 		pCom->infuture.Init(&pCom->info, &bufferSamples);
@@ -449,12 +455,12 @@ public:
 		hd->_musicPlcChAll.Init(pCom);
 #endif
 		*pHd = hd;
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 	}
 	static inline int32_t Set(void* hd, MusicPlc_SetChhoose_e choose, void* val) {
 		if (!hd
 			|| choose >= MUSIC_PLC_SET_CHOOSE_MAX)
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 		MusicPlc_c<T>* pMusicPlc = (MusicPlc_c<T>*)hd;
 		switch (choose)
 		{
@@ -469,10 +475,10 @@ public:
 		default:
 			break;
 		}
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 	}
 	static inline int32_t Get(void* hd, MusicPlc_GetChhoose_e choose, void* val) {
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 	}
 	static inline i32 Run(void* hd, uint8_t* in, int32_t inLen, uint8_t* out, int32_t* outLen, uint16_t isLost)
 	{
@@ -480,10 +486,10 @@ public:
 		if (isLost == false) {
 			if (!in
 				|| inLen < (frameSamples * info._bytesPerSample))
-				return MUSIC_PLC_RET_FAIL;
+				return MUSIC_PLC_API_RET_FAIL;
 		}
 		if (*outLen < frameSamples * info._bytesPerSample)
-			return MUSIC_PLC_RET_FAIL;
+			return MUSIC_PLC_API_RET_FAIL;
 #endif
 		MusicPlc_c* plc = (MusicPlc_c*)hd;
 		MusicPlcCom_c<T>* pCom = &plc->_com;
@@ -508,7 +514,7 @@ public:
 		plc->_musicPlcChAll.Run(pIn, pOut, isLost ? true : false);
 #endif
 		*outLen = pOut.GetValidSamples(0) * pCom->info._bytesPerSample;
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 	}
 
 	static inline i32 Destory(void* hd) {
@@ -517,7 +523,7 @@ public:
 		AlgoBasePorting_c* basePorting = plc->_basePorting;
 		plc->~MusicPlc_c();
 		basePorting->Free(plc);
-		return MUSIC_PLC_RET_SUCCESS;
+		return MUSIC_PLC_API_RET_SUCCESS;
 	}
 
 private:

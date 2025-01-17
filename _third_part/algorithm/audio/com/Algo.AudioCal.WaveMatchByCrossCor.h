@@ -9,7 +9,7 @@
 namespace Algo {
 namespace Audio {
 	
-template<class Tref, class Tcmp, class Tnorm, int _rShitf = 0>
+template<class Tref, class Tcmp, class Tnorm, int _rShitf1 = 0, int _rShitf0 = 0>
 class WaveMatchByCrossCor_c
 {
 public:
@@ -23,11 +23,11 @@ public:
 		Tnorm bestCorr = 0;
 		i32 accorrelationSample = matchSample;
 		Tref* pRef = (Tref*)ref;
-		bestCorr = CrossCorr_t<Tref,Tcmp,Tnorm,_rShitf>::runAllCh(ref, cmp, channels, accorrelationSample, &norm);
+		bestCorr = CrossCorr_t<Tref,Tcmp,Tnorm,_rShitf1,_rShitf0>::runAllCh(ref, cmp, channels, accorrelationSample, &norm);
 		for (i32 s = 1; s < seekSample; s++) {
 			pRef += channels;
 			Tnorm corr;
-			corr = CrossCorrAccumulate_t<Tref,Tcmp,Tnorm,_rShitf>::RunAllCh(pRef, cmp, channels, accorrelationSample, &norm);
+			corr = CrossCorrAccumulate_t<Tref,Tcmp,Tnorm,_rShitf1,_rShitf0>::RunAllCh(pRef, cmp, channels, accorrelationSample, &norm);
 			if (bestCorr < corr) {
 				bestCorr = corr;
 				lagOpt = s;
@@ -42,11 +42,11 @@ public:
 		Tnorm bestCorr = 0;
 		i32 accorrelationSample = matchSample;
 		Tref* pRef = (Tref*)ref;
-		bestCorr = CrossCorr_t<Tref, Tcmp, Tnorm, _rShitf>::runCh(ref, cmp, channels, channelSelect, accorrelationSample, &norm);
+		bestCorr = CrossCorr_t<Tref, Tcmp, Tnorm, _rShitf1,_rShitf0>::runCh(ref, cmp, channels, channelSelect, accorrelationSample, &norm);
 		for (i32 s = 1; s < seekSample; s++) {
 			pRef += channels;
 			Tnorm corr;
-			corr = CrossCorrAccumulate_t<Tref, Tcmp, Tnorm, _rShitf>::RunCh(pRef, cmp, channels, channelSelect, accorrelationSample, &norm);
+			corr = CrossCorrAccumulate_t<Tref, Tcmp, Tnorm, _rShitf1,_rShitf0>::RunCh(pRef, cmp, channels, channelSelect, accorrelationSample, &norm);
 			if (bestCorr < corr) {
 				bestCorr = corr;
 				lagOpt = s;

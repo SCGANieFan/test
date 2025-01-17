@@ -38,10 +38,15 @@ namespace Algo {
 	template<>
 	struct Sqrt_t<f32, f32> {
 		static inline f32 Run(f32 a) {
+			if (!TypeIdentify_c::IsFloatValid(a)) {
+				return 0;
+			}
 			if (a < 0) {
 				return 0;
 			}
 			static const f32 EPSILON = 0.00001f;
+			const i32 loopNumMax = 100;
+			i32 loopNum = 0;
 			f32 x = a / 2.0f;
 			f32 y = x;
 			f32 diff;
@@ -49,9 +54,11 @@ namespace Algo {
 				y = x;
 				x = 0.5f * (x + a / x);
 				diff = x - y;
-				if (ALGO_ABS(diff) < EPSILON) {
+				if (ALGO_ABS(diff) < EPSILON
+					|| loopNum > loopNumMax) {
 					break;
 				}
+				loopNum++;
 			}
 			return x;
 		}

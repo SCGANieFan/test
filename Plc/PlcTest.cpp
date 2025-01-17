@@ -33,25 +33,26 @@
 #define OVERLAP_MS 2
 #else
 
-#define FILE_NAME "sin4ch48k16b.wav"
+//#define FILE_NAME "mbz_48k2h.wav"
+//#define FILE_NAME "sin4ch48k16b.wav"
 //#define FILE_NAME "sin4ch48k32b.wav"
 //#define FILE_NAME "sin1ch48k32b_1.wav"
 //#define FILE_NAME "sin1ch48k32b_2.wav"
 //#define FILE_NAME "sin1ch48k32b_3.wav"
-//#define FILE_NAME "sin1ch48k32b_4.wav"
+#define FILE_NAME "sin1ch48k32b_4.wav"
 //#define FILE_NAME "sin4ch48k32bFloat.wav"
-//#define FILE_NAME "mbz_48k2h.wav"
+//#define FILE_NAME "Walking01_Burn(1).wav"
 #define RATE 48000
-#define CHANNEL 4
-#define WIDTH 2
+#define CHANNEL 2
+#define WIDTH 4
 #define FRAME_MS 2
-#define DECAY_MS 30
-#define GAIN_MS 10
 #define OVERLAP_MS 4
+#define DECAY_MS 30
+#define GAIN_MS 30
 #endif
 #endif
 
-#define FRAME_LEN ((FRAME_MS*RATE/1000)-7)
+#define FRAME_LEN ((FRAME_MS*RATE/1000))
 
 void PlcTest()
 {

@@ -79,15 +79,14 @@ enum class OverlapAddWindowChoose_e {
 	Cosine,
 };
 
+template<class T, b1 type = TypeIdentify_c::IsFloat<T>()>
+struct OverlapAddInner_t : OverlapAdd_t<T, T, T> {};
+template<class T>
+struct OverlapAddInner_t<T, false> : OverlapAdd_t<T, T, i32> {};
+
 template<class T>
 class OverlapAdd_c
 {
-
-private:
-	template<class T, b1 type = TypeIdentify_c::IsFloat<T>()>
-	struct OverlapAddInner_t : OverlapAdd_t<T, T, T> {};
-	template<class T>
-	struct OverlapAddInner_t<T, false> : OverlapAdd_t<T, T, i32> {};
 public:
 	OverlapAdd_c() {};
 	~OverlapAdd_c() {};
@@ -108,7 +107,24 @@ public:
 		for (i16 ch = 0; ch < _info->_channels; ch++) {
 			_overlapSamplesNow[ch] = _overlapSamples;
 		}
-		FactorInit<T>(MM, windowChoose);
+		BufferGenerator_c::BufferChoose_e bufferChoose;
+		if (windowChoose == OverlapAddWindowChoose_e::Line)
+			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_LINE_FADE;
+		else if (windowChoose == OverlapAddWindowChoose_e::Cosine)
+			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
+		else {
+			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
+		}
+		if (TypeIdentify_c::IsF32<T>()) {
+			_factor = MM->Malloc(_overlapSamples * sizeof(f32));//1->0
+			_fixNum = 0;
+			BufferGenerator_c::Generate(bufferChoose, (f32*)_factor, _overlapSamples, _fixNum);
+		}
+		else {
+			_factor = MM->Malloc(_overlapSamples * sizeof(i32));//1->0
+			_fixNum = 15;
+			BufferGenerator_c::Generate(bufferChoose, (i32*)_factor, _overlapSamples, _fixNum);
+		}
 		return true;
 	}
 
@@ -171,30 +187,6 @@ public:
 				(doOverlapSamples - doOverlapSamples0) * _info->_bytesPerSample);
 		}
 		_overlapSamplesNow[0] += doOverlapSamples0;
-	}
-private:
-	template<class T>
-	INLINE void FactorInit(MemoryManger_c* MM, OverlapAddWindowChoose_e choose) {
-		_factor = MM->Malloc(_overlapSamples * sizeof(i32));//1->0
-		_fixNum = 15;
-		BufferGenerator_c::BufferChoose_e bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
-		if (choose == OverlapAddWindowChoose_e::Line)
-			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_LINE_FADE;
-		else if (choose == OverlapAddWindowChoose_e::Cosine)
-			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
-		BufferGenerator_c::Generate(bufferChoose, (i32*)_factor, _overlapSamples, _fixNum);
-	}
-
-	template<>
-	INLINE void FactorInit<f32>(MemoryManger_c* MM, OverlapAddWindowChoose_e choose) {
-		_factor = MM->Malloc(_overlapSamples * sizeof(f32));//1->0
-		_fixNum = 0;
-		BufferGenerator_c::BufferChoose_e bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
-		if (choose == OverlapAddWindowChoose_e::Line)
-			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_LINE_FADE;
-		else if (choose == OverlapAddWindowChoose_e::Cosine)
-			bufferChoose = BufferGenerator_c::BufferChoose_e::WINDOW_COSINE_FADE;
-		BufferGenerator_c::Generate(bufferChoose, (f32*)_factor, _overlapSamples, _fixNum);
 	}
 private:
 	AudioInfo* _info;

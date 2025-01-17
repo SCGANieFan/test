@@ -11,7 +11,7 @@ enum class WaveFormMatchFuncMode_e {
 	WAVE_FORM_MATCH_FUNC_MODE_SUM = 0,
 	WAVE_FORM_MATCH_FUNC_MODE_ACCORELATION,
 };
-template<class Tref, class Tcmp, class Tnorm, int _rShitf = 0>
+template<class Tref, class Tcmp, class Tnorm, int _rShitf1 = 0, int _rShitf0 = 0>
 class WaveFormMatch_c
 {
 public:
@@ -20,8 +20,8 @@ public:
 public:
 	INLINE void Init(WaveFormMatchFuncMode_e mode, AudioInfo* info) {
 			_info = info;
-			_waveFormMatchCh = WaveMatchByCrossCor_c<Tref, Tcmp, Tnorm, _rShitf>::RunCh;
-			_waveFormMatchAllCh = WaveMatchByCrossCor_c<Tref, Tcmp, Tnorm, _rShitf>::RunAllCh;
+			_waveFormMatchCh = WaveMatchByCrossCor_c<Tref, Tcmp, Tnorm, _rShitf1, _rShitf0>::RunCh;
+			_waveFormMatchAllCh = WaveMatchByCrossCor_c<Tref, Tcmp, Tnorm, _rShitf1, _rShitf0>::RunAllCh;
 	}
 	INLINE i32 DoWaveFormMatchCh(Tref* ref, Tcmp* cmp, u16 chSelect, i32 seekSample, i32 matchSample) {
 		return _waveFormMatchCh(

@@ -525,13 +525,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Muter.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.OverlapAdd.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Product.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.Resample.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveFormMatch.cpp" />
-    <ClCompile Include="..\_third_part\algorithm\audio\com\Algo.AudioCal.WaveMatchByCrossCor.cpp" />
     <ClCompile Include="..\_third_part\algorithm\audio\demo\audiodemo.cpp" />
+    <ClCompile Include="..\_third_part\algorithm\base\Algo.Memory.cpp" />
     <ClCompile Include="..\_third_part\MAF\interface\demo\MAF.demo.cpp" />
     <ClCompile Include="..\_third_part\MTF\interface\demo\MTF.demo.cpp" />
     <ClCompile Include="MTF_demoTest.cpp" />

@@ -64,8 +64,10 @@ mtf_int32 MTF_MusicPlc::Init()
 	const mtf_int8* script = "type=$0,Malloc=$1,Realloc=$2,Calloc=$3,Free=$4"\
 							 ",rate=$5,ch=$6,width=$7,fSamples=$8,decayMs=$9,gainMs=$10,overlapMs=$11;";
 	ret = MAF_Init(_hd, script, param);
-	if (ret != MA_RET_SUCCESS)
+	if (ret != MA_RET_SUCCESS) {
 		MTF_PRINT("err");
+		return -1;
+	}
 
 	//io data
 	mtf_int32 size = _frameBytes;
@@ -85,7 +87,7 @@ mtf_int32 MTF_MusicPlc::receive(MTF_Data& iData)
 }
 
 #define FRAMES_LOST 10
-#define FRAMES_TOTAL 50
+#define FRAMES_TOTAL 500
 mtf_int32 MTF_MusicPlc::generate(MTF_Data*& oData)
 {
 	AA_Data AA_iData;
