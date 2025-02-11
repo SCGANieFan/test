@@ -10,7 +10,7 @@ namespace Audio {
 template<class Ti, class To, class Tf>
 struct OverlapAdd_t {
 	STATIC b1 RunCh(void* dst, void* srcDecline, void* srcRise, const i16 channelSelect, const i16 channels, void* factorDecLine, const i32 startOverlapSample, const i32 endOverlapSample, i32 overlapSample) {
-		const i32 fixNum = 15;
+		const i32 fixNum = 13;
 		Ti* pSrcRise = (Ti*)srcRise + channelSelect;
 		Ti* pSrcDecline = (Ti*)srcDecline + channelSelect;
 		To* pDst = (To*)dst + channelSelect;
@@ -24,7 +24,7 @@ struct OverlapAdd_t {
 		return true;
 	}
 	STATIC b1 RunAllCh(void* dst, void* srcDecline, void* srcRise, const i16 channels, void* factorDecLine, const i32 startOverlapSample, const i32 endOverlapSample, i32 overlapSample) {
-		const i32 fixNum = 15;
+		const i32 fixNum = 13;
 		Ti* pSrcRise = (Ti*)srcRise;
 		Ti* pSrcDecline = (Ti*)srcDecline;
 		To* pDst = (To*)dst;
@@ -122,7 +122,7 @@ public:
 		}
 		else {
 			_factor = MM->Malloc(_overlapSamples * sizeof(i32));//1->0
-			_fixNum = 15;
+			_fixNum = 13;
 			BufferGenerator_c::Generate(bufferChoose, (i32*)_factor, _overlapSamples, _fixNum);
 		}
 		return true;

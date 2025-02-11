@@ -117,6 +117,9 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.frameSamples = _frameSamples;
 	initParam.width = _width;
 	initParam.mode = PlcApiMode_e::PLC_API_MODE_MUSIC_PLC;
+	initParam.dataType = PlcApiDataType_e::PLC_API_DATA_TYPE_SHORT_16;
+	//initParam.dataType = PlcApiDataType_e::PLC_API_DATA_TYPE_INT_32;
+	//initParam.dataType = PlcApiDataType_e::PLC_API_DATA_TYPE_FLOAT_32;
 	initParam.cb_malloc = PlcMalloc;
 	initParam.cb_free = PlcFree;
 	initParam.cb_printf = PlcPrint;
@@ -125,14 +128,16 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
 	initParam.MusicPlcParam.fadeSamples = _decayMs * _rate / 1000;
 	initParam.MusicPlcParam.gainSamples = _gainMs * _rate / 1000;
-	initParam.MusicPlcParam.seekSamples = 2 * _rate / 1000;
-	initParam.MusicPlcParam.matchSamples = 1* _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 2 * _rate / 1000;
 	initParam.MusicPlcParam.channelSelect = 0xffff;
 	_hd = _memory.Malloc(_hdSize);
 	PlcApiRet ret = PlcApiCreate(&_hd, &initParam);
 	if (ret!=PLC_API_RET_SUCCESS){
+		MAF_PRINT("PlcApiCreate fail, %d", ret);
 		return -1;
 	}
+
 	return 0;
 }
 
@@ -146,13 +151,21 @@ maf_int32 MAFA_MusicPlc::Deinit()
 
 maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 {
-	maf_int32 ret;
+	maf_int32 ret = 0;
 
 	maf_int32 outByte = dataOut->GetLeftSize();
+#if 0
+	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY)) {
+		outByte = _frameSamples * _width * _ch;
+		MAF_MEM_SET(dataOut->GetLeftData(), 0, outByte);
+		dataOut->Append(outByte);
+	}
+	else {
+		dataOut->Append(dataIn->GetData(), dataIn->GetSize());
+	}
 
-	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY))
-	{
-#if 1
+#else
+	if (dataIn->CheckFlag(MAFA_FRAME_IS_EMPTY)) {
 		dataIn->ClearFlag(MAFA_FRAME_IS_EMPTY);
 		ret = PlcApiRun(
 			_hd,
@@ -162,24 +175,9 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 			dataOut->GetLeftData(),
 			&outByte,
 			0xffff);
-#else
-		outByte= _frameSamples* _width *_ch;
-		MAF_MEM_SET(dataOut->GetLeftData(), 0, outByte);
-#endif
 		dataOut->Append(outByte);
 	}
-	else
-	{
-#if 0
-		ret = MusicPlc_Run(
-			_hd,
-			dataIn->GetData(),
-			dataIn->GetSize(),
-			dataOut->GetLeftData(),
-			&outByte,
-			false);
-		dataOut->Append(outByte);
-#else
+	else {
 		dataOut->Append(dataIn->GetData(), dataIn->GetSize());
 		ret = PlcApiRun(
 			_hd,
@@ -189,8 +187,9 @@ maf_int32 MAFA_MusicPlc::Process(MAF_Data* dataIn, MAF_Data* dataOut)
 			dataOut->GetData(),
 			&outByte,
 			0x0000);
-#endif
 	}
+#endif
+
 	if (ret < 0)
 	{
 		return -1;

@@ -413,7 +413,7 @@ public:
 		pCom->frameSamples = param->frameSamples;
 		pCom->overlapSamples = param->overlapSamples;
 		pCom->_seekSamples = param->seekSamples;
-		pCom->_matchSamples = param->matchSamples;
+		pCom->_matchSamples = MIN(param->matchSamples, pCom->overlapSamples);
 
 		BufferSamples bufferSamples;
 #if 1
@@ -445,7 +445,7 @@ public:
 			&pCom->MM, &pCom->info, 
 			MuterWindowChoose_e::MUTER_WINDOW_CHOOSE_COSINE, MuterDirChoose_e::MUTER_DIR_CHOOSE_AMPLIFICATION, 
 			param->gainSamplesAfterNoLost);
-		pCom->_overlapAdd.Init(&pCom->MM, &pCom->info, OverlapAddWindowChoose_e::Line,pCom->overlapSamples);
+		pCom->_overlapAdd.Init(&pCom->MM, &pCom->info, OverlapAddWindowChoose_e::Cosine,pCom->overlapSamples);
 		pCom->_holdSamplesAfterLost = param->holdSamplesAfterLost;
 		pCom->_waveFormMatch.Init(WaveFormMatchFuncMode_e::WAVE_FORM_MATCH_FUNC_MODE_ACCORELATION, &pCom->info);
 		hd->_channelSelect = 0xffff;

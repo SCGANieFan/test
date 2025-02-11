@@ -7,9 +7,9 @@ using namespace Algo;
 #ifdef WIN32
 #define USE_MUSIC_PLC 1
 #define LOG(func,fmt,...) if(func) func("[%s](%d)" fmt "\n",__func__, __LINE__, ##__VA_ARGS__)
-#define PLC_DATA_TYPE_SHORT_16	(0)
-#define PLC_DATA_TYPE_INT_32	(0&(!PLC_DATA_TYPE_SHORT_16))
-#define PLC_DATA_TYPE_FLOAT_32  (1&(!PLC_DATA_TYPE_SHORT_16)&(!PLC_DATA_TYPE_INT_32))
+#define PLC_DATA_TYPE_SHORT_16	(1)
+#define PLC_DATA_TYPE_INT_32	(1)
+#define PLC_DATA_TYPE_FLOAT_32  (1)
 #else
 #define LOG(func,fmt,...) if(func) func("[%s](%d)" fmt, __func__, __LINE__, ##__VA_ARGS__)
 #endif
@@ -55,6 +55,9 @@ public:
 	virtual PlcApiRet Destory(void* hd) const {
 		return PLC_API_RET_NOT_SUPPORT;
 	}
+	virtual b1 IsSupport() const {
+		return false;
+	}
 };
 
 template<class T>
@@ -66,9 +69,6 @@ public:
 public:
 	virtual PlcApiRet Create(void** pHd, PlcApiParam_t* param, PlcApiBasePort_c* plcMemory) const {
 		*pHd = 0;
-		if (param->width != sizeof(T)) {
-			return PLC_API_RET_NOT_SUPPORT;
-		}
 		MusicPlc_ns::MusicPlcParam_t musicplcParam;
 		ALGO_MEM_SET(&musicplcParam, 0, sizeof(MusicPlc_ns::MusicPlcParam_t));
 		musicplcParam.basePorting = (AlgoBasePorting_c*)plcMemory;
@@ -153,6 +153,9 @@ public:
 		MusicPlc_ns::MusicPlc_c<T>::Destory(hd);
 		return PLC_API_RET_SUCCESS;
 	}
+	virtual b1 IsSupport() const {
+		return true;
+	}
 #endif
 };
 
@@ -164,13 +167,19 @@ public:
 };
 
 #if PLC_DATA_TYPE_SHORT_16
-const static PlcApiMusic_c<int16_t> plcApiMusic = PlcApiMusic_c<int16_t>::PlcApiMusic_c();
-#elif PLC_DATA_TYPE_INT_32
-const static PlcApiMusic_c<int32_t> plcApiMusic;
-#elif PLC_DATA_TYPE_FLOAT_32
-const static PlcApiMusic_c<float> plcApiMusic;
+const static PlcApiMusic_c<int16_t> plcApiMusic16b;
 #else
-const static PlcApiMusic_c<bool> plcApiMusic;
+const static PlcApiMusic_c<bool> plcApiMusic16b;
+#endif
+#if PLC_DATA_TYPE_INT_32
+const static PlcApiMusic_c<int32_t> plcApiMusic32b;
+#else
+const static PlcApiMusic_c<bool> plcApiMusic32b;
+#endif
+#if PLC_DATA_TYPE_FLOAT_32
+const static PlcApiMusic_c<float> plcApiMusic32f;
+#else
+const static PlcApiMusic_c<bool> plcApiMusic32f;
 #endif
 
 class PlcApi_c {
@@ -182,7 +191,24 @@ public:
 		if (!pHd
 			|| !param)
 			return PLC_API_RET_INPUT_ERROR;
-		LOG(param->cb_printf, " version %s, plc api, (%p,%p)", version, pHd, param);
+		LOG(param->cb_printf, "plc api(%s),(%d,%d,%d) (%p,%p)",
+			version,
+			plcApiMusic16b.IsSupport(), plcApiMusic32b.IsSupport(), plcApiMusic32f.IsSupport(),
+			pHd, param);
+		if (param->width == 2) {
+			if (param->dataType != PlcApiDataType_e::PLC_API_DATA_TYPE_SHORT_16) {
+				return PLC_API_RET_INPUT_ERROR;
+			}
+		}
+		else if (param->width == 4) {
+			if (param->dataType != PlcApiDataType_e::PLC_API_DATA_TYPE_INT_32
+				&& param->dataType != PlcApiDataType_e::PLC_API_DATA_TYPE_FLOAT_32) {
+				return PLC_API_RET_INPUT_ERROR;
+			}
+		}
+		else {
+			return PLC_API_RET_INPUT_ERROR;
+		}
 		int32_t size = sizeof(PlcApi_c);
 		PlcApi_c* plcApi = (PlcApi_c*)param->cb_malloc(size);
 		if (!plcApi) {
@@ -196,7 +222,18 @@ public:
 
 		switch (param->mode) {
 		case PlcApiMode_e::PLC_API_MODE_MUSIC_PLC:
-			plcApi->_plcCom = &plcApiMusic;
+			if (param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_SHORT_16) {
+				plcApi->_plcCom = &plcApiMusic16b;
+			}
+			else if (param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_INT_32) {
+				plcApi->_plcCom = &plcApiMusic32b;
+			}
+			else if(param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_FLOAT_32){
+				plcApi->_plcCom = &plcApiMusic32f;
+			}
+			else {
+				return PLC_API_RET_FAIL;
+			}
 			break;
 		default:
 			LOG(plcApi->_basePort.print_cb, "plc api mode error, %d", param->mode);
@@ -257,10 +294,10 @@ public:
 		return PLC_API_RET_SUCCESS;
 	}
 public:
+	constexpr static const char* version = "1.0.1.0";
 	PlcApiBasePort_c _basePort;
 	const PlcApiCom_c* _plcCom;
 	void* _plc;
-	constexpr static const char* version = "1.0.0.0";
 };
 
 

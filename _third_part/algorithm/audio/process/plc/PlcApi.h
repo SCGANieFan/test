@@ -20,6 +20,13 @@ enum PlcApiMode_e {
 	PLC_API_MODE_MAX,
 };
 
+enum PlcApiDataType_e {
+	PLC_API_DATA_TYPE_SHORT_16 = 0,
+	PLC_API_DATA_TYPE_INT_32,
+	PLC_API_DATA_TYPE_FLOAT_32,
+	PLC_API_DATA_TYPE_MAX,
+};
+
 enum PlcApiSet_e {
 	PLC_API_SET_NOONE = 0,
 	PLC_API_SET_MAX,
@@ -37,6 +44,7 @@ typedef struct {
 	int16_t frameSamples;
 	int16_t width;
 	enum PlcApiMode_e mode;
+	enum PlcApiDataType_e dataType;
 	void* (*cb_malloc)(int size);
 	void (*cb_free)(void* ptr);
 	void (*cb_printf)(const char *fmt, ...);
