@@ -81,8 +81,9 @@ public:
 		musicplcParam.attenuateSamplesAfterLost = param->MusicPlcParam.fadeSamples;
 		musicplcParam.gainSamplesAfterNoLost = param->MusicPlcParam.gainSamples;
 		musicplcParam.seekSamples = param->MusicPlcParam.seekSamples;
+		musicplcParam.noSeekSamples = param->MusicPlcParam.noSeekSamples;
 		musicplcParam.matchSamples = param->MusicPlcParam.matchSamples;
-		LOG(param->cb_printf, "plc api musicplc, (%p,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)",
+		LOG(param->cb_printf, "plc api musicplc, (%p,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)",
 			musicplcParam.basePorting,
 			musicplcParam.fsHz,
 			musicplcParam.channels,
@@ -93,6 +94,7 @@ public:
 			musicplcParam.attenuateSamplesAfterLost,
 			musicplcParam.gainSamplesAfterNoLost,
 			musicplcParam.seekSamples,
+			musicplcParam.noSeekSamples,
 			musicplcParam.matchSamples);
 		void* plc;
 		int32_t ret = MusicPlc_ns::MusicPlc_c<T>::Create(&plc, &musicplcParam);
@@ -191,10 +193,11 @@ public:
 		if (!pHd
 			|| !param)
 			return PLC_API_RET_INPUT_ERROR;
-		LOG(param->cb_printf, "plc api(%s),(%d,%d,%d) (%p,%p)",
+		LOG(param->cb_printf, "plc api(%s),(%d,%d,%d) (%p,%p) (%d,%d)",
 			version,
 			plcApiMusic16b.IsSupport(), plcApiMusic32b.IsSupport(), plcApiMusic32f.IsSupport(),
-			pHd, param);
+			pHd, param, 
+			param->mode, param->dataType);
 		if (param->width == 2) {
 			if (param->dataType != PlcApiDataType_e::PLC_API_DATA_TYPE_SHORT_16) {
 				return PLC_API_RET_INPUT_ERROR;
@@ -294,7 +297,7 @@ public:
 		return PLC_API_RET_SUCCESS;
 	}
 public:
-	constexpr static const char* version = "1.0.1.0";
+	constexpr static const char* version = "1.0.2.0";
 	PlcApiBasePort_c _basePort;
 	const PlcApiCom_c* _plcCom;
 	void* _plc;

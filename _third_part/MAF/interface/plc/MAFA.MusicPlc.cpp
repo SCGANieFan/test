@@ -88,30 +88,6 @@ maf_int32 MAFA_MusicPlc::Init()
 	_free = _memory.GetFree();
 	_PlcMemory = &_memory;
 #endif
-#if 0
-	typedef struct {
-		//common
-		enum PlcMode_e mode;
-		union {
-			//music plc
-			struct {
-				int32_t overlapSamples;
-				int32_t holdSamples;
-				int32_t fadeSamples;
-				int32_t gainSamples;
-				int32_t seekSamples;
-				int32_t matchSamples;
-				uint16_t channelSelect;
-			}MusicPlcParam;
-			//other
-			struct {
-			}otherParam;
-		};
-		PlcMemory_c* memory;
-		void* other;
-	}PlcParam_t;
-#endif
-
 	initParam.fsHz = _rate;
 	initParam.channels = _ch;
 	initParam.frameSamples = _frameSamples;
@@ -123,13 +99,43 @@ maf_int32 MAFA_MusicPlc::Init()
 	initParam.cb_malloc = PlcMalloc;
 	initParam.cb_free = PlcFree;
 	initParam.cb_printf = PlcPrint;
-
-	initParam.MusicPlcParam.overlapSamples = _overlapMs * _rate / 1000;
+#if 0
+	//voice
+	initParam.MusicPlcParam.overlapSamples = 4 * _rate / 1000;
 	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
-	initParam.MusicPlcParam.fadeSamples = _decayMs * _rate / 1000;
-	initParam.MusicPlcParam.gainSamples = _gainMs * _rate / 1000;
-	initParam.MusicPlcParam.seekSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.fadeSamples = 30 * _rate / 1000;
+	initParam.MusicPlcParam.gainSamples = 10 * _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 20 * _rate / 1000;
+	initParam.MusicPlcParam.noSeekSamples = 5 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 5 * _rate / 1000;
+#elif 0
+	//music
+	initParam.MusicPlcParam.overlapSamples = 2 * _rate / 1000;
+	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.fadeSamples = 50 * _rate / 1000;
+	initParam.MusicPlcParam.gainSamples = 50 * _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 10 * _rate / 1000;
+	initParam.MusicPlcParam.noSeekSamples = 5 * _rate / 1000;
 	initParam.MusicPlcParam.matchSamples = 2 * _rate / 1000;
+#elif 0
+	//LOW LATENCY
+	initParam.MusicPlcParam.overlapSamples = 1 * _rate / 1000;
+	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.fadeSamples = 30 * _rate / 1000;
+	initParam.MusicPlcParam.gainSamples = 30 * _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 10 * _rate / 1000;
+	initParam.MusicPlcParam.noSeekSamples = 5 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 2 * _rate / 1000;
+#elif 1
+	//lfe
+	initParam.MusicPlcParam.overlapSamples = 2 * _rate / 1000;
+	initParam.MusicPlcParam.holdSamples = 0 * _rate / 1000;
+	initParam.MusicPlcParam.fadeSamples = 100 * _rate / 1000;
+	initParam.MusicPlcParam.gainSamples = 100 * _rate / 1000;
+	initParam.MusicPlcParam.seekSamples = 30 * _rate / 1000;
+	initParam.MusicPlcParam.noSeekSamples = 20 * _rate / 1000;
+	initParam.MusicPlcParam.matchSamples = 10 * _rate / 1000;
+#endif
 	initParam.MusicPlcParam.channelSelect = 0xffff;
 	_hd = _memory.Malloc(_hdSize);
 	PlcApiRet ret = PlcApiCreate(&_hd, &initParam);

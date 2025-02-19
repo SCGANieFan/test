@@ -56,6 +56,7 @@ typedef struct {
 			int32_t fadeSamples;
 			int32_t gainSamples;
 			int32_t seekSamples;
+			int32_t noSeekSamples;
 			int32_t matchSamples;
 			uint16_t channelSelect;
 		}MusicPlcParam;

@@ -36,6 +36,7 @@ public:
 					vNSum[ch] = v;
 				}
 				vSum[ch] = v;
+				vDir[ch] = -v;
 				buf += channels;
 			}
 			for (i32 m = 1; m < matchSample; m++) {
@@ -50,20 +51,25 @@ public:
 						vNSum[ch] += v;
 					}
 					vSum[ch] += v;
+					if (m < matchSample >> 1) {
+						vDir[ch] -= v;
+					}
+					else {
+						vDir[ch] += v;
+					}
 					buf += channels;
 				}
-			}
-			for (i32 ch = 0; ch < 1; ch++) {
-				vDir[ch] = buf[-channels + ch] - bufOri[ch];
 			}
 		}
 		template<class T>
 		void Update(T* buf, i16 channels) {
 			T* bufOld = &buf[-channels * _matchSample];
+			T* bufOld2 = &bufOld[channels * (_matchSample >> 1)];
 			for (i32 ch = 0; ch < 1; ch++) {
 			//for (i32 ch = 0; ch < channels; ch++) {
 				T v = *buf;
 				T vOld = *bufOld;
+				T vOld2 = *bufOld2;
 				vAbsSum[ch] -= Abs(vOld);
 				vAbsSum[ch] += Abs(v);
 				if (vOld > 0) {
@@ -80,27 +86,28 @@ public:
 				}
 				vSum[ch] -= vOld;
 				vSum[ch] += v;
-				vDir[ch] = v - vOld;
+				vDir[ch] += v + vOld - (vOld2 * 2);
 				++buf;
 				++bufOld;
+				++bufOld2;
 			}
 		}
 		static inline Tnorm Max(Tnorm x0, Tnorm x1) { return x0 > x1 ? x0 : x1; }
 		static inline Tnorm Min(Tnorm x0, Tnorm x1) { return x0 < x1 ? x0 : x1; }
 		static inline Tnorm Abs(Tnorm x) { return x > 0? x : -x; }
 		static i32 Evaluate(Feature *ref, Feature *cmp, i16 channels) {
-			i32 scoreOut = 0;
+			Tnorm scoreOut = 0;
 			for (i32 ch = 0; ch < 1; ch++) {
 			//for (i32 ch = 0; ch < channels; ch++) {
-				i32 score = Abs(ref->vAbsSum[ch] - cmp->vAbsSum[ch]);
+				Tnorm score = Abs(ref->vAbsSum[ch] - cmp->vAbsSum[ch]);
 				score += Abs(ref->vPSum[ch] - cmp->vPSum[ch]);
 				score += Abs(ref->vNSum[ch] - cmp->vNSum[ch]);
 				score += Abs(ref->vSum[ch] - cmp->vSum[ch]);
-				score += Abs(ref->vDir[ch] - cmp->vDir[ch])*4;
-				score = score / ref->_matchSample;
+				score += Abs(ref->vDir[ch] - cmp->vDir[ch])*1;
+				//score = score / ref->_matchSample;
 				scoreOut += score;
 			}
-			return scoreOut;
+			return (i32)scoreOut;
 		}
 
 	public:

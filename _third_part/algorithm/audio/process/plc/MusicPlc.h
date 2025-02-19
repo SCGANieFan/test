@@ -31,6 +31,7 @@ typedef struct
 	int32_t attenuateSamplesAfterLost;	//Attenuation after packet loss
 	int32_t gainSamplesAfterNoLost;//Gain after obtaining the package
 	int32_t seekSamples;
+	int32_t noSeekSamples;
 	int32_t matchSamples;
 }MusicPlcParam_t;
 
@@ -70,6 +71,7 @@ public:
 	i32 overlapSamples;
 	i32 _holdSamplesAfterLost;
 	i32 _seekSamples;
+	i32 _noSeekSamples;
 	i32 _matchSamples;
 	AudioSamples inHistory;
 	AudioSamples infuture;
@@ -275,11 +277,12 @@ private:
 		_lostCount += 1;
 		if (_lostCount == 1)
 		{
+			i32 matchPos = MAX(_com->_matchSamples, _com->overlapSamples);
 			_holdAfterLostSamplesNow = 0;
 #if 1
 			i32 bestLag = _com->_waveFormMatch.DoWaveFormMatchAllCh(
 				(T*)_com->inHistory.GetBufInSample(0),
-				(T*)_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples),
+				(T*)_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - matchPos),
 				_com->_seekSamples,
 				_com->_matchSamples);
 #else		
@@ -291,15 +294,15 @@ private:
 			_com->_overlapAdd.DoOverlapAdd(
 				_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples),
 				_com->inHistory.GetBufInSample(_com->inHistory.GetSamplesMax() - _com->overlapSamples),
-				_com->inHistory.GetBufInSample(bestLag),
+				_com->inHistory.GetBufInSample(bestLag + matchPos - _com->overlapSamples),
 				_com->overlapSamples);
 #endif
 			//fill signal
 #if 1
 			_com->fillSignal.Input(
 				_com->inHistory,
-				bestLag + _com->overlapSamples,
-				_com->inHistory.GetSamplesMax() - (bestLag + _com->overlapSamples));
+				bestLag + matchPos,
+				_com->inHistory.GetSamplesMax() - (bestLag + matchPos));
 #else
 			_com->fillSignal.fillSignal.Clear(_com->fillSignal.fillSignal.GetValidSamples());
 			_com->fillSignal.fillSignal.Append(_com->fillSignal.fillSignal.GetSamplesMax());
@@ -413,11 +416,15 @@ public:
 		pCom->frameSamples = param->frameSamples;
 		pCom->overlapSamples = param->overlapSamples;
 		pCom->_seekSamples = param->seekSamples;
+		pCom->_noSeekSamples = param->noSeekSamples;
+#if 0
 		pCom->_matchSamples = MIN(param->matchSamples, pCom->overlapSamples);
-
+#else
+		pCom->_matchSamples = param->matchSamples;
+#endif
 		BufferSamples bufferSamples;
 #if 1
-		i32 histSamples = pCom->_seekSamples + pCom->_matchSamples + (5 * pCom->info._rate) / 1000;
+		i32 histSamples = pCom->_seekSamples + pCom->_matchSamples + pCom->_noSeekSamples;
 		histSamples = MAX(histSamples, pCom->frameSamples);
 		bufferSamples._samples = histSamples + pCom->overlapSamples;
 #endif
