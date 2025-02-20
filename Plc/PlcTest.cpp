@@ -39,20 +39,27 @@
 //#define FILE_NAME "sin1ch48k32b_1.wav"
 //#define FILE_NAME "sin1ch48k32b_2.wav"
 //#define FILE_NAME "sin1ch48k32b_3.wav"
-#define FILE_NAME "sin1ch48k32b_4.wav"
+//#define FILE_NAME "sin1ch48k32b_4.wav"
 //#define FILE_NAME "sin4ch48k32bFloat.wav"
 //#define FILE_NAME "Walking01_Burn(1).wav"
+//#define FILE_NAME "30hz_48k2ch.wav"
+//#define FILE_NAME "sin1k48k2ch16b.wav"
+//#define FILE_NAME "stSection_48k1ch.wav"
+//#define FILE_NAME "Flower Dance_44.1k2chF32.wav"
+//#define FILE_NAME "Inuyasha_48k2ch_40sF32.wav"
+#define FILE_NAME "lfe01_48k2ch.wav"
+//#define FILE_NAME "lfe02_48k2ch.wav"
+//#define FILE_NAME "lfe03_48k2ch.wav"
+//#define FILE_NAME "lfe04_48k2ch.wav"
+
 #define RATE 48000
-#define CHANNEL 2
-#define WIDTH 4
+//#define RATE 96000
 #define FRAME_MS 2
-#define OVERLAP_MS 4
-#define DECAY_MS 30
-#define GAIN_MS 30
 #endif
 #endif
 
 #define FRAME_LEN ((FRAME_MS*RATE/1000))
+//#define FRAME_LEN (128)
 
 void PlcTest()
 {
@@ -67,9 +74,6 @@ void PlcTest()
 		(void*)(PATH FILE_NAME ".plc.wav"),		
 		//(void*)(FRAME_MS),
 		(void*)(FRAME_LEN),
-		(void*)DECAY_MS,
-		(void*)GAIN_MS,
-		(void*)OVERLAP_MS,
 	};
 #if 0
 	const char* str = {
@@ -80,7 +84,7 @@ void PlcTest()
 #else
 	const char* str = {
 	"|wav_demuxer,url=$0,fSamples=$2|-->"
-	"|music_plc,decayMs=$3,gainMs=$4,overlapMs=$5|-->"
+	"|music_plc|-->"
 	"|wav_muxer,url=$1|"
 	};
 #endif

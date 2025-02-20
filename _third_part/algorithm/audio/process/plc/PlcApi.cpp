@@ -168,21 +168,7 @@ public:
 	~PlcApiMusic_c() {}
 };
 
-#if PLC_DATA_TYPE_SHORT_16
-const static PlcApiMusic_c<int16_t> plcApiMusic16b;
-#else
-const static PlcApiMusic_c<bool> plcApiMusic16b;
-#endif
-#if PLC_DATA_TYPE_INT_32
-const static PlcApiMusic_c<int32_t> plcApiMusic32b;
-#else
-const static PlcApiMusic_c<bool> plcApiMusic32b;
-#endif
-#if PLC_DATA_TYPE_FLOAT_32
-const static PlcApiMusic_c<float> plcApiMusic32f;
-#else
-const static PlcApiMusic_c<bool> plcApiMusic32f;
-#endif
+
 
 class PlcApi_c {
 public:
@@ -193,9 +179,8 @@ public:
 		if (!pHd
 			|| !param)
 			return PLC_API_RET_INPUT_ERROR;
-		LOG(param->cb_printf, "plc api(%s),(%d,%d,%d) (%p,%p) (%d,%d)",
+		LOG(param->cb_printf, "plc api (%s) (%p,%p) (%d,%d)",
 			version,
-			plcApiMusic16b.IsSupport(), plcApiMusic32b.IsSupport(), plcApiMusic32f.IsSupport(),
 			pHd, param, 
 			param->mode, param->dataType);
 		if (param->width == 2) {
@@ -219,6 +204,8 @@ public:
 			return PLC_API_RET_FAIL;
 		}
 		new(plcApi) PlcApi_c();
+		LOG(param->cb_printf, "plc api (%d,%d,%d)",
+			plcApi->plcApiMusic16b.IsSupport(), plcApi->plcApiMusic32b.IsSupport(), plcApi->plcApiMusic32f.IsSupport());
 		plcApi->_basePort.malloc_cb = param->cb_malloc;
 		plcApi->_basePort.free_cb = param->cb_free;
 		plcApi->_basePort.print_cb = param->cb_printf;
@@ -226,13 +213,13 @@ public:
 		switch (param->mode) {
 		case PlcApiMode_e::PLC_API_MODE_MUSIC_PLC:
 			if (param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_SHORT_16) {
-				plcApi->_plcCom = &plcApiMusic16b;
+				plcApi->_plcCom = &plcApi->plcApiMusic16b;
 			}
 			else if (param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_INT_32) {
-				plcApi->_plcCom = &plcApiMusic32b;
+				plcApi->_plcCom = &plcApi->plcApiMusic32b;
 			}
 			else if(param->dataType == PlcApiDataType_e::PLC_API_DATA_TYPE_FLOAT_32){
-				plcApi->_plcCom = &plcApiMusic32f;
+				plcApi->_plcCom = &plcApi->plcApiMusic32f;
 			}
 			else {
 				return PLC_API_RET_FAIL;
@@ -301,6 +288,21 @@ public:
 	PlcApiBasePort_c _basePort;
 	const PlcApiCom_c* _plcCom;
 	void* _plc;
+#if PLC_DATA_TYPE_SHORT_16
+	PlcApiMusic_c<int16_t> plcApiMusic16b;
+#else
+	PlcApiMusic_c<bool> plcApiMusic16b;
+#endif
+#if PLC_DATA_TYPE_INT_32
+	PlcApiMusic_c<int32_t> plcApiMusic32b;
+#else
+	PlcApiMusic_c<bool> plcApiMusic32b;
+#endif
+#if PLC_DATA_TYPE_FLOAT_32
+	PlcApiMusic_c<float> plcApiMusic32f;
+#else
+	PlcApiMusic_c<bool> plcApiMusic32f;
+#endif
 };
 
 
