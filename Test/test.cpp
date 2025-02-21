@@ -16,11 +16,11 @@ void test()
 	//TestBitPerSampleConvet();
 	//StackTest();
 	//OggTest();
-	 PlcTest();
+	 //PlcTest();
 	//AudioSpeedCtrTest();
 	//AudioResampleTest();
-	//OggTest();
-	OpusTest();
+	OggTest();
+	//OpusTest();
 	//MTF_demo_Test();
 	//WavTest();
 	//ApeTest();

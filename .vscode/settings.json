@@ -70,6 +70,7 @@
     "iostream": "cpp",
     "string": "cpp",
     "*.iosourceh": "c",
-    "mtf.source.h": "c"
+    "mtf.source.h": "c",
+    "cstdlib": "cpp"
   }
 }
