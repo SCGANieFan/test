@@ -36,7 +36,8 @@ bool PraseElement(const char* str, int32_t strLen, MTF_Element**ele, void** para
 		posStart = MTF_String::Search(pStr, ",", 0, strLen0 - 1);
 		if (posStart < 0)
 		{
-			(*ele)->Init();
+			if((*ele)->Init())
+				return false;
 			return true;
 		}
 
@@ -92,7 +93,10 @@ int32_t MTFApi::Api(const char* str, void** param)
 		if (posStart < 0)
 			break;
 		posEnd = MTF_String::Search(pStr, "|", posStart + 1, strLen - 1);
-		PraseElement(pStr + posStart, posEnd - posStart + 1, &eles[i], param);
+		bool ret = PraseElement(pStr + posStart, posEnd - posStart + 1, &eles[i], param);
+		if (!ret) {
+			return -1;
+		}
 		if (i > 0)
 		{
 			eles[i - 1]->Set("to", eles[i]);

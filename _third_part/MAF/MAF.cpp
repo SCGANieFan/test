@@ -30,7 +30,8 @@ static maf_bool prase(maf_void* hd, const maf_int8* script, maf_void** param)
 		posStart = MAF_String::Search(pStr, ",", 0, strLen0 - 1);
 		if (posStart < 0)
 		{
-			((MAF_Algorithm*)hd)->Init();
+			if (((MAF_Algorithm*)hd)->Init())
+				return false;
 			return true;
 		}
 
@@ -86,7 +87,9 @@ MA_Ret MAF_Init(void* hd, const char* script, void** param)
 		|| !param)
 		return MA_RET_INPUT_ERROR;
 
-	prase(hd, script, param);
+	maf_bool ret = prase(hd, script, param);
+	if(!ret)
+		return MA_RET_FAIL;
 	return MA_RET_SUCCESS;
 }
 MA_Ret MAF_Deinit(void* hd)
