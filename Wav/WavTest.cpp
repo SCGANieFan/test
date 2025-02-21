@@ -7,11 +7,11 @@
 #define WIDTH 2
 #define FRAME_MS 20
 
-
+using namespace MTFApi_ns;
 
 void WavTest()
 {
-	MultiemdiaTestInit();
+	MTFApi::Init();
 
 	MTF_REGISTER(wav_demuxer);
 	MTF_REGISTER(wav_muxer);
@@ -27,5 +27,5 @@ void WavTest()
 	"|wav_muxer,url=$1|"
 	};
 
-	MultiemdiaApi(str, param);
+	MTFApi::Api(str, param);
 }

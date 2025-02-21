@@ -29,8 +29,8 @@ maf_int32 MAFA_WavMmux::Init()
 	_malloc = _memory.GetMalloc();
 	_free = _memory.GetFree();
 
-	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting));
-	AlgoBasePorting* basePorting = (AlgoBasePorting*)_basePorting;
+	_basePorting = _memory.Malloc(sizeof(AlgoBasePorting_t));
+	AlgoBasePorting_t* basePorting = (AlgoBasePorting_t*)_basePorting;
 
 	basePorting->Malloc = (ALGO_Malloc_t)MallocLocal;
 	basePorting->Free = (ALGO_Free_t)FreeLocal;

@@ -60,10 +60,10 @@
 
 #define FRAME_LEN ((FRAME_MS*RATE/1000))
 //#define FRAME_LEN (128)
-
+using namespace MTFApi_ns;
 void PlcTest()
 {
-	MultiemdiaTestInit();
+	MTFApi::Init();
 
 	MTF_REGISTER(wav_demuxer);
 	MTF_REGISTER(music_plc);
@@ -88,6 +88,5 @@ void PlcTest()
 	"|wav_muxer,url=$1|"
 	};
 #endif
-
-	MultiemdiaApi(str, param);
+	MTFApi::Api(str, param);
 }
